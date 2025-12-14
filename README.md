@@ -10,63 +10,67 @@
 - **Production**: Cloudflare Pages 배포 후 업데이트 예정
 - **Admin Dashboard**: `/admin`
 
-## ✅ 완료된 기능
+## ✅ 완료된 기능 (최신 업데이트)
 
-### 1. Premium UI/UX Design
-- **Shader Background**: studiojuai.club 스타일 Live Shader 배경 (움직이는 Orb 3개)
-- **Dark Mode Only**: 검정(#000000) 배경 + 흰색 텍스트
-- **Typography**: Pretendard Variable (KR) + Syncopate (EN 슬로건)
-- **Glassmorphism**: blur(24px) + 반투명 유리 효과
-- **Premium Animations**: cubic-bezier 기반 reveal, hover, transition 효과
+### 1. 🌊 WebGL Fluid Background (Visual Revolution)
+- **GLSL Shader 기반** 마우스 반응형 물결/연기 효과
+- **Fractal Brownian Motion (FBM)** 알고리즘 적용
+- **Simplex Noise** 기반 유기적 움직임
+- 마우스 위치에 따라 배경이 살아 숨쉬는 효과
+- WebGL 미지원 시 CSS fallback 자동 적용
 
-### 2. 3-Step Quote Builder (견적 빌더)
-- **Step 1 - 마케팅 베이스 구축**
-  - TYPE A (150만원): 랜딩형 - DB수집 최적화
-  - TYPE B (300만원): 스탠다드 브랜딩 - SEO + AI 챗봇 포함 ⭐추천
-  - TYPE C (800만원): 하이엔드 솔루션 - 병원/프랜차이즈용
+### 2. 🎯 4개 완성형 세트 패키지 (Set Menu Strategy)
+**"이거 하나면 끝"** - 구축 + 관리 + 트래픽 올인원
 
-- **Step 2 - 월 매출 부스팅**
-  - Grade 1 (110만원/월): 브랜딩 기초 - 채널 최적화
-  - Grade 2 (250만원/월): 퍼포먼스 그로스 - 숏폼 알고리즘 공략 ⭐BEST
-  - Grade 3 (450만원/월): 지역 장악 마스터 - 압도적 트래픽
+| 패키지 | 이름 | 첫 달 가격 | 2달째~ 월 관리비 |
+|--------|------|-----------|----------------|
+| **A** | THE LANDING SET (소상공인 실속) | ₩1,800,000 | ₩500,000 |
+| **B** | THE STANDARD SET (스탠다드 성장) ⭐BEST | ₩3,500,000 | ₩1,100,000 |
+| **C** | THE BRANDING SET (하이엔드 브랜딩) | ₩5,000,000 | ₩2,500,000 |
+| **D** | THE PREMIUM SET (병원/프랜차이즈) | ₩8,000,000 | ₩4,500,000 |
 
-- **Step 3 - 애드온 (옵션)**
-  - 채널 활성화 트래픽: 10만원/패키지
-  - 구매전환 상세페이지: 50만원/건
-  - 도파민 숏폼 기획/편집: 15만원/건
-  - 플레이스 광고 운영: 30만원/월
-  - 유튜브 롱폼 편집: 30만원/건
+**각 패키지 포함 내역:**
+- **구축**: 웹사이트 디자인 + 개발
+- **관리**: 1개월 마케팅 운영
+- **SEO/트래픽**: 기본 SEO 또는 초기 트래픽 부스팅
 
-- **Location Fee**: 서울/경기(무료) vs 지방(+30만원 출장비)
+### 3. 🔐 Secret Consultant Mode (히든 기능)
+- **트리거**: 푸터 "XIΛIX" 로고 **5번 빠르게 클릭**
+- **기능**: 대면 협의 금액 직접 입력 창
+- **작동**: 고객명 + 협의 금액 입력 → 즉시 PortOne 결제창 생성
+- **용도**: 대면 상담 후 협의된 맞춤 가격 결제
 
-### 3. Critical Business Logic
-- ✅ **첫 달 필수 패키지**: Step 1 + Step 2 세트 구매 필수
-- ✅ **옵션 잠금**: Step 1, 2 선택 전까지 Step 3 비활성화
-- ✅ **실시간 견적 계산**: 하단 고정 바 + 사이드바 카트
+### 4. 🎬 Premium Animations (Framer Motion Style)
+- **Reveal Animation**: 스크롤 시 요소들이 부드럽게 등장
+- **Stagger Effect**: 자식 요소들이 순차적으로 나타남
+- **Parallax Scroll**: 배경 요소 시차 효과
+- **Hover Interactions**: 카드 hover 시 translateY + scale + shadow
 
-### 4. Secure Portfolio Grid
-- iframe 기반 실시간 사이트 미리보기
-- 투명 Overlay로 클릭/드래그/복사 방지
-- 우클릭 차단 + F12/Ctrl+Shift+I/Ctrl+U 차단
-- sandbox 속성 보안 강화
+### 5. 💎 Glassmorphism UI
+- `backdrop-filter: blur(24px) saturate(1.2)`
+- 반투명 유리 카드 + 미세한 보더
+- 호버 시 강화된 글로우 효과
+- `cubic-bezier(0.16, 1, 0.3, 1)` 프리미엄 이징
 
-### 5. AI Sales Consultant (챗봇)
+### 6. ✨ Premium Typography
+- **Korean**: Pretendard Variable
+- **English/Display**: Syncopate
+- Letter-spacing, line-height 세밀 조정
+
+### 7. 🤖 AI Sales Consultant (챗봇)
 - **Gemini API** 연동 (데모 응답 지원)
-- 수석 마케팅 컨설턴트 페르소나
-- 컨설팅 프로세스: 질문 → 공감 → 교육 → 제안
-- 업종별 맞춤 추천
+- 4개 패키지 중심 추천 로직
+- 업종별 맞춤 컨설팅 멘트
 
-### 6. Payment System
+### 8. 💳 Payment System
 - **PortOne V2 API** 연동
-- `requestPayment` 함수 통합
-- 카트 총액 정확히 전달
+- 패키지 선택 → 확인 → 즉시 결제
+- Secret Mode 맞춤 금액 결제
 
-### 7. SEO/AEO Optimization
-- **Schema.org 마크업**
-  - Organization (회사 정보)
-  - Product (서비스 상품)
-  - FAQPage (자주 묻는 질문)
-- 메타 태그 최적화
+### 9. 🔒 Security Features
+- 우클릭 방지 + 개발자 도구 차단
+- Portfolio iframe 보안 overlay
+- 텍스트 선택/드래그 방지
 
 ## 🔧 API Endpoints
 
@@ -75,9 +79,9 @@
 | GET | `/` | 메인 세일즈 페이지 |
 | GET | `/admin` | 관리자 대시보드 |
 | GET | `/api/portfolios` | 포트폴리오 목록 JSON |
-| GET | `/api/pricing` | 가격 정책 JSON |
+| GET | `/api/packages` | 4개 패키지 정보 JSON |
 | POST | `/api/chat` | AI 챗봇 대화 |
-| POST | `/api/payment/prepare` | 결제 준비 (주문 ID 생성) |
+| POST | `/api/payment/prepare` | 결제 준비 (패키지 또는 맞춤 금액) |
 
 ## 🚀 배포 가이드
 
@@ -111,9 +115,6 @@ pm2 start ecosystem.config.cjs
 
 # 로그 확인
 pm2 logs --nostream
-
-# 직접 실행
-npm run dev:sandbox
 ```
 
 ## 📁 프로젝트 구조
@@ -121,7 +122,7 @@ npm run dev:sandbox
 ```
 webapp/
 ├── src/
-│   └── index.tsx         # Hono 앱 (API + SSR)
+│   └── index.tsx         # Hono 앱 (API + SSR + WebGL Shader)
 ├── public/
 │   └── static/           # 정적 파일
 ├── dist/                 # 빌드 출력
@@ -135,40 +136,28 @@ webapp/
 
 | Element | Value |
 |---------|-------|
-| Background | #000000 (Pure Black) |
-| Text | #FFFFFF (White) |
+| Background | WebGL Fluid Shader (dark smoke/fluid) |
+| Fallback BG | #000000 + gradient |
+| Text | #FFFFFF |
 | Glass | rgba(255,255,255,0.015) + blur(24px) |
 | Font (KR) | Pretendard Variable |
 | Font (EN) | Syncopate |
 | Animation | cubic-bezier(0.16, 1, 0.3, 1) |
 
-## 📊 Data Model
+## 🎯 Key User Checkpoints
 
-### Cart State
-```typescript
-{
-  setup: 'type-a' | 'type-b' | 'type-c' | null,
-  monthly: 'grade-1' | 'grade-2' | 'grade-3' | null,
-  addons: string[],
-  location: 'loc-seoul' | 'loc-local'
-}
-```
+사용자(쮸쌤)가 확인해야 할 핵심 포인트:
+
+1. **✅ 배경 움직임**: WebGL Fluid 배경이 마우스에 반응하는지
+2. **✅ 패키지 카드 4개**: A(Landing), B(Standard), C(Branding), D(Premium)
+3. **✅ 히든 결제창**: 푸터 로고 5번 클릭 시 관리자 가격 입력창 등장
 
 ## 📋 향후 개발 계획
 
-1. **SMMKing API 연동** - 채널 트래픽 부스팅 자동화
-2. **D1 Database** - 결제/계약 내역 저장
-3. **Webhook 처리** - 결제 완료 알림
-4. **Analytics** - 전환율 트래킹
-
-## 🔒 Security Features
-
-- ✅ 우클릭 방지
-- ✅ 개발자 도구 차단 (F12, Ctrl+Shift+I)
-- ✅ 소스보기 차단 (Ctrl+U)
-- ✅ 텍스트 선택 방지
-- ✅ iframe sandbox
-- ✅ Portfolio 보안 Overlay
+1. **D1 Database** - 결제/계약 내역 저장
+2. **Webhook 처리** - 결제 완료 알림
+3. **Analytics** - 전환율 트래킹
+4. **패키지 커스터마이징** - 애드온 옵션 추가
 
 ---
 
