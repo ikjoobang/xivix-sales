@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "xilix-sales",
+  "compatibility_date": "2024-12-14",
+  "pages_build_output_dir": "./dist",
+  "compatibility_flags": ["nodejs_compat"]
+  // Environment variables (set via wrangler secret)
+  // "vars": {
+  //   "GEMINI_API_KEY": "your-gemini-api-key",
+  //   "PORTONE_STORE_ID": "your-store-id",
+  //   "PORTONE_CHANNEL_KEY": "your-channel-key"
+  // }
+}
