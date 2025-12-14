@@ -2,223 +2,147 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/cloudflare-pages'
 
-// Types
 type Bindings = {
   GEMINI_API_KEY?: string
   PORTONE_STORE_ID?: string
   PORTONE_CHANNEL_KEY?: string
 }
 
-type Variables = {
-  userIp: string
-}
+const app = new Hono<{ Bindings: Bindings }>()
 
-const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
-
-// Middleware
 app.use('/api/*', cors())
-
-// Static files
 app.use('/static/*', serveStatic())
 
 // ========================================
-// PORTFOLIO DATA - Marketing Results
+// PORTFOLIO DATA
 // ========================================
 const portfolios = [
-  { 
-    id: 1, 
-    title: "Studio JuAi", 
-    url: "https://www.studiojuai.com/", 
-    category: "브랜딩 구축", 
-    description: "인스타 팔로워 3배 증가",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-    result: "+340%"
-  },
-  { 
-    id: 2, 
-    title: "Tax JupJup", 
-    url: "https://tax-jupjup.pages.dev/", 
-    category: "퍼포먼스 마케팅", 
-    description: "월 문의량 5배 증가",
-    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-    result: "+500%"
-  },
-  { 
-    id: 3, 
-    title: "Bon Life", 
-    url: "https://www.thebonlife.kr/", 
-    category: "숏폼 마케팅", 
-    description: "릴스 조회수 100만 돌파",
-    thumbnail: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-    result: "1M+"
-  },
-  { 
-    id: 4, 
-    title: "Aura Kim", 
-    url: "https://aurakim.com/", 
-    category: "브랜딩 구축", 
-    description: "개인 브랜드 런칭 성공",
-    thumbnail: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop",
-    result: "LAUNCH"
-  },
-  { 
-    id: 5, 
-    title: "Amanna Hair", 
-    url: "https://www.amanna.hair/", 
-    category: "플레이스 마케팅", 
-    description: "네이버 플레이스 1위 달성",
-    thumbnail: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop",
-    result: "#1"
-  },
-  { 
-    id: 6, 
-    title: "Studio JuAi Club", 
-    url: "https://studiojuai.club/", 
-    category: "토탈 마케팅", 
-    description: "월 매출 200% 성장",
-    thumbnail: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
-    result: "+200%"
-  },
+  { id: 1, title: "Studio JuAi", url: "https://www.studiojuai.com/", category: "BRANDING", result: "+340%" },
+  { id: 2, title: "Aura Kim", url: "https://aurakim.com/", category: "PERSONAL", result: "LAUNCH" },
+  { id: 3, title: "Bon Life", url: "https://www.thebonlife.kr/", category: "COMMERCE", result: "+200%" },
+  { id: 4, title: "Amanna Hair", url: "https://www.amanna.hair/", category: "PLACE #1", result: "#1" },
+  { id: 5, title: "Studio JuAi Club", url: "https://studiojuai.club/", category: "PREMIUM", result: "1M+" },
 ]
 
 // ========================================
-// PRICING DATA - Marketing Focused
+// PRICING DATA - NO NUMBERS, VALUE-FOCUSED
 // ========================================
 const pricingData = {
   setup: [
     {
       id: 'type-a',
       name: 'TYPE A',
-      title: '랜딩 세팅',
+      title: '랜딩형',
       price: 1500000,
-      description: '이벤트/DB수집용 원페이지',
-      features: ['반응형 원페이지', 'DB 수집 폼', '기본 SEO 세팅', '1회 수정'],
-      recommended: false,
-      tooltip: '단기 이벤트나 신규 고객 DB 수집에 최적화된 가벼운 랜딩입니다. 숏폼 마케팅과 함께 운영하면 효과적입니다.'
+      description: '이벤트/DB수집 최적화',
+      features: ['반응형 원페이지 구축', 'DB 수집 폼 설계', '기본 SEO 세팅', '1회 수정 지원'],
+      tooltip: '단기 이벤트나 신규 고객 DB 수집에 최적화된 가벼운 랜딩입니다.'
     },
     {
       id: 'type-b',
       name: 'TYPE B',
-      title: '스탠다드 구축',
+      title: '스탠다드 브랜딩',
       price: 3000000,
-      description: 'SEO + 블로그/인스타 최적화 세팅',
-      features: ['5페이지 구성', '브랜드 스토리텔링', 'SEO 완벽 세팅', '블로그/인스타 연동', 'AI 챗봇 포함', '3회 수정'],
+      description: '기업형/검색최적화(SEO) 완벽 세팅',
+      features: ['멀티 페이지 구성', '브랜드 스토리텔링', 'SEO 완벽 최적화', 'AI 세일즈 챗봇 포함', '무제한 피드백'],
       recommended: true,
-      badge: 'AI 챗봇 500만원 상당 무료',
-      tooltip: '단순 홈페이지가 아닙니다. 고객을 설득하고 결제하게 만드는 "영업 사원"을 심는 과정입니다.'
+      badge: 'AI 챗봇 500만원 상당 포함',
+      tooltip: '24시간 잠들지 않는 영업사원을 심는 과정입니다. 검색 상위노출까지.'
     },
     {
       id: 'type-c',
       name: 'TYPE C',
-      title: '하이엔드 프리미엄',
+      title: '하이엔드 솔루션',
       price: 8000000,
-      description: '기획자 투입 + 결제/예약 시스템',
-      features: ['무제한 페이지', '결제/예약 기능', '기획자 직접 투입', 'CRM 연동', '전환율 최적화 설계', 'VIP 유지보수', '무제한 수정'],
-      recommended: false,
-      badge: 'AI 챗봇 + 예약시스템 포함',
-      tooltip: '병원, 프랜차이즈처럼 복잡한 고객 동선 설계가 필요한 고가 서비스에 적합합니다. 기획자가 직접 투입됩니다.'
+      description: '병원/프랜차이즈 전용 결제 시스템',
+      features: ['무제한 페이지', '온라인 예약/결제 시스템', '전담 기획자 투입', 'CRM 연동', 'VIP 유지보수'],
+      badge: 'ENTERPRISE',
+      tooltip: '복잡한 고객 동선과 예약/결제 플로우가 필요한 고가 서비스 전용입니다.'
     }
   ],
   monthly: [
     {
       id: 'grade-1',
-      name: 'Grade 1',
-      title: '브랜딩 베이직',
+      name: 'GRADE 1',
+      title: '브랜딩 기초',
       price: 1100000,
-      description: '온라인 존재감 유지',
-      features: ['블로그 포스팅 4회/월', '인스타그램 8회/월', '기본 리포트'],
-      recommended: false,
-      tooltip: '최소한의 온라인 존재감 유지. 당장 매출보단 "검색하면 나온다" 정도가 목표인 분께.'
+      description: '채널 최적화 + 기본 관리',
+      features: ['블로그 채널 최적화', '인스타그램 브랜딩 관리', '기본 성과 리포트', 'Trust Building 전략'],
+      tooltip: '온라인 존재감 구축. "검색하면 나온다" 수준의 신뢰도 형성.'
     },
     {
       id: 'grade-2',
-      name: 'Grade 2',
-      title: '퍼포먼스 패키지',
+      name: 'GRADE 2',
+      title: '퍼포먼스 그로스',
       price: 2500000,
-      description: '블로그8 + 릴스/숏폼 촬영&편집 4 + 인스타8',
-      features: ['블로그 포스팅 8회/월', '릴스/숏폼 촬영&편집 4회/월', '인스타그램 8회/월', '네이버 플레이스 관리', '성과 분석 리포트', '월간 전략 미팅'],
+      description: '상위노출 타겟팅 + 숏폼 알고리즘 공략',
+      features: ['블로그 상위노출 타겟팅', '릴스/숏폼 알고리즘 공략', '인스타그램 퍼포먼스', '네이버 플레이스 관리', '전환율 분석 리포트'],
       recommended: true,
-      badge: 'BEST 선택',
-      tooltip: '실제 매출 전환을 원하시는 분께 추천. 숏폼이 포함되어 MZ세대 유입에 압도적으로 효과적입니다.'
+      badge: 'BEST',
+      tooltip: '실제 매출 전환. 숏폼으로 MZ세대 유입, 블로그로 검색 유입 동시 공략.'
     },
     {
       id: 'grade-3',
-      name: 'Grade 3',
-      title: '토탈 마스터',
+      name: 'GRADE 3',
+      title: '지역 장악 마스터',
       price: 4500000,
-      description: '지역 1등을 위한 전방위 공략',
-      features: ['유튜브 롱폼/숏폼', '블로그 포스팅 12회/월', '인스타그램 12회/월', '광고 운영 대행', '주간 전략 미팅', 'VIP 전담 매니저'],
-      recommended: false,
-      tooltip: '지역 내 압도적 1위를 목표로 하시는 분. 모든 채널을 동시에 공략합니다. 2등보다 2배 투자해야 1등 됩니다.'
+      description: '압도적 트래픽 + 광고 운영',
+      features: ['유튜브 롱폼/숏폼 제작', '블로그 풀 커버리지', '인스타그램 집중 공략', '광고 운영 대행', '주간 전략 미팅', 'VIP 전담 매니저'],
+      tooltip: '지역 내 압도적 1위. 2등보다 2배 투자해야 1등 됩니다.'
     }
   ],
   addons: [
-    { id: 'addon-detail', name: '구매전환 상세페이지', price: 500000, unit: '건', tooltip: '와디즈/스마트스토어용 팔리는 상세페이지 기획/제작. 구매 버튼 누르게 만드는 심리학적 설계.' },
-    { id: 'addon-place-setup', name: '플레이스 초기 세팅', price: 300000, unit: '1회', tooltip: 'SEO 최적화, 키워드 세팅, 메뉴판 디자인. "지도에서 예쁘게 나오게" 해드립니다.' },
-    { id: 'addon-place-ad', name: '플레이스 광고 운영', price: 300000, unit: '월', tooltip: '세팅과 다릅니다. 실제 광고비(CP)를 태워서 상위에 꽂는 "광고 운영" 대행입니다. 입찰 관리 포함.' },
-    { id: 'addon-youtube-long', name: '유튜브 롱폼 편집', price: 300000, unit: '건', tooltip: '10분+ 유튜브 영상 전문 편집. 썸네일, 자막, BGM 포함.' },
-    { id: 'addon-shortform', name: '추가 숏폼 제작', price: 150000, unit: '건', tooltip: '릴스/쇼츠/틱톡용 15-60초 숏폼 콘텐츠 추가 제작.' },
-    { id: 'addon-smm', name: 'SNS 채널 활성화', price: 100000, unit: '패키지', tooltip: '인스타/유튜브 조회수+좋아요 투입. 신규 계정의 "인기 있어 보이게" 브랜딩 작업.' },
+    { id: 'addon-traffic', name: '채널 활성화 트래픽', price: 100000, unit: '패키지', tooltip: '조회수/좋아요 부스팅. 신규 채널의 "인기 있어 보이게" 브랜딩.' },
+    { id: 'addon-detail', name: '구매전환 상세페이지', price: 500000, unit: '건', tooltip: '와디즈/스마트스토어용. 구매 버튼 누르게 만드는 심리학적 설계.' },
+    { id: 'addon-shorts', name: '도파민 숏폼 기획/편집', price: 150000, unit: '건', tooltip: '릴스/쇼츠/틱톡용 15-60초 콘텐츠. 알고리즘 타는 구조.' },
+    { id: 'addon-place', name: '플레이스 광고 운영', price: 300000, unit: '월', tooltip: '네이버 플레이스 상위노출 입찰 관리.' },
+    { id: 'addon-longform', name: '유튜브 롱폼 편집', price: 300000, unit: '건', tooltip: '10분+ 유튜브 영상 전문 편집. 썸네일, 자막, BGM 포함.' },
   ],
   location: [
-    { id: 'loc-seoul', name: '서울/경기', price: 0, description: '현장 촬영 포함 (무료)', tooltip: '서울/경기 지역은 현장 촬영이 기본 포함됩니다.' },
-    { id: 'loc-local', name: '지방', price: 300000, description: '현장 촬영 출장비 (+30만)', tooltip: '촬영 감독의 이동/숙박 경비입니다. 릴스/숏폼 촬영을 위한 현장 출장비.' },
+    { id: 'loc-seoul', name: '서울/경기', price: 0, description: '현장 촬영 포함' },
+    { id: 'loc-local', name: '지방', price: 300000, description: '촬영 출장비 +30만' },
   ]
 }
 
 // ========================================
 // API ROUTES
 // ========================================
+app.get('/api/portfolios', (c) => c.json(portfolios))
+app.get('/api/pricing', (c) => c.json(pricingData))
 
-// Get portfolios
-app.get('/api/portfolios', (c) => {
-  return c.json(portfolios)
-})
-
-// Get pricing
-app.get('/api/pricing', (c) => {
-  return c.json(pricingData)
-})
-
-// AI Chat endpoint (Gemini API)
 app.post('/api/chat', async (c) => {
   const { message, context } = await c.req.json()
   const apiKey = c.env?.GEMINI_API_KEY || ''
   
   if (!apiKey) {
-    return c.json({
-      response: getDemoResponse(message),
-      isDemo: true
-    })
+    return c.json({ response: getDemoResponse(message), isDemo: true })
   }
   
-  const systemPrompt = `당신은 X I Λ I X의 수석 마케팅 컨설턴트입니다. 
+  const systemPrompt = `당신은 X I Λ I X의 수석 마케팅 컨설턴트입니다.
 
-**중요**: 우리는 웹사이트 제작 회사가 아닙니다. "토탈 마케팅 솔루션 파트너"입니다.
-- "웹사이트 만들어드려요" (X)
-- "매출을 올리는 마케팅 엔진을 구축해드립니다" (O)
+**핵심 정체성**: 
+- 웹사이트 제작사가 아닙니다
+- "기술(AI)과 비즈니스를 결합한 마케팅 수익화 솔루션 기업"입니다
 
-**페르소나**: 냉철하지만 해결책을 주는 전문가. 무조건 팔려고 들지 말고 '컨설턴트'처럼 행동하세요.
+**대화 스타일**: 컨설팅 전문가. 무조건 팔지 않고, 질문하고 공감하고 교육한 후 제안합니다.
 
-**대화 프로세스**:
-1. Ask (질문): "대표님, 현재 어떤 사업을 운영 중이신가요? 가장 큰 고민이 '신규 유입'인가요, '재방문'인가요?"
-2. Empathize (공감): "아, 미용실 오픈 초기시군요. 인테리어 비용 때문에 마케팅 예산 걱정되시는 거 이해합니다."
-3. Educate (교육): "하지만 대표님, 지금 마케팅 안 하면 그 인테리어 아무도 못 봅니다. 초기 3개월이 골든타임입니다."
-4. Recommend (제안): 상황에 맞는 TYPE과 Grade를 추천하세요.
+**프로세스**:
+1. 업종 파악: "어떤 사업을 운영하시나요?"
+2. 현황 진단: "현재 가장 큰 고민이 무엇인가요?"
+3. 공감: "인테리어에 투자하셨는데 마케팅에는 0원이시군요"
+4. 교육: "지금 안 하면 그 인테리어 아무도 못 봅니다. 초기 3개월이 골든타임입니다"
+5. 제안: 상황에 맞는 TYPE + GRADE 조합 추천
+
+**가격 (첫 달 = 구축 + 관리 세트 필수)**:
+- TYPE A + GRADE 2 = 400만 (오픈 초기)
+- TYPE B + GRADE 2 = 550만 ⭐추천
+- TYPE C + GRADE 2 = 1,050만 (병원/프랜차이즈)
 
 **핵심 멘트**:
-- "100만원짜리는 명함이지만, 1,000만원짜리는 24시간 잠들지 않는 영업사원을 고용하는 것입니다."
-- "인테리어에 3천 쓰셨는데 마케팅에 0원 쓰시면 그 인테리어 누가 봅니까?"
-- "건물만 짓고 방치하면 폐가입니다. 유입을 만드는 월 관리가 필수입니다."
-- "저희는 단순 제작이 아니라 타겟 분석과 심리학적 설계를 포함합니다."
+- "100만원짜리는 명함, 1,000만원짜리는 24시간 영업사원"
+- "건물만 짓고 방치하면 폐가. 유입을 만드는 관리가 필수"
 
-**가격 정보** (첫 달 = 구축 + 월관리 필수 결합):
-- TYPE A (150만) + Grade 2 (250만) = 첫 달 400만
-- TYPE B (300만) + Grade 2 (250만) = 첫 달 550만 ⭐추천
-- TYPE C (800만) + Grade 2 (250만) = 첫 달 1,050만
-
-**어조**: "무조건 비싼 거 하세요" (X) -> "지금 단계에선 이게 효율적입니다" (O)
-항상 한국어로 답변하세요.`
+한국어로만 답변. 전문가답게 신뢰감 있게.`
 
   try {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
@@ -227,128 +151,78 @@ app.post('/api/chat', async (c) => {
       body: JSON.stringify({
         contents: [
           { role: 'user', parts: [{ text: systemPrompt }] },
-          { role: 'model', parts: [{ text: '안녕하세요, X I Λ I X 수석 컨설턴트입니다. 어떤 사업을 운영하고 계신가요?' }] },
+          { role: 'model', parts: [{ text: '안녕하세요, X I Λ I X 컨설턴트입니다. 어떤 사업을 운영하고 계신가요?' }] },
           ...context.map((msg: any) => ({
             role: msg.role === 'user' ? 'user' : 'model',
             parts: [{ text: msg.content }]
           })),
           { role: 'user', parts: [{ text: message }] }
         ],
-        generationConfig: {
-          temperature: 0.8,
-          maxOutputTokens: 1000,
-        }
+        generationConfig: { temperature: 0.7, maxOutputTokens: 1000 }
       })
     })
-    
     const data = await response.json() as any
-    const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '죄송합니다, 잠시 후 다시 시도해주세요.'
-    
-    return c.json({ response: aiResponse, isDemo: false })
-  } catch (error) {
+    return c.json({ response: data.candidates?.[0]?.content?.parts?.[0]?.text || '잠시 후 다시 시도해주세요.', isDemo: false })
+  } catch {
     return c.json({ response: getDemoResponse(message), isDemo: true })
   }
 })
 
-// Demo responses
 function getDemoResponse(message: string): string {
-  const lowerMessage = message.toLowerCase()
-  
-  if (lowerMessage.includes('가격') || lowerMessage.includes('비용') || lowerMessage.includes('얼마')) {
-    return `대표님, 가격 문의 주셨군요.
+  const lower = message.toLowerCase()
+  if (lower.includes('가격') || lower.includes('비용') || lower.includes('얼마')) {
+    return `대표님, 저희는 **"첫 달 스타터 팩"** 형태로 운영됩니다.
 
-저희는 **"첫 달 스타터 팩"** 개념으로 운영됩니다.
-구축만 하고 방치하면 의미가 없기 때문에, **[마케팅 베이스 구축] + [월 매출 부스팅]**을 함께 시작하셔야 합니다.
+구축만 하고 방치하면 의미가 없기 때문에, **마케팅 베이스 구축 + 월 매출 부스팅**을 함께 시작합니다.
 
-**🚀 첫 달 결제 예시**:
-- TYPE A + Grade 2 = **400만 원** (오픈 초기 추천)
-- TYPE B + Grade 2 = **550만 원** ⭐BEST
-- TYPE C + Grade 2 = **1,050만 원** (병원/프랜차이즈)
+**🚀 첫 달 결제 예시**
+• TYPE A + GRADE 2 = **400만**
+• TYPE B + GRADE 2 = **550만** ⭐BEST
+• TYPE C + GRADE 2 = **1,050만**
 
-대표님은 현재 어떤 사업을 운영 중이신가요? 
-업종에 따라 최적의 조합이 달라집니다.`
+어떤 업종을 운영하시나요? 상황에 맞게 추천드리겠습니다.`
   }
-  
-  if (lowerMessage.includes('미용') || lowerMessage.includes('헤어') || lowerMessage.includes('살롱')) {
-    return `아, 미용실/헤어샵이시군요! 
+  if (lower.includes('미용') || lower.includes('헤어')) {
+    return `미용실/헤어샵이시군요!
 
-뷰티 업계는 저희가 가장 많이 작업하는 분야입니다. 
-대표님, 인테리어에 얼마 정도 투자하셨나요?
+인테리어에 3-5천만 원 쓰시고, 마케팅에 0원 쓰시는 분들 많습니다.
+**그러면 그 예쁜 인테리어를 누가 봅니까?**
 
-많은 원장님들이 인테리어에 3-5천만 원 쓰시고, 정작 마케팅에는 0원 쓰십니다.
-**그러면 그 예쁜 인테리어를 누가 보겠습니까?**
+**추천 조합**
+🌟 TYPE B + GRADE 2 = **550만**
+릴스/숏폼 알고리즘 공략이 포함되어 인스타에서 바이럴 가능합니다.
 
-**제가 추천드리는 첫 달 스타터 팩**:
-- 🌟 TYPE B (300만) + Grade 2 (250만)
-- **첫 달 결제: 550만 원**
-
-이 조합이면 예약 문의가 바로 들어오기 시작합니다. 
-특히 **릴스/숏폼 촬영 4회**가 포함되어서 인스타그램에서 바이럴 효과를 노릴 수 있어요.
-
-오픈 예정이신가요, 아니면 이미 운영 중이신가요?`
+오픈 예정이신가요, 운영 중이신가요?`
   }
-  
-  if (lowerMessage.includes('병원') || lowerMessage.includes('치과') || lowerMessage.includes('의료')) {
-    return `의료 분야시군요! 
+  return `안녕하세요, X I Λ I X 컨설턴트입니다.
 
-병원/치과는 **신뢰**가 가장 중요합니다. 
-저렴해 보이는 온라인 존재감은 오히려 환자분들의 불신을 삽니다.
+저희는 웹사이트 제작사가 아닙니다.
+**"매출을 올리는 마케팅 수익화 솔루션"**을 제공합니다.
 
-**제가 추천드리는 첫 달 스타터 팩**:
-- 🏆 TYPE C (800만) + Grade 2 (250만)
-- **첫 달 결제: 1,050만 원**
+1. 어떤 업종을 운영하시나요?
+2. 현재 가장 큰 고민은 무엇인가요?
+3. 마케팅에 투자해보신 경험이 있으신가요?
 
-TYPE C에는 온라인 예약 시스템, 진료 문의 챗봇, 
-그리고 **기획자가 직접 투입**되어 환자 동선을 설계합니다.
-
-"1,000만 원이요?" 하실 수 있는데요,
-24시간 예약받는 시스템 + 신뢰를 주는 브랜딩 = **월 10명만 더 오셔도 본전**입니다.
-
-어떤 진료과목을 운영하시나요?`
-  }
-  
-  return `안녕하세요, X I Λ I X 수석 컨설턴트입니다.
-
-저희는 웹사이트 제작 회사가 아닙니다.
-**"매출을 올리는 토탈 마케팅 솔루션 파트너"**입니다.
-
-대표님의 비즈니스에 대해 더 자세히 알고 싶습니다.
-
-1. 어떤 업종을 운영하고 계신가요? (예: 미용실, 병원, 학원, 카페 등)
-2. 현재 가장 큰 고민은 무엇인가요? (신규 고객 부족 / 재방문율 저조 / 온라인 인지도)
-3. 기존에 마케팅에 투자해보신 경험이 있으신가요?
-
-이 세 가지만 알려주시면, 대표님 상황에 딱 맞는 솔루션을 제안드리겠습니다. 😊`
+알려주시면 맞춤 솔루션을 제안드리겠습니다.`
 }
 
-// Payment preparation endpoint
 app.post('/api/payment/prepare', async (c) => {
-  const { items, total, customerInfo } = await c.req.json()
-  
-  const orderId = `XILIX_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-  
+  const { items, total } = await c.req.json()
   return c.json({
-    orderId,
-    orderName: 'X I Λ I X 마케팅 서비스',
+    orderId: `XILIX_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    orderName: 'X I Λ I X 마케팅 솔루션',
     totalAmount: total,
     storeId: c.env?.PORTONE_STORE_ID || 'store-xxxxxxxx',
     channelKey: c.env?.PORTONE_CHANNEL_KEY || 'channel-xxxxxxxx',
-    items,
-    customerInfo
+    items
   })
 })
 
 // ========================================
-// MAIN HTML PAGE
+// MAIN PAGE
 // ========================================
-app.get('/', (c) => {
-  return c.html(getMainHTML())
-})
-
-// Admin page (hidden)
-app.get('/admin', (c) => {
-  return c.html(getAdminHTML())
-})
+app.get('/', (c) => c.html(getMainHTML()))
+app.get('/admin', (c) => c.html(getAdminHTML()))
 
 function getMainHTML(): string {
   return `<!DOCTYPE html>
@@ -356,47 +230,68 @@ function getMainHTML(): string {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X I Λ I X | Total Marketing Solution Partner</title>
-    <meta name="description" content="남들이 'V'(Vision)를 볼 때, 우리는 세상을 뒤집어 '∧'(Angle)를 봅니다. 매출을 올리는 토탈 마케팅 솔루션">
+    <title>X I Λ I X | AI Marketing Revenue Partner</title>
+    <meta name="description" content="기술(AI)과 비즈니스를 결합한 마케팅 수익화 솔루션. 웹사이트 제작사가 아닌, Total Marketing Solution Partner.">
     
-    <!-- Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "X I Λ I X",
-      "description": "토탈 마케팅 솔루션 파트너 - 매출 부스팅 마케팅 서비스",
+      "alternateName": "XILIX",
+      "description": "기술(AI)과 비즈니스를 결합한 마케팅 수익화 솔루션 기업. Total Marketing Solution Partner.",
       "url": "https://xilix.pages.dev",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "sales",
-        "availableLanguage": "Korean"
-      }
+      "sameAs": [],
+      "foundingDate": "2024"
     }
     </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "마케팅 솔루션 서비스",
-      "description": "매출을 올리는 마케팅 엔진 구축",
+      "@type": "Product",
+      "name": "X I Λ I X 마케팅 솔루션",
+      "description": "온라인 본점 구축 + 월 매출 부스팅 패키지",
+      "brand": { "@type": "Brand", "name": "X I Λ I X" },
       "offers": [
-        { "@type": "Offer", "name": "스탠다드 구축 + 퍼포먼스 패키지", "price": "5500000", "priceCurrency": "KRW" },
-        { "@type": "Offer", "name": "하이엔드 프리미엄 + 퍼포먼스 패키지", "price": "10500000", "priceCurrency": "KRW" }
+        { "@type": "Offer", "name": "TYPE A 랜딩형", "price": "1500000", "priceCurrency": "KRW" },
+        { "@type": "Offer", "name": "TYPE B 스탠다드", "price": "3000000", "priceCurrency": "KRW" },
+        { "@type": "Offer", "name": "TYPE C 하이엔드", "price": "8000000", "priceCurrency": "KRW" }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "왜 구축과 관리를 함께 해야 하나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "건물만 짓고 방치하면 폐가가 됩니다. 마케팅 베이스를 구축한 후 트래픽을 공급해야 실제 매출이 발생합니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "최소 비용은 얼마인가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "TYPE A(150만) + GRADE 1(110만) = 260만원부터 시작 가능합니다. 추천 조합은 TYPE B + GRADE 2 = 550만원입니다." }
+        }
       ]
     }
     </script>
     
+    <!-- Fonts: Pretendard + Syncopate -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: { sans: ['Noto Sans KR', 'sans-serif'] },
-            colors: {
-              dark: { 900: '#0a0a0a', 800: '#111111', 700: '#1a1a1a', 600: '#222222' }
+            fontFamily: {
+              sans: ['Pretendard', 'sans-serif'],
+              display: ['Syncopate', 'sans-serif']
             }
           }
         }
@@ -406,211 +301,377 @@ function getMainHTML(): string {
     
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
-      body { font-family: 'Noto Sans KR', sans-serif; background: #0a0a0a; color: #ffffff; overflow-x: hidden; }
-      .no-select { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+      html { scroll-behavior: smooth; font-size: 16px; }
+      body { 
+        font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        font-feature-settings: 'ss01' on;
+        background: #000000; 
+        color: #ffffff; 
+        overflow-x: hidden;
+        line-height: 1.6;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .no-select { -webkit-user-select: none; user-select: none; }
       
-      /* Cinematic Dark Background */
+      /* Heavy Shader Background - studiojuai.club inspired */
       #shader-bg {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        background: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0a 50%, #000000 100%);
+        position: fixed; inset: 0; z-index: -1;
+        background: #000000;
+        overflow: hidden;
+      }
+      .shader-layer {
+        position: absolute; inset: 0;
+        background: 
+          radial-gradient(ellipse 100% 60% at 50% -30%, rgba(25,25,40,0.6) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 50% at 100% 100%, rgba(20,20,35,0.4) 0%, transparent 50%),
+          radial-gradient(ellipse 60% 40% at 0% 80%, rgba(15,15,30,0.3) 0%, transparent 40%);
       }
       .shader-orb {
-        position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.2;
-        animation: float 25s ease-in-out infinite;
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.15;
+        animation: float 20s ease-in-out infinite;
       }
-      .orb-1 { width: 800px; height: 800px; background: radial-gradient(circle, rgba(100,100,150,0.3) 0%, transparent 70%); top: -300px; right: -300px; }
-      .orb-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(80,80,120,0.2) 0%, transparent 70%); bottom: -200px; left: -200px; animation-delay: -10s; }
+      .shader-orb:nth-child(1) {
+        width: 600px; height: 600px;
+        background: radial-gradient(circle, rgba(60,60,100,0.8) 0%, transparent 70%);
+        top: -200px; left: 30%;
+        animation-delay: 0s;
+      }
+      .shader-orb:nth-child(2) {
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(50,50,80,0.6) 0%, transparent 70%);
+        bottom: -100px; right: 10%;
+        animation-delay: -5s;
+      }
+      .shader-orb:nth-child(3) {
+        width: 300px; height: 300px;
+        background: radial-gradient(circle, rgba(40,40,70,0.5) 0%, transparent 70%);
+        top: 40%; left: -100px;
+        animation-delay: -10s;
+      }
       @keyframes float {
         0%, 100% { transform: translate(0, 0) scale(1); }
-        33% { transform: translate(30px, -30px) scale(1.05); }
-        66% { transform: translate(-20px, 20px) scale(0.98); }
+        25% { transform: translate(30px, -20px) scale(1.05); }
+        50% { transform: translate(-20px, 30px) scale(0.95); }
+        75% { transform: translate(20px, 20px) scale(1.02); }
+      }
+      .noise-overlay {
+        position: absolute; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        opacity: 0.025;
+        pointer-events: none;
+        mix-blend-mode: overlay;
       }
       
-      .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.06); }
-      .glass-hover:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.12); }
-      .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+      .glass { 
+        background: rgba(255,255,255,0.015); 
+        backdrop-filter: blur(24px) saturate(1.2); 
+        -webkit-backdrop-filter: blur(24px) saturate(1.2);
+        border: 1px solid rgba(255,255,255,0.04); 
+        box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      }
+      .glass-hover:hover { 
+        background: rgba(255,255,255,0.04); 
+        border-color: rgba(255,255,255,0.08); 
+        transform: translateY(-2px);
+        box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      }
+      
+      .reveal { 
+        opacity: 0; 
+        transform: translateY(50px); 
+        transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
       .reveal.active { opacity: 1; transform: translateY(0); }
-      .hero-text { background: linear-gradient(135deg, #ffffff 0%, #666666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-      .badge-recommended { background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%); color: #000000; }
-      .badge-locked { background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.4); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.3s; }
+      .reveal-delay-4 { transition-delay: 0.4s; }
       
-      .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 1000; display: none; justify-content: center; align-items: center; }
-      .modal-overlay.active { display: flex; }
-      .portfolio-security-overlay { position: absolute; inset: 0; z-index: 10; cursor: not-allowed; }
+      /* Price Cards - Premium Feel */
+      .price-card { 
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        cursor: pointer; 
+        position: relative;
+        border-radius: 16px;
+      }
+      .price-card:hover:not(.locked):not(.disabled) { 
+        transform: translateY(-10px) scale(1.02); 
+        border-color: rgba(255,255,255,0.15);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+      }
+      .price-card.selected { 
+        border-color: #ffffff !important; 
+        background: rgba(255,255,255,0.05) !important;
+        box-shadow: 0 0 0 1px #ffffff, 0 20px 60px rgba(255,255,255,0.1);
+      }
+      .price-card.disabled { opacity: 0.25; pointer-events: none; filter: grayscale(0.5); }
+      .price-card.locked { opacity: 0.2; cursor: not-allowed; filter: grayscale(0.7); }
+      .price-card .check-icon { opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(0.8); }
+      .price-card.selected .check-icon { opacity: 1; transform: scale(1); }
       
-      .chatbot-container { position: fixed; bottom: 20px; right: 20px; z-index: 999; }
-      .chatbot-button { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #333333 0%, #111111 100%); border: 2px solid rgba(255, 255, 255, 0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); }
-      .chatbot-button:hover { transform: scale(1.1); border-color: rgba(255, 255, 255, 0.4); }
-      .chatbot-panel { position: absolute; bottom: 80px; right: 0; width: 400px; height: 520px; background: #111111; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); display: none; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8); }
-      .chatbot-panel.active { display: flex; }
+      .lock-overlay {
+        position: absolute; inset: 0; z-index: 10;
+        background: rgba(0,0,0,0.8);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        border-radius: inherit;
+      }
+      
+      /* Portfolio - Dark Cinematic Style */
+      .portfolio-card { 
+        position: relative; 
+        overflow: hidden; 
+        aspect-ratio: 16/10;
+        border-radius: 12px;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .portfolio-card::before {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.95) 100%);
+        z-index: 1;
+        transition: all 0.5s ease;
+      }
+      .portfolio-card:hover::before {
+        background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.9) 100%);
+      }
+      .portfolio-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      }
+      .portfolio-card iframe { 
+        width: 100%; height: 100%; border: none; pointer-events: none; 
+        transform: scale(1.15);
+        transition: transform 0.6s ease;
+      }
+      .portfolio-card:hover iframe { transform: scale(1.2); }
+      .portfolio-overlay { position: absolute; inset: 0; z-index: 5; cursor: pointer; }
+      
+      /* Modal - Cinematic */
+      .modal-overlay { 
+        position: fixed; inset: 0; 
+        background: rgba(0,0,0,0.97); 
+        z-index: 1000; 
+        display: none; 
+        justify-content: center; 
+        align-items: center;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .modal-overlay.active { display: flex; opacity: 1; }
+      .security-overlay { position: absolute; inset: 0; z-index: 10; }
+      
+      /* Chatbot - Premium Design */
+      .chatbot-container { position: fixed; bottom: 28px; right: 28px; z-index: 999; }
+      .chatbot-btn { 
+        width: 60px; height: 60px; border-radius: 50%; 
+        background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); 
+        border: 1px solid rgba(255,255,255,0.12); 
+        cursor: pointer; display: flex; align-items: center; justify-content: center; 
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      }
+      .chatbot-btn:hover { 
+        transform: scale(1.1) translateY(-3px); 
+        border-color: rgba(255,255,255,0.25);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      }
+      .chatbot-panel { 
+        position: absolute; bottom: 75px; right: 0; 
+        width: 380px; height: 500px; 
+        background: linear-gradient(180deg, #0d0d0d 0%, #080808 100%); 
+        border-radius: 20px; 
+        border: 1px solid rgba(255,255,255,0.08); 
+        display: none; flex-direction: column; overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+      }
+      .chatbot-panel.active { display: flex; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+      @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
       .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
-      .chat-message { margin-bottom: 15px; max-width: 85%; }
+      .chat-message { margin-bottom: 16px; max-width: 85%; }
       .chat-message.user { margin-left: auto; }
-      .chat-message.user .message-content { background: #333333; border-radius: 18px 18px 4px 18px; }
-      .chat-message.bot .message-content { background: rgba(255, 255, 255, 0.05); border-radius: 18px 18px 18px 4px; }
-      .message-content { padding: 12px 16px; line-height: 1.6; font-size: 14px; }
+      .chat-message.user .msg-content { background: rgba(255,255,255,0.08); border-radius: 18px 18px 4px 18px; }
+      .chat-message.bot .msg-content { background: rgba(255,255,255,0.03); border-radius: 18px 18px 18px 4px; border: 1px solid rgba(255,255,255,0.05); }
+      .msg-content { padding: 14px 18px; line-height: 1.7; font-size: 14px; font-weight: 400; }
       
-      .tooltip-trigger { position: relative; cursor: help; }
-      .tooltip-content { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); padding: 12px 16px; background: #1a1a1a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; font-size: 13px; width: 280px; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; margin-bottom: 10px; line-height: 1.5; }
-      .tooltip-trigger:hover .tooltip-content { opacity: 1; visibility: visible; }
+      .tooltip { position: relative; }
+      .tooltip-text { 
+        position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px); 
+        padding: 14px 18px; 
+        background: rgba(15,15,15,0.98); 
+        border: 1px solid rgba(255,255,255,0.08); 
+        border-radius: 12px; 
+        font-size: 13px; font-weight: 400;
+        width: 280px; 
+        opacity: 0; visibility: hidden; 
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+        z-index: 100; margin-bottom: 12px; line-height: 1.6;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      }
+      .tooltip:hover .tooltip-text { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
       
-      ::-webkit-scrollbar { width: 6px; }
+      @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.2); } 50% { box-shadow: 0 0 0 15px rgba(255,255,255,0); } }
+      .pulse { animation: pulse 2.5s ease-in-out infinite; }
+      
+      ::-webkit-scrollbar { width: 4px; }
       ::-webkit-scrollbar-track { background: transparent; }
-      ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
       
-      @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); } 50% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); } }
-      .pulse { animation: pulse 2s infinite; }
-      
-      .price-card { transition: all 0.3s ease; cursor: pointer; position: relative; }
-      .price-card:hover:not(.locked) { transform: translateY(-5px); }
-      .price-card.selected { border-color: white !important; background: rgba(255, 255, 255, 0.08) !important; }
-      .price-card.locked { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
-      .price-card .check-icon { opacity: 0; transition: all 0.3s ease; }
-      .price-card.selected .check-icon { opacity: 1; }
-      
-      /* Portfolio Card with Thumbnail */
-      .portfolio-card { position: relative; overflow: hidden; border-radius: 16px; }
-      .portfolio-card .thumbnail { width: 100%; height: 200px; object-fit: cover; transition: transform 0.5s ease; }
-      .portfolio-card:hover .thumbnail { transform: scale(1.05); }
-      .portfolio-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%); }
-      .portfolio-card .result-badge { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 14px; }
-      
-      /* Bottom Cart Bar */
-      .bottom-cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(17, 17, 17, 0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 16px 24px; z-index: 900; transform: translateY(100%); transition: transform 0.3s ease; }
-      .bottom-cart-bar.visible { transform: translateY(0); }
-      
-      /* Lock Overlay */
-      .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: inherit; z-index: 10; }
+      /* Bottom Cart Bar - Premium */
+      .bottom-bar {
+        position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+        background: rgba(5,5,5,0.97); 
+        backdrop-filter: blur(30px) saturate(1.5);
+        -webkit-backdrop-filter: blur(30px) saturate(1.5);
+        border-top: 1px solid rgba(255,255,255,0.06);
+        padding: 18px 28px;
+        transform: translateY(100%); 
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+      }
+      .bottom-bar.visible { transform: translateY(0); }
     </style>
 </head>
 <body class="no-select">
     <div id="shader-bg">
-      <div class="shader-orb orb-1"></div>
-      <div class="shader-orb orb-2"></div>
+      <div class="shader-layer"></div>
+      <div class="shader-orb"></div>
+      <div class="shader-orb"></div>
+      <div class="shader-orb"></div>
+      <div class="noise-overlay"></div>
     </div>
     
-    <!-- Navigation -->
+    <!-- Nav - Premium Glass -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass">
       <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#" class="text-2xl font-black tracking-[0.3em]">X I Λ I X</a>
-        <div class="hidden md:flex items-center gap-8">
-          <a href="#portfolio" class="text-sm text-gray-400 hover:text-white transition">성과</a>
-          <a href="#pricing" class="text-sm text-gray-400 hover:text-white transition">견적</a>
-          <a href="#contact" class="px-5 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-gray-200 transition">상담하기</a>
+        <a href="#" class="font-display text-lg tracking-[0.5em] font-bold hover:opacity-80 transition-opacity" style="letter-spacing: 0.5em;">XIΛIX</a>
+        <div class="hidden md:flex items-center gap-12">
+          <a href="#works" class="text-[13px] text-gray-400 hover:text-white transition-colors duration-300 tracking-[0.15em] uppercase font-medium">Works</a>
+          <a href="#pricing" class="text-[13px] text-gray-400 hover:text-white transition-colors duration-300 tracking-[0.15em] uppercase font-medium">Pricing</a>
+          <a href="#contact" class="px-6 py-2.5 bg-white text-black text-[13px] font-semibold tracking-[0.1em] uppercase hover:bg-gray-100 transition-all duration-300 hover:shadow-lg hover:shadow-white/10">Contact</a>
         </div>
       </div>
     </nav>
     
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center px-6 pt-20">
-      <div class="text-center">
-        <div class="mb-6 reveal">
-          <span class="text-xs tracking-[0.5em] text-gray-500 uppercase">Total Marketing Solution Partner</span>
+    <!-- Hero - Cinematic Premium -->
+    <section class="min-h-screen flex items-center justify-center px-6 pt-24 pb-20">
+      <div class="text-center max-w-5xl">
+        <div class="mb-10 reveal">
+          <span class="text-[11px] tracking-[0.5em] text-gray-500 uppercase font-medium">AI × Business Marketing Solution</span>
         </div>
-        <h1 class="text-6xl md:text-9xl font-black tracking-[0.15em] mb-6 reveal hero-text" style="transition-delay: 0.1s">
-          X I Λ I X
+        <h1 class="font-display text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-[0.2em] mb-10 reveal reveal-delay-1 leading-none" style="font-weight: 700; letter-spacing: 0.25em;">
+          XIΛIX
         </h1>
-        <div class="text-lg md:text-xl text-gray-400 mb-4 reveal" style="transition-delay: 0.2s">
-          <span>남들이 '<span class="text-white font-bold">V</span>'(Vision)를 볼 때,</span>
-          <span>우리는 세상을 뒤집어 '<span class="text-white font-bold">∧</span>'(Angle)를 봅니다.</span>
+        <div class="text-base md:text-lg text-gray-400 mb-8 reveal reveal-delay-2 max-w-2xl mx-auto leading-relaxed">
+          남들이 '<span class="text-white font-semibold">V</span>'(Vision)를 볼 때,<br class="hidden sm:block"/>
+          우리는 세상을 뒤집어 '<span class="text-white font-semibold">∧</span>'(Angle)를 봅니다.
         </div>
-        <p class="text-gray-500 mb-10 reveal" style="transition-delay: 0.25s">
-          웹사이트 제작? <span class="line-through">아닙니다.</span> <span class="text-white font-semibold">매출을 올리는 마케팅 엔진</span>을 구축합니다.
+        <p class="text-gray-500 mb-14 reveal reveal-delay-3 text-sm md:text-base">
+          웹사이트 제작사? <span class="line-through opacity-40">아닙니다.</span>
+          <span class="text-white font-medium ml-2">마케팅 수익화 솔루션</span>을 제공합니다.
         </p>
-        <div class="flex flex-col md:flex-row gap-4 justify-center reveal" style="transition-delay: 0.3s">
-          <a href="#pricing" class="px-10 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition text-lg">
-            첫 달 견적 보기 <i class="fas fa-arrow-right ml-2"></i>
+        <div class="flex flex-col sm:flex-row gap-5 justify-center reveal reveal-delay-4">
+          <a href="#pricing" class="group px-10 py-4 bg-white text-black font-semibold tracking-[0.05em] hover:bg-gray-100 transition-all duration-300 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1">
+            견적 시작하기
+            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
           </a>
-          <a href="#portfolio" class="px-10 py-4 glass glass-hover rounded-full font-semibold transition text-lg">
+          <a href="#works" class="px-10 py-4 glass glass-hover font-medium tracking-[0.05em] transition-all duration-300">
             성과 확인하기
           </a>
         </div>
-        <div class="mt-24 reveal" style="transition-delay: 0.4s">
-          <i class="fas fa-chevron-down text-2xl text-gray-600 animate-bounce"></i>
-        </div>
       </div>
     </section>
     
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-32 px-6">
+    <!-- Works - Premium Gallery -->
+    <section id="works" class="py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20 reveal">
+          <span class="text-[11px] tracking-[0.4em] text-gray-500 uppercase mb-6 block font-medium">Selected Works</span>
+          <h2 class="font-display text-4xl md:text-5xl font-bold tracking-[0.15em]">PORTFOLIO</h2>
+          <p class="text-gray-500 mt-6 max-w-xl mx-auto text-sm leading-relaxed">실제 구축한 프로젝트들입니다. 클릭하면 사이트를 확인할 수 있습니다.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid"></div>
+      </div>
+    </section>
+    
+    <!-- Pricing - Premium Quote Builder -->
+    <section id="pricing" class="py-32 px-6">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16 reveal">
-          <span class="text-xs tracking-[0.3em] text-gray-500 uppercase mb-4 block">Marketing Results</span>
-          <h2 class="text-4xl md:text-5xl font-black mb-4">우리가 만든 <span class="text-gray-400">성과</span></h2>
-          <p class="text-gray-500">클릭하면 실제 결과물을 확인하실 수 있습니다</p>
+          <span class="text-[11px] tracking-[0.4em] text-gray-500 uppercase mb-6 block font-medium">First Month Starter Pack</span>
+          <h2 class="font-display text-4xl md:text-5xl font-bold tracking-[0.15em] mb-6">PRICING</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+            구축만 하고 방치하면 의미가 없습니다.<br/>
+            <strong class="text-white font-semibold">마케팅 베이스 구축 + 월 매출 부스팅</strong>을 함께 시작하세요.
+          </p>
         </div>
         
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
-        </div>
-      </div>
-    </section>
-    
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-32 px-6 bg-gradient-to-b from-transparent via-dark-800/30 to-transparent">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-8 reveal">
-          <span class="text-xs tracking-[0.3em] text-gray-500 uppercase mb-4 block">First Month Starter Pack</span>
-          <h2 class="text-4xl md:text-5xl font-black mb-4">첫 달 <span class="text-gray-400">스타터 팩</span></h2>
-          <p class="text-gray-500 max-w-2xl mx-auto">구축만 하고 방치하면 의미가 없습니다. <br class="hidden md:block"/><strong class="text-white">마케팅 베이스 구축 + 월 매출 부스팅</strong>을 함께 시작하세요.</p>
-        </div>
-        
-        <!-- First Month Notice -->
-        <div class="glass rounded-2xl p-6 mb-12 max-w-3xl mx-auto reveal">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
-              <i class="fas fa-info-circle text-xl"></i>
+        <!-- Starter Pack Notice - Elegant -->
+        <div class="glass rounded-2xl p-8 mb-20 max-w-3xl mx-auto reveal border border-white/5">
+          <div class="flex items-start gap-5">
+            <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-link text-xl text-gray-300"></i>
             </div>
             <div>
-              <h4 class="font-bold mb-2">💡 첫 달 결제 = [구축] + [월 관리] 필수 결합</h4>
-              <p class="text-gray-400 text-sm">
-                온라인 본점(구축)만 만들고 운영(월 관리)을 안 하면 폐가입니다.<br/>
-                저희는 <strong class="text-white">구축과 운영을 함께 시작</strong>하는 것을 원칙으로 합니다.
+              <h4 class="font-semibold mb-2 text-lg tracking-tight">첫 달 필수 패키지</h4>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Step 1(구축)과 Step 2(관리)는 <strong class="text-white font-medium">세트로만 구매 가능</strong>합니다.<br/>
+                온라인 본점을 짓고 바로 운영해야 의미가 있습니다.
               </p>
             </div>
           </div>
         </div>
         
-        <div class="grid lg:grid-cols-3 gap-8">
-          <div class="lg:col-span-2 space-y-12">
-            <!-- Step 1: Marketing Base Setup -->
-            <div id="pricing-step-1" class="reveal">
-              <div class="flex items-center gap-4 mb-6">
-                <div class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center font-black text-lg">1</div>
+        <div class="grid lg:grid-cols-3 gap-10">
+          <div class="lg:col-span-2 space-y-16">
+            <!-- Step 1 - Marketing Base -->
+            <div class="reveal">
+              <div class="flex items-center gap-5 mb-10">
+                <div class="w-16 h-16 bg-white text-black rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg shadow-white/10">1</div>
                 <div>
-                  <h3 class="text-2xl font-black">마케팅 베이스 구축</h3>
-                  <p class="text-gray-500 text-sm">단순 홈페이지가 아닙니다. 고객을 설득하고 결제하게 만드는 "영업 사원"입니다.</p>
+                  <h3 class="text-2xl font-bold tracking-tight">마케팅 베이스 구축</h3>
+                  <p class="text-gray-500 text-sm mt-1">24시간 잠들지 않는 온라인 본점을 짓습니다</p>
                 </div>
               </div>
-              <div class="grid md:grid-cols-3 gap-4" id="setup-cards"></div>
+              <div class="grid md:grid-cols-3 gap-5" id="setup-cards"></div>
             </div>
             
-            <!-- Step 2: Monthly Revenue Boost -->
-            <div id="pricing-step-2" class="reveal">
-              <div class="flex items-center gap-4 mb-6">
-                <div class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center font-black text-lg">2</div>
+            <!-- Step 2 -->
+            <div class="reveal" id="step2-section">
+              <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl" id="step2-icon">2</div>
                 <div>
-                  <h3 class="text-2xl font-black">월 매출 부스팅</h3>
-                  <p class="text-gray-500 text-sm">세팅된 마케팅 베이스에 잠재 고객을 쏟아부어 매출로 전환합니다.</p>
+                  <h3 class="text-2xl font-bold">월 매출 부스팅</h3>
+                  <p class="text-gray-500 text-sm">알고리즘 최적화와 트래픽 공급으로 실제 매출을 만듭니다</p>
                 </div>
+                <span id="step2-lock-badge" class="text-xs text-gray-500 ml-auto hidden">
+                  <i class="fas fa-lock mr-1"></i>Step 1 선택 필요
+                </span>
               </div>
               <div class="grid md:grid-cols-3 gap-4" id="monthly-cards"></div>
             </div>
             
-            <!-- Step 3: Add-ons (LOCKED until Step 1 or 2 selected) -->
-            <div id="pricing-step-3" class="reveal">
-              <div class="flex items-center gap-4 mb-6">
-                <div class="w-12 h-12 bg-white/20 text-white/60 rounded-full flex items-center justify-center font-black text-lg" id="step3-number">3</div>
+            <!-- Step 3 -->
+            <div class="reveal" id="step3-section">
+              <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 bg-white/10 text-gray-400 rounded-lg flex items-center justify-center font-bold text-xl" id="step3-icon">3</div>
                 <div>
-                  <h3 class="text-2xl font-black">추가 옵션 <span id="addon-lock-badge" class="text-sm font-normal text-gray-500 ml-2"><i class="fas fa-lock mr-1"></i>Step 1, 2 선택 후 활성화</span></h3>
-                  <p class="text-gray-500 text-sm">상황별 필살기를 추가하세요 (옵션만 단독 구매 불가)</p>
+                  <h3 class="text-2xl font-bold text-gray-400" id="step3-title">애드온 (Add-on)</h3>
+                  <p class="text-gray-600 text-sm">상황별 필살기 추가 (옵션 단독 구매 불가)</p>
                 </div>
+                <span id="step3-lock-badge" class="text-xs text-gray-500 ml-auto">
+                  <i class="fas fa-lock mr-1"></i>Step 1, 2 선택 필요
+                </span>
               </div>
               <div class="grid md:grid-cols-2 gap-4" id="addon-cards"></div>
               
-              <!-- Location -->
-              <div class="mt-8" id="location-section">
-                <h4 class="font-semibold mb-4 text-gray-400">
+              <div class="mt-10" id="location-section">
+                <h4 class="text-sm font-semibold mb-4 text-gray-400 tracking-wide">
                   <i class="fas fa-map-marker-alt mr-2"></i>현장 촬영 지역
                 </h4>
                 <div class="flex flex-wrap gap-4" id="location-cards"></div>
@@ -618,51 +679,48 @@ function getMainHTML(): string {
             </div>
           </div>
           
-          <!-- Cart Sidebar -->
+          <!-- Cart - Premium Sidebar -->
           <div class="lg:col-span-1">
-            <div class="sticky top-24 glass rounded-3xl p-6 reveal">
-              <h3 class="text-xl font-black mb-6 flex items-center gap-2">
-                <i class="fas fa-receipt"></i>
-                첫 달 견적
+            <div class="sticky top-28 glass rounded-2xl p-7 reveal border border-white/5">
+              <h3 class="text-xl font-semibold mb-8 flex items-center gap-3 tracking-tight">
+                <i class="fas fa-receipt text-gray-400"></i>첫 달 견적
               </h3>
               
-              <div id="cart-items" class="space-y-4 mb-6">
-                <div class="text-gray-500 text-center py-8">
-                  <i class="fas fa-hand-pointer text-3xl mb-3"></i>
-                  <p>Step 1, 2를 선택해주세요</p>
+              <div id="cart-items" class="space-y-3 mb-6 min-h-[100px]">
+                <div class="text-gray-600 text-center py-10">
+                  <i class="fas fa-hand-pointer text-2xl mb-3"></i>
+                  <p class="text-sm">Step 1을 선택해주세요</p>
                 </div>
               </div>
               
-              <div class="border-t border-white/10 pt-4 mb-6 space-y-3">
-                <div class="flex justify-between items-center">
-                  <span class="text-gray-400">마케팅 베이스 구축</span>
-                  <span id="cart-setup-price" class="font-semibold">₩0</span>
+              <div class="border-t border-white/10 pt-5 space-y-3">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">마케팅 베이스 구축</span>
+                  <span id="cart-setup">₩0</span>
                 </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-gray-400">월 매출 부스팅 (첫 달)</span>
-                  <span id="cart-monthly-price" class="font-semibold">₩0</span>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">월 매출 부스팅</span>
+                  <span id="cart-monthly">₩0</span>
                 </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-gray-400">추가 옵션</span>
-                  <span id="cart-addon-price" class="font-semibold">₩0</span>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">애드온/출장비</span>
+                  <span id="cart-addon">₩0</span>
                 </div>
                 <div class="border-t border-white/10 pt-4 flex justify-between items-center">
-                  <span class="text-lg font-bold">첫 달 총액</span>
-                  <span id="cart-total" class="text-2xl font-black">₩0</span>
+                  <span class="font-bold text-lg">첫 달 총액</span>
+                  <span id="cart-total" class="text-2xl font-bold">₩0</span>
                 </div>
               </div>
               
-              <button onclick="proceedToPayment()" id="payment-btn" class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition disabled:opacity-30 disabled:cursor-not-allowed" disabled>
-                결제하기 <i class="fas fa-arrow-right ml-2"></i>
+              <button onclick="proceedToPayment()" id="pay-btn" class="w-full mt-8 py-4 bg-white text-black font-semibold tracking-wide hover:bg-gray-100 transition-all duration-300 disabled:opacity-20 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-white/10" disabled>
+                결제하기
               </button>
               
-              <p class="text-xs text-gray-500 text-center mt-4">
-                * 부가세 별도 / 세금계산서 발행 가능
-              </p>
+              <p class="text-xs text-gray-500 text-center mt-5">부가세 별도 / 세금계산서 발행 가능</p>
               
-              <div id="cart-warning" class="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-xl text-yellow-200 text-xs">
+              <div id="cart-warning" class="mt-4 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-yellow-300/80 text-xs">
                 <i class="fas fa-exclamation-triangle mr-2"></i>
-                <strong>Step 1 + Step 2</strong> 모두 선택해야 결제가 가능합니다.
+                <strong>Step 1 + Step 2</strong> 세트 선택 필수
               </div>
             </div>
           </div>
@@ -670,194 +728,253 @@ function getMainHTML(): string {
       </div>
     </section>
     
-    <!-- Contact Section -->
+    <!-- Contact - Premium CTA -->
     <section id="contact" class="py-32 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <div class="reveal">
-          <span class="text-xs tracking-[0.3em] text-gray-500 uppercase mb-4 block">Contact</span>
-          <h2 class="text-4xl md:text-5xl font-black mb-4">직접 상담 받아보세요</h2>
-          <p class="text-gray-500 mb-10">
-            우측 하단의 AI 컨설턴트에게 물어보시거나, 직접 연락 주세요.
-          </p>
-          <div class="flex flex-col md:flex-row gap-4 justify-center">
-            <a href="tel:010-0000-0000" class="px-8 py-4 glass glass-hover rounded-full font-semibold transition">
-              <i class="fas fa-phone mr-2"></i> 전화 문의
-            </a>
-            <a href="mailto:hello@xilix.com" class="px-8 py-4 glass glass-hover rounded-full font-semibold transition">
-              <i class="fas fa-envelope mr-2"></i> 이메일 문의
-            </a>
-          </div>
+      <div class="max-w-4xl mx-auto text-center reveal">
+        <span class="text-[11px] tracking-[0.4em] text-gray-500 uppercase mb-6 block font-medium">Get Started</span>
+        <h2 class="font-display text-4xl md:text-5xl font-bold tracking-[0.15em] mb-8">GET IN TOUCH</h2>
+        <p class="text-gray-400 mb-12 text-sm md:text-base">우측 하단 AI 컨설턴트 또는 직접 연락해주세요</p>
+        <div class="flex flex-col sm:flex-row gap-5 justify-center">
+          <a href="tel:010-0000-0000" class="px-10 py-4 glass glass-hover font-medium transition-all duration-300 tracking-wide">
+            <i class="fas fa-phone mr-3"></i>전화 문의
+          </a>
+          <a href="mailto:hello@xilix.com" class="px-10 py-4 glass glass-hover font-medium transition-all duration-300 tracking-wide">
+            <i class="fas fa-envelope mr-3"></i>이메일 문의
+          </a>
         </div>
       </div>
     </section>
     
-    <!-- Footer -->
+    <!-- Footer - Minimal Premium -->
     <footer class="py-12 px-6 border-t border-white/5">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="text-2xl font-black tracking-[0.3em]">X I Λ I X</div>
-        <div class="text-sm text-gray-600">
-          © 2024 X I Λ I X. Total Marketing Solution Partner.
-        </div>
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+        <span class="font-display text-lg tracking-[0.4em] font-bold">XIΛIX</span>
+        <span class="text-[11px] text-gray-500 tracking-wide">© 2024 X I Λ I X. All rights reserved.</span>
       </div>
     </footer>
     
     <!-- Portfolio Modal -->
-    <div id="portfolio-modal" class="modal-overlay" onclick="closePortfolioModal(event)">
-      <div class="relative w-full max-w-6xl h-[85vh] mx-4 bg-dark-800 rounded-2xl overflow-hidden" onclick="event.stopPropagation()">
-        <div class="absolute top-4 right-4 z-20">
-          <button onclick="closePortfolioModal()" class="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition">
-            <i class="fas fa-times text-lg"></i>
-          </button>
-        </div>
-        <div class="portfolio-security-overlay" title="보안을 위해 상호작용이 제한됩니다"></div>
-        <iframe id="portfolio-iframe" class="w-full h-full" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
+    <div id="portfolio-modal" class="modal-overlay" onclick="closeModal(event)">
+      <div class="relative w-full max-w-6xl h-[85vh] mx-4 bg-black rounded-xl overflow-hidden" onclick="event.stopPropagation()">
+        <button onclick="closeModal()" class="absolute top-4 right-4 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+        <div class="security-overlay"></div>
+        <iframe id="modal-iframe" class="w-full h-full" sandbox="allow-scripts allow-same-origin"></iframe>
       </div>
     </div>
     
     <!-- Chatbot -->
     <div class="chatbot-container">
-      <div id="chatbot-panel" class="chatbot-panel">
+      <div id="chat-panel" class="chatbot-panel">
         <div class="p-4 border-b border-white/10 flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+            <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center">
               <i class="fas fa-headset"></i>
             </div>
             <div>
               <div class="font-bold text-sm">AI 컨설턴트</div>
-              <div class="text-xs text-gray-500">수석 마케팅 컨설턴트</div>
+              <div class="text-xs text-gray-500">마케팅 전문가</div>
             </div>
           </div>
-          <button onclick="toggleChat()" class="text-gray-400 hover:text-white p-2">
-            <i class="fas fa-minus"></i>
-          </button>
+          <button onclick="toggleChat()" class="text-gray-400 hover:text-white p-2"><i class="fas fa-minus"></i></button>
         </div>
         <div class="chat-messages" id="chat-messages">
           <div class="chat-message bot">
-            <div class="message-content">
-              안녕하세요, X I Λ I X 수석 컨설턴트입니다. 😊<br><br>
-              저희는 웹사이트 제작 회사가 아닙니다.<br>
+            <div class="msg-content">
+              안녕하세요, X I Λ I X 컨설턴트입니다.<br><br>
+              저희는 웹사이트 제작사가 아닙니다.<br>
               <strong>매출을 올리는 마케팅 솔루션</strong>을 제공합니다.<br><br>
-              어떤 사업을 운영하고 계신가요?
+              어떤 사업을 운영하시나요?
             </div>
           </div>
         </div>
         <div class="p-4 border-t border-white/10">
           <div class="flex gap-2">
-            <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-3 text-sm focus:outline-none focus:border-white/30" onkeypress="handleChatKeypress(event)">
-            <button onclick="sendChatMessage()" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:bg-gray-200 transition">
+            <input type="text" id="chat-input" placeholder="메시지 입력..." class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-3 text-sm focus:outline-none focus:border-white/20" onkeypress="if(event.key==='Enter')sendChat()">
+            <button onclick="sendChat()" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:bg-gray-200 transition">
               <i class="fas fa-paper-plane"></i>
             </button>
           </div>
         </div>
       </div>
-      <button onclick="toggleChat()" class="chatbot-button pulse" id="chatbot-btn">
+      <button onclick="toggleChat()" class="chatbot-btn pulse" id="chat-btn">
         <i class="fas fa-comment-dots text-xl"></i>
       </button>
     </div>
     
+    <!-- Bottom Bar -->
+    <div class="bottom-bar" id="bottom-bar">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-6 text-sm">
+          <span class="text-gray-500">구축 <strong class="text-white" id="bb-setup">₩0</strong></span>
+          <span class="text-gray-500">+ 관리 <strong class="text-white" id="bb-monthly">₩0</strong></span>
+          <span class="text-gray-500">+ 옵션 <strong class="text-white" id="bb-addon">₩0</strong></span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xl font-bold" id="bb-total">₩0</span>
+          <button onclick="proceedToPayment()" class="px-8 py-3 bg-white text-black font-bold text-sm hover:bg-gray-200 transition disabled:opacity-30" id="bb-pay-btn" disabled>
+            결제하기
+          </button>
+        </div>
+      </div>
+    </div>
+    
     <script>
       // Security
-      document.addEventListener('contextmenu', (e) => e.preventDefault());
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
-          e.preventDefault();
-        }
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('keydown', e => {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) e.preventDefault();
       });
       
       // Data
       const portfolios = ${JSON.stringify(portfolios)};
-      const pricingData = ${JSON.stringify(pricingData)};
+      const pricing = ${JSON.stringify(pricingData)};
       
       // State
       let cart = { setup: null, monthly: null, addons: [], location: 'loc-seoul' };
-      let chatContext = [];
+      let chatCtx = [];
       
       // Init
       document.addEventListener('DOMContentLoaded', () => {
-        initRevealAnimations();
+        initReveal();
         renderPortfolios();
         renderPricing();
-        updateCart();
-        updateAddonLockState();
+        updateUI();
       });
       
-      function initRevealAnimations() {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('active');
-          });
+      function initReveal() {
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
       }
       
       // Portfolio
       function renderPortfolios() {
-        const grid = document.getElementById('portfolio-grid');
-        grid.innerHTML = portfolios.map(p => \`
-          <div class="portfolio-card glass cursor-pointer reveal" onclick="openPortfolio('\${p.url}')">
-            <img src="\${p.thumbnail}" alt="\${p.title}" class="thumbnail" />
-            <div class="overlay"></div>
-            <div class="result-badge">\${p.result}</div>
-            <div class="absolute bottom-0 left-0 right-0 p-5">
-              <span class="text-xs px-3 py-1 bg-white/10 rounded-full mb-2 inline-block">\${p.category}</span>
-              <h3 class="font-bold text-lg mb-1">\${p.title}</h3>
-              <p class="text-sm text-gray-400">\${p.description}</p>
+        document.getElementById('portfolio-grid').innerHTML = portfolios.map(p => \`
+          <div class="portfolio-card glass rounded-xl reveal" onclick="openModal('\${p.url}')">
+            <iframe src="\${p.url}" loading="lazy"></iframe>
+            <div class="portfolio-overlay"></div>
+            <div class="absolute top-4 right-4 z-10 px-3 py-1 bg-white/10 backdrop-blur rounded-full text-xs font-bold">\${p.result}</div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 z-10">
+              <span class="text-xs text-gray-400 tracking-wider">\${p.category}</span>
+              <h3 class="font-bold text-lg mt-1">\${p.title}</h3>
             </div>
           </div>
         \`).join('');
       }
       
-      function openPortfolio(url) {
-        const modal = document.getElementById('portfolio-modal');
-        const iframe = document.getElementById('portfolio-iframe');
-        iframe.src = url;
-        modal.classList.add('active');
+      function openModal(url) {
+        document.getElementById('modal-iframe').src = url;
+        document.getElementById('portfolio-modal').classList.add('active');
         document.body.style.overflow = 'hidden';
       }
       
-      function closePortfolioModal(e) {
+      function closeModal(e) {
         if (e && e.target !== e.currentTarget) return;
-        const modal = document.getElementById('portfolio-modal');
-        const iframe = document.getElementById('portfolio-iframe');
-        modal.classList.remove('active');
-        iframe.src = '';
+        document.getElementById('modal-iframe').src = '';
+        document.getElementById('portfolio-modal').classList.remove('active');
         document.body.style.overflow = '';
       }
       
       // Pricing
       function renderPricing() {
-        document.getElementById('setup-cards').innerHTML = pricingData.setup.map(item => createPriceCard(item, 'setup')).join('');
-        document.getElementById('monthly-cards').innerHTML = pricingData.monthly.map(item => createPriceCard(item, 'monthly')).join('');
+        renderSetup();
+        renderMonthly();
         renderAddons();
         renderLocations();
       }
       
-      function renderAddons() {
-        const isLocked = !cart.setup && !cart.monthly;
-        document.getElementById('addon-cards').innerHTML = pricingData.addons.map(item => \`
-          <div class="price-card glass rounded-xl p-4 flex items-center justify-between \${isLocked ? 'locked' : ''}" data-id="\${item.id}" onclick="\${isLocked ? '' : "toggleAddon('" + item.id + "')"}">
-            \${isLocked ? '<div class="lock-overlay"><i class="fas fa-lock text-2xl mb-2"></i><span class="text-xs">Step 1, 2 선택 필요</span></div>' : ''}
-            <div class="flex-1">
-              <div class="flex items-center gap-2">
-                <span class="font-semibold">\${item.name}</span>
-                <span class="tooltip-trigger">
-                  <i class="fas fa-question-circle text-gray-500 text-xs"></i>
-                  <div class="tooltip-content">\${item.tooltip}</div>
-                </span>
+      function renderSetup() {
+        document.getElementById('setup-cards').innerHTML = pricing.setup.map(item => \`
+          <div class="price-card glass rounded-xl p-6 \${item.recommended ? 'border-white/20' : ''}" data-id="\${item.id}" onclick="selectSetup('\${item.id}')">
+            \${item.badge ? \`<div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-white text-black text-xs font-bold rounded-full whitespace-nowrap">\${item.badge}</div>\` : ''}
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <span class="text-xs text-gray-500">\${item.name}</span>
+                <h4 class="font-bold text-lg">\${item.title}</h4>
               </div>
-              <span class="text-sm text-gray-500">\${formatPrice(item.price)}/\${item.unit}</span>
+              <div class="check-icon w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs">
+                <i class="fas fa-check"></i>
+              </div>
             </div>
-            <div class="check-icon w-6 h-6 bg-white text-black rounded-full flex items-center justify-center">
-              <i class="fas fa-check text-xs"></i>
+            <div class="text-3xl font-bold mb-2">\${formatPrice(item.price)}</div>
+            <p class="text-sm text-gray-500 mb-4">\${item.description}</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+              \${item.features.map(f => \`<li class="flex items-start gap-2"><i class="fas fa-check text-xs mt-1 text-gray-600"></i><span>\${f}</span></li>\`).join('')}
+            </ul>
+            <div class="mt-4 tooltip">
+              <span class="text-xs text-gray-600 cursor-help"><i class="fas fa-info-circle mr-1"></i>상세 정보</span>
+              <div class="tooltip-text">\${item.tooltip}</div>
             </div>
           </div>
         \`).join('');
       }
       
+      function renderMonthly() {
+        const isLocked = !cart.setup;
+        document.getElementById('monthly-cards').innerHTML = pricing.monthly.map(item => \`
+          <div class="price-card glass rounded-xl p-6 \${item.recommended ? 'border-white/20' : ''} \${isLocked ? 'disabled' : ''}" data-id="\${item.id}" onclick="\${isLocked ? '' : "selectMonthly('" + item.id + "')"}">
+            \${isLocked ? '<div class="lock-overlay"><i class="fas fa-lock text-xl mb-2"></i><span class="text-xs">Step 1 선택 필요</span></div>' : ''}
+            \${item.badge ? \`<div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-white text-black text-xs font-bold rounded-full">\${item.badge}</div>\` : ''}
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <span class="text-xs text-gray-500">\${item.name}</span>
+                <h4 class="font-bold text-lg">\${item.title}</h4>
+              </div>
+              <div class="check-icon w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs">
+                <i class="fas fa-check"></i>
+              </div>
+            </div>
+            <div class="text-3xl font-bold mb-2">\${formatPrice(item.price)}</div>
+            <p class="text-sm text-gray-500 mb-4">\${item.description}</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+              \${item.features.map(f => \`<li class="flex items-start gap-2"><i class="fas fa-check text-xs mt-1 text-gray-600"></i><span>\${f}</span></li>\`).join('')}
+            </ul>
+          </div>
+        \`).join('');
+        
+        // Update lock badge
+        document.getElementById('step2-lock-badge').classList.toggle('hidden', !isLocked);
+        document.getElementById('step2-icon').classList.toggle('bg-white', !isLocked);
+        document.getElementById('step2-icon').classList.toggle('text-black', !isLocked);
+        document.getElementById('step2-icon').classList.toggle('bg-white/10', isLocked);
+        document.getElementById('step2-icon').classList.toggle('text-gray-400', isLocked);
+      }
+      
+      function renderAddons() {
+        const isLocked = !cart.setup || !cart.monthly;
+        document.getElementById('addon-cards').innerHTML = pricing.addons.map(item => \`
+          <div class="price-card glass rounded-xl p-5 flex items-center justify-between \${isLocked ? 'locked' : ''}" data-id="\${item.id}" onclick="\${isLocked ? '' : "toggleAddon('" + item.id + "')"}">
+            \${isLocked ? '<div class="lock-overlay rounded-xl"><i class="fas fa-lock"></i></div>' : ''}
+            <div>
+              <div class="font-semibold mb-1 flex items-center gap-2">
+                \${item.name}
+                <span class="tooltip"><i class="fas fa-question-circle text-gray-600 text-xs"></i><div class="tooltip-text">\${item.tooltip}</div></span>
+              </div>
+              <span class="text-sm text-gray-500">\${formatPrice(item.price)}/\${item.unit}</span>
+            </div>
+            <div class="check-icon w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs">
+              <i class="fas fa-check"></i>
+            </div>
+          </div>
+        \`).join('');
+        
+        // Update Step 3 visuals
+        document.getElementById('step3-lock-badge').classList.toggle('hidden', !isLocked);
+        document.getElementById('step3-icon').classList.toggle('bg-white', !isLocked);
+        document.getElementById('step3-icon').classList.toggle('text-black', !isLocked);
+        document.getElementById('step3-icon').classList.toggle('bg-white/10', isLocked);
+        document.getElementById('step3-icon').classList.toggle('text-gray-400', isLocked);
+        document.getElementById('step3-title').classList.toggle('text-gray-400', isLocked);
+        document.getElementById('step3-title').classList.toggle('text-white', !isLocked);
+      }
+      
       function renderLocations() {
-        const isLocked = !cart.setup && !cart.monthly;
-        document.getElementById('location-cards').innerHTML = pricingData.location.map(item => \`
-          <div class="price-card glass rounded-xl px-5 py-4 flex items-center gap-3 \${cart.location === item.id ? 'selected' : ''} \${isLocked ? 'locked' : ''}" data-id="\${item.id}" onclick="\${isLocked ? '' : "selectLocation('" + item.id + "')"}">
+        const isLocked = !cart.setup || !cart.monthly;
+        document.getElementById('location-cards').innerHTML = pricing.location.map(item => \`
+          <div class="price-card glass rounded-xl px-5 py-4 flex items-center gap-4 \${cart.location === item.id ? 'selected' : ''} \${isLocked ? 'locked' : ''}" data-id="\${item.id}" onclick="\${isLocked ? '' : "selectLocation('" + item.id + "')"}">
             <div class="check-icon w-5 h-5 bg-white text-black rounded-full flex items-center justify-center text-xs">
               <i class="fas fa-check"></i>
             </div>
@@ -869,257 +986,183 @@ function getMainHTML(): string {
         \`).join('');
       }
       
-      function createPriceCard(item, type) {
-        return \`
-          <div class="price-card glass rounded-2xl p-6 relative \${item.recommended ? 'border-white/30' : ''}" data-id="\${item.id}" onclick="selectPricing('\${type}', '\${item.id}')">
-            \${item.badge ? \`<div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 badge-recommended text-xs font-bold rounded-full whitespace-nowrap">\${item.badge}</div>\` : ''}
-            <div class="flex items-start justify-between mb-4">
-              <div>
-                <span class="text-xs text-gray-500">\${item.name}</span>
-                <h4 class="text-lg font-bold">\${item.title}</h4>
-              </div>
-              <div class="check-icon w-7 h-7 bg-white text-black rounded-full flex items-center justify-center">
-                <i class="fas fa-check text-sm"></i>
-              </div>
-            </div>
-            <div class="text-3xl font-black mb-2">\${formatPrice(item.price)}</div>
-            <p class="text-sm text-gray-500 mb-4">\${item.description}</p>
-            <ul class="space-y-2">
-              \${item.features.map(f => \`<li class="text-sm text-gray-400 flex items-center gap-2"><i class="fas fa-check text-xs text-gray-600"></i>\${f}</li>\`).join('')}
-            </ul>
-            <div class="mt-4 tooltip-trigger inline-block">
-              <span class="text-xs text-gray-500 cursor-help"><i class="fas fa-info-circle mr-1"></i>왜 필요한가요?</span>
-              <div class="tooltip-content">\${item.tooltip}</div>
-            </div>
-          </div>
-        \`;
-      }
-      
-      function selectPricing(type, id) {
-        cart[type] = id;
-        document.querySelectorAll(\`#\${type === 'setup' ? 'setup-cards' : 'monthly-cards'} .price-card\`).forEach(card => {
-          card.classList.toggle('selected', card.dataset.id === id);
-        });
-        updateCart();
-        updateAddonLockState();
-      }
-      
-      function updateAddonLockState() {
-        const isLocked = !cart.setup && !cart.monthly;
-        const step3Number = document.getElementById('step3-number');
-        const lockBadge = document.getElementById('addon-lock-badge');
-        
-        if (isLocked) {
-          step3Number.classList.remove('bg-white', 'text-black');
-          step3Number.classList.add('bg-white/20', 'text-white/60');
-          lockBadge.innerHTML = '<i class="fas fa-lock mr-1"></i>Step 1, 2 선택 후 활성화';
-        } else {
-          step3Number.classList.add('bg-white', 'text-black');
-          step3Number.classList.remove('bg-white/20', 'text-white/60');
-          lockBadge.innerHTML = '<i class="fas fa-unlock mr-1"></i>선택 가능';
-        }
-        
+      // Selection handlers
+      function selectSetup(id) {
+        cart.setup = id;
+        document.querySelectorAll('#setup-cards .price-card').forEach(c => c.classList.toggle('selected', c.dataset.id === id));
+        renderMonthly();
         renderAddons();
         renderLocations();
+        updateUI();
+      }
+      
+      function selectMonthly(id) {
+        if (!cart.setup) return;
+        cart.monthly = id;
+        document.querySelectorAll('#monthly-cards .price-card').forEach(c => c.classList.toggle('selected', c.dataset.id === id));
+        renderAddons();
+        renderLocations();
+        updateUI();
       }
       
       function toggleAddon(id) {
-        if (!cart.setup && !cart.monthly) return;
-        const index = cart.addons.indexOf(id);
-        if (index > -1) cart.addons.splice(index, 1);
+        if (!cart.setup || !cart.monthly) return;
+        const idx = cart.addons.indexOf(id);
+        if (idx > -1) cart.addons.splice(idx, 1);
         else cart.addons.push(id);
-        
-        document.querySelectorAll('#addon-cards .price-card').forEach(card => {
-          card.classList.toggle('selected', cart.addons.includes(card.dataset.id));
-        });
-        updateCart();
+        document.querySelectorAll('#addon-cards .price-card').forEach(c => c.classList.toggle('selected', cart.addons.includes(c.dataset.id)));
+        updateUI();
       }
       
       function selectLocation(id) {
-        if (!cart.setup && !cart.monthly) return;
+        if (!cart.setup || !cart.monthly) return;
         cart.location = id;
-        document.querySelectorAll('#location-cards .price-card').forEach(card => {
-          card.classList.toggle('selected', card.dataset.id === id);
-        });
-        updateCart();
+        document.querySelectorAll('#location-cards .price-card').forEach(c => c.classList.toggle('selected', c.dataset.id === id));
+        updateUI();
       }
       
-      // Cart
-      function updateCart() {
-        const cartItems = document.getElementById('cart-items');
+      // Update UI
+      function updateUI() {
         const items = [];
         let setupPrice = 0, monthlyPrice = 0, addonPrice = 0;
         
         if (cart.setup) {
-          const setup = pricingData.setup.find(s => s.id === cart.setup);
-          items.push({ type: '마케팅 베이스 구축', name: setup.title, price: setup.price });
-          setupPrice = setup.price;
+          const s = pricing.setup.find(x => x.id === cart.setup);
+          items.push({ type: '마케팅 베이스 구축', name: s.title, price: s.price });
+          setupPrice = s.price;
         }
-        
         if (cart.monthly) {
-          const monthly = pricingData.monthly.find(m => m.id === cart.monthly);
-          items.push({ type: '월 매출 부스팅', name: monthly.title, price: monthly.price });
-          monthlyPrice = monthly.price;
+          const m = pricing.monthly.find(x => x.id === cart.monthly);
+          items.push({ type: '월 매출 부스팅', name: m.title, price: m.price });
+          monthlyPrice = m.price;
         }
-        
-        cart.addons.forEach(addonId => {
-          const addon = pricingData.addons.find(a => a.id === addonId);
-          items.push({ type: '추가 옵션', name: addon.name, price: addon.price });
-          addonPrice += addon.price;
+        cart.addons.forEach(aid => {
+          const a = pricing.addons.find(x => x.id === aid);
+          items.push({ type: '애드온', name: a.name, price: a.price });
+          addonPrice += a.price;
         });
-        
-        const location = pricingData.location.find(l => l.id === cart.location);
-        if (location && location.price > 0) {
-          items.push({ type: '출장비', name: location.name, price: location.price });
-          addonPrice += location.price;
+        const loc = pricing.location.find(x => x.id === cart.location);
+        if (loc && loc.price > 0) {
+          items.push({ type: '출장비', name: loc.name, price: loc.price });
+          addonPrice += loc.price;
         }
         
         const total = setupPrice + monthlyPrice + addonPrice;
+        const canPay = cart.setup && cart.monthly;
         
+        // Cart sidebar
+        const cartEl = document.getElementById('cart-items');
         if (items.length > 0) {
-          cartItems.innerHTML = items.map(item => \`
-            <div class="flex justify-between items-center text-sm py-2 border-b border-white/5 last:border-0">
-              <div>
-                <span class="text-gray-500 text-xs">\${item.type}</span>
-                <div class="font-semibold">\${item.name}</div>
-              </div>
-              <span class="font-semibold">\${formatPrice(item.price)}</span>
+          cartEl.innerHTML = items.map(i => \`
+            <div class="flex justify-between text-sm py-2 border-b border-white/5">
+              <div><span class="text-gray-500 text-xs">\${i.type}</span><div class="font-medium">\${i.name}</div></div>
+              <span class="font-medium">\${formatPrice(i.price)}</span>
             </div>
           \`).join('');
         } else {
-          cartItems.innerHTML = \`
-            <div class="text-gray-500 text-center py-8">
-              <i class="fas fa-hand-pointer text-3xl mb-3"></i>
-              <p>Step 1, 2를 선택해주세요</p>
-            </div>
-          \`;
+          cartEl.innerHTML = '<div class="text-gray-600 text-center py-10"><i class="fas fa-hand-pointer text-2xl mb-3"></i><p class="text-sm">Step 1을 선택해주세요</p></div>';
         }
         
-        document.getElementById('cart-setup-price').textContent = formatPrice(setupPrice);
-        document.getElementById('cart-monthly-price').textContent = formatPrice(monthlyPrice);
-        document.getElementById('cart-addon-price').textContent = formatPrice(addonPrice);
+        document.getElementById('cart-setup').textContent = formatPrice(setupPrice);
+        document.getElementById('cart-monthly').textContent = formatPrice(monthlyPrice);
+        document.getElementById('cart-addon').textContent = formatPrice(addonPrice);
         document.getElementById('cart-total').textContent = formatPrice(total);
-        
-        // Button state - both setup AND monthly required
-        const canPay = cart.setup && cart.monthly;
-        document.getElementById('payment-btn').disabled = !canPay;
+        document.getElementById('pay-btn').disabled = !canPay;
         document.getElementById('cart-warning').style.display = canPay ? 'none' : 'block';
+        
+        // Bottom bar
+        document.getElementById('bb-setup').textContent = formatPrice(setupPrice);
+        document.getElementById('bb-monthly').textContent = formatPrice(monthlyPrice);
+        document.getElementById('bb-addon').textContent = formatPrice(addonPrice);
+        document.getElementById('bb-total').textContent = formatPrice(total);
+        document.getElementById('bb-pay-btn').disabled = !canPay;
+        document.getElementById('bottom-bar').classList.toggle('visible', items.length > 0);
       }
       
       // Payment
       async function proceedToPayment() {
-        if (!cart.setup || !cart.monthly) {
-          alert('마케팅 베이스 구축(Step 1)과 월 매출 부스팅(Step 2) 모두 선택해주세요.');
-          return;
-        }
+        if (!cart.setup || !cart.monthly) return alert('Step 1과 Step 2를 모두 선택해주세요.');
         
         const items = [];
         let total = 0;
         
-        const setup = pricingData.setup.find(s => s.id === cart.setup);
-        items.push({ name: setup.title, price: setup.price });
-        total += setup.price;
+        const s = pricing.setup.find(x => x.id === cart.setup);
+        items.push({ name: s.title, price: s.price }); total += s.price;
         
-        const monthly = pricingData.monthly.find(m => m.id === cart.monthly);
-        items.push({ name: monthly.title + ' (첫 달)', price: monthly.price });
-        total += monthly.price;
+        const m = pricing.monthly.find(x => x.id === cart.monthly);
+        items.push({ name: m.title, price: m.price }); total += m.price;
         
-        cart.addons.forEach(addonId => {
-          const addon = pricingData.addons.find(a => a.id === addonId);
-          items.push({ name: addon.name, price: addon.price });
-          total += addon.price;
+        cart.addons.forEach(aid => {
+          const a = pricing.addons.find(x => x.id === aid);
+          items.push({ name: a.name, price: a.price }); total += a.price;
         });
         
-        const location = pricingData.location.find(l => l.id === cart.location);
-        if (location.price > 0) {
-          items.push({ name: location.name, price: location.price });
-          total += location.price;
-        }
+        const loc = pricing.location.find(x => x.id === cart.location);
+        if (loc.price > 0) { items.push({ name: loc.name, price: loc.price }); total += loc.price; }
         
         try {
-          const response = await fetch('/api/payment/prepare', {
+          const res = await fetch('/api/payment/prepare', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ items, total })
           });
-          
-          const paymentData = await response.json();
+          const data = await res.json();
           
           if (typeof PortOne !== 'undefined') {
             const payment = await PortOne.requestPayment({
-              storeId: paymentData.storeId,
-              channelKey: paymentData.channelKey,
-              paymentId: paymentData.orderId,
-              orderName: paymentData.orderName,
-              totalAmount: total,
-              currency: 'KRW',
-              payMethod: 'CARD',
-              customer: { fullName: '', phoneNumber: '', email: '' }
+              storeId: data.storeId, channelKey: data.channelKey, paymentId: data.orderId,
+              orderName: data.orderName, totalAmount: total, currency: 'KRW', payMethod: 'CARD',
+              customer: {}
             });
-            
-            if (payment.code) {
-              alert('결제 실패: ' + payment.message);
-            } else {
-              alert('결제가 완료되었습니다! 담당자가 곧 연락드리겠습니다.');
-            }
+            if (payment.code) alert('결제 실패: ' + payment.message);
+            else alert('결제 완료! 담당자가 연락드립니다.');
           } else {
-            alert('결제 시스템을 준비 중입니다. 잠시 후 다시 시도해주세요.');
+            alert('결제 시스템 준비 중입니다.');
           }
-        } catch (error) {
-          console.error('Payment error:', error);
-          alert('결제 처리 중 오류가 발생했습니다.');
-        }
+        } catch (e) { alert('결제 처리 중 오류 발생'); }
       }
       
       // Chat
       function toggleChat() {
-        const panel = document.getElementById('chatbot-panel');
-        const btn = document.getElementById('chatbot-btn');
-        panel.classList.toggle('active');
-        btn.classList.toggle('pulse', !panel.classList.contains('active'));
+        document.getElementById('chat-panel').classList.toggle('active');
+        document.getElementById('chat-btn').classList.toggle('pulse');
       }
       
-      function handleChatKeypress(e) {
-        if (e.key === 'Enter') sendChatMessage();
-      }
-      
-      async function sendChatMessage() {
+      async function sendChat() {
         const input = document.getElementById('chat-input');
-        const message = input.value.trim();
-        if (!message) return;
+        const msg = input.value.trim();
+        if (!msg) return;
         
-        const messagesDiv = document.getElementById('chat-messages');
-        messagesDiv.innerHTML += \`<div class="chat-message user"><div class="message-content">\${escapeHtml(message)}</div></div>\`;
+        const msgs = document.getElementById('chat-messages');
+        msgs.innerHTML += \`<div class="chat-message user"><div class="msg-content">\${escapeHtml(msg)}</div></div>\`;
         input.value = '';
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        msgs.scrollTop = msgs.scrollHeight;
         
-        const loadingId = 'loading-' + Date.now();
-        messagesDiv.innerHTML += \`<div class="chat-message bot" id="\${loadingId}"><div class="message-content"><i class="fas fa-spinner fa-spin mr-2"></i>생각 중...</div></div>\`;
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        const loadId = 'l-' + Date.now();
+        msgs.innerHTML += \`<div class="chat-message bot" id="\${loadId}"><div class="msg-content"><i class="fas fa-spinner fa-spin mr-2"></i>...</div></div>\`;
+        msgs.scrollTop = msgs.scrollHeight;
         
-        chatContext.push({ role: 'user', content: message });
+        chatCtx.push({ role: 'user', content: msg });
         
         try {
-          const response = await fetch('/api/chat', {
+          const res = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message, context: chatContext })
+            body: JSON.stringify({ message: msg, context: chatCtx })
           });
-          
-          const data = await response.json();
-          document.getElementById(loadingId).remove();
-          messagesDiv.innerHTML += \`<div class="chat-message bot"><div class="message-content">\${formatChatResponse(data.response)}</div></div>\`;
-          chatContext.push({ role: 'assistant', content: data.response });
-          messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        } catch (error) {
-          document.getElementById(loadingId).innerHTML = \`<div class="message-content text-red-400">죄송합니다, 잠시 후 다시 시도해주세요.</div>\`;
+          const data = await res.json();
+          document.getElementById(loadId).remove();
+          msgs.innerHTML += \`<div class="chat-message bot"><div class="msg-content">\${formatChat(data.response)}</div></div>\`;
+          chatCtx.push({ role: 'assistant', content: data.response });
+          msgs.scrollTop = msgs.scrollHeight;
+        } catch {
+          document.getElementById(loadId).innerHTML = '<div class="msg-content text-red-400">오류가 발생했습니다.</div>';
         }
       }
       
-      // Utils
-      function formatPrice(price) { return '₩' + price.toLocaleString('ko-KR'); }
-      function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-      function formatChatResponse(text) { return text.replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>').replace(/\\n/g, '<br>').replace(/^- /gm, '• '); }
+      function formatPrice(p) { return '₩' + p.toLocaleString('ko-KR'); }
+      function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+      function formatChat(t) { return t.replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>').replace(/\\n/g, '<br>'); }
     </script>
 </body>
 </html>`
@@ -1131,36 +1174,22 @@ function getAdminHTML(): string {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | X I Λ I X</title>
+    <title>Admin | XIΛIX</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <style>body { background: #0a0a0a; color: #fff; font-family: system-ui, sans-serif; }</style>
+    <style>body { font-family: 'Pretendard', sans-serif; background: #000; color: #fff; }</style>
 </head>
 <body class="min-h-screen p-8">
     <div class="max-w-6xl mx-auto">
-      <h1 class="text-3xl font-black mb-8"><i class="fas fa-chart-line mr-3"></i>Marketing Dashboard</h1>
-      
+      <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
       <div class="grid md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-white/5 rounded-xl p-6">
-          <div class="text-gray-400 text-sm mb-2">총 계약 건수</div>
-          <div class="text-3xl font-black">0건</div>
-        </div>
-        <div class="bg-white/5 rounded-xl p-6">
-          <div class="text-gray-400 text-sm mb-2">총 매출</div>
-          <div class="text-3xl font-black">₩0</div>
-        </div>
-        <div class="bg-white/5 rounded-xl p-6">
-          <div class="text-gray-400 text-sm mb-2">평균 계약 금액</div>
-          <div class="text-3xl font-black">₩0</div>
-        </div>
+        <div class="bg-white/5 rounded-xl p-6"><div class="text-gray-400 text-sm mb-2">계약 건수</div><div class="text-3xl font-bold">0건</div></div>
+        <div class="bg-white/5 rounded-xl p-6"><div class="text-gray-400 text-sm mb-2">총 매출</div><div class="text-3xl font-bold">₩0</div></div>
+        <div class="bg-white/5 rounded-xl p-6"><div class="text-gray-400 text-sm mb-2">평균 금액</div><div class="text-3xl font-bold">₩0</div></div>
       </div>
-      
       <div class="bg-white/5 rounded-xl p-6">
-        <h2 class="text-xl font-bold mb-4">최근 계약 내역</h2>
-        <div class="text-gray-500 text-center py-12">
-          <i class="fas fa-inbox text-4xl mb-4"></i>
-          <p>아직 계약 내역이 없습니다.</p>
-        </div>
+        <h2 class="text-xl font-bold mb-4">최근 계약</h2>
+        <div class="text-gray-500 text-center py-12"><i class="fas fa-inbox text-4xl mb-4"></i><p>계약 내역이 없습니다.</p></div>
       </div>
     </div>
 </body>
