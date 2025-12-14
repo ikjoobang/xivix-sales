@@ -14,7 +14,7 @@ app.use('/api/*', cors())
 app.use('/static/*', serveStatic())
 
 // ========================================
-// EXACT PORTFOLIO DATA - 12개 링크 정확히 주입
+// EXACT PORTFOLIO DATA - 12개 링크 (변경 금지)
 // ========================================
 const PORTFOLIO_LINKS = [
   { title: "Studio JuAi Main", url: "https://www.studiojuai.com/", tag: "Branding" },
@@ -32,7 +32,7 @@ const PORTFOLIO_LINKS = [
 ]
 
 // ========================================
-// EXACT PRICING DATA - 3개 세트 패키지
+// EXACT PRICING DATA - 4개 패키지 (500만 포함!)
 // ========================================
 const PRICING_PACKAGES = [
   {
@@ -51,8 +51,15 @@ const PRICING_PACKAGES = [
     recommended: true
   },
   {
+    id: "branding",
+    name: "하이엔드 브랜딩 패키지",
+    price: 5000000,
+    desc: "경쟁하지 않는 독보적 브랜드 가치",
+    features: ["압도적 비주얼 웹사이트", "스토리텔링 기획자 투입", "초기 채널 활성화 트래픽", "브랜드 영상 편집"]
+  },
+  {
     id: "premium",
-    name: "하이엔드/병원 마스터",
+    name: "병원/프랜차이즈 마스터",
     price: 8000000,
     desc: "결제/예약/CRM까지 포함된 토탈 솔루션",
     features: ["결제 시스템 연동", "기획자 투입", "의료법 준수 콘텐츠", "VIP 전담 케어"]
@@ -79,10 +86,11 @@ app.post('/api/chat', async (c) => {
 - 웹사이트 제작사가 아닙니다
 - "기술(AI)과 비즈니스를 결합한 마케팅 수익화 솔루션 기업"입니다
 
-**3가지 완성형 패키지**:
+**4가지 완성형 패키지**:
 1. 소상공인 실속 패키지 (180만) - 원페이지 + 기본관리
 2. 스탠다드 성장 패키지 (350만) ⭐BEST - 5페이지 + SEO + 채널연동
-3. 하이엔드/병원 마스터 (800만) - 결제시스템 + VIP케어
+3. 하이엔드 브랜딩 패키지 (500만) - 압도적 비주얼 + 트래픽
+4. 병원/프랜차이즈 마스터 (800만) - 결제시스템 + VIP케어
 
 **포트폴리오 추천**:
 - 미용실/헤어샵: Amanna Hair 프로젝트 확인
@@ -118,19 +126,20 @@ app.post('/api/chat', async (c) => {
 function getDemoResponse(message: string): string {
   const lower = message.toLowerCase()
   if (lower.includes('가격') || lower.includes('비용') || lower.includes('얼마')) {
-    return `대표님, 저희는 **3가지 완성형 패키지**로 운영됩니다.
+    return `대표님, 저희는 **4가지 완성형 패키지**로 운영됩니다.
 
 **🎯 패키지 라인업**
 • **소상공인 실속** (180만) - 원페이지 + 기본관리
 • **스탠다드 성장** (350만) ⭐BEST - 5페이지 + SEO
-• **하이엔드/병원** (800만) - 결제시스템 + VIP케어
+• **하이엔드 브랜딩** (500만) - 압도적 비주얼 + 트래픽
+• **병원/프랜차이즈** (800만) - 결제시스템 + VIP케어
 
 SERVICE & PLANS 블록에서 자세히 확인하세요!`
   }
   if (lower.includes('미용') || lower.includes('헤어') || lower.includes('네일')) {
     return `뷰티샵이시군요!
 
-**추천 패키지**: 스탠다드 성장 (350만)
+**추천 패키지**: 스탠다드 성장 (350만) 또는 하이엔드 브랜딩 (500만)
 **참고 포트폴리오**: Amanna Hair
 
 쇼케이스에서 Amanna Hair 프로젝트를 확인해보세요.
@@ -184,7 +193,7 @@ app.post('/api/payment/prepare', async (c) => {
 })
 
 // ========================================
-// MAIN PAGE - BENTO GRID LAYOUT
+// MAIN PAGE - BENTO GRID (Command Center Style)
 // ========================================
 app.get('/', (c) => c.html(getMainHTML()))
 app.get('/admin', (c) => c.html(getAdminHTML()))
@@ -230,13 +239,12 @@ function getMainHTML(): string {
     
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      html, body { height: 100%; }
       body { 
         font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
         background: #000; 
         color: #fff; 
-        overflow-x: hidden;
-        min-height: 100vh;
+        overflow: hidden;
         -webkit-font-smoothing: antialiased;
       }
       .no-select { -webkit-user-select: none; user-select: none; }
@@ -258,134 +266,131 @@ function getMainHTML(): string {
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         opacity: 0.03;
         pointer-events: none;
-        mix-blend-mode: overlay;
       }
       
       /* ========================================
-         BENTO GRID LAYOUT
+         BENTO GRID - Command Center Style
          ======================================== */
       .bento-container {
         position: relative;
         z-index: 10;
-        min-height: 100vh;
-        padding: 20px;
+        height: 100vh;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
       }
       .bento-grid {
+        flex: 1;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(3, minmax(200px, auto));
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 1.2fr 0.8fr;
         gap: 20px;
-        max-width: 1400px;
+        max-width: 1600px;
         margin: 0 auto;
+        width: 100%;
       }
       @media (max-width: 1024px) {
         .bento-grid {
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: 1fr 1fr;
           grid-template-rows: auto;
         }
       }
       @media (max-width: 640px) {
-        .bento-grid {
-          grid-template-columns: 1fr;
-        }
+        .bento-grid { grid-template-columns: 1fr; }
+        .bento-container { overflow-y: auto; height: auto; min-height: 100vh; }
       }
       
-      /* Bento Box Base */
+      /* Bento Box */
       .bento-box {
-        background: rgba(255,255,255,0.02);
+        background: rgba(10,10,12,0.6);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 20px;
         overflow: hidden;
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         position: relative;
       }
       .bento-box:hover {
-        border-color: rgba(255,255,255,0.1);
-        transform: translateY(-4px);
-        box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        border-color: rgba(255,255,255,0.12);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
       }
       
-      /* Hero Box (2x2) */
+      /* Hero Box */
       .bento-hero {
-        grid-column: span 2;
         grid-row: span 2;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 40px;
-        min-height: 400px;
+        padding: 48px;
+        text-align: center;
       }
       
-      /* Showcase Box (2x1) */
-      .bento-showcase {
-        grid-column: span 2;
-        grid-row: span 1;
-        padding: 24px;
-        overflow: hidden;
-      }
-      
-      /* AI Director Box (1x1) */
-      .bento-ai {
-        grid-column: span 1;
-        grid-row: span 1;
-        padding: 24px;
+      /* Square Boxes */
+      .bento-square {
+        padding: 28px;
         cursor: pointer;
       }
+      .bento-square:hover { transform: translateY(-4px); }
       
-      /* Service Box (1x1) */
+      /* Service Box - 3D Tilt */
       .bento-service {
-        grid-column: span 1;
-        grid-row: span 1;
-        padding: 24px;
-        cursor: pointer;
         perspective: 1000px;
       }
       .bento-service-inner {
         transition: transform 0.3s ease;
         transform-style: preserve-3d;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
       }
       .bento-service:hover .bento-service-inner {
-        transform: rotateX(5deg) rotateY(-5deg);
+        transform: rotateX(3deg) rotateY(-3deg);
+      }
+      
+      /* Showcase Box */
+      .bento-showcase {
+        grid-column: span 2;
+        padding: 24px;
+        overflow: hidden;
+      }
+      @media (max-width: 1024px) {
+        .bento-showcase { grid-column: span 2; }
+      }
+      @media (max-width: 640px) {
+        .bento-showcase { grid-column: span 1; }
       }
       
       /* ========================================
-         MARQUEE / CAROUSEL
+         MARQUEE
          ======================================== */
-      .marquee-container {
-        overflow: hidden;
-        width: 100%;
-      }
+      .marquee-container { overflow: hidden; width: 100%; }
       .marquee-track {
         display: flex;
         gap: 16px;
-        animation: marquee 40s linear infinite;
+        animation: marquee 50s linear infinite;
       }
-      .marquee-track:hover {
-        animation-play-state: paused;
-      }
+      .marquee-track:hover { animation-play-state: paused; }
       @keyframes marquee {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
       }
       .portfolio-item {
         flex-shrink: 0;
-        width: 280px;
-        height: 180px;
-        background: rgba(255,255,255,0.03);
+        width: 260px;
+        height: 160px;
+        background: rgba(255,255,255,0.02);
         border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 16px;
+        border-radius: 14px;
         overflow: hidden;
         cursor: pointer;
         position: relative;
-        transition: all 0.4s ease;
+        transition: all 0.3s ease;
       }
       .portfolio-item:hover {
         border-color: rgba(255,255,255,0.15);
         transform: scale(1.02);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       }
       .portfolio-item iframe {
         width: 100%;
@@ -397,38 +402,38 @@ function getMainHTML(): string {
       .portfolio-item .overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%);
+        background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.9) 100%);
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        padding: 16px;
+        padding: 14px;
       }
       .portfolio-item .tag {
         position: absolute;
-        top: 12px;
-        right: 12px;
-        padding: 4px 10px;
+        top: 10px;
+        right: 10px;
+        padding: 3px 8px;
         background: rgba(255,255,255,0.1);
         border-radius: 20px;
-        font-size: 10px;
+        font-size: 9px;
         font-weight: 600;
         letter-spacing: 0.1em;
         text-transform: uppercase;
       }
       
       /* ========================================
-         AI DIRECTOR TYPING ANIMATION
+         AI DIRECTOR
          ======================================== */
       .typing-indicator {
         display: inline-flex;
         gap: 4px;
-        padding: 8px 12px;
+        padding: 6px 10px;
         background: rgba(255,255,255,0.05);
-        border-radius: 12px;
+        border-radius: 10px;
       }
       .typing-dot {
-        width: 6px;
-        height: 6px;
+        width: 5px;
+        height: 5px;
         background: #fff;
         border-radius: 50%;
         animation: typing 1.4s ease-in-out infinite;
@@ -437,11 +442,11 @@ function getMainHTML(): string {
       .typing-dot:nth-child(3) { animation-delay: 0.4s; }
       @keyframes typing {
         0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-        30% { transform: translateY(-6px); opacity: 1; }
+        30% { transform: translateY(-5px); opacity: 1; }
       }
       
       /* ========================================
-         VIEWS (Pricing View, Chat View)
+         VIEWS (Pricing, Chat)
          ======================================== */
       .view-overlay {
         position: fixed;
@@ -453,34 +458,31 @@ function getMainHTML(): string {
         justify-content: center;
         align-items: center;
         padding: 40px;
-        opacity: 0;
-        transition: opacity 0.4s ease;
+        overflow-y: auto;
       }
-      .view-overlay.active {
-        display: flex;
-        opacity: 1;
-      }
+      .view-overlay.active { display: flex; }
       .view-content {
-        background: rgba(10,10,12,0.98);
+        background: rgba(8,8,10,0.98);
         border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 28px;
+        border-radius: 24px;
         width: 100%;
-        max-width: 900px;
+        max-width: 1000px;
         max-height: 90vh;
         overflow-y: auto;
         padding: 48px;
-        animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
       }
       @keyframes slideUp {
-        from { opacity: 0; transform: translateY(40px); }
+        from { opacity: 0; transform: translateY(30px); }
         to { opacity: 1; transform: translateY(0); }
       }
       .view-close {
         position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 48px;
-        height: 48px;
+        top: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
         background: rgba(255,255,255,0.05);
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 50%;
@@ -490,26 +492,36 @@ function getMainHTML(): string {
         justify-content: center;
         transition: all 0.3s ease;
       }
-      .view-close:hover {
-        background: rgba(255,255,255,0.1);
-        transform: rotate(90deg);
-      }
+      .view-close:hover { background: rgba(255,255,255,0.1); transform: rotate(90deg); }
       
       /* ========================================
-         PRICING CARDS
+         PRICING CARDS - 4개
          ======================================== */
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      @media (max-width: 1024px) {
+        .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 640px) {
+        .pricing-grid { grid-template-columns: 1fr; }
+      }
       .pricing-card {
         background: rgba(255,255,255,0.02);
         border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 20px;
-        padding: 32px;
+        border-radius: 18px;
+        padding: 28px;
         transition: all 0.4s ease;
         cursor: pointer;
+        display: flex;
+        flex-direction: column;
       }
       .pricing-card:hover {
         background: rgba(255,255,255,0.04);
         border-color: rgba(255,255,255,0.1);
-        transform: translateY(-8px);
+        transform: translateY(-6px);
       }
       .pricing-card.recommended {
         border: 2px solid rgba(255,255,255,0.2);
@@ -521,59 +533,35 @@ function getMainHTML(): string {
       }
       
       /* ========================================
-         CHAT INTERFACE
+         CHAT
          ======================================== */
-      .chat-container {
-        height: 500px;
-        display: flex;
-        flex-direction: column;
-      }
-      .chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px 0;
-      }
-      .chat-message {
-        margin-bottom: 16px;
-        max-width: 80%;
-      }
+      .chat-container { height: 450px; display: flex; flex-direction: column; }
+      .chat-messages { flex: 1; overflow-y: auto; padding: 16px 0; }
+      .chat-message { margin-bottom: 14px; max-width: 80%; }
       .chat-message.user { margin-left: auto; }
-      .chat-message.user .msg-content { 
-        background: rgba(255,255,255,0.1); 
-        border-radius: 18px 18px 4px 18px; 
-      }
-      .chat-message.bot .msg-content { 
-        background: rgba(255,255,255,0.03); 
-        border-radius: 18px 18px 18px 4px; 
-        border: 1px solid rgba(255,255,255,0.05);
-      }
-      .msg-content { padding: 14px 18px; line-height: 1.7; font-size: 14px; }
+      .chat-message.user .msg-content { background: rgba(255,255,255,0.1); border-radius: 16px 16px 4px 16px; }
+      .chat-message.bot .msg-content { background: rgba(255,255,255,0.03); border-radius: 16px 16px 16px 4px; border: 1px solid rgba(255,255,255,0.05); }
+      .msg-content { padding: 12px 16px; line-height: 1.6; font-size: 14px; }
       
       /* ========================================
-         HIDDEN ADMIN INPUT
+         HIDDEN ADMIN
          ======================================== */
       .hidden-admin {
         display: none;
-        margin-top: 32px;
+        margin-top: 28px;
         padding: 24px;
-        background: rgba(255,100,100,0.05);
-        border: 1px solid rgba(255,100,100,0.2);
-        border-radius: 16px;
+        background: rgba(255,80,80,0.05);
+        border: 1px solid rgba(255,80,80,0.2);
+        border-radius: 14px;
       }
       .hidden-admin.active { display: block; animation: fadeIn 0.3s ease; }
       @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
       
-      /* ========================================
-         LOCATION TOGGLE
-         ======================================== */
-      .location-toggle {
-        display: flex;
-        gap: 12px;
-        margin: 24px 0;
-      }
+      /* Location Toggle */
+      .location-toggle { display: flex; gap: 12px; margin: 20px 0; }
       .location-btn {
         flex: 1;
-        padding: 16px;
+        padding: 14px;
         background: rgba(255,255,255,0.02);
         border: 1px solid rgba(255,255,255,0.08);
         border-radius: 12px;
@@ -582,14 +570,9 @@ function getMainHTML(): string {
         text-align: center;
       }
       .location-btn:hover { background: rgba(255,255,255,0.04); }
-      .location-btn.active {
-        background: rgba(255,255,255,0.08);
-        border-color: #fff;
-      }
+      .location-btn.active { background: rgba(255,255,255,0.08); border-color: #fff; }
       
-      /* ========================================
-         PORTFOLIO MODAL
-         ======================================== */
+      /* Portfolio Modal */
       .portfolio-modal {
         position: fixed;
         inset: 0;
@@ -600,20 +583,18 @@ function getMainHTML(): string {
         align-items: center;
       }
       .portfolio-modal.active { display: flex; }
-      .portfolio-modal iframe {
-        width: 95%;
-        height: 90%;
-        border: none;
-        border-radius: 16px;
-      }
-      .portfolio-modal .security-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 10;
+      .portfolio-modal iframe { width: 95%; height: 90%; border: none; border-radius: 14px; }
+      .portfolio-modal .security-overlay { position: absolute; inset: 0; z-index: 10; }
+      
+      /* Footer */
+      .bento-footer {
+        text-align: center;
+        padding: 16px 0 8px 0;
+        font-size: 11px;
+        color: rgba(255,255,255,0.3);
       }
       
-      /* Scrollbar */
-      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar { width: 5px; }
       ::-webkit-scrollbar-track { background: transparent; }
       ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
     </style>
@@ -624,133 +605,105 @@ function getMainHTML(): string {
     <div class="noise-overlay"></div>
     
     <!-- ========================================
-         BENTO GRID MAIN LAYOUT
+         BENTO GRID - Command Center
          ======================================== -->
     <div class="bento-container">
       <div class="bento-grid">
         
-        <!-- HERO BOX (2x2) -->
+        <!-- HERO BOX (Large, spans 2 rows) -->
         <div class="bento-box bento-hero">
-          <div class="text-center">
-            <h1 class="font-display text-6xl md:text-8xl font-bold tracking-[0.3em] mb-6">
+          <div>
+            <div class="text-xs tracking-[0.4em] text-gray-500 uppercase mb-6 font-medium">Business × Technology</div>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.25em] mb-8">
               XIΛIX
             </h1>
-            <p class="text-lg text-gray-400 tracking-[0.2em] uppercase mb-8">Business × Technology</p>
-            <p class="text-gray-500 max-w-md mx-auto leading-relaxed">
+            <p class="text-gray-400 max-w-md mx-auto leading-relaxed text-sm md:text-base">
               웹사이트 제작사? <span class="line-through opacity-50">아닙니다.</span><br>
               <span class="text-white font-medium">마케팅 수익화 솔루션</span>을 제공합니다.
             </p>
           </div>
         </div>
         
-        <!-- AI DIRECTOR BOX (1x1) -->
-        <div class="bento-box bento-ai" onclick="openChatView()">
+        <!-- AI DIRECTOR BOX -->
+        <div class="bento-box bento-square" onclick="openChatView()">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center">
-              <i class="fas fa-robot"></i>
+            <div class="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center">
+              <i class="fas fa-robot text-sm"></i>
             </div>
             <div>
               <h3 class="font-bold text-sm">AI Director</h3>
-              <span class="text-xs text-gray-500">Live Status</span>
+              <span class="text-[10px] text-gray-500">Live Status</span>
             </div>
           </div>
-          <div class="typing-indicator mb-4">
+          <div class="typing-indicator mb-3">
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
           </div>
-          <div id="ai-message" class="text-sm text-gray-400 leading-relaxed">
-            대표님, 솔루션을 찾고 계신가요?
+          <div id="ai-message" class="text-sm text-gray-400 leading-relaxed transition-opacity duration-300">
+            대표님, 진단이 필요하신가요?
           </div>
-          <div class="mt-4 text-xs text-gray-600">
-            <i class="fas fa-hand-pointer mr-1"></i>클릭하여 대화하기
+          <div class="mt-auto pt-4 text-[10px] text-gray-600">
+            <i class="fas fa-hand-pointer mr-1"></i>Click to Chat
           </div>
         </div>
         
-        <!-- SERVICE BOX (1x1) -->
-        <div class="bento-box bento-service" onclick="openPricingView()">
+        <!-- SERVICE BOX -->
+        <div class="bento-box bento-square bento-service" onclick="openPricingView()">
           <div class="bento-service-inner">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center">
-                <i class="fas fa-cube"></i>
+              <div class="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center">
+                <i class="fas fa-cube text-sm"></i>
               </div>
               <div>
                 <h3 class="font-bold text-sm">SERVICE</h3>
-                <span class="text-xs text-gray-500">& PLANS</span>
+                <span class="text-[10px] text-gray-500">& PLANS</span>
               </div>
             </div>
-            <div class="space-y-2 text-sm text-gray-400 mb-4">
-              <div class="flex justify-between">
-                <span>소상공인 실속</span>
-                <span class="text-white">180만</span>
-              </div>
-              <div class="flex justify-between">
-                <span>스탠다드 성장</span>
-                <span class="text-white">350만</span>
-              </div>
-              <div class="flex justify-between">
-                <span>하이엔드/병원</span>
-                <span class="text-white">800만</span>
-              </div>
+            <div class="space-y-2 text-xs text-gray-400 flex-1">
+              <div class="flex justify-between"><span>소상공인 실속</span><span class="text-white">180만</span></div>
+              <div class="flex justify-between"><span>스탠다드 성장</span><span class="text-white">350만</span></div>
+              <div class="flex justify-between"><span>하이엔드 브랜딩</span><span class="text-white">500만</span></div>
+              <div class="flex justify-between"><span>병원/프랜차이즈</span><span class="text-white">800만</span></div>
             </div>
-            <div class="text-xs text-gray-600">
+            <div class="mt-auto pt-4 text-[10px] text-gray-600">
               <i class="fas fa-arrow-right mr-1"></i>VIEW PLANS
             </div>
           </div>
         </div>
         
-        <!-- SHOWCASE BOX (2x1) - Portfolio Marquee -->
+        <!-- SHOWCASE BOX (Portfolio Marquee) -->
         <div class="bento-box bento-showcase">
           <div class="flex items-center justify-between mb-4">
             <h3 class="font-bold text-sm tracking-wide">
               <i class="fas fa-images mr-2 text-gray-500"></i>SHOWCASE
             </h3>
-            <span class="text-xs text-gray-500">12 Projects</span>
+            <span class="text-[10px] text-gray-500">12 Projects</span>
           </div>
           <div class="marquee-container">
-            <div class="marquee-track" id="marquee-track">
-              <!-- Will be populated by JS -->
-            </div>
-          </div>
-        </div>
-        
-        <!-- CONTACT BOX (2x1) -->
-        <div class="bento-box" style="grid-column: span 2; padding: 32px;">
-          <div class="flex items-center justify-between h-full">
-            <div>
-              <h3 class="text-2xl font-bold mb-2">Ready to Start?</h3>
-              <p class="text-gray-400 text-sm">우측 AI Director와 대화하거나 직접 연락주세요</p>
-            </div>
-            <div class="flex gap-4">
-              <a href="tel:010-0000-0000" class="px-6 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition text-sm">
-                <i class="fas fa-phone mr-2"></i>Call
-              </a>
-              <a href="mailto:hello@xilix.com" class="px-6 py-3 bg-white text-black rounded-xl hover:bg-gray-200 transition text-sm font-semibold">
-                <i class="fas fa-envelope mr-2"></i>Email
-              </a>
-            </div>
+            <div class="marquee-track" id="marquee-track"></div>
           </div>
         </div>
         
       </div>
       
-      <!-- Footer -->
-      <div class="text-center py-8 mt-8 text-xs text-gray-600">
-        © 2024 <span class="font-display tracking-wider">XIΛIX</span>. All rights reserved.
+      <!-- Footer - 2026년 고정 -->
+      <div class="bento-footer">
+        © 2026 <span class="font-display tracking-wider">XIΛIX</span>. All rights reserved.
       </div>
     </div>
     
     <!-- ========================================
-         PRICING VIEW OVERLAY
+         PRICING VIEW
          ======================================== -->
     <div id="pricing-view" class="view-overlay" onclick="closePricingView(event)">
-      <div class="view-content relative" onclick="event.stopPropagation()">
+      <div class="view-content" onclick="event.stopPropagation()">
         <button class="view-close" onclick="closePricingView()">
           <i class="fas fa-times"></i>
         </button>
         
-        <div class="text-center mb-8">
-          <h2 id="pricing-title" class="font-display text-3xl font-bold tracking-[0.2em] mb-2 cursor-pointer" onclick="handlePricingTitleClick()">
+        <div class="text-center mb-6">
+          <h2 id="pricing-title" class="font-display text-2xl md:text-3xl font-bold tracking-[0.2em] mb-2 cursor-pointer" onclick="handlePricingTitleClick()">
             PRICING
           </h2>
           <p class="text-gray-400 text-sm">이거 하나면 끝. 구축 + 관리 포함.</p>
@@ -759,56 +712,54 @@ function getMainHTML(): string {
         <!-- Location Toggle -->
         <div class="location-toggle">
           <div class="location-btn active" data-regional="false" onclick="setLocation(false)">
-            <div class="font-semibold mb-1">서울 / 경기</div>
-            <div class="text-xs text-gray-500">출장비 무료</div>
+            <div class="font-semibold text-sm mb-1">서울 / 경기</div>
+            <div class="text-[10px] text-gray-500">출장비 무료</div>
           </div>
           <div class="location-btn" data-regional="true" onclick="setLocation(true)">
-            <div class="font-semibold mb-1">지방</div>
-            <div class="text-xs text-gray-500">+30만원</div>
+            <div class="font-semibold text-sm mb-1">지방</div>
+            <div class="text-[10px] text-gray-500">+30만원</div>
           </div>
         </div>
         
-        <!-- Package Cards -->
-        <div class="grid md:grid-cols-3 gap-6 mb-8" id="pricing-cards">
-          <!-- Will be populated by JS -->
-        </div>
+        <!-- 4 Package Cards -->
+        <div class="pricing-grid mb-6" id="pricing-cards"></div>
         
-        <!-- Selected Package Info -->
-        <div id="selected-package" class="hidden p-6 bg-white/5 rounded-xl border border-white/10">
+        <!-- Selected Package -->
+        <div id="selected-package" class="hidden p-5 bg-white/5 rounded-xl border border-white/10">
           <div class="flex justify-between items-center mb-4">
             <div>
-              <span class="text-sm text-gray-400">선택된 패키지</span>
-              <h3 id="selected-name" class="text-xl font-bold"></h3>
+              <span class="text-xs text-gray-400">선택된 패키지</span>
+              <h3 id="selected-name" class="text-lg font-bold"></h3>
             </div>
             <div class="text-right">
-              <span class="text-sm text-gray-400">총 금액</span>
-              <div id="selected-total" class="text-2xl font-bold"></div>
+              <span class="text-xs text-gray-400">총 금액</span>
+              <div id="selected-total" class="text-xl font-bold"></div>
             </div>
           </div>
-          <button onclick="processPayment()" class="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition">
+          <button onclick="processPayment()" class="w-full py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition">
             결제하기
           </button>
         </div>
         
-        <!-- Hidden Admin (5 clicks on PRICING title) -->
+        <!-- Hidden Admin -->
         <div id="hidden-admin" class="hidden-admin">
-          <h4 class="font-bold mb-4 text-red-400">
+          <h4 class="font-bold mb-4 text-red-400 text-sm">
             <i class="fas fa-lock mr-2"></i>관리자 모드
           </h4>
           <div class="grid md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label class="block text-sm text-gray-400 mb-2">고객명</label>
+              <label class="block text-xs text-gray-400 mb-2">고객명</label>
               <input type="text" id="admin-customer" placeholder="홍길동" 
-                     class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30">
+                     class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/30">
             </div>
             <div>
-              <label class="block text-sm text-gray-400 mb-2">협의 금액 (원)</label>
+              <label class="block text-xs text-gray-400 mb-2">협의 금액 (원)</label>
               <input type="text" id="admin-amount" placeholder="4,500,000" 
-                     class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30"
+                     class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/30"
                      oninput="formatAdminAmount(this)">
             </div>
           </div>
-          <button onclick="processCustomPayment()" class="w-full py-3 bg-red-500/20 border border-red-500/30 text-red-300 rounded-xl hover:bg-red-500/30 transition">
+          <button onclick="processCustomPayment()" class="w-full py-3 bg-red-500/20 border border-red-500/30 text-red-300 rounded-xl hover:bg-red-500/30 transition text-sm">
             <i class="fas fa-credit-card mr-2"></i>맞춤 결제 생성
           </button>
         </div>
@@ -816,21 +767,21 @@ function getMainHTML(): string {
     </div>
     
     <!-- ========================================
-         CHAT VIEW OVERLAY
+         CHAT VIEW
          ======================================== -->
     <div id="chat-view" class="view-overlay" onclick="closeChatView(event)">
-      <div class="view-content relative" onclick="event.stopPropagation()" style="max-width: 600px;">
+      <div class="view-content" onclick="event.stopPropagation()" style="max-width: 560px;">
         <button class="view-close" onclick="closeChatView()">
           <i class="fas fa-times"></i>
         </button>
         
-        <div class="flex items-center gap-4 mb-6">
-          <div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center">
-            <i class="fas fa-robot text-xl"></i>
+        <div class="flex items-center gap-4 mb-5">
+          <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center">
+            <i class="fas fa-robot text-lg"></i>
           </div>
           <div>
-            <h2 class="text-xl font-bold">AI Director</h2>
-            <p class="text-sm text-gray-400">마케팅 컨설턴트</p>
+            <h2 class="text-lg font-bold">AI Director</h2>
+            <p class="text-xs text-gray-400">마케팅 컨설턴트</p>
           </div>
         </div>
         
@@ -847,9 +798,9 @@ function getMainHTML(): string {
           </div>
           <div class="flex gap-3 pt-4 border-t border-white/10">
             <input type="text" id="chat-input" placeholder="메시지 입력..." 
-                   class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/20"
+                   class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white/20"
                    onkeypress="if(event.key==='Enter')sendChat()">
-            <button onclick="sendChat()" class="px-6 bg-white text-black rounded-xl font-semibold hover:bg-gray-200 transition">
+            <button onclick="sendChat()" class="px-5 bg-white text-black rounded-xl font-semibold hover:bg-gray-200 transition">
               <i class="fas fa-paper-plane"></i>
             </button>
           </div>
@@ -858,11 +809,11 @@ function getMainHTML(): string {
     </div>
     
     <!-- ========================================
-         PORTFOLIO MODAL (Full Screen)
+         PORTFOLIO MODAL
          ======================================== -->
     <div id="portfolio-modal" class="portfolio-modal" onclick="closePortfolioModal()">
-      <button onclick="closePortfolioModal()" class="absolute top-6 right-6 z-20 w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition">
-        <i class="fas fa-times text-xl"></i>
+      <button onclick="closePortfolioModal()" class="absolute top-5 right-5 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition">
+        <i class="fas fa-times text-lg"></i>
       </button>
       <div class="security-overlay"></div>
       <iframe id="portfolio-iframe" src=""></iframe>
@@ -873,7 +824,7 @@ function getMainHTML(): string {
          ======================================== -->
     <script>
       // ========================================
-      // EXACT DATA - 변경 금지
+      // EXACT DATA - 변경 금지!
       // ========================================
       const PORTFOLIO_LINKS = ${JSON.stringify(PORTFOLIO_LINKS)};
       const PRICING_PACKAGES = ${JSON.stringify(PRICING_PACKAGES)};
@@ -948,7 +899,7 @@ function getMainHTML(): string {
             vec3 col=mix(c1,c2,smoothstep(0.3,0.5,n));
             col=mix(col,c3,smoothstep(0.5,0.7,n+mouseInf));
             col+=vec3(0.02,0.02,0.04)*mouseInf;
-            col*=1.0-length(uv-0.5)*0.7;
+            col*=1.0-length(uv-0.5)*0.6;
             gl_FragColor=vec4(col,1.0);
           }
         \`);
@@ -991,17 +942,13 @@ function getMainHTML(): string {
         requestAnimationFrame(render);
       })();
       
-      // ========================================
-      // SECURITY
-      // ========================================
+      // Security
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('keydown', e => {
         if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) e.preventDefault();
       });
       
-      // ========================================
-      // INITIALIZE
-      // ========================================
+      // Initialize
       document.addEventListener('DOMContentLoaded', () => {
         renderMarquee();
         renderPricingCards();
@@ -1009,31 +956,30 @@ function getMainHTML(): string {
       });
       
       // ========================================
-      // MARQUEE (Portfolio Carousel)
+      // MARQUEE (12 Portfolios)
       // ========================================
       function renderMarquee() {
         const track = document.getElementById('marquee-track');
-        // Duplicate for seamless loop
-        const items = [...PORTFOLIO_LINKS, ...PORTFOLIO_LINKS];
-        track.innerHTML = items.map((p, i) => \`
+        const items = [...PORTFOLIO_LINKS, ...PORTFOLIO_LINKS]; // duplicate for loop
+        track.innerHTML = items.map(p => \`
           <div class="portfolio-item" onclick="openPortfolioModal('\${p.url}')">
             <iframe src="\${p.url}" loading="lazy"></iframe>
             <div class="overlay">
               <span class="tag">\${p.tag}</span>
-              <h4 class="font-bold text-sm">\${p.title}</h4>
+              <h4 class="font-bold text-xs">\${p.title}</h4>
             </div>
           </div>
         \`).join('');
       }
       
       // ========================================
-      // AI MESSAGE CYCLE
+      // AI Messages Cycle
       // ========================================
       const aiMessages = [
-        "대표님, 솔루션을 찾고 계신가요?",
-        "Amanna Hair 프로젝트를 확인해보세요.",
+        "대표님, 진단이 필요하신가요?",
+        "Amanna Hair 프로젝트 확인 중...",
         "스탠다드 패키지가 인기입니다.",
-        "350만원으로 지역 1등 브랜딩을 시작하세요."
+        "350만원으로 지역 1등 브랜딩을."
       ];
       let aiMsgIndex = 0;
       function cycleAIMessages() {
@@ -1065,12 +1011,12 @@ function getMainHTML(): string {
         const container = document.getElementById('pricing-cards');
         container.innerHTML = PRICING_PACKAGES.map(pkg => \`
           <div class="pricing-card \${pkg.recommended ? 'recommended' : ''}" data-id="\${pkg.id}" onclick="selectPackage('\${pkg.id}')">
-            \${pkg.recommended ? '<div class="text-xs font-bold text-white bg-white/10 px-3 py-1 rounded-full mb-4 inline-block">⭐ BEST</div>' : ''}
-            <h3 class="text-xl font-bold mb-2">\${pkg.name}</h3>
-            <p class="text-sm text-gray-400 mb-4">\${pkg.desc}</p>
-            <div class="text-3xl font-bold mb-4">₩\${pkg.price.toLocaleString()}</div>
-            <ul class="space-y-2 text-sm text-gray-400">
-              \${pkg.features.map(f => \`<li class="flex items-start gap-2"><i class="fas fa-check text-xs mt-1 text-gray-600"></i>\${f}</li>\`).join('')}
+            \${pkg.recommended ? '<div class="text-[10px] font-bold text-white bg-white/10 px-3 py-1 rounded-full mb-3 inline-block">⭐ BEST</div>' : ''}
+            <h3 class="text-base font-bold mb-1">\${pkg.name}</h3>
+            <p class="text-xs text-gray-400 mb-3">\${pkg.desc}</p>
+            <div class="text-2xl font-bold mb-3">₩\${pkg.price.toLocaleString()}</div>
+            <ul class="space-y-1.5 text-xs text-gray-400 flex-1">
+              \${pkg.features.map(f => \`<li class="flex items-start gap-2"><i class="fas fa-check text-[8px] mt-1 text-gray-600"></i>\${f}</li>\`).join('')}
             </ul>
           </div>
         \`).join('');
@@ -1093,17 +1039,14 @@ function getMainHTML(): string {
       
       function updateSelectedInfo() {
         const el = document.getElementById('selected-package');
-        if (!selectedPackage) {
-          el.classList.add('hidden');
-          return;
-        }
+        if (!selectedPackage) { el.classList.add('hidden'); return; }
         el.classList.remove('hidden');
         document.getElementById('selected-name').textContent = selectedPackage.name;
         const total = selectedPackage.price + (isRegional ? 300000 : 0);
         document.getElementById('selected-total').textContent = '₩' + total.toLocaleString() + (isRegional ? ' (지방 +30만)' : '');
       }
       
-      // Hidden Admin (5 clicks on PRICING title)
+      // Hidden Admin (5 clicks)
       function handlePricingTitleClick() {
         pricingTitleClicks++;
         if (pricingTitleTimer) clearTimeout(pricingTitleTimer);
@@ -1139,9 +1082,7 @@ function getMainHTML(): string {
             });
             if (payment.code) alert('결제 실패: ' + payment.message);
             else alert('✅ 결제 완료!');
-          } else {
-            alert('결제 시스템 준비 중입니다.');
-          }
+          } else { alert('결제 시스템 준비 중입니다.'); }
         } catch { alert('결제 처리 중 오류 발생'); }
       }
       
@@ -1161,9 +1102,7 @@ function getMainHTML(): string {
             });
             if (payment.code) alert('결제 실패: ' + payment.message);
             else alert('결제 완료! 담당자가 연락드립니다.');
-          } else {
-            alert('결제 시스템 준비 중입니다.');
-          }
+          } else { alert('결제 시스템 준비 중입니다.'); }
         } catch { alert('결제 처리 중 오류 발생'); }
       }
       
@@ -1224,9 +1163,6 @@ function getMainHTML(): string {
         document.body.style.overflow = '';
       }
       
-      // ========================================
-      // UTILITIES
-      // ========================================
       function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
       function formatChat(t) { return t.replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>').replace(/\\n/g, '<br>'); }
     </script>
