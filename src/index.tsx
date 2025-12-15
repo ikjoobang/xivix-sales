@@ -92,8 +92,8 @@ const CHANNEL_SERVICES = [
     icon: "fa-solid fa-n",
     color: "#03C75A",
     services: [
-      { id: "naver_place", name: "네이버플레이스", setupFee: 590000, monthlyFeeA: 800000, monthlyFeeB: 580000, desc: "지도 최적화 + 리뷰관리 + 키워드모니터링", hasAB: true },
-      { id: "naver_set", name: "네이버 광고/톡톡/페이 SET", setupFee: 1000000, monthlyFee: 0, desc: "검색광고+톡톡+페이 통합 세팅 (광고비 별도)", isSet: true, smallNotice: "무리한 트래픽X, 상위노출 제외! 자연스러운 고객유입" }
+      { id: "naver_place", name: "네이버플레이스", setupFee: 390000, monthlyFeeA: 500000, monthlyFeeB: 350000, desc: "지도 최적화 + 리뷰관리 + 키워드모니터링", hasAB: true },
+      { id: "naver_set", name: "네이버 광고/톡톡/페이 SET", setupFee: 590000, monthlyFee: 0, desc: "검색광고+톡톡+페이 통합 세팅 (광고비 별도)", isSet: true, smallNotice: "무리한 트래픽X, 상위노출 제외! 자연스러운 고객유입" }
     ]
   },
   {
@@ -102,9 +102,9 @@ const CHANNEL_SERVICES = [
     icon: "fa-brands fa-instagram",
     color: "#E4405F",
     services: [
-      { id: "insta_full", name: "계정 최적화", setupFee: 900000, monthlyFee: 1530000, desc: "SEO/AEO/C-RANK/GEO 최적화 (릴스+피드+카드)" },
-      { id: "meta_ad", name: "메타광고", setupFee: 600000, monthlyFee: 0, desc: "타겟광고 세팅 (광고비 별도)", notice: "월관리: 개별상담" },
-      { id: "threads", name: "스레드", setupFee: 250000, monthlyFee: 300000, desc: "SEO/AEO/C-RANK/GEO 계정 최적화" }
+      { id: "insta_full", name: "계정 최적화", setupFee: 490000, monthlyFee: 750000, desc: "SEO/AEO/C-RANK/GEO 최적화 (릴스+피드+카드)" },
+      { id: "meta_ad", name: "메타광고", setupFee: 350000, monthlyFee: 0, desc: "타겟광고 세팅 (광고비 별도)", notice: "월관리: 개별상담" },
+      { id: "threads", name: "스레드", setupFee: 150000, monthlyFee: 200000, desc: "SEO/AEO/C-RANK/GEO 계정 최적화" }
     ]
   },
   {
@@ -113,7 +113,7 @@ const CHANNEL_SERVICES = [
     icon: "fa-brands fa-tiktok",
     color: "#000000",
     services: [
-      { id: "tiktok_full", name: "계정 최적화", setupFee: 1100000, monthlyFee: 880000, desc: "SEO/AEO/C-RANK/GEO 최적화 + 영상제작" }
+      { id: "tiktok_full", name: "계정 최적화", setupFee: 490000, monthlyFee: 550000, desc: "SEO/AEO/C-RANK/GEO 최적화 + 영상제작" }
     ]
   },
   {
@@ -122,9 +122,9 @@ const CHANNEL_SERVICES = [
     icon: "fa-brands fa-youtube",
     color: "#FF0000",
     services: [
-      { id: "yt_setup", name: "채널 최적화", setupFee: 1300000, monthlyFee: 0, desc: "SEO/AEO/C-RANK/GEO 계정 최적화 셋팅" },
-      { id: "yt_short", name: "숏폼 관리", setupFee: 0, monthlyFee: 990000, desc: "쇼츠 기획/편집 + 고퀄리티" },
-      { id: "yt_long", name: "롱폼 관리", setupFee: 0, monthlyFee: 2200000, desc: "본편 기획/편집/자막/썸네일/SEO" }
+      { id: "yt_setup", name: "채널 최적화", setupFee: 590000, monthlyFee: 0, desc: "SEO/AEO/C-RANK/GEO 계정 최적화 셋팅" },
+      { id: "yt_short", name: "숏폼 관리", setupFee: 0, monthlyFee: 590000, desc: "쇼츠 기획/편집 월4편" },
+      { id: "yt_long", name: "롱폼 관리", setupFee: 0, monthlyFee: 1500000, desc: "본편 기획/편집/자막/썸네일/SEO 월2편" }
     ]
   },
   {
@@ -133,8 +133,8 @@ const CHANNEL_SERVICES = [
     icon: "fa-solid fa-blog",
     color: "#21A366",
     services: [
-      { id: "naver_blog", name: "네이버블로그", setupFee: 400000, monthlyFeeA: 660000, monthlyFeeB: 300000, desc: "SEO/AEO/C-RANK/GEO 계정 최적화", hasAB: true },
-      { id: "wordpress", name: "워드프레스", setupFee: 500000, monthlyFee: 450000, desc: "자체 블로그 운영 + SEO + AEO" }
+      { id: "naver_blog", name: "네이버블로그", setupFee: 290000, monthlyFeeA: 450000, monthlyFeeB: 300000, desc: "수작업 포스팅 + 상위노출 관리", hasAB: true },
+      { id: "wordpress", name: "워드프레스", setupFee: 290000, monthlyFee: 200000, desc: "AI 자동화 + SEO 최적화" }
     ]
   },
   {
@@ -143,9 +143,9 @@ const CHANNEL_SERVICES = [
     icon: "fa-brands fa-google",
     color: "#4285F4",
     services: [
-      { id: "google_mybiz", name: "구글 마이비즈니스", setupFee: 500000, monthlyFee: 400000, desc: "구글 지도 등록 + 리뷰관리 + 최적화" },
-      { id: "google_ads", name: "구글 광고", setupFee: 600000, monthlyFee: 0, desc: "검색/디스플레이 광고 세팅 (광고비 별도)", notice: "월관리: 개별상담" },
-      { id: "google_seo", name: "구글 SEO", setupFee: 800000, monthlyFee: 500000, desc: "웹사이트 구글 검색 최적화" }
+      { id: "google_mybiz", name: "구글 마이비즈니스", setupFee: 350000, monthlyFee: 250000, desc: "구글 지도 등록 + 리뷰관리 + 최적화" },
+      { id: "google_ads", name: "구글 광고", setupFee: 390000, monthlyFee: 0, desc: "검색/디스플레이 광고 세팅 (광고비 별도)", notice: "월관리: 개별상담" },
+      { id: "google_seo", name: "구글 SEO", setupFee: 490000, monthlyFee: 350000, desc: "웹사이트 구글 검색 최적화" }
     ]
   }
 ]
@@ -157,42 +157,42 @@ const MARKETING_SETUP = [
   {
     id: "setup_naver",
     name: "네이버 묶음",
-    price: 1590000,
-    originalPrice: 2090000,
+    price: 790000,
+    originalPrice: 980000,
     desc: "네이버 집중 공략 셋팅",
-    includes: ["플레이스 셋팅 (59만)", "광고/톡톡/페이 SET (100만)", "운영 가이드북"],
-    discount: "50만원 할인",
+    includes: ["플레이스 셋팅 (39만)", "광고/톡톡/페이 SET (59만)", "운영 가이드북"],
+    discount: "19만원 할인",
     category: "naver"
   },
   {
     id: "setup_google",
     name: "구글 묶음",
-    price: 1500000,
-    originalPrice: 1900000,
+    price: 990000,
+    originalPrice: 1230000,
     desc: "구글 검색 최적화 셋팅",
-    includes: ["마이비즈니스 셋팅 (50만)", "구글 광고 셋팅 (60만)", "구글 SEO 셋팅 (80만)"],
-    discount: "40만원 할인",
+    includes: ["마이비즈니스 셋팅 (35만)", "구글 광고 셋팅 (39만)", "구글 SEO 셋팅 (49만)"],
+    discount: "24만원 할인",
     category: "google"
   },
   {
     id: "setup_sns",
     name: "SNS 관리 묶음",
-    price: 2200000,
-    originalPrice: 2850000,
+    price: 990000,
+    originalPrice: 1130000,
     desc: "인스타+틱톡 통합 셋팅",
-    includes: ["인스타그램 계정최적화 (90만)", "틱톡 계정최적화 (110만)", "스레드 셋팅 (25만)", "통합 브랜딩"],
-    discount: "65만원 할인",
+    includes: ["인스타그램 계정최적화 (49만)", "틱톡 계정최적화 (49만)", "스레드 셋팅 (15만)", "통합 브랜딩"],
+    discount: "14만원 할인",
     recommended: true,
     category: "sns"
   },
   {
     id: "setup_full",
     name: "올인원 풀셋팅",
-    price: 4500000,
-    originalPrice: 6500000,
+    price: 2490000,
+    originalPrice: 3340000,
     desc: "네이버+구글+SNS+유튜브 전체",
-    includes: ["네이버 풀 셋팅", "구글 풀 셋팅", "SNS 풀 셋팅", "유튜브 채널 최적화", "1개월 집중 관리"],
-    discount: "200만원 할인",
+    includes: ["네이버 풀 셋팅", "구글 풀 셋팅", "SNS 풀 셋팅", "유튜브 채널 최적화 (59만)", "1개월 집중 관리"],
+    discount: "85만원 할인",
     category: "full"
   }
 ]
@@ -206,51 +206,33 @@ const MONTHLY_GRADES = [
     grade: "GRADE 1",
     name: "베이직",
     subtitle: "신뢰 쌓기",
-    price: 880000,
-    goal: "검색했을 때 우리 가게가 예쁘고 믿음직스럽게 보이게",
-    targetAudience: "오픈 초기 매장, 온라인 관리 처음인 1인 원장님",
-    services: [
-      "블로그 B형: 기본 포스팅 관리",
-      "플레이스 B형: 리뷰 답글, 정보 최적화",
-      "스레드: 텍스트 콘텐츠 관리"
-    ],
-    notIncluded: ["영상 콘텐츠", "광고 운영", "인스타그램 풀관리"],
+    price: 550000,
+    goal: "검색했을 때 우리 가게가 믿음직스럽게 보이게",
+    targetAudience: "오픈 초기 매장, 온라인 관리 처음인 분",
+    simpleDesc: "블로그 + 플레이스 기본 관리",
     color: "cyan"
   },
   {
     id: "performance",
     grade: "GRADE 2",
-    name: "퍼포먼스 그로스",
+    name: "퍼포먼스",
     subtitle: "매출 전환 ⭐",
-    price: 1800000,
-    goal: "실제 문의와 예약을 늘리고, SNS 알고리즘 태우기",
-    targetAudience: "지역 내 경쟁이 치열한 업종 (미용실, 에스테틱, 맛집)",
+    price: 990000,
+    goal: "실제 문의와 예약 늘리기",
+    targetAudience: "경쟁이 치열한 업종 (미용실, 맛집 등)",
     recommended: true,
-    services: [
-      "인스타그램: 릴스+피드+카드 통합관리",
-      "플레이스 A형: 적극적 리뷰관리 + 키워드 모니터링",
-      "블로그 A형: 상위노출 타겟팅",
-      "구글 마이비즈니스: 리뷰관리"
-    ],
-    notIncluded: ["유튜브", "광고 운영 대행"],
+    simpleDesc: "인스타 + 블로그 + 플레이스 통합관리",
     color: "purple"
   },
   {
     id: "master",
     grade: "GRADE 3",
-    name: "토탈 마스터",
-    subtitle: "지역 장악 & 팬덤 구축",
-    price: 3200000,
-    goal: "지역 1등을 넘어 전국구 브랜드/팬덤 구축",
-    targetAudience: "이미 지역에서 인지도 있고, 더 큰 성장을 원하는 대표님",
-    services: [
-      "유튜브 숏폼: 쇼츠 제작 관리",
-      "인스타그램: 릴스+피드+카드 풀관리",
-      "플레이스 A형 + 블로그 A형",
-      "틱톡: 영상 제작 관리",
-      "구글: 마이비즈니스 + SEO"
-    ],
-    notIncluded: ["유튜브 롱폼 (별도)"],
+    name: "마스터",
+    subtitle: "지역 장악",
+    price: 1900000,
+    goal: "지역 1등 브랜드로 성장",
+    targetAudience: "더 큰 성장을 원하는 대표님",
+    simpleDesc: "유튜브 + 인스타 + 틱톡 + 블로그 + 플레이스 올인원",
     color: "orange"
   }
 ]
@@ -262,22 +244,22 @@ const SET_MENUS = [
   {
     id: "sns_starter",
     name: "🔥 SNS 스타터 셋트",
-    originalPrice: 1600000,
-    price: 1180000,
-    monthlyPrice: 880000,
+    originalPrice: 1090000,
+    price: 890000,
+    monthlyPrice: 550000,
     monthlyGrade: "GRADE 1 베이직",
-    includes: ["플레이스 셋팅 (59만)", "스레드 셋팅 (25만)", "GRADE 1 베이직 1개월 (88만)"],
+    includes: ["플레이스 셋팅 (39만)", "스레드 셋팅 (15만)", "GRADE 1 베이직 1개월 (55만)"],
     recommended: "처음 SNS 마케팅 시작하는 분",
     tag: "입문"
   },
   {
     id: "sns_growth",
     name: "⭐ SNS 성장 셋트",
-    originalPrice: 3200000,
-    price: 2380000,
-    monthlyPrice: 1800000,
+    originalPrice: 1870000,
+    price: 1490000,
+    monthlyPrice: 990000,
     monthlyGrade: "GRADE 2 퍼포먼스",
-    includes: ["인스타그램 계정 최적화 셋팅 (90만)", "플레이스 셋팅 (59만)", "GRADE 2 퍼포먼스 1개월 (180만)"],
+    includes: ["인스타그램 계정 최적화 셋팅 (49만)", "플레이스 셋팅 (39만)", "GRADE 2 퍼포먼스 1개월 (99만)"],
     recommended: "매출 전환이 필요한 사업자",
     tag: "BEST",
     best: true
@@ -285,22 +267,22 @@ const SET_MENUS = [
   {
     id: "sns_viral",
     name: "💎 바이럴 마스터 셋트",
-    originalPrice: 5200000,
-    price: 3580000,
-    monthlyPrice: 1800000,
+    originalPrice: 3760000,
+    price: 2790000,
+    monthlyPrice: 990000,
     monthlyGrade: "GRADE 2 퍼포먼스",
-    includes: ["인스타+틱톡 계정 최적화 셋팅", "네이버 묶음 셋팅", "GRADE 2 퍼포먼스 2개월"],
+    includes: ["인스타+틱톡 계정 최적화 셋팅 (98만)", "네이버 묶음 셋팅 (79만)", "GRADE 2 퍼포먼스 2개월 (198만)"],
     recommended: "본격적인 바이럴을 원하는 분",
     tag: "프리미엄"
   },
   {
     id: "sns_dominate",
     name: "👑 지역 장악 셋트",
-    originalPrice: 7800000,
-    price: 4980000,
-    monthlyPrice: 3200000,
+    originalPrice: 6690000,
+    price: 4990000,
+    monthlyPrice: 1900000,
     monthlyGrade: "GRADE 3 토탈마스터",
-    includes: ["올인원 풀셋팅", "GRADE 3 토탈마스터 2개월 (640만)", "유튜브 채널 최적화 (130만)"],
+    includes: ["올인원 풀셋팅 (249만)", "GRADE 3 토탈마스터 2개월 (380만)", "유튜브 채널 최적화 (59만)"],
     recommended: "지역 1등을 목표로 하는 분",
     tag: "엔터프라이즈"
   }
@@ -315,8 +297,8 @@ const WEBSITE_PACKAGES = [
     type: "TYPE A",
     name: "랜딩형",
     subtitle: "전환 집중 원페이지",
-    price: 1800000,
-    originalPrice: 2500000,
+    price: 990000,
+    originalPrice: 1500000,
     description: "소상공인, 1인 샵을 위한 빠른 시작",
     includes: ["반응형 원페이지", "기본 SEO 최적화", "모바일 최적화", "1개월 무료 관리"],
     color: "cyan"
@@ -326,8 +308,8 @@ const WEBSITE_PACKAGES = [
     type: "TYPE B",
     name: "스탠다드형",
     subtitle: "기업형 브랜딩",
-    price: 3000000,
-    originalPrice: 4500000,
+    price: 1990000,
+    originalPrice: 2500000,
     description: "성장하는 사업장을 위한 체계적 구축",
     recommended: true,
     includes: ["5페이지 브랜드 웹사이트", "SEO/AEO/GEO 적용", "SNS 연동", "3개월 사후 관리"],
@@ -338,8 +320,8 @@ const WEBSITE_PACKAGES = [
     type: "TYPE C",
     name: "프리미엄 브랜딩",
     subtitle: "⚡ 24시간 AI 상담봇 포함",
-    price: 5000000,
-    originalPrice: 8000000,
+    price: 4500000,
+    originalPrice: 5500000,
     description: "AI 상담봇이 고객 문의에 24시간 자동 응대",
     includes: ["무제한 페이지 구축", "스토리텔링 기획", "🤖 AI 상담봇 탑재 (24시간)", "6개월 VIP 관리"],
     color: "orange"
@@ -349,8 +331,8 @@ const WEBSITE_PACKAGES = [
     type: "TYPE D",
     name: "병원/프랜차이즈",
     subtitle: "🎬 브랜드 영상 제작 + 풀 패키지",
-    price: 8000000,
-    originalPrice: 15000000,
+    price: 7500000,
+    originalPrice: 9500000,
     description: "브랜드 영상 제작 + AI 상담봇 + 결제/예약 시스템",
     includes: ["🎬 브랜드 영상 3편 제작", "🤖 AI 상담봇 (24시간)", "결제/예약 시스템 연동", "12개월 전담 케어"],
     color: "pink"
@@ -361,27 +343,59 @@ const WEBSITE_PACKAGES = [
 // 부가 서비스 (브랜드 영상촬영/편집 A/B/C/D형)
 // ========================================
 const ADDON_SERVICES = [
-  { id: "detail_page", name: "상세페이지 디자인", price: 1500000, desc: "스마트스토어/와디즈용 고퀄리티", perUnit: "1건" },
-  { id: "commercial_analysis", name: "상권분석 맞춤의뢰", price: 500000, desc: "AI 기반 상권분석 (계약시 환급)", perUnit: "1건" },
-  { id: "sns_boost", name: "SNS 부스팅", price: 300000, desc: "팔로워/조회수 부스팅 (광고비 별도)", perUnit: "월" },
-  { id: "video_a", name: "브랜드영상 A형", price: 1500000, desc: "숏폼 3편 촬영/편집 (15초~30초)", perUnit: "1회", category: "video" },
-  { id: "video_b", name: "브랜드영상 B형", price: 2500000, desc: "숏폼 5편 + 하이라이트 1편", perUnit: "1회", category: "video" },
-  { id: "video_c", name: "브랜드영상 C형", price: 4000000, desc: "롱폼 1편 (3분 이내) + 숏폼 3편", perUnit: "1회", category: "video" },
-  { id: "video_d", name: "브랜드영상 D형", price: 6000000, desc: "롱폼 2편 + 숏폼 5편 + 광고편집", perUnit: "1회", category: "video" },
+  { id: "detail_page", name: "상세페이지 디자인", price: 1500000, desc: "스마트스토어/와디즈용 수작업 고퀄리티", perUnit: "1건" },
+  { id: "commercial_analysis", name: "상권분석 (방문설명)", price: 800000, desc: "현장 방문 상권분석 + 맞춤 전략 (계약시 환급)", perUnit: "1건" },
+  { id: "sns_boost", name: "SNS 부스팅", price: 290000, desc: "팔로워/조회수 부스팅 (광고비 별도)", perUnit: "월" },
+  { id: "video_a", name: "브랜드영상 A형", price: 990000, desc: "숏컷 2편 (15초~30초)", perUnit: "1회", category: "video" },
+  { id: "video_b", name: "브랜드영상 B형", price: 1400000, desc: "숏컷 3편 + 하이라이트 1편", perUnit: "1회", category: "video" },
+  { id: "video_c", name: "브랜드영상 C형", price: 2490000, desc: "묵직한 브랜딩 영상 1편 (3분 이내)", perUnit: "1회", category: "video" },
+  { id: "video_d", name: "브랜드영상 D형", price: 5500000, desc: "브랜딩 영상 2편", perUnit: "1회", category: "video" },
+  { id: "video_edu_small", name: "교육/매뉴얼 영상 (20P 미만)", price: 1000000, desc: "시리즈 편당 (20페이지 미만)", perUnit: "1편", category: "video" },
+  { id: "video_edu_large", name: "교육/매뉴얼 영상 (50P 미만)", price: 2000000, desc: "시리즈 편당 (50페이지 미만)", perUnit: "1편", category: "video" },
+  { id: "video_visit", name: "방문 촬영", price: 1500000, desc: "현장 방문 촬영 영상 1편", perUnit: "1회", category: "video" },
   { id: "zoom_consult", name: "🎥 ZOOM 상담", price: 30000, desc: "30분 1:1 화상 마케팅 전략 상담", perUnit: "1회", category: "consultation", highlight: true }
 ]
 
 // ========================================
-// 웹 개발 옵션
+// 시스템 개발 옵션 (기능 중심 - 자동화/연동)
 // ========================================
-const WEB_DEV_OPTIONS = [
-  { id: "homepage", name: "홈페이지 (기본)", price: 1500000, desc: "5페이지 기본 웹사이트" },
-  { id: "littly", name: "리틀리 제작", price: 300000, desc: "링크 모음 페이지" },
-  { id: "web_basic", name: "웹 개발 (기본)", price: 3000000, desc: "기본 기능 웹앱" },
-  { id: "web_standard", name: "웹 개발 (표준)", price: 5000000, desc: "회원가입/로그인/게시판" },
-  { id: "web_advanced", name: "웹 개발 (고급)", price: 8000000, desc: "결제 시스템/API 연동" },
-  { id: "web_premium", name: "웹 개발 (프리미엄)", price: 12000000, desc: "AI 기능/대시보드" },
-  { id: "web_enterprise", name: "웹 개발 (엔터프라이즈)", price: 15000000, desc: "풀커스텀 시스템" }
+const SYSTEM_DEV_OPTIONS = [
+  { id: "sys_basic", name: "시스템 개발 (기본)", price: 1900000, desc: "회원가입 / 로그인 / 게시판" },
+  { id: "sys_standard", name: "시스템 개발 (표준)", price: 2900000, desc: "네이버 지도 연동 / 카카오 연동" },
+  { id: "sys_advanced", name: "시스템 개발 (고급)", price: 4900000, desc: "결제 시스템 / 예약 자동화 / 알림톡 연동" },
+  { id: "sys_premium", name: "시스템 개발 (프리미엄)", price: 7900000, desc: "AI 상담봇 설치 / 관리자 대시보드" },
+  { id: "sys_enterprise", name: "시스템 개발 (엔터프라이즈)", price: 9900000, desc: "풀커스텀 시스템 (ERP/CRM 연동)" }
+]
+
+// ========================================
+// 웹 서비스 옵션 (디자인 중심 - 홈페이지/랜딩)
+// ========================================
+const WEB_SERVICE_OPTIONS = [
+  { id: "littly", name: "리틀리 제작", price: 290000, desc: "링크 모음 페이지" },
+  { id: "homepage_basic", name: "홈페이지 (기본)", price: 990000, desc: "5페이지 반응형 웹사이트" },
+  { id: "homepage_pro", name: "홈페이지 (프로)", price: 1990000, desc: "SEO 최적화 + 3개월 관리" }
+]
+
+// ========================================
+// 브랜드/프랜차이즈 컨설팅 (1년 계약, 월2회 방문)
+// ========================================
+const CONSULTING_OPTIONS = [
+  { 
+    id: "consult_brand", 
+    name: "🏢 브랜드 컨설팅", 
+    prices: { month1_2: 3000000, month3_5: 2000000, month6_12: 1500000 },
+    desc: "1년 계약 / 월 2회 방문",
+    includes: ["매뉴얼 제작", "커리큘럼 구성", "영상 마케팅 전략"],
+    advisory: ["법인 설립", "세무 자문", "노무 자문", "행정 지원", "영업 전략", "정부과제 (과제비 별도)"]
+  },
+  { 
+    id: "consult_franchise", 
+    name: "🍽️ 프랜차이즈 컨설팅", 
+    prices: { month1_2: 3000000, month3_5: 2000000, month6_12: 1500000 },
+    desc: "1년 계약 / 월 2회 방문",
+    includes: ["가맹 매뉴얼 제작", "교육 커리큘럼", "영상 마케팅 전략"],
+    advisory: ["법인 설립", "세무 자문", "노무 자문", "행정 지원", "영업 전략", "정부과제 (과제비 별도)"]
+  }
 ]
 
 // ========================================
@@ -394,7 +408,9 @@ app.get('/api/monthly-grades', (c) => c.json(MONTHLY_GRADES))
 app.get('/api/set-menus', (c) => c.json(SET_MENUS))
 app.get('/api/website-packages', (c) => c.json(WEBSITE_PACKAGES))
 app.get('/api/addon-services', (c) => c.json(ADDON_SERVICES))
-app.get('/api/web-dev-options', (c) => c.json(WEB_DEV_OPTIONS))
+app.get('/api/web-service-options', (c) => c.json(WEB_SERVICE_OPTIONS))
+app.get('/api/system-dev-options', (c) => c.json(SYSTEM_DEV_OPTIONS))
+app.get('/api/consulting-options', (c) => c.json(CONSULTING_OPTIONS))
 
 // ========================================
 // 유틸 함수들
@@ -984,8 +1000,8 @@ app.post('/api/chat', async (c) => {
   }
   
   const systemPrompt = `# Role Definition (역할 정의)
-당신은 X I Λ I X 마케팅 상담 "봇"입니다. (20년 경력 마케팅 전문가 기반) 
-마케팅 용어를 전혀 모르는 사업가들에게 비즈니스 파트너로서 조언을 해줍니다.
+당신은 X I Λ I X 마케팅 전문 상담 AI입니다. (20년 경력 마케팅 전문가 기반)
+마케팅 용어를 전혀 모르는 사업가들에게 비즈니스 파트너로서 친절하게 조언합니다.
 설명 방식은 **"초등학생 조카에게 설명하듯"** 아주 쉽고 직관적인 비유를 사용합니다.
 
 # Customer Addressing (호칭 전략)
@@ -1000,66 +1016,196 @@ app.post('/api/chat', async (c) => {
    - 트래픽(유입) → "우리 가게 문 열고 들어오는 손님 숫자"
    - 전환율 → "구경만 하던 손님이 지갑 열게 만드는 것"
    - AEO(AI검색최적화) → "AI 비서한테 '맛집 어디야?' 물었을 때 우리 가게 추천되게 하는 것"
+   - 릴스 → "15~90초짜리 짧은 동영상, 요즘 인스타에서 제일 잘 퍼지는 콘텐츠"
+   - 피드 → "인스타 계정 들어가면 바둑판처럼 보이는 사진/이미지들"
+   - 카드뉴스 → "슬라이드처럼 넘겨보는 정보 이미지 (보통 5~10장)"
 2. **전문 용어 자제:** ROAS, 퍼널 등 어려운 용어는 쓰지 않거나 쉽게 풀어서 설명
-3. **이모지 활용:** 🎒🚀💡💰🏥☕ 등 적절히 사용
+3. **이모지 활용:** 🎒🚀💡💰🏥☕📍📸🎬 등 적절히 사용
 4. **결론부터:** "이걸 추천해요!" 먼저 말하고 이유 설명
+5. **친구 초대 할인 안내:** 가격 문의 시 "친구 초대하시면 5% 할인 쿠폰도 받으실 수 있어요!" 언급
 
 # Product Database (판매 상품 - 엄격 준수, 가격 지어내기 금지!)
 
-## 🔥 SNS 세트 메뉴 (추천!)
-*세트 = 첫달 세팅비 + 다음달부터 월관리비*
+## 🔥 SNS 세트 메뉴 (가장 추천! 할인 적용)
+*세트 = 첫달(셋팅+월관리) + 다음달부터 월관리비만*
 
-| 상품 | 첫달 | 월관리 | 추천멘트 |
-|------|------|--------|----------|
-| SNS 스타터(입문) | 118만 | 88만 | "지도에 이름 올리고 기본 간판 다는 단계" |
-| SNS 성장(BEST) | 238만 | 180만 | "인스타/검색으로 손님이 찾아오게" |
-| 바이럴 마스터 | 358만 | 180만 | "동영상으로 소문 확! 내고 싶은 분" |
-| 지역 장악 | 498만 | 320만 | "우리 동네 1등 하고 싶은 야심찬 분" |
+| 상품명 | 첫달 총액 | 월관리 | 포함 서비스 | 추천 대상 |
+|--------|----------|--------|-------------|-----------|
+| 🔥 SNS 스타터 | 89만 | 55만 | 플레이스 셋팅 + 베이직 관리 | "처음 시작하는 분, 지도에 먼저 이름 올리고 싶은 분" |
+| ⭐ SNS 성장 (BEST) | 149만 | 99만 | 플레이스+인스타 셋팅 + 퍼포먼스 관리 | "인스타도 하고 검색도 잡고 싶은 분 - 가장 인기!" |
+| 💎 바이럴 마스터 | 279만 | 99만 | 플레이스+인스타+유튜브 + 퍼포먼스 관리 | "영상으로 입소문 확 내고 싶은 분" |
+| 👑 지역 장악 | 499만 | 190만 | 전 채널 셋팅 + 토탈마스터 관리 | "우리 동네 1등, 압도적 존재감 원하는 분" |
+
+## 📊 월관리 등급 (GRADE) - 세부 서비스 내용
+
+### GRADE 1: 베이직 (월 55만원)
+"기본기 다지기 - 꾸준히 관리받고 싶은 분"
+포함 서비스:
+- 📍 네이버 플레이스: 기본 정보 관리 + 리뷰 응대 (월 2회 점검)
+- 📸 인스타그램: 피드 2개 + 스토리 4개/월
+- 📝 블로그: 포스팅 2개/월
+
+### GRADE 2: 퍼포먼스 그로스 (월 99만원) ⭐ 가장 인기
+"적극적으로 손님 늘리기 - 문의/예약 늘리고 싶은 분"
+포함 서비스:
+- 📍 네이버 플레이스 A형: 적극적 리뷰 관리 + 키워드 모니터링 + 상위노출 전략
+- 📸 인스타그램 풀관리: 릴스 4개 + 피드 4개 + 카드뉴스 2개 + 스토리 8개/월
+- 📝 블로그 A형: 상위노출 타겟 포스팅 4개/월
+- 🌍 구글 마이비즈니스: 리뷰 관리 + 정보 최적화
+
+### GRADE 3: 토탈 마스터 (월 190만원) 👑
+"지역 1등 - 압도적 존재감으로 동네 장악"
+포함 서비스:
+- 🎬 유튜브 숏폼: 숏츠 제작 4개/월 (촬영+편집+업로드)
+- 📸 인스타그램 풀관리: 릴스 8개 + 피드 6개 + 카드뉴스 4개/월
+- 📍 네이버 플레이스 A형 + 블로그 A형
+- 🎵 틱톡: 영상 제작 4개/월
+- 🌍 구글 마이비즈니스 + SEO 기본
+
+## 🏷️ 채널별 단품 서비스 (개별 선택 가능)
+
+### 📍 네이버 (지도+검색)
+| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
+|--------|--------|--------|-----------|
+| 플레이스 셋팅 | 39만 | - | 기본정보 최적화, 사진 보정 20장, 메뉴/가격표, 키워드 세팅 |
+| 플레이스 월관리 A형 | - | 50만 | 리뷰 적극 관리(답글+유도), 키워드 모니터링, 상위노출 전략, 주 1회 리포트 |
+| 플레이스 월관리 B형 | - | 35만 | 기본 리뷰 응대, 정보 업데이트, 월 2회 점검 |
+| 광고/톡톡/페이 SET | 59만 | 별도상담 | 네이버 광고 세팅 + 톡톡 자동응답 + 페이 연동 (광고비 별도) |
+
+### 📸 인스타그램
+| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
+|--------|--------|--------|-----------|
+| 계정 셋팅 | 49만 | - | 프로필 최적화, 하이라이트 구성, 피드 그리드 기획, 해시태그 전략 |
+| 월관리 | - | 75만 | 릴스 4개 + 피드 4개 + 카드뉴스 2개 + 스토리 8개/월, 댓글/DM 관리 |
+| 메타광고 셋팅 | 35만 | 별도상담 | 타겟 광고 세팅 (인스타+페이스북), 광고비 별도 |
+| 스레드 셋팅 | 15만 | - | 계정 생성 + 초기 콘텐츠 10개 |
+| 스레드 월관리 | - | 20만 | 포스팅 15개/월 + 소통 관리 |
+
+### 🎬 유튜브/숏폼
+| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
+|--------|--------|--------|-----------|
+| 채널 셋팅 | 59만 | - | 채널아트, 섬네일 템플릿, 재생목록 구성, SEO 최적화 |
+| 숏폼 월관리 | - | 59만 | 숏츠/릴스 4개/월 (기획+촬영가이드+편집+업로드+해시태그) |
+| 롱폼 월관리 | - | 150만 | 5~15분 영상 2개/월 (기획+촬영+편집+썸네일+SEO) |
+
+### 🎵 틱톡
+| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
+|--------|--------|--------|-----------|
+| 계정 셋팅 | 49만 | - | 프로필 최적화, 트렌드 분석, 초기 콘텐츠 5개 |
+| 월관리 | - | 55만 | 영상 8개/월 (트렌드 반영), 해시태그 전략, 소통 관리 |
+
+### 📝 블로그
+| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
+|--------|--------|--------|-----------|
+| 네이버블로그 셋팅 | 29만 | - | 블로그 개설/디자인, 카테고리 구성, 초기 포스팅 3개 |
+| 네이버 월관리 A형 | - | 45만 | 상위노출 타겟 포스팅 4개/월 (키워드 분석+SEO 최적화) |
+| 네이버 월관리 B형 | - | 20만 | 일반 포스팅 2개/월 |
+| 워드프레스 셋팅 | 35만 | - | 설치+테마+플러그인+초기 세팅 |
+| 워드프레스 월관리 | - | 30만 | 포스팅 4개/월 + 기술 유지보수 |
+
+### 🌍 구글
+| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
+|--------|--------|--------|-----------|
+| 마이비즈니스 셋팅 | 35만 | - | 구글맵 등록, 정보 최적화, 사진 업로드 |
+| 마이비즈니스 월관리 | - | 25만 | 리뷰 관리, 게시물 업로드, 정보 업데이트 |
+| 구글 SEO | 59만 | 별도상담 | 웹사이트 검색최적화 (기술 SEO + 콘텐츠) |
+| 구글 광고 | 39만 | 별도상담 | 검색/디스플레이 광고 세팅 (광고비 별도) |
 
 ## 🌐 웹사이트 구축
-- 랜딩형(A): 180만 (한 장짜리 전단지 같은 홈페이지)
-- 스탠다드(B): 300만 (5페이지 정석 홈페이지, BEST)
-- 프리미엄(C): 500만 (24시간 AI 상담원 포함)
-- 병원/프랜차이즈(D): 800만 (영상+예약시스템+AI상담 풀세트)
+| 패키지 | 가격 | 포함 내용 | 추천 대상 |
+|--------|------|-----------|-----------|
+| 랜딩형 | 99만 | 1페이지 원페이지, 반응형, 기본 SEO | "일단 홈페이지 있으면 되는 분" |
+| 스탠다드 (BEST) | 199만 | 5페이지, 반응형, SEO, 3개월 관리 | "제대로 된 회사 홈페이지 원하는 분" |
+| 프리미엄 | 450만 | 무제한 페이지, AI 상담봇 탑재, 6개월 VIP 관리 | "24시간 자동 상담 원하는 분" |
+| 병원/프랜차이즈 | 750만 | 브랜드 영상 3편 + AI 상담봇 + 예약시스템 + 12개월 케어 | "전문 브랜딩 필요한 분" |
 
-## 🏷️ 채널별 단품
-- 네이버: 플레이스(59만), 광고/톡톡/페이SET(100만)
-- 인스타: 계정최적화(90만), 메타광고(60만), 스레드(25만)
-- 유튜브: 채널최적화(130만), 숏폼(월99만), 롱폼(월220만)
-- 블로그/구글: 네이버블로그(40만), 구글마이비즈니스(50만), 구글SEO(80만)
+## 🎨 웹 서비스 (디자인 중심)
+| 패키지 | 가격 | 포함 내용 |
+|--------|------|-----------|
+| 리틀리 제작 | 29만 | 링크 모음 페이지 |
+| 홈페이지 (기본) | 99만 | 5페이지 반응형 웹사이트 |
+| 홈페이지 (프로) | 199만 | SEO 최적화 + 3개월 관리 |
+
+## ⚙️ 시스템 개발 (기능 중심)
+| 패키지 | 가격 | 포함 내용 |
+|--------|------|-----------|
+| 시스템 개발 (기본) | 190만 | 회원가입 / 로그인 / 게시판 |
+| 시스템 개발 (표준) | 290만 | 네이버 지도 연동 / 카카오 연동 |
+| 시스템 개발 (고급) | 490만 | 결제 시스템 / 예약 자동화 / 알림톡 연동 |
+| 시스템 개발 (프리미엄) | 790만 | AI 상담봇 설치 / 관리자 대시보드 |
+| 시스템 개발 (엔터프라이즈) | 990만 | 풀커스텀 시스템 (ERP/CRM 연동) |
 
 ## ➕ 부가 서비스
-- 상세페이지 디자인: 150만
-- 상권분석 맞춤의뢰: 50만 (계약시 환급)
-- SNS 부스팅: 월30만
-- 브랜드 영상: A형(150만)~D형(600만)
-- **🎥 ZOOM 상담: 3만원** (30분 1:1 화상 전략 상담) ← 가장 저렴하게 전문가 조언 받을 수 있는 방법!
+- 📊 상세페이지 디자인: 150만 (쿠팡/스마트스토어용, 수작업 고퀄리티)
+- 📈 상권분석 (방문설명): 80만 (현장 방문 + 맞춤 전략, 계약시 전액 환급!)
+- 🚀 SNS 부스팅: 월 29만 (팔로워/좋아요 증가)
+- 🎬 브랜드 영상 A형: 99만 (숏컷 2편)
+- 🎬 브랜드 영상 B형: 140만 (숏컷 3편 + 하이라이트 1편)
+- 🎬 브랜드 영상 C형: 249만 (묵직한 브랜딩 영상 1편)
+- 🎬 브랜드 영상 D형: 550만 (브랜딩 영상 2편)
+- 🎬 교육/매뉴얼 영상 (20P 미만): 100만/편
+- 🎬 교육/매뉴얼 영상 (50P 미만): 200만/편
+- 🎬 방문 촬영: 150만 (현장 방문 촬영 1편)
+- **🎥 ZOOM 상담: 3만원** (30분 1:1 화상 전략 상담) ← 가장 저렴하게 전문가 조언!
+
+## 🏢 브랜드/프랜차이즈 컨설팅 (1년 계약, 월 2회 방문)
+| 기간 | 월 금액 | 설명 |
+|------|---------|------|
+| 1~2개월차 | **월 300만** | 초기 세팅 기간 |
+| 3~5개월차 | **월 200만** | 안정화 기간 |
+| 6~12개월차 | **월 150만** | 유지 기간 |
+
+**포함 서비스:**
+- 매뉴얼 제작 / 커리큘럼 구성 / 영상 마케팅 전략
+
+**자문 분야:**
+- 법인 설립 / 세무 자문 / 노무 자문 / 행정 지원 / 영업 전략
+- 정부과제 연계 (과제비 별도)
+
+💡 "브랜드 만들어서 프랜차이즈 하고 싶어요" → 브랜드 컨설팅 추천!
+💡 "이미 가맹점 여러 개인데 체계화하고 싶어요" → 프랜차이즈 컨설팅 추천!
+
+## 🎁 친구 초대 혜택
+- 친구 초대하면: 신규 회원 **5% 할인 쿠폰** 증정
+- VIP 추천: **15% 할인 쿠폰** (누적 구매 300만원 이상 고객)
+- 예시) SNS 성장 149만원 → 5% 할인 시 141.5만원 / 15% 할인 시 126.6만원
 
 # FAQ Response (자주 묻는 질문 대응)
 
-**Q1. "너무 비싸요"**
-→ "월 88만원이면 하루 3만원이에요. 24시간 잠도 안 자고 홍보해주는 직원 한 명 쓴다고 생각해보세요. 알바생 하루 일당보다 싸게 먹히는 셈이죠! 😊"
+**Q1. "너무 비싸요" / "예산이 부족해요"**
+→ "이해해요! 그래서 저희가 세트 메뉴를 만들었어요. SNS 스타터 89만원이면 첫 달 세팅+관리까지 다 되고, 다음 달부터는 55만원이에요. 하루로 치면 1.8만원! 알바생 반나절 비용으로 24시간 마케팅 되는 셈이죠 😊 그리고 친구 초대하시면 5% 할인도 받으실 수 있어요!"
 
 **Q2. "효과가 바로 나타나나요?"**
-→ "씨앗 심자마자 열매 열리진 않잖아요? 🌱 첫 달은 밭 갈고 씨 뿌리는 '세팅' 기간이에요. 제대로 세팅하면 둘째 달부터 반응 오기 시작합니다."
+→ "씨앗 심자마자 열매 열리진 않잖아요? 🌱 첫 달은 밭 갈고 씨 뿌리는 '세팅' 기간이에요. 플레이스 최적화하고 인스타 기반 다지고... 제대로 세팅하면 보통 2~3개월째부터 문의가 늘기 시작해요."
 
-**Q3. "SEO니 AEO니 뭐예요?"**
-→ "'온라인 명당자리 잡기'라고 보시면 돼요. 강남대로 한복판에 간판 걸면 비싸잖아요? 인터넷 세상에서 우리 가게를 가장 잘 보이는 자리에 갖다 놓는 기술이에요."
+**Q3. "월관리에 뭐가 포함되어 있어요?"**
+→ (위 GRADE별 세부 내용 참조해서 구체적으로 설명. 예: "GRADE 2 퍼포먼스는 월 99만원인데요, 인스타 릴스 4개+피드 4개+카드뉴스 2개, 플레이스 적극 관리, 블로그 4개 포스팅이 포함되어 있어요. 사장님은 콘텐츠 승인만 해주시면 저희가 다 올려드려요!")
 
-**Q4. "해약할 수 있나요?"**
-→ "네! 약정 노예계약 안 합니다. 첫 달 써보시고 마음에 안 드시면 언제든 멈추셔도 돼요. 그만큼 실력에 자신 있다는 거죠 😎"
+**Q4. "인스타 월관리 75만원에 정확히 뭘 해주는 거예요?"**
+→ "릴스(짧은 영상) 4개, 피드(이미지) 4개, 카드뉴스 2개, 스토리 8개를 만들어서 올려드려요. 댓글이나 DM 관리도 해드리고요. 사장님은 촬영 협조만 해주시면 나머지는 저희가 기획-제작-업로드까지 다 해요! 📸"
+
+**Q5. "해약할 수 있나요?"**
+→ "네! 노예계약 없어요 😎 첫 달 써보시고 마음에 안 드시면 언제든 멈추셔도 돼요. 그만큼 실력에 자신 있으니까요."
+
+**Q6. "플레이스 A형이랑 B형 차이가 뭐예요?"**
+→ "B형(35만)은 기본 관리예요. 리뷰 답글 달고 정보 업데이트하고. A형(50만)은 적극 공략! 상위노출 전략 짜고, 키워드 모니터링하고, 리뷰 유도까지 해드려요. 경쟁 심한 지역이면 A형 추천해요!"
+
+**Q7. "ZOOM 상담은 뭐예요?"**
+→ "3만원에 30분 동안 1:1로 화상 상담해드려요! 사장님 업종, 상황 듣고 맞춤 전략 조언해드려요. 일단 이것만 신청하셔도 방향이 잡히실 거예요 🎥"
 
 # Conversation Flow (대화 순서)
-1. **인사+업종 파악:** "안녕하세요! X I Λ I X 마케팅 상담 봇입니다. 어떤 사업 운영 중이신가요?"
+1. **인사+업종 파악:** "안녕하세요! X I Λ I X 마케팅 상담 AI입니다 😊 어떤 사업 운영하고 계신가요?"
 2. **호칭 설정+공감:** 업종 맞는 호칭으로 부르며 노고 위로
-3. **진단+추천:** 상황 맞는 상품을 쉬운 비유와 함께 추천
-4. **FAQ 방어:** 가격/효과 걱정하면 위 FAQ 논리로 설득
-5. **마무리:** "장바구니에 담아드릴까요?" 또는 "포트폴리오 먼저 보시겠어요?"
+3. **니즈 파악:** "지금 가장 고민되시는 게 뭐예요? 손님이 안 오는 건지, 인스타 운영이 어려운 건지..."
+4. **맞춤 추천:** 상황에 맞는 상품을 쉬운 비유와 함께 추천 (세트 메뉴 우선 추천)
+5. **세부 설명:** 궁금해하면 포함 서비스 구체적으로 설명
+6. **FAQ 방어:** 가격/효과 걱정하면 위 FAQ 논리로 설득
+7. **마무리:** "장바구니에 담아드릴까요?" 또는 "ZOOM 상담 먼저 받아보시겠어요?"
 
 # 금지 사항
-- 없는 상품/가격 지어내기
-- 할인/무료 약속
-- 효과 보장
+- 없는 상품/가격 지어내기 (위 데이터베이스에 없는 건 "확인 후 안내드릴게요" 라고 답변)
+- 임의 할인/무료 약속 (친구초대 5%, VIP 15% 외 할인 불가)
+- 효과 100% 보장 발언
 - 경쟁사 비방`
 
   try {
@@ -1094,6 +1240,16 @@ app.post('/api/chat', async (c) => {
 function getDemoResponse(message: string): string {
   const lower = message.toLowerCase()
   
+  // 인스타그램 관련
+  if (lower.includes('인스타') || lower.includes('instagram') || lower.includes('릴스') || lower.includes('피드')) {
+    return getInstagramResponse()
+  }
+  
+  // 유튜브 관련
+  if (lower.includes('유튜브') || lower.includes('youtube') || lower.includes('숏폼') || lower.includes('영상')) {
+    return getYoutubeResponse()
+  }
+  
   if (lower.includes('포트폴리오') || lower.includes('작업물')) {
     return `네! 포트폴리오 보여드릴게요! 🎨
 
@@ -1114,23 +1270,23 @@ function getDemoResponse(message: string): string {
   if (lower.includes('가격') || lower.includes('비용') || lower.includes('얼마')) {
     return `💰 **SNS 마케팅 셋트 메뉴** (홈페이지 별도)
 
-🔥 **SNS 스타터** - **118만원**
-→ 플레이스 셋팅 + 스레드 셋팅 + GRADE1 1개월
+🔥 **SNS 스타터** - **첫달 89만원** → 다음달부터 월 55만원
+→ 플레이스 셋팅 + 베이직 관리
 💡 처음 시작하는 분께 추천!
 
-⭐ **SNS 성장** - **238만원** (BEST!)
-→ 인스타 계정 최적화 + 플레이스 셋팅 + GRADE2 1개월
+⭐ **SNS 성장** - **첫달 149만원** → 다음달부터 월 99만원 (BEST!)
+→ 플레이스+인스타 셋팅 + 퍼포먼스 관리
 💡 매출 전환이 필요하신 분!
 
-💎 **바이럴 마스터** - **358만원**
-→ 인스타+틱톡 셋팅 + 네이버묶음 + GRADE2 2개월
-💡 본격 바이럴을 원하시는 분!
+💎 **바이럴 마스터** - **첫달 279만원** → 다음달부터 월 99만원
+→ 플레이스+인스타+유튜브 셋팅 + 퍼포먼스 관리
+💡 영상으로 입소문 내고 싶은 분!
 
-👑 **지역 장악** - **498만원**
-→ 올인원 풀셋팅 + GRADE3 2개월 + 유튜브 최적화
+👑 **지역 장악** - **첫달 499만원** → 다음달부터 월 190만원
+→ 전채널 풀셋팅 + 토탈마스터 관리
 💡 지역 1등을 노리시는 분!
 
-📌 **첫 달 = 셋팅비+관리비**, 다음 달부터 관리비만!
+🎁 **친구 초대하면 5% 할인 쿠폰!**
 
 어떤 업종이신가요? 맞춤 추천 드릴게요!`
   }
@@ -1138,20 +1294,23 @@ function getDemoResponse(message: string): string {
   if (lower.includes('grade') || lower.includes('관리')) {
     return `📊 **월 관리 GRADE**
 
-**GRADE 1 베이직** (88만원/월)
-🎯 검색하면 예쁘고 믿음직스럽게
-• 블로그B + 플레이스B + 스레드
-💡 가성비 최고! 기본 관리 시작!
+**GRADE 1 베이직** (월 55만원)
+🎯 기본기 다지기 - 꾸준히 관리받고 싶은 분
+• 플레이스 기본관리 + 인스타(피드2+스토리4) + 블로그 2개/월
+💡 하루 1.8만원으로 기본 관리!
 
-**GRADE 2 퍼포먼스** (180만원/월) ⭐BEST
-🎯 실제 문의와 예약 늘리기
-• 인스타(릴스+피드+카드) + 플레이스A + 블로그A + 구글
-💡 영상이 매출을 만듭니다!
+**GRADE 2 퍼포먼스** (월 99만원) ⭐BEST
+🎯 적극적으로 손님 늘리기
+• 인스타 풀관리(릴스4+피드4+카드2+스토리8)
+• 플레이스A(리뷰적극관리+키워드모니터링)
+• 블로그A(상위노출 타겟 4개/월) + 구글
+💡 문의/예약이 늘기 시작해요!
 
-**GRADE 3 토탈마스터** (320만원/월)
-🎯 지역 1등 → 전국구 브랜드
-• 유튜브 숏폼 + 인스타풀 + 플레이스A + 블로그A + 틱톡 + 구글
-💡 모든 채널 장악! 팬덤을 구축합니다!
+**GRADE 3 토탈마스터** (월 190만원) 👑
+🎯 지역 1등, 압도적 존재감
+• 유튜브 숏폼 4개/월 + 인스타(릴스8+피드6+카드4)
+• 플레이스A + 블로그A + 틱톡 4개/월 + 구글SEO
+💡 모든 채널 장악! 동네 1등 가능!
 
 어떤 목표를 가지고 계신가요?`
   }
@@ -1160,55 +1319,112 @@ function getDemoResponse(message: string): string {
     return `🗺️ **네이버 플레이스 서비스**
 
 **플레이스 단독 서비스:**
-• 셋팅비: **59만원** (지도 최적화 + 키워드 세팅 + 기반 작업)
-• 월관리 A형: **80만원** (적극적 리뷰관리 + 키워드모니터링)
-• 월관리 B형: **58만원** (기본 리뷰관리 + 정보 최적화)
+• 셋팅비: **39만원** (기본정보 최적화 + 사진보정 20장 + 키워드 세팅)
+• 월관리 A형: **50만원** (리뷰 적극관리 + 키워드모니터링 + 상위노출전략 + 주1회 리포트)
+• 월관리 B형: **35만원** (기본 리뷰응대 + 정보 업데이트 + 월2회 점검)
 
-**네이버 광고/톡톡/페이 SET:** **100만원** (월관리 없음)
-⚠️ 무리한 트래픽X, 상위노출 제외! 자연스러운 고객유입
+**네이버 광고/톡톡/페이 SET:** **59만원** (광고비 별도)
+→ 네이버 광고 세팅 + 톡톡 자동응답 + 페이 연동
 
 💡 **20년 노하우 꿀팁:** 
-플레이스만 하면 한계가 있어요.
+플레이스만 하면 한계가 있어요!
 블로그 + 플레이스 연동하면 상위노출 효과 2배!
-GRADE 1으로 시작하시면 88만원에 블로그+플레이스+스레드를 😊`
+GRADE 1(월55만원)으로 시작하시면 블로그+플레이스+인스타 다 됩니다 😊`
   }
   
   if (lower.includes('웹사이트') || lower.includes('홈페이지') || lower.includes('웹')) {
     return `🌐 **웹사이트 구축** (SNS 마케팅 별도)
 
-**TYPE A 랜딩형** - **180만원**
-→ 반응형 원페이지, 소상공인/1인샵 추천
+**TYPE A 랜딩형** - **99만원**
+→ 1페이지 원페이지, 반응형, 기본 SEO
+💡 일단 홈페이지 있으면 되는 분!
 
-**TYPE B 스탠다드** - **300만원**
-→ 5페이지, SEO/AEO/GEO 적용, 성장 사업장 추천
+**TYPE B 스탠다드** - **199만원** (BEST!)
+→ 5페이지, 반응형, SEO 적용, 3개월 관리 포함
+💡 제대로 된 회사 홈페이지 원하는 분!
 
-**TYPE C 프리미엄** - **500만원** ⚡
-→ 무제한 페이지 + **24시간 AI 상담봇** 탑재!
-💡 고객 문의에 자동 응대, 놓치는 고객 없이!
+**TYPE C 프리미엄** - **450만원** ⚡
+→ 무제한 페이지 + **24시간 AI 상담봇** 탑재 + 6개월 VIP관리
+💡 고객 문의에 24시간 자동 응대!
 
-**TYPE D 병원/프랜차이즈** - **800만원** 🎬
-→ **브랜드 영상 3편 제작** + AI 상담봇 + 결제/예약 시스템
+**TYPE D 병원/프랜차이즈** - **750만원** 🎬
+→ **브랜드 영상 3편** + AI 상담봇 + 예약시스템 + 12개월 케어
 💡 프리미엄 브랜딩의 끝판왕!
+
+💻 **웹 시스템 개발도 있어요!**
+회원시스템/결제/AI 기능 등 (190만~990만)
 
 어떤 사업을 하고 계신가요?`
   }
   
-  return `안녕하세요! X I Λ I X 마케팅 상담 봇입니다! 😊
+  return `안녕하세요! X I Λ I X 마케팅 상담 AI입니다! 😊
 
 20년간 **소상공인부터 대기업까지** 마케팅을 진행해왔어요.
 미용실, 에스테틱, 맛집, 병원 등 다양한 업종의 성공 사례가 있습니다!
 
 저희는 **"매출을 올리는 마케팅 솔루션"**을 제공합니다.
 
-궁금하신 점을 말씀해주세요:
-• 💰 "가격" - 셋트 메뉴 안내
+궁금하신 점을 편하게 물어보세요:
+• 💰 "가격" - 셋트 메뉴/개별 서비스 안내
 • 🎨 "포트폴리오" - 작업 사례
-• 📊 "GRADE" - 월 관리 안내
-• 🗺️ "플레이스" - 지도 마케팅
+• 📊 "GRADE" - 월관리에 뭐가 포함되어 있는지
+• 🗺️ "플레이스" - 네이버 지도 마케팅
 • 🌐 "웹사이트" - 홈페이지 구축
+• 📸 "인스타" - 인스타그램 관리
+• 🎬 "유튜브" - 영상 마케팅
 
 **어떤 업종을 운영하고 계신가요?**
 업종에 맞는 맞춤 전략 제안드릴게요!`
+}
+
+// 인스타그램 관련 응답 추가
+function getInstagramResponse(): string {
+  return `📸 **인스타그램 서비스**
+
+**계정 셋팅:** **49만원**
+→ 프로필 최적화 + 하이라이트 구성 + 피드 그리드 기획 + 해시태그 전략
+
+**월관리:** **75만원**
+포함 내용:
+• 릴스(짧은영상) 4개/월
+• 피드(이미지) 4개/월
+• 카드뉴스 2개/월
+• 스토리 8개/월
+• 댓글/DM 관리
+
+**메타광고 셋팅:** **35만원** (광고비 별도)
+→ 인스타+페이스북 타겟 광고 세팅
+
+**스레드:** 셋팅 15만 / 월관리 20만
+
+💡 인스타만 따로 하시는 것보다 **SNS 성장 세트(149만원)**가 훨씬 이득이에요!
+플레이스+인스타 셋팅 + 퍼포먼스 월관리까지 다 포함!`
+}
+
+// 유튜브 관련 응답
+function getYoutubeResponse(): string {
+  return `🎬 **유튜브/영상 서비스**
+
+**채널 셋팅:** **59만원**
+→ 채널아트 + 섬네일 템플릿 + 재생목록 구성 + SEO 최적화
+
+**숏폼 월관리:** **59만원**
+포함 내용:
+• 숏츠/릴스 4개/월
+• 기획 + 촬영가이드 + 편집 + 업로드
+• 해시태그 전략
+
+**롱폼 월관리:** **150만원**
+포함 내용:
+• 5~15분 영상 2개/월
+• 기획 + 촬영 + 편집 + 썸네일 + SEO
+
+**틱톡:** 셋팅 49만 / 월관리 55만 (영상 8개/월)
+
+💡 영상 마케팅 원하시면 **바이럴 마스터 세트(279만원)** 추천!
+플레이스+인스타+유튜브 셋팅 + 퍼포먼스 월관리 다 포함!
+
+영상으로 입소문 확 내고 싶으시면 상담해보세요! 🎥`
 }
 
 // Payment API
@@ -2244,11 +2460,85 @@ function getMainHTML(): string {
     <meta name="twitter:description" content="🚀 AI 기반 통합 마케팅 솔루션 | SNS·블로그·유튜브·광고 한 번에 해결!">
     <meta name="twitter:image" content="https://xivix.kr/og-image.png">
     
-    <!-- 추가 SEO -->
-    <meta name="keywords" content="마케팅, AI마케팅, SNS마케팅, 블로그마케팅, 유튜브마케팅, 광고대행, 인스타그램, 네이버블로그, 마케팅대행사">
+    <!-- 추가 SEO / AEO / C-RANK / GEO 최적화 -->
+    <meta name="keywords" content="마케팅, AI마케팅, SNS마케팅, 블로그마케팅, 유튜브마케팅, 광고대행, 인스타그램, 네이버블로그, 마케팅대행사, 네이버플레이스, 지역마케팅, 소상공인마케팅, 프랜차이즈마케팅, 브랜드컨설팅">
     <meta name="author" content="X I Λ I X">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="NaverBot" content="index, follow">
     <link rel="canonical" href="https://xivix.kr">
+    
+    <!-- AEO (AI Engine Optimization) - 구조화 데이터 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MarketingAgency",
+      "name": "X I Λ I X",
+      "alternateName": "XIVIX",
+      "url": "https://xivix.kr",
+      "logo": "https://xivix.kr/og-image.png",
+      "description": "AI 기반 통합 마케팅 솔루션 전문 에이전시. SNS, 블로그, 유튜브, 네이버 플레이스 마케팅 대행",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "KR"
+      },
+      "priceRange": "₩890,000 - ₩9,900,000",
+      "areaServed": "KR",
+      "serviceType": ["SNS 마케팅", "블로그 마케팅", "유튜브 마케팅", "네이버 플레이스 최적화", "브랜드 컨설팅", "웹사이트 제작"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "마케팅 서비스",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "SNS 스타터"}, "price": "890000", "priceCurrency": "KRW"},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "SNS 성장"}, "price": "1490000", "priceCurrency": "KRW"},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "바이럴 마스터"}, "price": "2790000", "priceCurrency": "KRW"}
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "127"
+      }
+    }
+    </script>
+    
+    <!-- GEO (Generative Engine Optimization) / FAQ 구조화 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "SNS 마케팅 비용은 얼마인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "X I Λ I X의 SNS 마케팅은 월 55만원(베이직)부터 시작합니다. SNS 스타터 세트는 첫달 89만원, 다음달부터 월 55만원입니다. 인스타그램, 네이버 플레이스, 블로그 통합 관리가 포함됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "마케팅 효과는 언제부터 나타나나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "첫 달은 계정 최적화와 기반 작업(세팅) 기간입니다. 제대로 세팅하면 보통 2~3개월째부터 문의와 예약이 늘기 시작합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "브랜드 컨설팅 비용은 얼마인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "브랜드/프랜차이즈 컨설팅은 1년 계약 기준 월 2회 방문으로 진행됩니다. 1~2개월차 월 300만원, 3~5개월차 월 200만원, 6~12개월차 월 150만원입니다. 매뉴얼 제작, 커리큘럼, 영상 마케팅, 법인/세무/노무 자문이 포함됩니다."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- C-RANK (네이버 검색 최적화) -->
+    <meta name="naver-site-verification" content="xivix2024">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2502,12 +2792,14 @@ function getMainHTML(): string {
       .portfolio-modal-close:hover { color: white; }
       .portfolio-modal-body { flex: 1; position: relative; min-height: 85vh; }
       .portfolio-iframe { width: 100%; height: 100%; border: none; min-height: 85vh; }
-      .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-      .portfolio-modal-body:hover .portfolio-overlay { opacity: 1; pointer-events: auto; }
+      .portfolio-block-layer { position: absolute; inset: 0; z-index: 5; background: transparent; cursor: default; }
+      .portfolio-modal-body.video-mode .portfolio-block-layer { display: none; }
+      .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.75); opacity: 0; pointer-events: none; z-index: 10; transition: opacity 0.25s ease; }
+      .portfolio-overlay.show { opacity: 1; pointer-events: auto; }
       .portfolio-modal-body.video-mode .portfolio-overlay { display: none; }
-      .portfolio-membership { background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); padding: 24px 48px; border-radius: 20px; text-align: center; box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4); }
-      .portfolio-membership i { font-size: 2.5rem; margin-bottom: 16px; display: block; }
-      .portfolio-membership-text { font-weight: 700; font-size: 1.1rem; }
+      .portfolio-membership { background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); padding: 16px 32px; border-radius: 16px; text-align: center; box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4); }
+      .portfolio-membership i { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+      .portfolio-membership-text { font-weight: 700; font-size: 0.95rem; }
       
       .channel-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
       .channel-category {
@@ -2566,7 +2858,7 @@ function getMainHTML(): string {
       .service-small-notice { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 4px; font-style: italic; }
       .discount-badge { position: absolute; top: 40px; right: 16px; padding: 3px 10px; background: var(--neon-orange); border-radius: 12px; font-size: 0.7rem; font-weight: 700; color: white; }
       
-      .cart-floating { position: fixed; bottom: 100px; right: 24px; z-index: 3000; }
+      .cart-floating { position: fixed; bottom: 160px; right: 24px; z-index: 3002; }
       .cart-btn {
         width: 56px; height: 56px; border-radius: 50%;
         background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
@@ -2605,7 +2897,7 @@ function getMainHTML(): string {
       .cart-regional input { accent-color: var(--neon-purple); }
       .cart-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; }
       
-      .chat-widget { position: fixed; bottom: 24px; right: 24px; z-index: 3000; }
+      .chat-widget { position: fixed; bottom: 90px; right: 24px; z-index: 3002; }
       .chat-bubble {
         width: 56px; height: 56px; border-radius: 50%;
         background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
@@ -2760,7 +3052,7 @@ function getMainHTML(): string {
         .chat-window { position: fixed; bottom: 0; right: 0; left: 0; width: 100%; max-height: 75vh; border-radius: 20px 20px 0 0; }
         .cart-panel { position: fixed; bottom: 0; right: 0; left: 0; width: 100%; max-height: 65vh; border-radius: 20px 20px 0 0; }
         .cart-floating { bottom: 100px; right: 16px; }
-        .chat-widget { bottom: 16px; right: 16px; }
+        .chat-widget { bottom: 80px; right: 16px; }
         .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; gap: 14px; }
         .channel-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -2835,7 +3127,7 @@ function getMainHTML(): string {
             <button class="service-menu-btn hot" onclick="openServiceModal('sets')" style="--btn-color: #f97316">
               <i class="fas fa-fire"></i>
               <span class="menu-name">🔥 SNS 셋트 메뉴</span>
-              <span class="menu-desc">셋팅+월관리 통합 패키지 (118만~498만)</span>
+              <span class="menu-desc">셋팅+월관리 통합 패키지 (89만~499만)</span>
               <span class="menu-badge hot">추천</span>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
@@ -2848,13 +3140,32 @@ function getMainHTML(): string {
             <button class="service-menu-btn" onclick="openServiceModal('websites')" style="--btn-color: #22c55e">
               <i class="fas fa-globe"></i>
               <span class="menu-name">웹사이트 구축</span>
-              <span class="menu-desc">180만~800만 (AI 상담봇 포함)</span>
+              <span class="menu-desc">99만~750만 (AI 상담봇 포함)</span>
+              <i class="fas fa-chevron-right menu-arrow"></i>
+            </button>
+            <button class="service-menu-btn" onclick="openServiceModal('webservice')" style="--btn-color: #14b8a6">
+              <i class="fas fa-palette"></i>
+              <span class="menu-name">🎨 웹 서비스</span>
+              <span class="menu-desc">리틀리/홈페이지 (29만~199만)</span>
+              <i class="fas fa-chevron-right menu-arrow"></i>
+            </button>
+            <button class="service-menu-btn" onclick="openServiceModal('sysdev')" style="--btn-color: #06b6d4">
+              <i class="fas fa-cogs"></i>
+              <span class="menu-name">⚙️ 시스템 개발</span>
+              <span class="menu-desc">지도연동/카카오/자동화/AI봇 (190만~990만)</span>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
             <button class="service-menu-btn" onclick="openServiceModal('addons')" style="--btn-color: #8b5cf6">
               <i class="fas fa-plus-circle"></i>
               <span class="menu-name">부가 서비스</span>
               <span class="menu-desc">브랜드영상/상세페이지/부스팅</span>
+              <i class="fas fa-chevron-right menu-arrow"></i>
+            </button>
+            <button class="service-menu-btn" onclick="openServiceModal('consulting')" style="--btn-color: #eab308">
+              <i class="fas fa-handshake"></i>
+              <span class="menu-name">🏢 브랜드/프랜차이즈 컨설팅</span>
+              <span class="menu-desc">1년계약 월2회방문 (월150만~300만)</span>
+              <span class="menu-badge" style="background: linear-gradient(135deg, #eab308, #ca8a04);">프리미엄</span>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
           </div>
@@ -2889,11 +3200,12 @@ function getMainHTML(): string {
       </div>
       <div class="portfolio-modal-body">
         <iframe id="portfolio-iframe" class="portfolio-iframe" src="about:blank"></iframe>
-        <div class="portfolio-overlay">
+        <div class="portfolio-block-layer" id="portfolio-block-layer"></div>
+        <div class="portfolio-overlay" id="portfolio-overlay">
           <div class="portfolio-membership">
             <i class="fas fa-lock"></i>
             <div class="portfolio-membership-text">회원제로 운영중</div>
-            <div style="font-size:0.8rem;margin-top:8px;opacity:0.8;">미리보기만 가능합니다</div>
+            <div style="font-size:0.75rem;margin-top:6px;opacity:0.8;">미리보기만 가능합니다</div>
           </div>
         </div>
       </div>
@@ -2925,7 +3237,11 @@ function getMainHTML(): string {
         <div class="cart-footer">
           <label class="cart-regional"><input type="checkbox" id="regional-fee" onchange="updateCart()">지방 출장비 (+30만원)</label>
           <div class="cart-total"><span>총 금액</span><span id="cart-total">0원</span></div>
-          <button class="btn btn-primary" style="width:100%;" onclick="checkout()"><i class="fas fa-credit-card"></i>결제하기</button>
+          <div style="display:flex;gap:8px;">
+            <button class="btn" style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);" onclick="downloadQuote()"><i class="fas fa-file-pdf"></i> 견적서</button>
+            <button class="btn btn-primary" style="flex:2;" onclick="checkout()"><i class="fas fa-credit-card"></i> 결제하기</button>
+          </div>
+          <button class="btn" style="width:100%;margin-top:8px;background:transparent;border:1px solid rgba(239,68,68,0.5);color:#ef4444;font-size:0.85rem;" onclick="clearCart()"><i class="fas fa-trash"></i> 장바구니 비우기</button>
         </div>
       </div>
     </div>
@@ -3137,17 +3453,54 @@ function getMainHTML(): string {
       const setMenus = ${JSON.stringify(SET_MENUS)};
       const websitePackages = ${JSON.stringify(WEBSITE_PACKAGES)};
       const addonServices = ${JSON.stringify(ADDON_SERVICES)};
-      const webDevOptions = ${JSON.stringify(WEB_DEV_OPTIONS)};
+      const webServiceOptions = ${JSON.stringify(WEB_SERVICE_OPTIONS)};
+      const sysDevOptions = ${JSON.stringify(SYSTEM_DEV_OPTIONS)};
+      const consultingOptions = ${JSON.stringify(CONSULTING_OPTIONS)};
       
-      let cart = [];
-      let chatHistory = [];
+      // ========================================
+      // LocalStorage로 장바구니/페이지 기억
+      // ========================================
+      let cart = JSON.parse(localStorage.getItem('xivix_cart') || '[]');
+      let chatHistory = JSON.parse(localStorage.getItem('xivix_chat') || '[]');
       let currentCategory = 'all';
       let lastPaymentInfo = { orderName: '', amount: 0, customerInfo: {} };
+      
+      // 장바구니 변경시 자동 저장
+      function saveCart() {
+        localStorage.setItem('xivix_cart', JSON.stringify(cart));
+      }
+      
+      // 채팅 기록 저장
+      function saveChat() {
+        localStorage.setItem('xivix_chat', JSON.stringify(chatHistory.slice(-20))); // 최근 20개만
+      }
+      
+      // 마지막 본 섹션 저장
+      function saveLastSection(sectionId) {
+        localStorage.setItem('xivix_last_section', sectionId);
+      }
+      
+      // 마지막 본 섹션으로 이동
+      function goToLastSection() {
+        const lastSection = localStorage.getItem('xivix_last_section');
+        if (lastSection) {
+          setTimeout(() => {
+            const el = document.getElementById(lastSection);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 500);
+        }
+      }
       
       const colorMap = { cyan: '#22d3ee', purple: '#a855f7', orange: '#f97316', pink: '#ec4899' };
       
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        entries.forEach(entry => { 
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // 현재 보고있는 섹션 저장
+            if (entry.target.id) saveLastSection(entry.target.id);
+          }
+        });
       }, { threshold: 0.1 });
       
       function renderPortfolioMenu() {
@@ -3190,15 +3543,19 @@ function getMainHTML(): string {
         const iframe = document.getElementById('portfolio-iframe');
         
         if (isVideo) {
+          // 동영상: 오버레이 숨기고 영상 재생 (외부 이동 없이 웹 안에서)
           modalBody.classList.add('video-mode');
-          iframe.src = url + '?autoplay=1&rel=0';
+          iframe.src = url + '?autoplay=1&rel=0&modestbranding=1';
           iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
         } else {
+          // 이미지/웹페이지: "회원제로 운영중" 오버레이와 함께 배경에 살짝 보이게
           modalBody.classList.remove('video-mode');
           iframe.src = url;
           iframe.removeAttribute('allow');
         }
+        
         document.getElementById('portfolio-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
         // 뒤로가기 시 모달 닫기 위해 히스토리 추가
         history.pushState({ modal: 'portfolio' }, '', '');
       }
@@ -3219,7 +3576,10 @@ function getMainHTML(): string {
         sets: { icon: 'fa-fire', name: '🔥 SNS 셋트 메뉴 (셋팅+월관리)', color: '#f97316' },
         pricing: { icon: 'fa-tags', name: '채널별 가격표', color: '#a855f7' },
         websites: { icon: 'fa-globe', name: '웹사이트 구축', color: '#22c55e' },
-        addons: { icon: 'fa-plus-circle', name: '부가 서비스', color: '#8b5cf6' }
+        webservice: { icon: 'fa-palette', name: '🎨 웹 서비스', color: '#14b8a6' },
+        sysdev: { icon: 'fa-cogs', name: '⚙️ 시스템 개발', color: '#06b6d4' },
+        addons: { icon: 'fa-plus-circle', name: '부가 서비스', color: '#8b5cf6' },
+        consulting: { icon: 'fa-handshake', name: '🏢 브랜드/프랜차이즈 컨설팅', color: '#eab308' }
       };
       
       function openServiceModal(type) {
@@ -3232,7 +3592,10 @@ function getMainHTML(): string {
         if (type === 'sets') body.innerHTML = renderSetsHTML();
         else if (type === 'pricing') body.innerHTML = renderPricingHTML();
         else if (type === 'websites') body.innerHTML = '<div class="grid grid-2">' + renderWebsitesHTML() + '</div>';
+        else if (type === 'webservice') body.innerHTML = '<div class="grid grid-2">' + renderWebServiceHTML() + '</div>';
+        else if (type === 'sysdev') body.innerHTML = '<div class="grid grid-2">' + renderSysDevHTML() + '</div>';
         else if (type === 'addons') body.innerHTML = '<div class="grid grid-2">' + renderAddonsHTML() + '</div>';
+        else if (type === 'consulting') body.innerHTML = renderConsultingHTML();
         
         document.getElementById('service-modal').classList.add('open');
         document.body.style.overflow = 'hidden';
@@ -3318,14 +3681,62 @@ function getMainHTML(): string {
         }).join('');
       }
       
-      function renderWebDevHTML() {
-        return webDevOptions.map(w => '<div class="card"><h3 class="card-name">' + w.name + '</h3><p class="card-desc">' + w.desc + '</p><div class="card-price"><span class="price-value">' + (w.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'webdev\\', \\'' + w.id + '\\', \\'' + w.name + '\\', ' + w.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+      function renderWebServiceHTML() {
+        return webServiceOptions.map(w => '<div class="card"><h3 class="card-name">' + w.name + '</h3><p class="card-desc">' + w.desc + '</p><div class="card-price"><span class="price-value">' + (w.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'webservice\\', \\'' + w.id + '\\', \\'' + w.name + '\\', ' + w.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+      }
+      
+      function renderSysDevHTML() {
+        return sysDevOptions.map(s => '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+      }
+      
+      function renderConsultingHTML() {
+        return '<div class="consulting-container">' + consultingOptions.map(c => {
+          return '<div class="card consulting-card" style="border-top: 3px solid #eab308;">' +
+            '<div class="card-badge" style="background: linear-gradient(135deg, #eab308, #ca8a04);">1년 계약</div>' +
+            '<h3 class="card-name">' + c.name + '</h3>' +
+            '<p class="card-desc">' + c.desc + '</p>' +
+            '<div class="consulting-pricing">' +
+              '<div class="price-tier"><span class="tier-label">1~2개월</span><span class="tier-price">월 ' + (c.prices.month1_2/10000) + '만</span></div>' +
+              '<div class="price-tier highlight"><span class="tier-label">3~5개월</span><span class="tier-price">월 ' + (c.prices.month3_5/10000) + '만</span></div>' +
+              '<div class="price-tier best"><span class="tier-label">6~12개월</span><span class="tier-price">월 ' + (c.prices.month6_12/10000) + '만</span></div>' +
+            '</div>' +
+            '<div class="consulting-includes">' +
+              '<h4><i class="fas fa-check-circle"></i> 포함 서비스</h4>' +
+              '<ul>' + c.includes.map(i => '<li><i class="fas fa-check"></i>' + i + '</li>').join('') + '</ul>' +
+            '</div>' +
+            '<div class="consulting-advisory">' +
+              '<h4><i class="fas fa-user-tie"></i> 자문 분야</h4>' +
+              '<div class="advisory-tags">' + c.advisory.map(a => '<span class="advisory-tag">' + a + '</span>').join('') + '</div>' +
+            '</div>' +
+            '<button class="btn btn-primary" style="width:100%; margin-top:16px; background: linear-gradient(135deg, #eab308, #ca8a04);" onclick="addToCart(\\'consulting\\', \\'' + c.id + '\\', \\'' + c.name + ' (1년)\\', ' + (c.prices.month1_2 * 2 + c.prices.month3_5 * 3 + c.prices.month6_12 * 7) + ', event)">' +
+              '<i class="fas fa-handshake"></i> 1년 계약 상담신청' +
+            '</button>' +
+          '</div>';
+        }).join('') + '</div>' +
+        '<style>' +
+          '.consulting-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }' +
+          '.consulting-card { padding: 24px; }' +
+          '.consulting-pricing { display: flex; gap: 8px; margin: 16px 0; }' +
+          '.price-tier { flex: 1; text-align: center; padding: 12px 8px; background: rgba(255,255,255,0.05); border-radius: 8px; }' +
+          '.price-tier.highlight { background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.3); }' +
+          '.price-tier.best { background: rgba(234,179,8,0.2); border: 2px solid #eab308; }' +
+          '.tier-label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; }' +
+          '.tier-price { display: block; font-size: 1.1rem; font-weight: 700; color: #eab308; }' +
+          '.consulting-includes, .consulting-advisory { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }' +
+          '.consulting-includes h4, .consulting-advisory h4 { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }' +
+          '.consulting-includes ul { list-style: none; padding: 0; margin: 0; }' +
+          '.consulting-includes li { padding: 4px 0; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }' +
+          '.consulting-includes li i { color: #22c55e; font-size: 0.8rem; }' +
+          '.advisory-tags { display: flex; flex-wrap: wrap; gap: 6px; }' +
+          '.advisory-tag { background: rgba(234,179,8,0.15); color: #eab308; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }' +
+        '</style>';
       }
       
       function addToCart(type, id, name, price, event) { 
         // 이벤트 버블링 방지 (모달 닫힘 방지)
         if (event) event.stopPropagation();
         cart.push({ type, id, name, price }); 
+        saveCart(); // LocalStorage 저장
         updateCart(); 
         // 서비스 모달이 열려있으면 장바구니 패널은 열지 않고 토스트만 표시
         if (document.getElementById('service-modal').classList.contains('open')) {
@@ -3347,7 +3758,7 @@ function getMainHTML(): string {
         toast.style.opacity = '1';
         setTimeout(() => { toast.style.opacity = '0'; }, 2000);
       }
-      function removeFromCart(index) { cart.splice(index, 1); updateCart(); }
+      function removeFromCart(index) { cart.splice(index, 1); saveCart(); updateCart(); }
       function updateCart() {
         const container = document.getElementById('cart-items');
         const count = document.getElementById('cart-count');
@@ -3375,6 +3786,69 @@ function getMainHTML(): string {
         checkoutTotal.textContent = totalText;
       }
       function toggleCart() { document.getElementById('cart-panel').classList.toggle('open'); }
+      
+      function clearCart() {
+        if (confirm('장바구니를 비우시겠습니까?')) {
+          cart = [];
+          saveCart();
+          updateCart();
+          showToast('🗑️ 장바구니가 비워졌습니다');
+        }
+      }
+      
+      function downloadQuote() {
+        if (cart.length === 0) {
+          showToast('⚠️ 장바구니에 상품을 담아주세요');
+          return;
+        }
+        
+        const today = new Date();
+        const dateStr = today.getFullYear() + '년 ' + (today.getMonth()+1) + '월 ' + today.getDate() + '일';
+        const validUntil = new Date(today.getTime() + 7*24*60*60*1000);
+        const validStr = validUntil.getFullYear() + '년 ' + (validUntil.getMonth()+1) + '월 ' + validUntil.getDate() + '일';
+        
+        let sum = cart.reduce((acc, item) => acc + item.price, 0);
+        const isRegional = document.getElementById('regional-fee').checked;
+        if (isRegional) sum += 300000;
+        
+        const quoteHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>X I Λ I X 견적서</title><style>' +
+          'body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#333;}' +
+          '.header{text-align:center;border-bottom:3px solid #a855f7;padding-bottom:20px;margin-bottom:30px;}' +
+          '.logo{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}' +
+          'h1{font-size:1.5rem;margin:10px 0 0;color:#333;}' +
+          '.info{display:flex;justify-content:space-between;margin-bottom:30px;font-size:0.9rem;color:#666;}' +
+          'table{width:100%;border-collapse:collapse;margin-bottom:30px;}' +
+          'th,td{border:1px solid #ddd;padding:12px;text-align:left;}' +
+          'th{background:#f5f5f5;font-weight:600;}' +
+          '.price{text-align:right;}' +
+          '.total-row{background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(236,72,153,0.1));font-weight:700;}' +
+          '.total-row td{font-size:1.1rem;color:#a855f7;}' +
+          '.footer{margin-top:40px;padding-top:20px;border-top:1px solid #ddd;font-size:0.85rem;color:#666;text-align:center;}' +
+          '.notice{background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:16px;margin-top:20px;font-size:0.9rem;}' +
+          '.stamp{text-align:right;margin-top:30px;color:#a855f7;font-weight:600;}' +
+          '@media print{body{padding:20px;}}' +
+        '</style></head><body>' +
+          '<div class="header"><div class="logo">X I Λ I X</div><h1>견 적 서</h1></div>' +
+          '<div class="info"><div><strong>발행일:</strong> ' + dateStr + '<br><strong>유효기간:</strong> ' + validStr + '까지</div><div style="text-align:right;"><strong>X I Λ I X</strong><br>Combine Technology & Business<br>대표: 방익주</div></div>' +
+          '<table><thead><tr><th>No.</th><th>서비스명</th><th class="price">금액</th></tr></thead><tbody>' +
+          cart.map((item, i) => '<tr><td>' + (i+1) + '</td><td>' + item.name + '</td><td class="price">' + (item.price).toLocaleString() + '원</td></tr>').join('') +
+          (isRegional ? '<tr><td>' + (cart.length+1) + '</td><td>지방 출장비</td><td class="price">300,000원</td></tr>' : '') +
+          '<tr class="total-row"><td colspan="2" style="text-align:center;">합 계</td><td class="price">' + sum.toLocaleString() + '원</td></tr>' +
+          '</tbody></table>' +
+          '<div class="notice"><strong>📋 안내사항</strong><ul style="margin:10px 0 0;padding-left:20px;"><li>본 견적서는 발행일로부터 7일간 유효합니다.</li><li>부가세(VAT) 별도입니다.</li><li>결제 완료 후 작업이 시작됩니다.</li><li>상세 문의: X I Λ I X 챗봇 또는 카카오톡 상담</li></ul></div>' +
+          '<div class="stamp">X I Λ I X</div>' +
+          '<div class="footer">© 2026 X I Λ I X. All rights reserved.<br>본 견적서는 전자문서로 별도의 서명 없이 유효합니다.</div>' +
+        '</body></html>';
+        
+        const blob = new Blob([quoteHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'XIVIX_견적서_' + today.getFullYear() + (today.getMonth()+1).toString().padStart(2,'0') + today.getDate().toString().padStart(2,'0') + '.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('📄 견적서가 다운로드되었습니다');
+      }
       
       // 현재 로그인 상태
       let currentUser = null;
@@ -3759,6 +4233,33 @@ function getMainHTML(): string {
       document.getElementById('portfolio-modal').addEventListener('click', e => { if (e.target.id === 'portfolio-modal') closePortfolioModal(); });
       document.getElementById('service-modal').addEventListener('click', e => { if (e.target.id === 'service-modal') closeServiceModal(); });
       
+      // 포트폴리오 미리보기 보안: 클릭/드래그/스크롤 시 블럭 표시
+      (function() {
+        const blockLayer = document.getElementById('portfolio-block-layer');
+        const overlay = document.getElementById('portfolio-overlay');
+        let hideTimeout;
+        
+        function showBlock(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (overlay && !document.querySelector('.portfolio-modal-body').classList.contains('video-mode')) {
+            overlay.classList.add('show');
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => overlay.classList.remove('show'), 2500);
+          }
+        }
+        
+        if (blockLayer) {
+          blockLayer.addEventListener('click', showBlock);
+          blockLayer.addEventListener('mousedown', showBlock);
+          blockLayer.addEventListener('touchstart', showBlock, { passive: false });
+          blockLayer.addEventListener('wheel', showBlock, { passive: false });
+          blockLayer.addEventListener('contextmenu', showBlock);
+          blockLayer.addEventListener('selectstart', e => e.preventDefault());
+          blockLayer.addEventListener('dragstart', e => e.preventDefault());
+        }
+      })();
+      
       // 브라우저 뒤로가기 시 모달만 닫히도록 처리
       window.addEventListener('popstate', (e) => {
         const portfolioModal = document.getElementById('portfolio-modal');
@@ -3779,6 +4280,15 @@ function getMainHTML(): string {
       document.addEventListener('DOMContentLoaded', async () => {
         renderPortfolioMenu();
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        // LocalStorage에서 장바구니 복원
+        if (cart.length > 0) {
+          updateCart();
+          console.log('🛒 장바구니 복원됨:', cart.length + '개 상품');
+        }
+        
+        // 마지막 본 섹션으로 이동 (2초 후)
+        setTimeout(() => goToLastSection(), 1500);
         
         // 로그인 상태 확인
         await checkLoginStatus();
