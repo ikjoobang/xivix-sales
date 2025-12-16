@@ -2734,11 +2734,12 @@ function getMainHTML(): string {
          🎯 서비스 메뉴 그리드 - 균일한 버튼 레이아웃
          ======================================== */
       .service-menu-grid { 
-        display: grid; 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: var(--space-md); 
-        max-width: var(--container-lg); 
+        display: grid !important; 
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 16px !important; 
+        max-width: 900px; 
         margin: 0 auto; 
+        width: 100%;
       }
       .service-menu-btn {
         display: flex; 
@@ -2811,18 +2812,18 @@ function getMainHTML(): string {
         background: linear-gradient(135deg, var(--neon-orange), #ef4444); 
       }
       
-      /* 태블릿 서비스 메뉴 */
+      /* 태블릿 서비스 메뉴 (768px 이하에서만 1열) */
       @media (max-width: 768px) {
         .service-menu-grid { 
-          grid-template-columns: 1fr; 
-          gap: var(--space-sm);
-          max-width: var(--container-md);
+          grid-template-columns: 1fr !important; 
+          gap: 12px !important;
+          max-width: 100%;
         }
         .service-menu-btn {
           flex-direction: row;
           align-items: center;
           min-height: auto;
-          padding: var(--space-md) var(--space-lg);
+          padding: 16px 20px;
         }
         .service-menu-btn .menu-icon {
           width: 40px; height: 40px;
@@ -2836,10 +2837,10 @@ function getMainHTML(): string {
       
       /* 모바일 서비스 메뉴 */
       @media (max-width: 480px) {
-        .service-menu-grid { gap: var(--space-xs); }
+        .service-menu-grid { gap: 8px !important; }
         .service-menu-btn { 
-          padding: var(--space-md); 
-          gap: var(--space-sm); 
+          padding: 14px 16px; 
+          gap: 12px; 
         }
         .service-menu-btn .menu-icon { 
           font-size: 1.2rem; 
@@ -3386,7 +3387,7 @@ function getMainHTML(): string {
       .service-small-notice { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 4px; font-style: italic; }
       .discount-badge { position: absolute; top: 40px; right: 16px; padding: 3px 10px; background: var(--neon-orange); border-radius: 12px; font-size: 0.7rem; font-weight: 700; color: white; }
       
-      .cart-floating { position: fixed; bottom: 160px; right: 24px; z-index: 3002; }
+      .cart-floating { position: fixed; bottom: 160px; right: 24px; z-index: 3001; }
       .cart-btn {
         width: 56px; height: 56px; border-radius: 50%;
         background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
@@ -3426,6 +3427,7 @@ function getMainHTML(): string {
       .cart-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; }
       
       .chat-widget { position: fixed; bottom: 90px; right: 24px; z-index: 3002; }
+      /* 챗봇이 장바구니보다 위에 표시되도록 z-index 조정 */
       .chat-bubble {
         width: 56px; height: 56px; border-radius: 50%;
         background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
@@ -3624,7 +3626,8 @@ function getMainHTML(): string {
           max-height: 65vh; 
           border-radius: var(--radius-xl) var(--radius-xl) 0 0; 
         }
-        .cart-floating { bottom: 100px; right: var(--space-md); }
+        /* 모바일: 챗봇과 장바구니 버튼 위치 분리 (겹침 방지) */
+        .cart-floating { bottom: 150px; right: var(--space-md); }
         .chat-widget { bottom: 80px; right: var(--space-md); }
         
         .portfolio-grid { 
