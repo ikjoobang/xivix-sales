@@ -15,6 +15,9 @@ type Bindings = {
   NAVER_CLIENT_SECRET?: string
   KAKAO_ALIMTALK_KEY?: string
   JWT_SECRET?: string
+  GOOGLE_CLIENT_ID?: string
+  GOOGLE_CLIENT_SECRET?: string
+  KAKAO_JS_KEY?: string
 }
 
 // 세션 사용자 타입
@@ -730,6 +733,134 @@ app.get('/api/auth/naver/callback', async (c) => {
 app.get('/api/auth/logout', (c) => {
   deleteCookie(c, 'xivix_session', { path: '/' })
   return c.redirect('/')
+})
+
+// ========================================
+// Google Calendar 연동 API
+// ========================================
+app.get('/api/auth/google', (c) => {
+  const clientId = c.env?.GOOGLE_CLIENT_ID || ''
+  const redirectUri = encodeURIComponent('https://xivix.kr/api/auth/google/callback')
+  const scope = encodeURIComponent('https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/userinfo.email')
+  const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`
+  return c.redirect(googleAuthUrl)
+})
+
+app.get('/api/auth/google/callback', async (c) => {
+  const code = c.req.query('code')
+  
+  if (!code) {
+    return c.redirect('/?error=google_auth_failed')
+  }
+  
+  try {
+    const clientId = c.env?.GOOGLE_CLIENT_ID || ''
+    const clientSecret = c.env?.GOOGLE_CLIENT_SECRET || ''
+    const redirectUri = 'https://xivix.kr/api/auth/google/callback'
+    
+    // 액세스 토큰 받기
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code,
+        client_id: clientId,
+        client_secret: clientSecret,
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code'
+      })
+    })
+    
+    const tokenData = await tokenRes.json() as any
+    
+    if (tokenData.access_token) {
+      // 토큰을 세션에 저장 (실제로는 DB에 저장하는 것이 좋음)
+      setCookie(c, 'google_access_token', tokenData.access_token, {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'Lax',
+        maxAge: tokenData.expires_in || 3600
+      })
+      
+      if (tokenData.refresh_token) {
+        setCookie(c, 'google_refresh_token', tokenData.refresh_token, {
+          path: '/',
+          httpOnly: true,
+          secure: true,
+          sameSite: 'Lax',
+          maxAge: 60 * 60 * 24 * 30 // 30일
+        })
+      }
+      
+      return c.redirect('/?google_connected=true')
+    }
+    
+    return c.redirect('/?error=google_token_failed')
+  } catch (error) {
+    console.error('Google OAuth error:', error)
+    return c.redirect('/?error=google_auth_error')
+  }
+})
+
+// Google Calendar 이벤트 생성 (예약 시 자동 등록)
+app.post('/api/calendar/create-event', async (c) => {
+  const accessToken = getCookie(c, 'google_access_token')
+  
+  if (!accessToken) {
+    return c.json({ success: false, error: 'Google 연동이 필요합니다.' }, 401)
+  }
+  
+  const { summary, description, startDateTime, endDateTime, attendeeEmail } = await c.req.json()
+  
+  try {
+    const event = {
+      summary: summary || 'XIVIX 상담 예약',
+      description: description || '',
+      start: {
+        dateTime: startDateTime,
+        timeZone: 'Asia/Seoul'
+      },
+      end: {
+        dateTime: endDateTime,
+        timeZone: 'Asia/Seoul'
+      },
+      attendees: attendeeEmail ? [{ email: attendeeEmail }] : [],
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 60 },
+          { method: 'popup', minutes: 30 }
+        ]
+      }
+    }
+    
+    const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(event)
+    })
+    
+    const result = await res.json() as any
+    
+    if (result.id) {
+      return c.json({ success: true, eventId: result.id, eventLink: result.htmlLink })
+    }
+    
+    return c.json({ success: false, error: 'Failed to create event' }, 400)
+  } catch (error) {
+    console.error('Calendar event error:', error)
+    return c.json({ success: false, error: 'Calendar API error' }, 500)
+  }
+})
+
+// 카카오 공유용 앱 키 제공
+app.get('/api/kakao/app-key', (c) => {
+  const jsKey = c.env?.KAKAO_JS_KEY || 'ab4e6e4c5d28f94c4af56f85519bf1a9'
+  return c.json({ appKey: jsKey })
 })
 
 // 현재 로그인 사용자 정보
@@ -2682,6 +2813,8 @@ function getMainHTML(): string {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <!-- 카카오 SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js" integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhLYvvil3s" crossorigin="anonymous"></script>
     
     <style>
       :root {
@@ -3734,9 +3867,14 @@ function getMainHTML(): string {
               <div style="font-size: 1.1rem; font-weight: 700; color: var(--neon-green);">친구 초대 = 15% 할인!</div>
               <div style="font-size: 0.8rem; color: var(--text-secondary);">추천인 5% 적립 · 2차 추천 2% 추가</div>
             </div>
-            <button class="btn btn-primary btn-small" onclick="openChat()" style="white-space: nowrap;">
-              <i class="fas fa-comments"></i> 코드 받기
-            </button>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-small" onclick="shareKakao()" style="background: #FEE500; color: #191919; white-space: nowrap;">
+                <i class="fas fa-comment"></i> 카카오 공유
+              </button>
+              <button class="btn btn-primary btn-small" onclick="openChat()" style="white-space: nowrap;">
+                <i class="fas fa-comments"></i> 코드 받기
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -4949,6 +5087,63 @@ function getMainHTML(): string {
       function openChat() { document.getElementById('chat-window').classList.add('open'); }
       function closeChat() { document.getElementById('chat-window').classList.remove('open'); }
       
+      // 카카오톡 공유
+      function shareKakao() {
+        if (!window.Kakao || !Kakao.isInitialized()) {
+          showToast('⚠️ 카카오 SDK 로딩 중입니다. 잠시 후 다시 시도해주세요.');
+          return;
+        }
+        
+        // 현재 로그인한 사용자의 추천인 코드가 있으면 포함
+        const referralCode = currentUser?.referral_code || '';
+        const shareUrl = referralCode ? 'https://xivix.kr?ref=' + referralCode : 'https://xivix.kr';
+        
+        Kakao.Share.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: '🎁 친구 초대하면 15% 할인!',
+            description: 'AI 마케팅 전문 에이전시 XIVIX에서 SNS 마케팅, 웹사이트 제작, 브랜드 컨설팅을 받아보세요!',
+            imageUrl: 'https://xivix.kr/og-image.png',
+            link: {
+              mobileWebUrl: shareUrl,
+              webUrl: shareUrl
+            }
+          },
+          social: {
+            likeCount: 127,
+            commentCount: 45
+          },
+          buttons: [
+            {
+              title: '15% 할인받기',
+              link: {
+                mobileWebUrl: shareUrl,
+                webUrl: shareUrl
+              }
+            },
+            {
+              title: '서비스 둘러보기',
+              link: {
+                mobileWebUrl: 'https://xivix.kr#services',
+                webUrl: 'https://xivix.kr#services'
+              }
+            }
+          ]
+        });
+      }
+      
+      // URL 복사 공유
+      function copyShareLink() {
+        const referralCode = currentUser?.referral_code || '';
+        const shareUrl = referralCode ? 'https://xivix.kr?ref=' + referralCode : 'https://xivix.kr';
+        
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('✅ 링크가 복사되었습니다!');
+        }).catch(() => {
+          showToast('❌ 복사 실패. 다시 시도해주세요.');
+        });
+      }
+      
       async function sendMessage() {
         const input = document.getElementById('chat-input');
         const message = input.value.trim();
@@ -5141,6 +5336,12 @@ function getMainHTML(): string {
       document.addEventListener('DOMContentLoaded', async () => {
         renderPortfolioMenu();
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        // 카카오 SDK 초기화
+        if (window.Kakao && !Kakao.isInitialized()) {
+          Kakao.init('ab4e6e4c5d28f94c4af56f85519bf1a9');
+          console.log('✅ 카카오 SDK 초기화 완료');
+        }
         
         // LocalStorage에서 장바구니 복원
         if (cart.length > 0) {
