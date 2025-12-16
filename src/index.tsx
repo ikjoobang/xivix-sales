@@ -3805,7 +3805,7 @@ function getMainHTML(): string {
               <i class="fas fa-handshake menu-icon"></i>
               <div class="menu-text">
                 <span class="menu-name">🏢 브랜드/프랜차이즈 컨설팅</span>
-                <span class="menu-desc">3개월 단위 선택 (월150만~300만)</span>
+                <span class="menu-desc">1년 계약 · 단계별 요금 (월150만~300만)</span>
               </div>
               <span class="menu-badge" style="background: linear-gradient(135deg, #eab308, #ca8a04);">프리미엄</span>
               <i class="fas fa-chevron-right menu-arrow"></i>
@@ -4444,7 +4444,7 @@ function getMainHTML(): string {
         return '<div class="consulting-packages">' +
           '<div class="consulting-intro">' +
             '<h3>🏢 브랜드/프랜차이즈 컨설팅</h3>' +
-            '<p>3개월 단위로 필요한 단계만 선택하세요</p>' +
+            '<p style="color: var(--neon-orange);">📋 1년 계약 · 월2회 방문 · 단계별 차등요금</p>' +
           '</div>' +
           '<div class="consulting-grid">' +
             consultingOptions.map((c, idx) => {
@@ -4479,7 +4479,7 @@ function getMainHTML(): string {
         '<style>' +
           '.consulting-packages { max-width: 100%; }' +
           '.consulting-intro { text-align: center; margin-bottom: 20px; }' +
-          '.consulting-intro h3 { font-size: 1.3rem; margin: 0 0 6px; }' +
+          '.consulting-intro h3 { font-size: 1.1rem; margin: 0 0 6px; white-space: nowrap; }' +
           '.consulting-intro p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }' +
           '.consulting-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }' +
           '.consulting-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; position: relative; border: 1px solid rgba(255,255,255,0.1); }' +
