@@ -2813,8 +2813,8 @@ function getMainHTML(): string {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
-    <!-- 카카오 SDK -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js" integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhLYvvil3s" crossorigin="anonymous"></script>
+    <!-- 카카오 SDK (최신 버전) -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
     <style>
       :root {
