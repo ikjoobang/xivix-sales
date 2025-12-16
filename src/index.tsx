@@ -343,6 +343,7 @@ const WEBSITE_PACKAGES = [
 // 부가 서비스 (브랜드 영상촬영/편집 A/B/C/D형)
 // ========================================
 const ADDON_SERVICES = [
+  { id: "littly", name: "리틀리 제작", price: 290000, desc: "링크 모음 페이지 (프로필 링크 통합)", perUnit: "1건" },
   { id: "detail_page", name: "상세페이지 디자인", price: 1500000, desc: "스마트스토어/와디즈용 수작업 고퀄리티", perUnit: "1건" },
   { id: "commercial_analysis", name: "상권분석 (방문설명)", price: 800000, desc: "현장 방문 상권분석 + 맞춤 전략 (계약시 환급)", perUnit: "1건" },
   { id: "sns_boost", name: "SNS 부스팅", price: 290000, desc: "팔로워/조회수 부스팅 (광고비 별도)", perUnit: "월" },
@@ -368,33 +369,54 @@ const SYSTEM_DEV_OPTIONS = [
 ]
 
 // ========================================
-// 웹 서비스 옵션 (디자인 중심 - 홈페이지/랜딩)
+// 웹 서비스 옵션 - 삭제됨 (리틀리는 부가서비스로 이동, 홈페이지는 웹사이트 구축으로 통합)
 // ========================================
-const WEB_SERVICE_OPTIONS = [
-  { id: "littly", name: "리틀리 제작", price: 290000, desc: "링크 모음 페이지" },
-  { id: "homepage_basic", name: "홈페이지 (기본)", price: 990000, desc: "5페이지 반응형 웹사이트" },
-  { id: "homepage_pro", name: "홈페이지 (프로)", price: 1990000, desc: "SEO 최적화 + 3개월 관리" }
-]
+const WEB_SERVICE_OPTIONS: any[] = []
 
 // ========================================
 // 브랜드/프랜차이즈 컨설팅 (1년 계약, 월2회 방문)
 // ========================================
+// 브랜드/프랜차이즈 컨설팅 - 3개월 단위 패키지
 const CONSULTING_OPTIONS = [
   { 
-    id: "consult_brand", 
-    name: "🏢 브랜드 컨설팅", 
-    prices: { month1_2: 3000000, month3_5: 2000000, month6_12: 1500000 },
-    desc: "1년 계약 / 월 2회 방문",
-    includes: ["매뉴얼 제작", "커리큘럼 구성", "영상 마케팅 전략"],
-    advisory: ["법인 설립", "세무 자문", "노무 자문", "행정 지원", "영업 전략", "정부과제 (과제비 별도)"]
+    id: "consult_initial", 
+    name: "🚀 초기 셋업",
+    badge: "STEP 1",
+    period: "3개월",
+    monthlyFee: 3000000,
+    totalPrice: 9000000,
+    subtitle: "브랜드 기반 구축",
+    desc: "월 2회 현장 방문",
+    tasks: ["브랜드 아이덴티티 정립", "매뉴얼 초안 제작", "마케팅 전략 수립", "법인/세무/노무 자문"],
+    includes: ["브랜드 매뉴얼 제작", "마케팅 전략 수립", "월2회 현장 방문"],
+    advisory: ["법인 설립", "세무 자문", "노무 자문"]
   },
   { 
-    id: "consult_franchise", 
-    name: "🍽️ 프랜차이즈 컨설팅", 
-    prices: { month1_2: 3000000, month3_5: 2000000, month6_12: 1500000 },
-    desc: "1년 계약 / 월 2회 방문",
-    includes: ["가맹 매뉴얼 제작", "교육 커리큘럼", "영상 마케팅 전략"],
-    advisory: ["법인 설립", "세무 자문", "노무 자문", "행정 지원", "영업 전략", "정부과제 (과제비 별도)"]
+    id: "consult_foundation", 
+    name: "📈 기반 확장",
+    badge: "STEP 2",
+    period: "3개월",
+    monthlyFee: 2000000,
+    totalPrice: 6000000,
+    subtitle: "실행 및 최적화",
+    desc: "월 2회 현장 방문",
+    tasks: ["커리큘럼 완성", "영상 마케팅 실행", "운영 시스템 안정화", "매출 성장 모니터링"],
+    includes: ["교육 커리큘럼 구성", "영상 마케팅 전략", "월2회 현장 방문"],
+    advisory: ["행정 지원", "영업 전략", "마케팅 자문"],
+    recommended: true
+  },
+  { 
+    id: "consult_growth", 
+    name: "🎯 성장 유지",
+    badge: "STEP 3",
+    period: "3개월",
+    monthlyFee: 1500000,
+    totalPrice: 4500000,
+    subtitle: "지속 관리 및 자문",
+    desc: "월 2회 현장 방문",
+    tasks: ["월2회 정기 방문", "지속 자문 (세무/노무/영업)", "정부과제 연계", "성과 분석 리포트"],
+    includes: ["정기 방문 자문", "성과 분석 리포트", "정부과제 연계 (과제비 별도)"],
+    advisory: ["세무 자문", "노무 자문", "영업 전략", "정부과제"]
   }
 ]
 
@@ -1022,7 +1044,7 @@ app.post('/api/chat', async (c) => {
 2. **전문 용어 자제:** ROAS, 퍼널 등 어려운 용어는 쓰지 않거나 쉽게 풀어서 설명
 3. **이모지 활용:** 🎒🚀💡💰🏥☕📍📸🎬 등 적절히 사용
 4. **결론부터:** "이걸 추천해요!" 먼저 말하고 이유 설명
-5. **친구 초대 할인 안내:** 가격 문의 시 "친구 초대하시면 5% 할인 쿠폰도 받으실 수 있어요!" 언급
+5. **친구 초대 할인 안내:** 가격 문의 시 "친구 초대하시면 바로 15% 할인 쿠폰 받으실 수 있어요! 추천해주신 분도 결제금액의 5% 적립금을 받으시고요!" 언급
 
 # Product Database (판매 상품 - 엄격 준수, 가격 지어내기 금지!)
 
@@ -1165,15 +1187,33 @@ app.post('/api/chat', async (c) => {
 💡 "브랜드 만들어서 프랜차이즈 하고 싶어요" → 브랜드 컨설팅 추천!
 💡 "이미 가맹점 여러 개인데 체계화하고 싶어요" → 프랜차이즈 컨설팅 추천!
 
-## 🎁 친구 초대 혜택
-- 친구 초대하면: 신규 회원 **5% 할인 쿠폰** 증정
-- VIP 추천: **15% 할인 쿠폰** (누적 구매 300만원 이상 고객)
-- 예시) SNS 성장 149만원 → 5% 할인 시 141.5만원 / 15% 할인 시 126.6만원
+## 🎁 다단계 친구 초대 혜택 (추천인 보상 시스템)
+**🔥 친구 초대하면 바로 15% 할인!**
+
+### 레벨 1: 직접 초대 (1차)
+- 초대한 친구: **15% 할인 쿠폰** 증정
+- 나(추천인): **친구 결제금액의 5% 적립금** 획득
+
+### 레벨 2: 친구의 친구 (2차)
+- 내가 초대한 친구가 또 친구를 초대하면
+- 나(원래 추천인): **2차 친구 결제금액의 2% 적립금** 추가 획득
+
+### 레벨 3: VIP 마스터 (누적 500만원 이상)
+- 모든 추천에서 **7% 적립금** 획득
+- 초대받는 친구는 **20% 할인** 혜택
+
+💰 **예시)**
+- SNS 성장 149만원 → 15% 할인 시 **126.6만원** (22.4만원 절약!)
+- 친구가 결제하면 나는 **7.4만원 적립금** 획득 (5%)
+- 친구의 친구가 결제하면 **추가 2.9만원 적립금** (2%)
 
 # FAQ Response (자주 묻는 질문 대응)
 
 **Q1. "너무 비싸요" / "예산이 부족해요"**
-→ "이해해요! 그래서 저희가 세트 메뉴를 만들었어요. SNS 스타터 89만원이면 첫 달 세팅+관리까지 다 되고, 다음 달부터는 55만원이에요. 하루로 치면 1.8만원! 알바생 반나절 비용으로 24시간 마케팅 되는 셈이죠 😊 그리고 친구 초대하시면 5% 할인도 받으실 수 있어요!"
+→ "이해해요! 그래서 저희가 세트 메뉴를 만들었어요. SNS 스타터 89만원이면 첫 달 세팅+관리까지 다 되고, 다음 달부터는 55만원이에요. 하루로 치면 1.8만원! 알바생 반나절 비용으로 24시간 마케팅 되는 셈이죠 😊 그리고 친구 초대받으시면 바로 15% 할인이에요! 아니면 분할결제도 가능해요!"
+
+**Q1-1. "분할결제 가능한가요?"**
+→ "네! 셋팅비를 2~3회로 나눠 결제하실 수 있어요. 예를 들어 SNS 성장(149만원)을 계약하시면: 계약금 50만원 → 1주후 49만원 → 세팅완료후 50만원 이렇게요. 월관리비는 매월 따로니까 겹치지 않아요! 😊"
 
 **Q2. "효과가 바로 나타나나요?"**
 → "씨앗 심자마자 열매 열리진 않잖아요? 🌱 첫 달은 밭 갈고 씨 뿌리는 '세팅' 기간이에요. 플레이스 최적화하고 인스타 기반 다지고... 제대로 세팅하면 보통 2~3개월째부터 문의가 늘기 시작해요."
@@ -1193,6 +1233,15 @@ app.post('/api/chat', async (c) => {
 **Q7. "ZOOM 상담은 뭐예요?"**
 → "3만원에 30분 동안 1:1로 화상 상담해드려요! 사장님 업종, 상황 듣고 맞춤 전략 조언해드려요. 일단 이것만 신청하셔도 방향이 잡히실 거예요 🎥"
 
+**Q8. "결제는 어떻게 하나요?" / "선입금인가요?"**
+→ "네! 저희는 **선입금 시스템**이에요. 결제 완료 후 작업이 시작됩니다. 정당한 대가 없이는 서비스 제공이 어렵습니다. 대신 품질에 자신 있으니 첫 달 써보시고 마음에 안 드시면 다음 달 해약 가능해요! 😊"
+
+**Q8-1. "후불 안 되나요?" / "나중에 결제해도 되나요?"**
+→ "죄송해요, 저희는 **선입금 원칙**입니다. 계약금 먼저 결제 → 작업 시작 → 세팅 완료 후 잔금 결제 순서로 진행해요. 분할결제는 가능하지만 후불은 어렵습니다. 신뢰가 쌓인 장기 고객님에게만 예외적으로 협의 가능해요!"
+
+**Q9. "계약서 작성하나요?"**
+→ "네! 정식 전자계약서를 작성해요. 서비스 범위, 기간, 금액, 해약 조건이 명시되어 있어서 서로 안심하고 진행할 수 있어요. 계약서 없이는 프로젝트 시작 안 해요! ✍️"
+
 # Conversation Flow (대화 순서)
 1. **인사+업종 파악:** "안녕하세요! X I Λ I X 마케팅 상담 AI입니다 😊 어떤 사업 운영하고 계신가요?"
 2. **호칭 설정+공감:** 업종 맞는 호칭으로 부르며 노고 위로
@@ -1204,7 +1253,7 @@ app.post('/api/chat', async (c) => {
 
 # 금지 사항
 - 없는 상품/가격 지어내기 (위 데이터베이스에 없는 건 "확인 후 안내드릴게요" 라고 답변)
-- 임의 할인/무료 약속 (친구초대 5%, VIP 15% 외 할인 불가)
+- 임의 할인/무료 약속 (친구초대 15%, VIP 20% 외 할인 불가)
 - 효과 100% 보장 발언
 - 경쟁사 비방`
 
@@ -1286,7 +1335,7 @@ function getDemoResponse(message: string): string {
 → 전채널 풀셋팅 + 토탈마스터 관리
 💡 지역 1등을 노리시는 분!
 
-🎁 **친구 초대하면 5% 할인 쿠폰!**
+🎁 **친구 초대하면 바로 15% 할인! 추천인도 5% 적립금!**
 
 어떤 업종이신가요? 맞춤 추천 드릴게요!`
   }
@@ -1674,6 +1723,94 @@ app.post('/api/questionnaire', async (c) => {
       paymentInfo: data.paymentInfo,
       submittedAt: new Date().toISOString()
     }
+  })
+})
+
+// ========================================
+// 상담 예약 API
+// ========================================
+app.post('/api/booking', async (c) => {
+  const data = await c.req.json()
+  const db = c.env?.DB
+  
+  // 필수 필드 검증
+  const { name, phone, date, time, consultType, industry, message } = data
+  
+  if (!name || !phone || !date || !time) {
+    return c.json({ success: false, error: '필수 정보를 입력해주세요.' }, 400)
+  }
+  
+  // DB에 예약 저장
+  if (db) {
+    try {
+      // bookings 테이블이 없으면 생성
+      await db.prepare(`
+        CREATE TABLE IF NOT EXISTS bookings (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          phone TEXT NOT NULL,
+          email TEXT,
+          date TEXT NOT NULL,
+          time TEXT NOT NULL,
+          consult_type TEXT,
+          industry TEXT,
+          message TEXT,
+          status TEXT DEFAULT 'pending',
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      `).run()
+      
+      await db.prepare(`
+        INSERT INTO bookings (name, phone, email, date, time, consult_type, industry, message)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `).bind(name, phone, data.email || '', date, time, consultType || '', industry || '', message || '').run()
+    } catch (error) {
+      console.error('Booking DB error:', error)
+    }
+  }
+  
+  console.log('📅 새로운 상담 예약:', JSON.stringify(data, null, 2))
+  
+  return c.json({
+    success: true,
+    message: '상담 예약이 완료되었습니다! 담당자가 확인 후 연락드리겠습니다.',
+    data: {
+      name,
+      date,
+      time,
+      consultType: consultType || '일반 상담',
+      submittedAt: new Date().toISOString()
+    }
+  })
+})
+
+// 예약 가능 시간 조회
+app.get('/api/booking/available-times', async (c) => {
+  const { date } = c.req.query()
+  const db = c.env?.DB
+  
+  // 기본 가능 시간 (10:00 ~ 18:00, 1시간 단위)
+  const allTimes = ['10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00']
+  
+  // DB에서 해당 날짜의 예약된 시간 조회
+  let bookedTimes: string[] = []
+  if (db && date) {
+    try {
+      const results = await db.prepare(`
+        SELECT time FROM bookings WHERE date = ? AND status != 'cancelled'
+      `).bind(date).all()
+      bookedTimes = (results.results || []).map((r: any) => r.time)
+    } catch (error) {
+      console.error('Error fetching booked times:', error)
+    }
+  }
+  
+  const availableTimes = allTimes.filter(t => !bookedTimes.includes(t))
+  
+  return c.json({
+    date,
+    availableTimes,
+    bookedTimes
   })
 })
 
@@ -2581,13 +2718,22 @@ function getMainHTML(): string {
         text-align: left; position: relative; width: 100%;
       }
       .service-menu-btn:hover { transform: translateX(8px); border-color: var(--btn-color); background: rgba(168, 85, 247, 0.05); }
-      .service-menu-btn i:first-child { font-size: 1.5rem; color: var(--btn-color); width: 40px; text-align: center; }
-      .service-menu-btn .menu-text { flex: 1; display: flex; flex-direction: column; }
-      .service-menu-btn .menu-name { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
-      .service-menu-btn .menu-desc { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px; font-weight: 400; }
-      .service-menu-btn .menu-arrow { color: var(--text-tertiary); font-size: 1rem; }
+      .service-menu-btn .menu-icon { font-size: 1.5rem; color: var(--btn-color); width: 40px; min-width: 40px; text-align: center; flex-shrink: 0; }
+      .service-menu-btn .menu-text { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+      .service-menu-btn .menu-name { font-size: 1rem; font-weight: 700; color: var(--text-primary); line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .service-menu-btn .menu-desc { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 4px; font-weight: 400; line-height: 1.4; }
+      .service-menu-btn .menu-arrow { color: var(--text-tertiary); font-size: 1rem; flex-shrink: 0; margin-left: 8px; }
       .service-menu-btn .menu-badge { position: absolute; top: 12px; right: 50px; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); color: white; }
       .service-menu-btn .menu-badge.hot { background: linear-gradient(135deg, var(--neon-orange), #ef4444); }
+      
+      /* 모바일 서비스 메뉴 최적화 */
+      @media (max-width: 480px) {
+        .service-menu-btn { padding: 16px; gap: 12px; }
+        .service-menu-btn .menu-icon { font-size: 1.3rem; width: 36px; min-width: 36px; }
+        .service-menu-btn .menu-name { font-size: 0.95rem; white-space: normal; }
+        .service-menu-btn .menu-desc { font-size: 0.75rem; }
+        .service-menu-btn .menu-badge { top: 8px; right: 40px; font-size: 0.65rem; padding: 2px 8px; }
+      }
       
       /* 서비스 상세 모달 */
       .service-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 900; display: none; overflow-y: auto; }
@@ -3103,6 +3249,23 @@ function getMainHTML(): string {
         <div class="hero-buttons animate-fade-in-up delay-3">
           <button class="btn btn-primary" onclick="scrollTo('portfolio')"><i class="fas fa-images"></i>포트폴리오</button>
           <button class="btn btn-secondary" onclick="openChat()"><i class="fas fa-comments"></i>AI 상담</button>
+          <button class="btn" style="background: linear-gradient(135deg, #eab308, #ca8a04);" onclick="openBookingModal()"><i class="fas fa-calendar-check"></i>상담 예약</button>
+        </div>
+      </section>
+      
+      <!-- 친구 초대 혜택 배너 (컴팩트) -->
+      <section id="referral-benefits" class="section" style="padding: 24px 20px;">
+        <div class="container" style="max-width: 600px;">
+          <div class="reveal" style="background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(34,197,94,0.1)); border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;">
+            <div style="font-size: 2rem;">🎁</div>
+            <div style="flex: 1; min-width: 200px;">
+              <div style="font-size: 1.1rem; font-weight: 700; color: var(--neon-green);">친구 초대 = 15% 할인!</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">추천인 5% 적립 · 2차 추천 2% 추가</div>
+            </div>
+            <button class="btn btn-primary btn-small" onclick="openChat()" style="white-space: nowrap;">
+              <i class="fas fa-comments"></i> 코드 받기
+            </button>
+          </div>
         </div>
       </section>
       
@@ -3125,46 +3288,53 @@ function getMainHTML(): string {
           </div>
           <div class="service-menu-grid reveal">
             <button class="service-menu-btn hot" onclick="openServiceModal('sets')" style="--btn-color: #f97316">
-              <i class="fas fa-fire"></i>
-              <span class="menu-name">🔥 SNS 셋트 메뉴</span>
-              <span class="menu-desc">셋팅+월관리 통합 패키지 (89만~499만)</span>
+              <i class="fas fa-fire menu-icon"></i>
+              <div class="menu-text">
+                <span class="menu-name">🔥 SNS 셋트 메뉴</span>
+                <span class="menu-desc">셋팅+월관리 통합 패키지 (89만~499만)</span>
+              </div>
               <span class="menu-badge hot">추천</span>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
             <button class="service-menu-btn" onclick="openServiceModal('pricing')" style="--btn-color: #a855f7">
-              <i class="fas fa-tags"></i>
-              <span class="menu-name">채널별 가격표</span>
-              <span class="menu-desc">셋팅비 + 월관리비 상세 안내</span>
+              <i class="fas fa-tags menu-icon"></i>
+              <div class="menu-text">
+                <span class="menu-name">📋 채널별 가격표</span>
+                <span class="menu-desc">셋팅비 + 월관리비 상세 안내</span>
+              </div>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
             <button class="service-menu-btn" onclick="openServiceModal('websites')" style="--btn-color: #22c55e">
-              <i class="fas fa-globe"></i>
-              <span class="menu-name">웹사이트 구축</span>
-              <span class="menu-desc">99만~750만 (AI 상담봇 포함)</span>
+              <i class="fas fa-globe menu-icon"></i>
+              <div class="menu-text">
+                <span class="menu-name">🌐 웹사이트 구축</span>
+                <span class="menu-desc">99만~750만 (AI 상담봇 포함)</span>
+              </div>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
-            <button class="service-menu-btn" onclick="openServiceModal('webservice')" style="--btn-color: #14b8a6">
-              <i class="fas fa-palette"></i>
-              <span class="menu-name">🎨 웹 서비스</span>
-              <span class="menu-desc">리틀리/홈페이지 (29만~199만)</span>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
+
             <button class="service-menu-btn" onclick="openServiceModal('sysdev')" style="--btn-color: #06b6d4">
-              <i class="fas fa-cogs"></i>
-              <span class="menu-name">⚙️ 시스템 개발</span>
-              <span class="menu-desc">지도연동/카카오/자동화/AI봇 (190만~990만)</span>
+              <i class="fas fa-cogs menu-icon"></i>
+              <div class="menu-text">
+                <span class="menu-name">⚙️ 시스템 개발</span>
+                <span class="menu-desc">지도연동/카카오/자동화/AI봇 (190만~990만)</span>
+              </div>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
             <button class="service-menu-btn" onclick="openServiceModal('addons')" style="--btn-color: #8b5cf6">
-              <i class="fas fa-plus-circle"></i>
-              <span class="menu-name">부가 서비스</span>
-              <span class="menu-desc">브랜드영상/상세페이지/부스팅</span>
+              <i class="fas fa-plus-circle menu-icon"></i>
+              <div class="menu-text">
+                <span class="menu-name">➕ 부가 서비스</span>
+                <span class="menu-desc">리틀리/브랜드영상/상세페이지/부스팅</span>
+              </div>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
             <button class="service-menu-btn" onclick="openServiceModal('consulting')" style="--btn-color: #eab308">
-              <i class="fas fa-handshake"></i>
-              <span class="menu-name">🏢 브랜드/프랜차이즈 컨설팅</span>
-              <span class="menu-desc">1년계약 월2회방문 (월150만~300만)</span>
+              <i class="fas fa-handshake menu-icon"></i>
+              <div class="menu-text">
+                <span class="menu-name">🏢 브랜드/프랜차이즈 컨설팅</span>
+                <span class="menu-desc">3개월 단위 선택 (월150만~300만)</span>
+              </div>
               <span class="menu-badge" style="background: linear-gradient(135deg, #eab308, #ca8a04);">프리미엄</span>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
@@ -3237,6 +3407,32 @@ function getMainHTML(): string {
         <div class="cart-footer">
           <label class="cart-regional"><input type="checkbox" id="regional-fee" onchange="updateCart()">지방 출장비 (+30만원)</label>
           <div class="cart-total"><span>총 금액</span><span id="cart-total">0원</span></div>
+          
+          <!-- 분할결제 옵션 -->
+          <div class="installment-option" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:12px;margin:12px 0;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);cursor:pointer;">
+              <input type="checkbox" id="installment-check" onchange="toggleInstallmentInfo()" style="accent-color:var(--neon-purple);">
+              <span><i class="fas fa-calendar-alt"></i> 분할결제 (셋팅비 2~3회 분납)</span>
+            </label>
+            <div id="installment-info" style="display:none;margin-top:10px;font-size:0.8rem;color:var(--text-tertiary);background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
+              <div style="margin-bottom:6px;color:var(--neon-cyan);">💡 분할결제 안내</div>
+              <div>• 계약금: 총액의 약 35%</div>
+              <div>• 1주 후: 약 35%</div>
+              <div>• 세팅완료 후: 잔금 30%</div>
+              <div style="margin-top:6px;color:var(--neon-orange);font-size:0.75rem;">※ 월관리비는 매월 별도 결제 (겹치지 않음)</div>
+            </div>
+          </div>
+          
+          <!-- 친구초대 혜택 배너 -->
+          <div class="referral-banner" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(168,85,247,0.15));border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:12px;margin-bottom:12px;text-align:center;">
+            <div style="font-size:0.9rem;font-weight:700;color:var(--neon-green);margin-bottom:4px;">
+              <i class="fas fa-gift"></i> 친구 초대하면 바로 15% 할인!
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">
+              추천인도 결제금액의 5% 적립금 획득 🎁
+            </div>
+          </div>
+          
           <div style="display:flex;gap:8px;">
             <button class="btn" style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);" onclick="downloadQuote()"><i class="fas fa-file-pdf"></i> 견적서</button>
             <button class="btn btn-primary" style="flex:2;" onclick="checkout()"><i class="fas fa-credit-card"></i> 결제하기</button>
@@ -3292,6 +3488,88 @@ function getMainHTML(): string {
       </div>
     </div>
     
+    <!-- 상담 예약 모달 -->
+    <div class="booking-modal" id="booking-modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.9);backdrop-filter:blur(12px);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px;">
+      <div style="background:linear-gradient(145deg,var(--bg-secondary),var(--bg-tertiary));border:2px solid #eab308;border-radius:24px;padding:32px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:loginPop 0.4s ease;">
+        <button onclick="closeBookingModal()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-tertiary);font-size:1.2rem;cursor:pointer;"><i class="fas fa-times"></i></button>
+        
+        <div style="text-align:center;margin-bottom:24px;">
+          <div style="font-size:3rem;margin-bottom:8px;">📅</div>
+          <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">상담 예약</h2>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">원하시는 시간에 전문 상담을 받으세요!</p>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">이름 *</label>
+            <input type="text" id="booking-name" placeholder="홍길동" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">연락처 *</label>
+            <input type="tel" id="booking-phone" placeholder="010-1234-5678" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">이메일 (선택)</label>
+            <input type="email" id="booking-email" placeholder="example@email.com" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+          </div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">희망 날짜 *</label>
+              <input type="date" id="booking-date" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;" onchange="loadAvailableTimes()">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">희망 시간 *</label>
+              <select id="booking-time" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+                <option value="">날짜를 먼저 선택</option>
+              </select>
+            </div>
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">상담 유형</label>
+            <select id="booking-type" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+              <option value="general">일반 마케팅 상담</option>
+              <option value="sns">SNS 마케팅 상담</option>
+              <option value="website">웹사이트/시스템 상담</option>
+              <option value="branding">브랜드 컨설팅</option>
+              <option value="franchise">프랜차이즈 컨설팅</option>
+              <option value="video">영상 제작 상담</option>
+            </select>
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">업종</label>
+            <select id="booking-industry" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+              <option value="">선택해주세요</option>
+              <option value="병원">병원/의원</option>
+              <option value="뷰티">뷰티/미용</option>
+              <option value="식음료">식음료/카페</option>
+              <option value="교육">교육/학원</option>
+              <option value="쇼핑몰">쇼핑몰/커머스</option>
+              <option value="서비스">서비스업</option>
+              <option value="기타">기타</option>
+            </select>
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">문의 내용 (선택)</label>
+            <textarea id="booking-message" rows="3" placeholder="상담받고 싶은 내용을 간단히 적어주세요" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;resize:vertical;"></textarea>
+          </div>
+        </div>
+        
+        <button onclick="submitBooking()" style="width:100%;margin-top:24px;padding:16px;background:linear-gradient(135deg,#eab308,#ca8a04);border:none;border-radius:12px;color:white;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <i class="fas fa-calendar-check"></i> 예약 신청하기
+        </button>
+        
+        <p style="text-align:center;margin-top:16px;font-size:0.8rem;color:var(--text-tertiary);">
+          예약 확정 후 담당자가 연락드립니다 📞
+        </p>
+      </div>
+    </div>
+    
     <!-- 로그인 유도 모달 -->
     <div class="login-modal" id="login-modal">
       <div class="login-modal-content" style="position:relative;">
@@ -3304,8 +3582,8 @@ function getMainHTML(): string {
           <div class="login-benefit-item">
             <div class="login-benefit-icon purple"><i class="fas fa-ticket-alt"></i></div>
             <div class="login-benefit-text">
-              <div class="login-benefit-title">첫 가입 5% 할인쿠폰</div>
-              <div class="login-benefit-desc">지금 바로 사용 가능!</div>
+              <div class="login-benefit-title">첫 가입 15% 할인쿠폰</div>
+              <div class="login-benefit-desc">친구 추천코드 입력시!</div>
             </div>
           </div>
           <div class="login-benefit-item">
@@ -3690,45 +3968,69 @@ function getMainHTML(): string {
       }
       
       function renderConsultingHTML() {
-        return '<div class="consulting-container">' + consultingOptions.map(c => {
-          return '<div class="card consulting-card" style="border-top: 3px solid #eab308;">' +
-            '<div class="card-badge" style="background: linear-gradient(135deg, #eab308, #ca8a04);">1년 계약</div>' +
-            '<h3 class="card-name">' + c.name + '</h3>' +
-            '<p class="card-desc">' + c.desc + '</p>' +
-            '<div class="consulting-pricing">' +
-              '<div class="price-tier"><span class="tier-label">1~2개월</span><span class="tier-price">월 ' + (c.prices.month1_2/10000) + '만</span></div>' +
-              '<div class="price-tier highlight"><span class="tier-label">3~5개월</span><span class="tier-price">월 ' + (c.prices.month3_5/10000) + '만</span></div>' +
-              '<div class="price-tier best"><span class="tier-label">6~12개월</span><span class="tier-price">월 ' + (c.prices.month6_12/10000) + '만</span></div>' +
-            '</div>' +
-            '<div class="consulting-includes">' +
-              '<h4><i class="fas fa-check-circle"></i> 포함 서비스</h4>' +
-              '<ul>' + c.includes.map(i => '<li><i class="fas fa-check"></i>' + i + '</li>').join('') + '</ul>' +
-            '</div>' +
-            '<div class="consulting-advisory">' +
-              '<h4><i class="fas fa-user-tie"></i> 자문 분야</h4>' +
-              '<div class="advisory-tags">' + c.advisory.map(a => '<span class="advisory-tag">' + a + '</span>').join('') + '</div>' +
-            '</div>' +
-            '<button class="btn btn-primary" style="width:100%; margin-top:16px; background: linear-gradient(135deg, #eab308, #ca8a04);" onclick="addToCart(\\'consulting\\', \\'' + c.id + '\\', \\'' + c.name + ' (1년)\\', ' + (c.prices.month1_2 * 2 + c.prices.month3_5 * 3 + c.prices.month6_12 * 7) + ', event)">' +
-              '<i class="fas fa-handshake"></i> 1년 계약 상담신청' +
-            '</button>' +
-          '</div>';
-        }).join('') + '</div>' +
+        const stepColors = ['#ef4444', '#f59e0b', '#22c55e'];
+        return '<div class="consulting-packages">' +
+          '<div class="consulting-intro">' +
+            '<h3>🏢 브랜드/프랜차이즈 컨설팅</h3>' +
+            '<p>3개월 단위로 필요한 단계만 선택하세요</p>' +
+          '</div>' +
+          '<div class="consulting-grid">' +
+            consultingOptions.map((c, idx) => {
+              const stepColor = stepColors[idx];
+              const isRecommended = c.recommended;
+              return '<div class="consulting-card' + (isRecommended ? ' recommended' : '') + '" style="--step-color: ' + stepColor + '">' +
+                '<div class="step-badge" style="background: ' + stepColor + '">' + c.badge + '</div>' +
+                (isRecommended ? '<div class="best-badge">BEST</div>' : '') +
+                '<h4 class="step-name">' + c.name + '</h4>' +
+                '<p class="step-subtitle">' + c.subtitle + '</p>' +
+                '<div class="step-pricing">' +
+                  '<div class="monthly-fee"><span class="fee-label">월</span><span class="fee-value">' + (c.monthlyFee/10000) + '</span><span class="fee-unit">만원</span></div>' +
+                  '<div class="total-fee">' + c.period + ' 총 ' + (c.totalPrice/10000) + '만원</div>' +
+                  '<div class="visit-note">' + c.desc + '</div>' +
+                '</div>' +
+                '<ul class="step-tasks">' + c.tasks.map(t => '<li><i class="fas fa-check"></i>' + t + '</li>').join('') + '</ul>' +
+                '<div class="step-includes">' +
+                  '<div class="includes-title"><i class="fas fa-box"></i> 포함</div>' +
+                  '<div class="includes-list">' + c.includes.map(i => '<span>' + i + '</span>').join('') + '</div>' +
+                '</div>' +
+                '<div class="step-advisory">' +
+                  '<div class="advisory-title"><i class="fas fa-user-tie"></i> 자문</div>' +
+                  '<div class="advisory-tags">' + c.advisory.map(a => '<span>' + a + '</span>').join('') + '</div>' +
+                '</div>' +
+                '<button class="btn btn-primary step-cta" style="background: ' + stepColor + '" onclick="addToCart(\\'consulting\\', \\'' + c.id + '\\', \\'' + c.name + ' (' + c.period + ')\\', ' + c.totalPrice + ', event)">' +
+                  '<i class="fas fa-handshake"></i> 상담신청' +
+                '</button>' +
+              '</div>';
+            }).join('') +
+          '</div>' +
+        '</div>' +
         '<style>' +
-          '.consulting-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }' +
-          '.consulting-card { padding: 24px; }' +
-          '.consulting-pricing { display: flex; gap: 8px; margin: 16px 0; }' +
-          '.price-tier { flex: 1; text-align: center; padding: 12px 8px; background: rgba(255,255,255,0.05); border-radius: 8px; }' +
-          '.price-tier.highlight { background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.3); }' +
-          '.price-tier.best { background: rgba(234,179,8,0.2); border: 2px solid #eab308; }' +
-          '.tier-label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; }' +
-          '.tier-price { display: block; font-size: 1.1rem; font-weight: 700; color: #eab308; }' +
-          '.consulting-includes, .consulting-advisory { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }' +
-          '.consulting-includes h4, .consulting-advisory h4 { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }' +
-          '.consulting-includes ul { list-style: none; padding: 0; margin: 0; }' +
-          '.consulting-includes li { padding: 4px 0; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }' +
-          '.consulting-includes li i { color: #22c55e; font-size: 0.8rem; }' +
-          '.advisory-tags { display: flex; flex-wrap: wrap; gap: 6px; }' +
-          '.advisory-tag { background: rgba(234,179,8,0.15); color: #eab308; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }' +
+          '.consulting-packages { max-width: 100%; }' +
+          '.consulting-intro { text-align: center; margin-bottom: 20px; }' +
+          '.consulting-intro h3 { font-size: 1.3rem; margin: 0 0 6px; }' +
+          '.consulting-intro p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }' +
+          '.consulting-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }' +
+          '.consulting-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; position: relative; border: 1px solid rgba(255,255,255,0.1); }' +
+          '.consulting-card.recommended { border: 2px solid var(--step-color); background: rgba(245,158,11,0.05); }' +
+          '.step-badge { position: absolute; top: -10px; left: 20px; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; color: white; }' +
+          '.best-badge { position: absolute; top: -10px; right: 20px; background: linear-gradient(135deg, #a855f7, #ec4899); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; color: white; }' +
+          '.step-name { font-size: 1.2rem; margin: 10px 0 4px; }' +
+          '.step-subtitle { color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 12px; }' +
+          '.step-pricing { text-align: center; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 12px; margin-bottom: 14px; }' +
+          '.monthly-fee { display: flex; align-items: baseline; justify-content: center; gap: 4px; }' +
+          '.fee-label { font-size: 0.8rem; color: var(--text-secondary); }' +
+          '.fee-value { font-size: 2rem; font-weight: 700; color: var(--step-color); }' +
+          '.fee-unit { font-size: 0.9rem; color: var(--text-secondary); }' +
+          '.total-fee { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 4px; }' +
+          '.visit-note { font-size: 0.75rem; color: var(--step-color); margin-top: 4px; }' +
+          '.step-tasks { list-style: none; padding: 0; margin: 0 0 12px; }' +
+          '.step-tasks li { font-size: 0.85rem; padding: 4px 0; display: flex; align-items: center; gap: 8px; }' +
+          '.step-tasks li i { color: var(--step-color); font-size: 0.7rem; }' +
+          '.step-includes, .step-advisory { margin-bottom: 10px; }' +
+          '.includes-title, .advisory-title { font-size: 0.75rem; color: var(--text-tertiary); margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }' +
+          '.includes-list span, .advisory-tags span { display: inline-block; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; margin: 2px; }' +
+          '.advisory-tags span { background: rgba(234,179,8,0.15); color: #eab308; }' +
+          '.step-cta { width: 100%; padding: 12px; font-size: 0.95rem; border: none; border-radius: 10px; margin-top: 8px; }' +
         '</style>';
       }
       
@@ -3786,6 +4088,12 @@ function getMainHTML(): string {
         checkoutTotal.textContent = totalText;
       }
       function toggleCart() { document.getElementById('cart-panel').classList.toggle('open'); }
+      
+      function toggleInstallmentInfo() {
+        const info = document.getElementById('installment-info');
+        const check = document.getElementById('installment-check');
+        info.style.display = check.checked ? 'block' : 'none';
+      }
       
       function clearCart() {
         if (confirm('장바구니를 비우시겠습니까?')) {
@@ -3895,6 +4203,87 @@ function getMainHTML(): string {
       
       function closeLoginModal() {
         document.getElementById('login-modal').classList.remove('open');
+      }
+      
+      // 예약 모달
+      function openBookingModal() {
+        document.getElementById('booking-modal').style.display = 'flex';
+        // 최소 날짜 설정 (내일부터)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('booking-date').min = tomorrow.toISOString().split('T')[0];
+      }
+      
+      function closeBookingModal() {
+        document.getElementById('booking-modal').style.display = 'none';
+      }
+      
+      async function loadAvailableTimes() {
+        const date = document.getElementById('booking-date').value;
+        const timeSelect = document.getElementById('booking-time');
+        
+        if (!date) {
+          timeSelect.innerHTML = '<option value="">날짜를 먼저 선택</option>';
+          return;
+        }
+        
+        try {
+          const res = await fetch('/api/booking/available-times?date=' + date);
+          const data = await res.json();
+          
+          if (data.availableTimes.length === 0) {
+            timeSelect.innerHTML = '<option value="">예약 가능한 시간이 없습니다</option>';
+          } else {
+            timeSelect.innerHTML = '<option value="">시간 선택</option>' + 
+              data.availableTimes.map(t => '<option value="' + t + '">' + t + '</option>').join('');
+          }
+        } catch (e) {
+          // 기본 시간 표시
+          timeSelect.innerHTML = '<option value="">시간 선택</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option>';
+        }
+      }
+      
+      async function submitBooking() {
+        const name = document.getElementById('booking-name').value.trim();
+        const phone = document.getElementById('booking-phone').value.trim();
+        const email = document.getElementById('booking-email').value.trim();
+        const date = document.getElementById('booking-date').value;
+        const time = document.getElementById('booking-time').value;
+        const consultType = document.getElementById('booking-type').value;
+        const industry = document.getElementById('booking-industry').value;
+        const message = document.getElementById('booking-message').value.trim();
+        
+        if (!name || !phone || !date || !time) {
+          showToast('⚠️ 필수 정보를 입력해주세요');
+          return;
+        }
+        
+        try {
+          const res = await fetch('/api/booking', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, phone, email, date, time, consultType, industry, message })
+          });
+          
+          const data = await res.json();
+          
+          if (data.success) {
+            closeBookingModal();
+            showToast('✅ 예약이 완료되었습니다! 담당자가 연락드릴게요 📞');
+            
+            // 입력값 초기화
+            document.getElementById('booking-name').value = '';
+            document.getElementById('booking-phone').value = '';
+            document.getElementById('booking-email').value = '';
+            document.getElementById('booking-date').value = '';
+            document.getElementById('booking-time').innerHTML = '<option value="">날짜를 먼저 선택</option>';
+            document.getElementById('booking-message').value = '';
+          } else {
+            showToast('❌ ' + (data.error || '예약 실패. 다시 시도해주세요.'));
+          }
+        } catch (e) {
+          showToast('❌ 네트워크 오류. 다시 시도해주세요.');
+        }
       }
       
       // 카카오/네이버 로그인 후 결제 계속
