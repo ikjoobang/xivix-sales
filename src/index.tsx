@@ -5089,9 +5089,22 @@ function getMainHTML(): string {
       
       // 카카오톡 공유
       function shareKakao() {
-        if (!window.Kakao || !Kakao.isInitialized()) {
-          showToast('⚠️ 카카오 SDK 로딩 중입니다. 잠시 후 다시 시도해주세요.');
+        // SDK 로딩 확인 및 초기화
+        if (!window.Kakao) {
+          showToast('⚠️ 카카오 SDK 로딩 중... 잠시 후 다시 클릭해주세요.');
           return;
+        }
+        
+        // 초기화 안 됐으면 초기화
+        if (!Kakao.isInitialized()) {
+          try {
+            Kakao.init('ab4e6e4c5d28f94c4af56f85519bf1a9');
+            console.log('✅ 카카오 SDK 초기화 완료');
+          } catch (e) {
+            console.error('카카오 초기화 실패:', e);
+            showToast('⚠️ 카카오 연동 오류. 새로고침 후 다시 시도해주세요.');
+            return;
+          }
         }
         
         // 현재 로그인한 사용자의 추천인 코드가 있으면 포함
