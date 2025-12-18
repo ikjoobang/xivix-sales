@@ -5213,18 +5213,18 @@ function getMainHTML(): string {
         navigator.clipboard.writeText('100124491987').then(() => showToast('✅ 계좌번호 복사됨!'));
       }
       
-      // 수강 신청 카드결제 (PortOne v2)
+      // 수강 신청 카드결제 (PortOne v2 - 기존 결제와 동일한 자격증명 사용)
       async function eduCardPay() {
         if (typeof PortOne === 'undefined') {
           showToast('⚠️ 결제 모듈 로딩 중... 잠시 후 다시 시도해주세요.');
           return;
         }
         
-        const orderId = 'edu_' + Date.now();
+        const orderId = 'EDU_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         try {
           const response = await PortOne.requestPayment({
-            storeId: 'store-e4038486-8d83-41a5-acf1-844a009e2674',
-            channelKey: 'channel-key-abe75a7e-faae-4e5c-815c-02519f5b9cdc',
+            storeId: 'store-d08be3e0-9ed0-4393-9974-0b9cbd799252',
+            channelKey: 'channel-key-1cb320d6-8851-4ab2-83de-b8fb88dd2613',
             paymentId: orderId,
             orderName: 'XIΛIX AI 입문반 1기',
             totalAmount: 2200000,
@@ -5237,6 +5237,7 @@ function getMainHTML(): string {
             showToast('❌ 결제 실패: ' + response.message);
           } else {
             showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+            closeEduModal();
           }
         } catch (e) {
           showToast('❌ 결제 오류: ' + e.message);
