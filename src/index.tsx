@@ -4653,7 +4653,7 @@ function getMainHTML(): string {
         return sysDevOptions.map(s => {
           if (s.isEdu) {
             // 수강 신청 카드 - 특별 디자인 + 바로 결제
-            return '<div class="card" style="border:2px solid var(--neon-green);background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(168,85,247,0.1));">' +
+            return '<div class="card" data-edu-card style="border:2px solid var(--neon-green);background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(168,85,247,0.1));">' +
               '<div style="position:absolute;top:-10px;right:10px;background:linear-gradient(135deg,#ef4444,#f97316);color:white;padding:4px 12px;border-radius:12px;font-size:0.75rem;font-weight:700;">🔥 선착순 5명</div>' +
               '<h3 class="card-name" style="color:var(--neon-green);">' + s.name + '</h3>' +
               '<p class="card-desc">' + s.desc + '</p>' +
@@ -5522,6 +5522,18 @@ function getMainHTML(): string {
           document.getElementById('main-container').classList.add('with-banner');
         } else {
           document.getElementById('top-banner').classList.add('hidden');
+        }
+        
+        // URL 해시로 바로가기 처리
+        if (window.location.hash === '#edu' || window.location.hash === '#sysdev') {
+          setTimeout(() => {
+            openServiceModal('sysdev');
+            // 입문반 카드로 스크롤
+            setTimeout(() => {
+              const eduCard = document.querySelector('[data-edu-card]');
+              if (eduCard) eduCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+          }, 500);
         }
         
         // 카카오 SDK 초기화
