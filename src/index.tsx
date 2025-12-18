@@ -1953,10 +1953,10 @@ app.get('/login', (c) => c.html(getLoginHTML()))
 app.get('/my', (c) => c.html(getMyPageHTML()))
 app.get('/admin', (c) => c.html(getAdminHTML()))
 
-// OG 이미지 (카카오톡, SNS 공유용) - 실제 이미지로 리다이렉트
+// OG 이미지 (카카오톡, SNS 공유용) - 실제 PNG 이미지로 리다이렉트
 app.get('/og-image.png', async (c) => {
-  // 생성된 OG 이미지로 리다이렉트
-  return c.redirect('https://www.genspark.ai/api/files/s/g876OmZQ')
+  // placehold.co 사용 - URL 인코딩 없는 깔끔한 URL (카카오톡 호환)
+  return c.redirect('https://placehold.co/1200x630/1a1a1f/ffffff.png?text=XIVIX')
 })
 
 // ========================================
@@ -5063,7 +5063,7 @@ function getMainHTML(): string {
           content: {
             title: '🎁 친구 초대하면 15% 할인!',
             description: 'AI 마케팅 전문 에이전시 XIVIX에서 SNS 마케팅, 웹사이트 제작, 브랜드 컨설팅을 받아보세요!',
-            imageUrl: 'https://www.genspark.ai/api/files/s/g876OmZQ',
+            imageUrl: 'https://placehold.co/1200x630/1a1a1f/ffffff.png?text=XIVIX',
             link: {
               mobileWebUrl: shareUrl,
               webUrl: shareUrl
