@@ -5230,11 +5230,10 @@ function getMainHTML(): string {
             totalAmount: 2200000,
             currency: 'KRW',
             payMethod: 'CARD',
-            windowType: 'IFRAME',
             customer: {
-              fullName: '방익주',
               email: 'customer@xivix.kr',
-              phoneNumber: '010-4845-3065'
+              fullName: '방익주',
+              phoneNumber: '01048453065'
             }
           });
           
