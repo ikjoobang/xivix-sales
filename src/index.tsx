@@ -5229,7 +5229,10 @@ function getMainHTML(): string {
             orderName: 'XIΛIX AI 입문반 1기',
             totalAmount: 2200000,
             currency: 'KRW',
-            payMethod: 'CARD'
+            payMethod: 'CARD',
+            customer: {
+              email: 'customer@xivix.kr'
+            }
           });
           
           if (response.code) {
