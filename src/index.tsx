@@ -5229,8 +5229,7 @@ function getMainHTML(): string {
             orderName: 'XIΛIX AI 입문반 1기',
             totalAmount: 2200000,
             currency: 'KRW',
-            payMethod: 'CARD',
-            customer: { email: '', fullName: '', phoneNumber: '' }
+            payMethod: 'CARD'
           });
           
           if (response.code) {
