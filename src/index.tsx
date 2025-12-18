@@ -2819,7 +2819,8 @@ function getMainHTML(): string {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <!-- PortOne 결제 SDK (v1 for IMP) -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <!-- 카카오 SDK (최신 버전) -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
@@ -5316,12 +5317,18 @@ function getMainHTML(): string {
             const orderName = 'XIΛIX AI 입문반 1기';
             const amount = 2200000; // VAT 포함
             
-            if (typeof IMP === 'undefined') {
-              alert('결제 모듈을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+            // SDK 로딩 확인
+            if (typeof IMP === 'undefined' || !window.IMP) {
+              showToast('⏳ 결제 모듈 로딩 중... 3초 후 다시 시도해주세요.');
+              // SDK 동적 로딩 시도
+              const script = document.createElement('script');
+              script.src = 'https://cdn.iamport.kr/v1/iamport.js';
+              document.head.appendChild(script);
               return;
             }
             
             IMP.init('imp16aboraz');
+            
             IMP.request_pay({
               pg: 'html5_inicis',
               pay_method: 'card',
@@ -5336,23 +5343,25 @@ function getMainHTML(): string {
                 showToast('🎉 결제가 완료되었습니다! 감사합니다.');
                 closeEduPaymentModal();
                 // 결제 정보 서버에 저장
-                await fetch('/api/edu-payment', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    type: 'card',
-                    imp_uid: rsp.imp_uid,
-                    merchant_uid: rsp.merchant_uid,
-                    amount: amount,
-                    product: orderName
-                  })
-                });
+                try {
+                  await fetch('/api/edu-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      type: 'card',
+                      imp_uid: rsp.imp_uid,
+                      merchant_uid: rsp.merchant_uid,
+                      amount: amount,
+                      product: orderName
+                    })
+                  });
+                } catch (e) { console.log('저장 오류:', e); }
               } else {
-                alert('결제가 취소되었습니다: ' + rsp.error_msg);
+                showToast('❌ 결제 취소: ' + (rsp.error_msg || '사용자 취소'));
               }
             });
           } catch (err) {
-            alert('결제 오류: ' + err.message);
+            showToast('❌ 결제 오류: ' + err.message);
           }
         } else {
           // 계좌이체 신청
