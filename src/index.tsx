@@ -2834,6 +2834,15 @@ function getMainHTML(): string {
       .top-banner.hidden { display: none; }
       .main-container.with-banner { padding-top: 48px; }
       
+      /* iframe 모달 (외부 페이지 내부 표시) */
+      .iframe-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 10000; display: none; flex-direction: column; }
+      .iframe-modal.open { display: flex; }
+      .iframe-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: linear-gradient(90deg, #a855f7, #ec4899); }
+      .iframe-modal-title { color: white; font-weight: 700; font-size: 1rem; }
+      .iframe-modal-close { background: rgba(0,0,0,0.3); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; }
+      .iframe-modal-close:hover { background: rgba(0,0,0,0.5); }
+      .iframe-modal iframe { flex: 1; border: none; width: 100%; background: white; }
+      
       /* 수강 신청 모달 */
       .edu-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10001; display: none; align-items: center; justify-content: center; }
       .edu-modal.open { display: flex; }
@@ -3835,7 +3844,7 @@ function getMainHTML(): string {
 </head>
 <body>
     <!-- 띠 배너 -->
-    <div class="top-banner" id="top-banner" onclick="openEduModal()">
+    <div class="top-banner" id="top-banner" onclick="openIframeModal()">
       <span class="banner-text">🎓 XIΛIX AI 입문반 1기 모집중! <strong>선착순 5명</strong> · 1월 개강 →</span>
       <button class="banner-close" onclick="event.stopPropagation(); closeBanner()"><i class="fas fa-times"></i></button>
     </div>
@@ -3963,6 +3972,15 @@ function getMainHTML(): string {
         <div class="footer-company">Combine Technology & Business | 대표: 방익주</div>
         <div class="footer-copy">© 2026 X I Λ I X. All rights reserved.</div>
       </footer>
+    </div>
+    
+    <!-- iframe 모달 (xivix-class 페이지) -->
+    <div class="iframe-modal" id="iframe-modal">
+      <div class="iframe-modal-header">
+        <span class="iframe-modal-title">🎓 XIΛIX AI 입문반 1기</span>
+        <button class="iframe-modal-close" onclick="closeIframeModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <iframe id="iframe-content" src="about:blank"></iframe>
     </div>
     
     <!-- 수강 신청 모달 -->
@@ -5149,6 +5167,16 @@ function getMainHTML(): string {
         document.getElementById('top-banner').classList.add('hidden');
         document.getElementById('main-container').classList.remove('with-banner');
         sessionStorage.setItem('banner_closed', 'true');
+      }
+      
+      // iframe 모달 (외부 페이지를 내부에서 열기)
+      function openIframeModal() {
+        document.getElementById('iframe-modal').classList.add('open');
+        document.getElementById('iframe-content').src = 'https://xivix-class.pages.dev/';
+      }
+      function closeIframeModal() {
+        document.getElementById('iframe-modal').classList.remove('open');
+        document.getElementById('iframe-content').src = 'about:blank';
       }
       
       function openEduModal() { document.getElementById('edu-modal').classList.add('open'); }
