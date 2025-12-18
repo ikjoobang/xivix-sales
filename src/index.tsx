@@ -5230,6 +5230,7 @@ function getMainHTML(): string {
             totalAmount: 2200000,
             currency: 'KRW',
             payMethod: 'CARD',
+            redirectUrl: window.location.origin + '/?payment=complete',
             customer: {
               fullName: '방익주',
               email: 'customer@xivix.kr',
