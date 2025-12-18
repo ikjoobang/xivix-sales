@@ -368,7 +368,23 @@ const SYSTEM_DEV_OPTIONS = [
   { id: "sys_standard", name: "시스템 개발 (표준)", price: 2900000, desc: "네이버 지도 연동 / 카카오 연동" },
   { id: "sys_advanced", name: "시스템 개발 (고급)", price: 4900000, desc: "결제 시스템 / 예약 자동화 / 알림톡 연동" },
   { id: "sys_premium", name: "시스템 개발 (프리미엄)", price: 7900000, desc: "AI 상담봇 설치 / 관리자 대시보드" },
-  { id: "sys_enterprise", name: "시스템 개발 (엔터프라이즈)", price: 9900000, desc: "풀커스텀 시스템 (ERP/CRM 연동)" }
+  { id: "sys_enterprise", name: "시스템 개발 (엔터프라이즈)", price: 9900000, desc: "풀커스텀 시스템 (ERP/CRM 연동)" },
+  { id: "sys_payment_link", name: "결제 링크", price: 0, desc: "카드 결제 / 계좌이체 링크 생성", isExternal: true, externalUrl: "https://xivix-class.pages.dev/" }
+]
+
+// ========================================
+// AI 입문반 교육 상품
+// ========================================
+const EDUCATION_OPTIONS = [
+  { 
+    id: "edu_ai_beginner_1", 
+    name: "XIΛIX AI 입문반 1기", 
+    price: 2000000, 
+    desc: "6주 과정 · 1월 개강 · 선착순 5명",
+    note: "카드결제 시 VAT 별도",
+    badge: "NEW",
+    spots: 5
+  }
 ]
 
 // ========================================
@@ -3781,9 +3797,32 @@ function getMainHTML(): string {
     </style>
 </head>
 <body>
+    <!-- 띠 배너 (상단 고정) -->
+    <div id="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#a855f7,#ec4899,#f97316);padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;" onclick="openClassModal()">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;">
+        <span style="font-size:1.2rem;">🎓</span>
+        <span style="font-weight:700;color:#fff;font-size:0.95rem;">XIΛIX AI 입문반 1기</span>
+        <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;font-size:0.8rem;color:#fff;">6주 과정 · 1월 개강</span>
+        <span style="font-weight:800;color:#fff;font-size:1rem;">200만원</span>
+        <span style="font-size:0.75rem;color:rgba(255,255,255,0.8);">(카드결제 시 VAT 별도)</span>
+        <span style="background:#fff;color:#a855f7;padding:4px 12px;border-radius:20px;font-weight:700;font-size:0.8rem;animation:pulse 2s infinite;">선착순 5명</span>
+      </div>
+      <button onclick="event.stopPropagation();closeBanner();" style="background:transparent;border:none;color:#fff;font-size:1.2rem;cursor:pointer;padding:4px 8px;opacity:0.8;margin-left:8px;">&times;</button>
+    </div>
+    
+    <!-- 클래스 iframe 모달 -->
+    <div id="class-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:10000;background:rgba(0,0,0,0.9);">
+      <div style="position:absolute;top:10px;right:20px;z-index:10001;">
+        <button onclick="closeClassModal()" style="background:#ef4444;border:none;color:#fff;padding:12px 20px;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:600;">
+          <i class="fas fa-times"></i> 닫기
+        </button>
+      </div>
+      <iframe id="class-iframe" src="" style="width:100%;height:100%;border:none;"></iframe>
+    </div>
+    
     <div class="bg-animated"><div class="bg-gradient"></div></div>
     
-    <div class="main-container">
+    <div class="main-container" style="padding-top:50px;">
       <section class="hero">
         <div class="hero-badge animate-fade-in-up">
           <span class="status-dot"></span>
@@ -4291,6 +4330,7 @@ function getMainHTML(): string {
       const webServiceOptions = ${JSON.stringify(WEB_SERVICE_OPTIONS)};
       const sysDevOptions = ${JSON.stringify(SYSTEM_DEV_OPTIONS)};
       const consultingOptions = ${JSON.stringify(CONSULTING_OPTIONS)};
+      const educationOptions = ${JSON.stringify(EDUCATION_OPTIONS)};
       
       // ========================================
       // LocalStorage로 장바구니/페이지 기억
@@ -4521,7 +4561,13 @@ function getMainHTML(): string {
       }
       
       function renderSysDevHTML() {
-        return sysDevOptions.map(s => '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+        return sysDevOptions.map(s => {
+          // 결제 링크는 외부 링크로 처리
+          if (s.isExternal) {
+            return '<div class="card" style="border: 2px solid var(--neon-green);"><h3 class="card-name" style="color: var(--neon-green);"><i class="fas fa-link"></i> ' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value" style="font-size: 1rem;">바로가기</span></div><button class="btn btn-primary btn-small" style="width:100%; background: linear-gradient(135deg, #22c55e, #16a34a);" onclick="openClassPage()"><i class="fas fa-external-link-alt"></i> 이동</button></div>';
+          }
+          return '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>';
+        }).join('');
       }
       
       function renderConsultingHTML() {
@@ -5033,6 +5079,35 @@ function getMainHTML(): string {
       function toggleChat() { document.getElementById('chat-window').classList.toggle('open'); }
       function openChat() { document.getElementById('chat-window').classList.add('open'); }
       function closeChat() { document.getElementById('chat-window').classList.remove('open'); }
+      
+      // 띠 배너 관련 함수
+      function closeBanner() {
+        document.getElementById('top-banner').style.display = 'none';
+        document.querySelector('.main-container').style.paddingTop = '0';
+        sessionStorage.setItem('banner_closed', 'true');
+      }
+      
+      function openClassModal() {
+        document.getElementById('class-modal').style.display = 'block';
+        document.getElementById('class-iframe').src = 'https://xivix-class.pages.dev/';
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeClassModal() {
+        document.getElementById('class-modal').style.display = 'none';
+        document.getElementById('class-iframe').src = '';
+        document.body.style.overflow = '';
+      }
+      
+      function openClassPage() {
+        openClassModal();
+      }
+      
+      // 페이지 로드 시 배너 상태 확인
+      if (sessionStorage.getItem('banner_closed') === 'true') {
+        document.getElementById('top-banner').style.display = 'none';
+        document.querySelector('.main-container').style.paddingTop = '0';
+      }
       
       // 카카오톡 공유
       function shareKakao() {
