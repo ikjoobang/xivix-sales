@@ -5230,6 +5230,7 @@ function getMainHTML(): string {
             totalAmount: 2200000,
             currency: 'KRW',
             payMethod: 'CARD',
+            redirectUrl: 'https://xivix.kr/?edu_payment=success',
             customer: {
               email: 'customer@xivix.kr',
               fullName: '방익주',
@@ -5534,6 +5535,13 @@ function getMainHTML(): string {
               if (eduCard) eduCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 300);
           }, 500);
+        }
+        
+        // 모바일 수강신청 결제 완료 처리
+        if (window.location.search.includes('edu_payment=success')) {
+          showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+          // URL 정리
+          window.history.replaceState({}, '', window.location.pathname);
         }
         
         // 카카오 SDK 초기화
