@@ -5221,6 +5221,7 @@ function getMainHTML(): string {
         }
         
         const orderId = 'EDU_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
         try {
           const response = await PortOne.requestPayment({
             storeId: 'store-d08be3e0-9ed0-4393-9974-0b9cbd799252',
@@ -5242,11 +5243,12 @@ function getMainHTML(): string {
             }
           });
           
-          // PC에서는 response로 결과 확인 (IFRAME 방식)
-          // 모바일에서는 redirectUrl로 리디렉션됨 (REDIRECTION 방식)
-          if (response && response.code) {
+          // PC (IFRAME)에서만 여기 도달, 모바일은 리디렉션됨
+          if (!response) return;
+          
+          if (response.code) {
             showToast('❌ 결제 실패: ' + response.message);
-          } else if (response && !response.code) {
+          } else if (response.paymentId) {
             showToast('🎉 결제가 완료되었습니다! 감사합니다.');
             closeEduModal();
           }
@@ -5546,13 +5548,16 @@ function getMainHTML(): string {
         // 모바일 수강신청 결제 완료 처리 (리디렉션 방식)
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('edu_payment') === 'success') {
+          const code = urlParams.get('code');
           const paymentId = urlParams.get('paymentId');
-          // paymentId가 있으면 실제 결제 완료, 없으면 오류
-          if (paymentId && paymentId.startsWith('EDU_')) {
+          const message = urlParams.get('message');
+          
+          if (code) {
+            // code가 있으면 결제 실패
+            showToast('❌ 결제 실패: ' + decodeURIComponent(message || '알 수 없는 오류'));
+          } else if (paymentId) {
+            // code 없고 paymentId 있으면 결제 성공
             showToast('🎉 결제가 완료되었습니다! 감사합니다.');
-          } else if (urlParams.get('code')) {
-            // 결제 실패
-            showToast('❌ 결제 실패: ' + (urlParams.get('message') || '알 수 없는 오류'));
           }
           // URL 정리
           window.history.replaceState({}, '', window.location.pathname);
