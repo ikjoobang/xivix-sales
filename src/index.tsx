@@ -368,7 +368,8 @@ const SYSTEM_DEV_OPTIONS = [
   { id: "sys_standard", name: "시스템 개발 (표준)", price: 2900000, desc: "네이버 지도 연동 / 카카오 연동" },
   { id: "sys_advanced", name: "시스템 개발 (고급)", price: 4900000, desc: "결제 시스템 / 예약 자동화 / 알림톡 연동" },
   { id: "sys_premium", name: "시스템 개발 (프리미엄)", price: 7900000, desc: "AI 상담봇 설치 / 관리자 대시보드" },
-  { id: "sys_enterprise", name: "시스템 개발 (엔터프라이즈)", price: 9900000, desc: "풀커스텀 시스템 (ERP/CRM 연동)" }
+  { id: "sys_enterprise", name: "시스템 개발 (엔터프라이즈)", price: 9900000, desc: "풀커스텀 시스템 (ERP/CRM 연동)" },
+  { id: "edu_ai_class", name: "🎓 XIΛIX AI 입문반 1기", price: 2000000, desc: "6주 과정 · 1월 개강 · 선착순 5명", isEdu: true }
 ]
 
 // ========================================
@@ -4649,7 +4650,23 @@ function getMainHTML(): string {
       }
       
       function renderSysDevHTML() {
-        return sysDevOptions.map(s => '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+        return sysDevOptions.map(s => {
+          if (s.isEdu) {
+            // 수강 신청 카드 - 특별 디자인 + 바로 결제
+            return '<div class="card" style="border:2px solid var(--neon-green);background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(168,85,247,0.1));">' +
+              '<div style="position:absolute;top:-10px;right:10px;background:linear-gradient(135deg,#ef4444,#f97316);color:white;padding:4px 12px;border-radius:12px;font-size:0.75rem;font-weight:700;">🔥 선착순 5명</div>' +
+              '<h3 class="card-name" style="color:var(--neon-green);">' + s.name + '</h3>' +
+              '<p class="card-desc">' + s.desc + '</p>' +
+              '<div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div>' +
+              '<p style="font-size:0.75rem;color:var(--neon-orange);margin-bottom:12px;">(카드결제 시 VAT 별도 → 220만원)</p>' +
+              '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+                '<button class="btn btn-small" style="background:linear-gradient(135deg,var(--neon-purple),var(--neon-pink));" onclick="eduCardPay()"><i class="fas fa-credit-card"></i> 카드</button>' +
+                '<button class="btn btn-small" style="background:linear-gradient(135deg,var(--neon-green),#16a34a);" onclick="openEduModal()"><i class="fas fa-university"></i> 계좌</button>' +
+              '</div>' +
+            '</div>';
+          }
+          return '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>';
+        }).join('');
       }
       
       function renderConsultingHTML() {
@@ -5196,8 +5213,8 @@ function getMainHTML(): string {
         navigator.clipboard.writeText('100124491987').then(() => showToast('✅ 계좌번호 복사됨!'));
       }
       
-      async function submitCard() {
-        // PortOne v2 결제 (기존 장바구니와 동일 방식)
+      // 수강 신청 카드결제 (PortOne v2)
+      async function eduCardPay() {
         if (typeof PortOne === 'undefined') {
           showToast('⚠️ 결제 모듈 로딩 중... 잠시 후 다시 시도해주세요.');
           return;
@@ -5220,11 +5237,16 @@ function getMainHTML(): string {
             showToast('❌ 결제 실패: ' + response.message);
           } else {
             showToast('🎉 결제가 완료되었습니다! 감사합니다.');
-            closeEduModal();
           }
         } catch (e) {
           showToast('❌ 결제 오류: ' + e.message);
         }
+      }
+      
+      async function submitCard() {
+        // 모달에서 호출되는 카드결제도 동일하게
+        await eduCardPay();
+        closeEduModal();
       }
       
       function submitBank() {
