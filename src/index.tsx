@@ -2769,10 +2769,8 @@ function getMainHTML(): string {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- PortOne v2 결제 SDK (기존 장바구니 결제용) -->
+    <!-- PortOne v2 결제 SDK -->
     <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
-    <!-- PortOne v1 결제 SDK (수강신청용) -->
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <!-- 카카오 SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
@@ -5170,31 +5168,35 @@ function getMainHTML(): string {
         navigator.clipboard.writeText('100124491987').then(() => showToast('✅ 계좌번호 복사됨!'));
       }
       
-      function submitCard() {
-        // PortOne 실제 결제
-        if (!window.IMP) {
+      async function submitCard() {
+        // PortOne v2 결제 (기존 장바구니와 동일 방식)
+        if (typeof PortOne === 'undefined') {
           showToast('⚠️ 결제 모듈 로딩 중... 잠시 후 다시 시도해주세요.');
           return;
         }
         
-        IMP.init('imp16aboraz');
-        IMP.request_pay({
-          pg: 'html5_inicis',
-          pay_method: 'card',
-          merchant_uid: 'edu_' + Date.now(),
-          name: 'XIΛIX AI 입문반 1기',
-          amount: 2200000,
-          buyer_email: '',
-          buyer_name: '',
-          buyer_tel: ''
-        }, function(rsp) {
-          if (rsp.success) {
+        const orderId = 'edu_' + Date.now();
+        try {
+          const response = await PortOne.requestPayment({
+            storeId: 'store-e4038486-8d83-41a5-acf1-844a009e2674',
+            channelKey: 'channel-key-abe75a7e-faae-4e5c-815c-02519f5b9cdc',
+            paymentId: orderId,
+            orderName: 'XIΛIX AI 입문반 1기',
+            totalAmount: 2200000,
+            currency: 'KRW',
+            payMethod: 'CARD',
+            customer: { email: '', fullName: '', phoneNumber: '' }
+          });
+          
+          if (response.code) {
+            showToast('❌ 결제 실패: ' + response.message);
+          } else {
             showToast('🎉 결제가 완료되었습니다! 감사합니다.');
             closeEduModal();
-          } else {
-            showToast('❌ 결제 실패: ' + (rsp.error_msg || '취소됨'));
           }
-        });
+        } catch (e) {
+          showToast('❌ 결제 오류: ' + e.message);
+        }
       }
       
       function submitBank() {
