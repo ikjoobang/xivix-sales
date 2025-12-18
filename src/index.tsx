@@ -5231,6 +5231,7 @@ function getMainHTML(): string {
             currency: 'KRW',
             payMethod: 'CARD',
             customer: {
+              fullName: '방익주',
               email: 'customer@xivix.kr',
               phoneNumber: '010-4845-3065'
             }
