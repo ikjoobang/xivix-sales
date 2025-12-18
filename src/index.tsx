@@ -5313,55 +5313,45 @@ function getMainHTML(): string {
       async function submitEduPayment() {
         if (selectedEduPayment === 'card') {
           // 카드 결제 - PortOne 결제 진행
+          const orderName = 'XIΛIX AI 입문반 1기';
+          const amount = 2200000; // VAT 포함
+          
+          // SDK 로딩 확인
+          if (typeof IMP === 'undefined' || !window.IMP) {
+            showToast('⏳ 결제 모듈 로딩 중...');
+            // SDK 동적 로딩 후 재시도
+            const script = document.createElement('script');
+            script.src = 'https://cdn.iamport.kr/v1/iamport.js';
+            script.onload = function() {
+              showToast('✅ 로딩 완료! 다시 클릭해주세요.');
+            };
+            document.head.appendChild(script);
+            return;
+          }
+          
           try {
-            const orderName = 'XIΛIX AI 입문반 1기';
-            const amount = 2200000; // VAT 포함
-            
-            // SDK 로딩 확인
-            if (typeof IMP === 'undefined' || !window.IMP) {
-              showToast('⏳ 결제 모듈 로딩 중... 3초 후 다시 시도해주세요.');
-              // SDK 동적 로딩 시도
-              const script = document.createElement('script');
-              script.src = 'https://cdn.iamport.kr/v1/iamport.js';
-              document.head.appendChild(script);
-              return;
-            }
-            
             IMP.init('imp16aboraz');
-            
             IMP.request_pay({
               pg: 'html5_inicis',
               pay_method: 'card',
               merchant_uid: 'edu_' + Date.now(),
               name: orderName,
-              amount: amount,
-              buyer_email: '',
-              buyer_name: '',
-              buyer_tel: ''
-            }, async function(rsp) {
+              amount: amount
+            }, function(rsp) {
               if (rsp.success) {
-                showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+                showToast('🎉 결제 완료! 감사합니다.');
                 closeEduPaymentModal();
-                // 결제 정보 서버에 저장
-                try {
-                  await fetch('/api/edu-payment', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      type: 'card',
-                      imp_uid: rsp.imp_uid,
-                      merchant_uid: rsp.merchant_uid,
-                      amount: amount,
-                      product: orderName
-                    })
-                  });
-                } catch (e) { console.log('저장 오류:', e); }
+                fetch('/api/edu-payment', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ type: 'card', imp_uid: rsp.imp_uid, merchant_uid: rsp.merchant_uid, amount: amount, product: orderName })
+                }).catch(function(e) { console.log('저장:', e); });
               } else {
-                showToast('❌ 결제 취소: ' + (rsp.error_msg || '사용자 취소'));
+                showToast('❌ ' + (rsp.error_msg || '결제 취소'));
               }
             });
           } catch (err) {
-            showToast('❌ 결제 오류: ' + err.message);
+            showToast('❌ 오류: ' + err.message);
           }
         } else {
           // 계좌이체 신청
@@ -5393,11 +5383,15 @@ function getMainHTML(): string {
         }
       }
       
-      // 페이지 로드 시 배너 상태 확인
-      if (sessionStorage.getItem('banner_closed') === 'true') {
-        document.getElementById('top-banner').style.display = 'none';
-        document.querySelector('.main-container').style.paddingTop = '0';
-      }
+      // 페이지 로드 시 배너 상태 확인 (DOMContentLoaded 후 실행)
+      document.addEventListener('DOMContentLoaded', function() {
+        if (sessionStorage.getItem('banner_closed') === 'true') {
+          const banner = document.getElementById('top-banner');
+          const container = document.querySelector('.main-container');
+          if (banner) banner.style.display = 'none';
+          if (container) container.style.paddingTop = '0';
+        }
+      });
       
       // 카카오톡 공유
       function shareKakao() {
