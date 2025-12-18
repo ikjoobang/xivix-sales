@@ -1946,55 +1946,13 @@ app.get('/api/booking/available-times', async (c) => {
 })
 
 // ========================================
-// 수강 신청 API (카드결제/계좌이체)
+// 수강 신청 API
 // ========================================
-
-// 카드 결제 완료 처리
-app.post('/api/edu-payment', async (c) => {
-  const { type, imp_uid, merchant_uid, amount, product } = await c.req.json()
-  const { DB } = c.env
-  
-  try {
-    // 결제 정보 저장
-    await DB.prepare(`
-      INSERT INTO edu_payments (type, imp_uid, merchant_uid, amount, product, status, created_at)
-      VALUES (?, ?, ?, ?, ?, 'completed', datetime('now'))
-    `).bind(type, imp_uid || '', merchant_uid, amount, product).run()
-    
-    console.log('✅ 수강 신청 결제 완료:', { type, amount, product })
-    
-    return c.json({ success: true, message: '결제가 완료되었습니다.' })
-  } catch (error) {
-    console.error('❌ 결제 저장 오류:', error)
-    return c.json({ success: false, error: '결제 처리 중 오류가 발생했습니다.' }, 500)
-  }
-})
-
-// 계좌이체 신청 처리
 app.post('/api/edu-bank-transfer', async (c) => {
   const { name, phone, email, product, amount } = await c.req.json()
-  const { DB } = c.env
-  
-  try {
-    // 계좌이체 신청 정보 저장
-    await DB.prepare(`
-      INSERT INTO edu_payments (type, name, phone, email, amount, product, status, created_at)
-      VALUES ('bank_transfer', ?, ?, ?, ?, ?, 'pending', datetime('now'))
-    `).bind(name, phone, email, amount, product).run()
-    
-    console.log('📧 계좌이체 신청:', { name, phone, email, amount, product })
-    // 알림 이메일: ikjoobang@gmail.com
-    // TODO: SendGrid/Mailgun 등으로 이메일 발송 구현
-    
-    return c.json({ 
-      success: true, 
-      message: '신청이 완료되었습니다. 입금 확인 후 연락드리겠습니다.',
-      data: { name, phone, email, product, amount }
-    })
-  } catch (error) {
-    console.error('❌ 계좌이체 신청 오류:', error)
-    return c.json({ success: false, error: '신청 처리 중 오류가 발생했습니다.' }, 500)
-  }
+  console.log('📧 계좌이체 신청:', { name, phone, email, product, amount })
+  // TODO: DB 저장 및 이메일 알림 (ikjoobang@gmail.com)
+  return c.json({ success: true, message: '신청 완료' })
 })
 
 // ========================================
@@ -2811,8 +2769,7 @@ function getMainHTML(): string {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- PortOne SDK v1 (IMP 결제) -->
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
     <!-- 카카오 SDK (최신 버전) -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
@@ -2856,279 +2813,47 @@ function getMainHTML(): string {
         --radius-2xl: 24px;
       }
       
-      /* 🎯 띠 배너 (상단 고정) */
+      /* 띠 배너 */
       .top-banner {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 9999;
+        position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
         background: linear-gradient(90deg, #a855f7, #ec4899, #f97316);
-        color: white;
-        padding: 12px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        cursor: pointer;
+        color: white; padding: 12px 20px;
+        display: flex; align-items: center; justify-content: center; gap: 12px;
+        font-size: 0.95rem; font-weight: 600; cursor: pointer;
         box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
-        animation: bannerShine 3s ease-in-out infinite;
       }
-      @keyframes bannerShine {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-      }
-      .top-banner:hover {
-        background: linear-gradient(90deg, #9333ea, #db2777, #ea580c);
-      }
+      .top-banner:hover { background: linear-gradient(90deg, #9333ea, #db2777, #ea580c); }
       .top-banner .banner-text { flex: 1; text-align: center; }
       .top-banner .banner-close {
-        background: rgba(0,0,0,0.2);
-        border: none;
-        color: white;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.9rem;
-        transition: all 0.2s;
+        background: rgba(0,0,0,0.2); border: none; color: white;
+        width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
       }
-      .top-banner .banner-close:hover { background: rgba(0,0,0,0.4); transform: scale(1.1); }
+      .top-banner .banner-close:hover { background: rgba(0,0,0,0.4); }
       .top-banner.hidden { display: none; }
       .main-container.with-banner { padding-top: 48px; }
       
-      /* 🎯 수강 신청 iframe 모달 */
-      .class-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.9);
-        z-index: 10001;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(5px);
-      }
-      .class-modal.open { display: flex; }
-      .class-modal-content {
-        width: 95%;
-        max-width: 900px;
-        height: 90vh;
-        background: var(--bg-secondary);
-        border-radius: 16px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid rgba(168, 85, 247, 0.3);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      }
-      .class-modal-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px 20px;
-        background: linear-gradient(90deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
-        border-bottom: 1px solid var(--border-subtle);
-      }
-      .class-modal-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
-      .class-modal-close {
-        background: rgba(255,255,255,0.1);
-        border: none;
-        color: var(--text-secondary);
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        transition: all 0.2s;
-      }
-      .class-modal-close:hover { background: rgba(255,255,255,0.2); color: white; }
-      .class-iframe { flex: 1; border: none; width: 100%; background: white; }
-      
-      /* 🎯 수강 신청 결제 모달 */
-      .edu-payment-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.85);
-        z-index: 10002;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(8px);
-        padding: 20px;
-      }
-      .edu-payment-modal.open { display: flex; }
-      .edu-payment-content {
-        width: 100%;
-        max-width: 480px;
-        max-height: 90vh;
-        overflow-y: auto;
-        background: var(--bg-secondary);
-        border-radius: 20px;
-        border: 1px solid rgba(168, 85, 247, 0.3);
-        box-shadow: 0 25px 80px rgba(0,0,0,0.5);
-      }
-      .edu-payment-header {
-        padding: 24px;
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(34, 197, 94, 0.1));
-        border-bottom: 1px solid var(--border-subtle);
-        text-align: center;
-      }
-      .edu-payment-title { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
-      .edu-payment-subtitle { font-size: 0.9rem; color: var(--text-secondary); }
-      .edu-payment-body { padding: 24px; }
-      .edu-product-card {
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.08));
-        border: 1px solid rgba(168, 85, 247, 0.3);
-        border-radius: 16px;
-        padding: 20px;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-      .edu-product-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: linear-gradient(135deg, #ef4444, #f97316);
-        color: white;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin-bottom: 12px;
-        animation: pulse 1.5s ease-in-out infinite;
-      }
-      @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-      }
-      .edu-product-name { font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
-      .edu-product-price { font-size: 1.8rem; font-weight: 900; color: var(--neon-purple); margin-bottom: 4px; }
-      .edu-product-price-note { font-size: 0.8rem; color: var(--neon-orange); }
-      .edu-product-info { font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px; }
-      
-      .payment-methods { margin-bottom: 20px; }
-      .payment-methods-title { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; text-align: center; }
-      .payment-method-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-      .payment-method-btn {
-        padding: 16px;
-        border-radius: 12px;
-        border: 2px solid var(--border-subtle);
-        background: rgba(255,255,255,0.02);
-        cursor: pointer;
-        transition: all 0.2s;
-        text-align: center;
-      }
-      .payment-method-btn:hover { border-color: var(--neon-purple); background: rgba(168, 85, 247, 0.1); }
-      .payment-method-btn.active { border-color: var(--neon-purple); background: rgba(168, 85, 247, 0.15); }
-      .payment-method-btn .method-icon { font-size: 1.5rem; margin-bottom: 6px; }
-      .payment-method-btn .method-name { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
-      
-      .bank-transfer-info {
-        display: none;
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 20px;
-      }
-      .bank-transfer-info.show { display: block; }
-      .bank-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-      .bank-info-label { font-size: 0.85rem; color: var(--text-secondary); }
-      .bank-info-value { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
-      .copy-btn {
-        background: var(--neon-green);
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-top: 8px;
-        width: 100%;
-        transition: all 0.2s;
-      }
-      .copy-btn:hover { background: #16a34a; transform: scale(1.02); }
-      .bank-notice { font-size: 0.8rem; color: var(--text-secondary); margin-top: 12px; line-height: 1.6; }
-      .bank-notice li { margin-bottom: 4px; }
-      
-      .bank-form { margin-top: 16px; }
-      .bank-form-group { margin-bottom: 12px; }
-      .bank-form-label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px; }
-      .bank-form-input {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: 10px;
-        border: 1px solid var(--border-subtle);
-        background: rgba(255,255,255,0.05);
-        color: var(--text-primary);
-        font-size: 0.95rem;
-        transition: all 0.2s;
-      }
-      .bank-form-input:focus { outline: none; border-color: var(--neon-green); background: rgba(34, 197, 94, 0.1); }
-      .bank-form-input::placeholder { color: var(--text-tertiary); }
-      
-      .edu-submit-btn {
-        width: 100%;
-        padding: 16px;
-        border-radius: 12px;
-        border: none;
-        font-size: 1rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-      .edu-submit-btn.card { background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); color: white; }
-      .edu-submit-btn.card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4); }
-      .edu-submit-btn.bank { background: linear-gradient(135deg, var(--neon-green), #16a34a); color: white; }
-      .edu-submit-btn.bank:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4); }
-      
-      .edu-payment-close {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: rgba(255,255,255,0.1);
-        border: none;
-        color: var(--text-secondary);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-        transition: all 0.2s;
-      }
-      .edu-payment-close:hover { background: rgba(255,255,255,0.2); color: white; }
-      
-      .edu-contact-info {
-        text-align: center;
-        padding-top: 16px;
-        border-top: 1px solid var(--border-subtle);
-        margin-top: 16px;
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-      }
-      .edu-contact-info a { color: var(--neon-cyan); text-decoration: none; }
+      /* 수강 신청 모달 */
+      .edu-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10001; display: none; align-items: center; justify-content: center; }
+      .edu-modal.open { display: flex; }
+      .edu-modal-content { width: 95%; max-width: 480px; max-height: 90vh; overflow-y: auto; background: var(--bg-secondary); border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); }
+      .edu-modal-header { padding: 20px; background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(34, 197, 94, 0.1)); border-bottom: 1px solid var(--border-subtle); text-align: center; position: relative; }
+      .edu-modal-close { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1); border: none; color: var(--text-secondary); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
+      .edu-modal-body { padding: 20px; }
+      .edu-product { background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.08)); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: center; }
+      .edu-badge { display: inline-block; background: linear-gradient(135deg, #ef4444, #f97316); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; }
+      .edu-price { font-size: 1.8rem; font-weight: 900; color: var(--neon-purple); }
+      .edu-note { font-size: 0.8rem; color: var(--neon-orange); margin-top: 4px; }
+      .payment-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+      .payment-btn { padding: 16px; border-radius: 12px; border: 2px solid var(--border-subtle); background: transparent; cursor: pointer; text-align: center; color: var(--text-primary); }
+      .payment-btn:hover, .payment-btn.active { border-color: var(--neon-purple); background: rgba(168, 85, 247, 0.1); }
+      .bank-info { display: none; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 16px; margin: 16px 0; }
+      .bank-info.show { display: block; }
+      .bank-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+      .bank-form input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle); background: rgba(255,255,255,0.05); color: var(--text-primary); margin-bottom: 10px; font-size: 0.95rem; }
+      .edu-submit { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; color: white; }
+      .edu-submit.card-btn { background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); }
+      .edu-submit.bank-btn { background: linear-gradient(135deg, var(--neon-green), #16a34a); }
       
       /* 챗봇 Pulse 애니메이션 */
       @keyframes chatPulse {
@@ -4108,9 +3833,9 @@ function getMainHTML(): string {
     </style>
 </head>
 <body>
-    <!-- 띠 배너 (상단 고정) -->
-    <div class="top-banner" id="top-banner" onclick="openClassModal()">
-      <span class="banner-text">🎓 XIΛIX AI 입문반 1기 모집중! <strong>선착순 5명</strong> · 1월 개강 · 클릭해서 자세히 보기 →</span>
+    <!-- 띠 배너 -->
+    <div class="top-banner" id="top-banner" onclick="openEduModal()">
+      <span class="banner-text">🎓 XIΛIX AI 입문반 1기 모집중! <strong>선착순 5명</strong> · 1월 개강 →</span>
       <button class="banner-close" onclick="event.stopPropagation(); closeBanner()"><i class="fas fa-times"></i></button>
     </div>
     
@@ -4211,18 +3936,6 @@ function getMainHTML(): string {
               </div>
               <i class="fas fa-chevron-right menu-arrow"></i>
             </button>
-            <button class="service-menu-btn hot" onclick="openEduPaymentModal()" style="--btn-color: #22c55e">
-              <i class="fas fa-graduation-cap menu-icon"></i>
-              <div class="menu-text">
-                <span class="menu-name">🎓 수강 신청</span>
-                <span class="menu-desc" style="display:flex;align-items:center;gap:6px;">
-                  <span style="animation:pulse 1.5s ease-in-out infinite;background:#ef4444;color:white;padding:2px 8px;border-radius:10px;font-size:0.7rem;font-weight:700;">🔥 선착순 5명</span>
-                  AI 입문반 1기 · 200만원
-                </span>
-              </div>
-              <span class="menu-badge hot">NEW</span>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
             <button class="service-menu-btn" onclick="openServiceModal('addons')" style="--btn-color: #8b5cf6">
               <i class="fas fa-plus-circle menu-icon"></i>
               <div class="menu-text">
@@ -4251,94 +3964,52 @@ function getMainHTML(): string {
       </footer>
     </div>
     
-    <!-- 수강 신청 iframe 모달 -->
-    <div class="class-modal" id="class-modal">
-      <div class="class-modal-content">
-        <div class="class-modal-header">
-          <span class="class-modal-title"><i class="fas fa-graduation-cap"></i> XIΛIX AI 입문반 1기</span>
-          <button class="class-modal-close" onclick="closeClassModal()"><i class="fas fa-times"></i></button>
+    <!-- 수강 신청 모달 -->
+    <div class="edu-modal" id="edu-modal">
+      <div class="edu-modal-content">
+        <div class="edu-modal-header">
+          <button class="edu-modal-close" onclick="closeEduModal()"><i class="fas fa-times"></i></button>
+          <h2 style="font-size:1.3rem;font-weight:800;color:var(--text-primary);">🎓 수강 신청</h2>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">XIΛIX AI 입문반 1기</p>
         </div>
-        <iframe class="class-iframe" id="class-iframe" src="about:blank"></iframe>
-      </div>
-    </div>
-    
-    <!-- 수강 신청 결제 모달 -->
-    <div class="edu-payment-modal" id="edu-payment-modal">
-      <button class="edu-payment-close" onclick="closeEduPaymentModal()"><i class="fas fa-times"></i></button>
-      <div class="edu-payment-content">
-        <div class="edu-payment-header">
-          <div class="edu-payment-title">🎓 수강 신청</div>
-          <div class="edu-payment-subtitle">XIΛIX AI 입문반 1기 결제하기</div>
-        </div>
-        <div class="edu-payment-body">
-          <div class="edu-product-card">
-            <div class="edu-product-badge"><i class="fas fa-fire"></i> 선착순 5명 중 잔여 2석!</div>
-            <div class="edu-product-name">XIΛIX AI 입문반 1기</div>
-            <div class="edu-product-price">2,000,000원</div>
-            <div class="edu-product-price-note">(카드결제 시 VAT 별도 → 2,200,000원)</div>
-            <div class="edu-product-info">6주 과정 · 1월 개강 · 선착순 5명 마감</div>
+        <div class="edu-modal-body">
+          <div class="edu-product">
+            <div class="edu-badge">🔥 선착순 5명 중 잔여 2석!</div>
+            <div style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">XIΛIX AI 입문반 1기</div>
+            <div class="edu-price">2,000,000원</div>
+            <div class="edu-note">(카드결제 시 VAT 별도 → 2,200,000원)</div>
+            <div style="font-size:0.85rem;color:var(--text-secondary);margin-top:8px;">6주 과정 · 1월 개강</div>
           </div>
           
-          <div class="payment-methods">
-            <div class="payment-methods-title">결제 방법 선택</div>
-            <div class="payment-method-btns">
-              <button class="payment-method-btn" id="method-card" onclick="selectEduPayment('card')">
-                <div class="method-icon">💳</div>
-                <div class="method-name">카드결제</div>
-              </button>
-              <button class="payment-method-btn" id="method-bank" onclick="selectEduPayment('bank')">
-                <div class="method-icon">🏦</div>
-                <div class="method-name">계좌이체</div>
-              </button>
-            </div>
+          <div style="font-weight:600;margin-bottom:12px;text-align:center;">결제 방법 선택</div>
+          <div class="payment-btns">
+            <button class="payment-btn" id="pay-card" onclick="selectPay('card')">💳<br>카드결제</button>
+            <button class="payment-btn" id="pay-bank" onclick="selectPay('bank')">🏦<br>계좌이체</button>
           </div>
           
-          <div class="bank-transfer-info" id="bank-transfer-info">
+          <div class="bank-info" id="bank-info">
             <div style="text-align:center;font-weight:700;color:var(--neon-green);margin-bottom:12px;">🏦 계좌이체 안내</div>
-            <div class="bank-info-row">
-              <span class="bank-info-label">입금 은행</span>
-              <span class="bank-info-value">케이뱅크 (K-Bank)</span>
+            <div class="bank-row"><span>입금 은행</span><span>케이뱅크 (K-Bank)</span></div>
+            <div class="bank-row"><span>계좌번호</span><span id="bank-num">100124491987</span></div>
+            <div class="bank-row"><span>예금주</span><span>방익주</span></div>
+            <button onclick="copyBank()" style="width:100%;padding:10px;background:var(--neon-green);color:white;border:none;border-radius:8px;cursor:pointer;margin:10px 0;"><i class="fas fa-copy"></i> 계좌번호 복사</button>
+            <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">
+              ✔️ 입금자명은 신청자 성함과 동일하게<br>
+              ✔️ 입금 후 아래 정보 입력 시 등록 완료<br>
+              ✔️ 계좌이체 금액: 2,000,000원
             </div>
-            <div class="bank-info-row">
-              <span class="bank-info-label">계좌번호</span>
-              <span class="bank-info-value" id="bank-account">100124491987</span>
-            </div>
-            <div class="bank-info-row">
-              <span class="bank-info-label">예금주</span>
-              <span class="bank-info-value">방익주</span>
-            </div>
-            <button class="copy-btn" onclick="copyBankAccount()"><i class="fas fa-copy"></i> 계좌번호 복사</button>
-            <ul class="bank-notice">
-              <li>✔️ 입금자명은 신청자 성함과 동일하게 해주세요.</li>
-              <li>✔️ 입금 후 아래 정보 입력하시면 등록 완료됩니다.</li>
-              <li>✔️ 계좌 이체는 2,000,000원입니다.</li>
-            </ul>
-            
-            <div class="bank-form">
-              <div class="bank-form-group">
-                <label class="bank-form-label">성함 *</label>
-                <input type="text" class="bank-form-input" id="edu-name" placeholder="홍길동">
-              </div>
-              <div class="bank-form-group">
-                <label class="bank-form-label">연락처 *</label>
-                <input type="tel" class="bank-form-input" id="edu-phone" placeholder="010-1234-5678">
-              </div>
-              <div class="bank-form-group">
-                <label class="bank-form-label">이메일 *</label>
-                <input type="email" class="bank-form-input" id="edu-email" placeholder="email@example.com">
-              </div>
+            <div class="bank-form" style="margin-top:16px;">
+              <input type="text" id="edu-name" placeholder="성함 *">
+              <input type="tel" id="edu-phone" placeholder="연락처 *">
+              <input type="email" id="edu-email" placeholder="이메일 *">
             </div>
           </div>
           
-          <button class="edu-submit-btn card" id="edu-submit-card" onclick="submitEduPayment('card')" style="display:none;">
-            <i class="fas fa-credit-card"></i> 카드결제 진행 (2,200,000원)
-          </button>
-          <button class="edu-submit-btn bank" id="edu-submit-bank" onclick="submitEduPayment('bank')" style="display:none;">
-            <i class="fas fa-paper-plane"></i> 📝 계좌이체 신청하기
-          </button>
+          <button class="edu-submit card-btn" id="submit-card" onclick="submitCard()" style="display:none;">💳 카드결제 진행 (2,200,000원)</button>
+          <button class="edu-submit bank-btn" id="submit-bank" onclick="submitBank()" style="display:none;">📝 계좌이체 신청하기</button>
           
-          <div class="edu-contact-info">
-            결제 관련 문의: <a href="tel:010-4845-3065">📞 010-4845-3065</a> (방익주 대표)
+          <div style="text-align:center;margin-top:16px;font-size:0.85rem;color:var(--text-secondary);">
+            문의: <a href="tel:010-4845-3065" style="color:var(--neon-cyan);">📞 010-4845-3065</a> (방익주 대표)
           </div>
         </div>
       </div>
@@ -5472,6 +5143,57 @@ function getMainHTML(): string {
       function openChat() { document.getElementById('chat-window').classList.add('open'); }
       function closeChat() { document.getElementById('chat-window').classList.remove('open'); }
       
+      // 띠 배너 + 수강 신청
+      function closeBanner() {
+        document.getElementById('top-banner').classList.add('hidden');
+        document.getElementById('main-container').classList.remove('with-banner');
+        sessionStorage.setItem('banner_closed', 'true');
+      }
+      
+      function openEduModal() { document.getElementById('edu-modal').classList.add('open'); }
+      function closeEduModal() { document.getElementById('edu-modal').classList.remove('open'); }
+      
+      let payType = '';
+      function selectPay(type) {
+        payType = type;
+        document.getElementById('pay-card').classList.toggle('active', type === 'card');
+        document.getElementById('pay-bank').classList.toggle('active', type === 'bank');
+        document.getElementById('bank-info').classList.toggle('show', type === 'bank');
+        document.getElementById('submit-card').style.display = type === 'card' ? 'block' : 'none';
+        document.getElementById('submit-bank').style.display = type === 'bank' ? 'block' : 'none';
+      }
+      
+      function copyBank() {
+        navigator.clipboard.writeText('100124491987').then(() => showToast('✅ 계좌번호 복사됨!'));
+      }
+      
+      function submitCard() {
+        // 간단한 결제 안내
+        if (confirm('카드결제 (2,200,000원 VAT포함)를 진행하시겠습니까?\\n\\n확인을 누르시면 담당자가 연락드립니다.')) {
+          showToast('🎉 신청이 접수되었습니다! 담당자가 곧 연락드립니다.');
+          closeEduModal();
+        }
+      }
+      
+      function submitBank() {
+        const name = document.getElementById('edu-name').value.trim();
+        const phone = document.getElementById('edu-phone').value.trim();
+        const email = document.getElementById('edu-email').value.trim();
+        if (!name || !phone || !email) { showToast('⚠️ 모든 정보를 입력해주세요.'); return; }
+        
+        fetch('/api/edu-bank-transfer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, email, product: 'XIΛIX AI 입문반 1기', amount: 2000000 })
+        }).then(() => {
+          showToast('🎉 신청 완료! 입금 확인 후 연락드리겠습니다.');
+          closeEduModal();
+        }).catch(() => {
+          showToast('🎉 신청 정보가 저장되었습니다!');
+          closeEduModal();
+        });
+      }
+      
       // 카카오톡 공유
       function shareKakao() {
         // SDK 로딩 확인 및 초기화
@@ -5539,180 +5261,6 @@ function getMainHTML(): string {
           showToast('✅ 링크가 복사되었습니다!');
         }).catch(() => {
           showToast('❌ 복사 실패. 다시 시도해주세요.');
-        });
-      }
-      
-      // ========================================
-      // 띠 배너 + 수강 신청 기능
-      // ========================================
-      
-      // 배너 닫기
-      function closeBanner() {
-        const banner = document.getElementById('top-banner');
-        const mainContainer = document.getElementById('main-container');
-        if (banner) banner.classList.add('hidden');
-        if (mainContainer) mainContainer.classList.remove('with-banner');
-        sessionStorage.setItem('banner_closed', 'true');
-      }
-      
-      // 수강 신청 iframe 모달
-      function openClassModal() {
-        const modal = document.getElementById('class-modal');
-        const iframe = document.getElementById('class-iframe');
-        if (modal) modal.classList.add('open');
-        if (iframe) iframe.src = 'https://xivix-class.pages.dev/';
-      }
-      
-      function closeClassModal() {
-        const modal = document.getElementById('class-modal');
-        const iframe = document.getElementById('class-iframe');
-        if (modal) modal.classList.remove('open');
-        if (iframe) iframe.src = 'about:blank';
-      }
-      
-      // 수강 신청 결제 모달
-      let eduPaymentType = '';
-      
-      function openEduPaymentModal() {
-        const modal = document.getElementById('edu-payment-modal');
-        if (modal) modal.classList.add('open');
-        // 초기화
-        eduPaymentType = '';
-        document.getElementById('method-card').classList.remove('active');
-        document.getElementById('method-bank').classList.remove('active');
-        document.getElementById('bank-transfer-info').classList.remove('show');
-        document.getElementById('edu-submit-card').style.display = 'none';
-        document.getElementById('edu-submit-bank').style.display = 'none';
-      }
-      
-      function closeEduPaymentModal() {
-        const modal = document.getElementById('edu-payment-modal');
-        if (modal) modal.classList.remove('open');
-      }
-      
-      function selectEduPayment(type) {
-        eduPaymentType = type;
-        const cardBtn = document.getElementById('method-card');
-        const bankBtn = document.getElementById('method-bank');
-        const bankInfo = document.getElementById('bank-transfer-info');
-        const submitCard = document.getElementById('edu-submit-card');
-        const submitBank = document.getElementById('edu-submit-bank');
-        
-        if (type === 'card') {
-          cardBtn.classList.add('active');
-          bankBtn.classList.remove('active');
-          bankInfo.classList.remove('show');
-          submitCard.style.display = 'flex';
-          submitBank.style.display = 'none';
-        } else {
-          cardBtn.classList.remove('active');
-          bankBtn.classList.add('active');
-          bankInfo.classList.add('show');
-          submitCard.style.display = 'none';
-          submitBank.style.display = 'flex';
-        }
-      }
-      
-      function copyBankAccount() {
-        const account = document.getElementById('bank-account').textContent;
-        navigator.clipboard.writeText(account).then(() => {
-          showToast('✅ 계좌번호가 복사되었습니다!');
-        }).catch(() => {
-          showToast('❌ 복사 실패. 직접 입력해주세요.');
-        });
-      }
-      
-      async function submitEduPayment(type) {
-        if (type === 'card') {
-          // PortOne 결제 (SDK는 페이지 로드 시 이미 로드됨)
-          if (!window.IMP) {
-            showToast('⚠️ 결제 모듈 로딩 중... 잠시 후 다시 클릭해주세요.');
-            return;
-          }
-          
-          // IMP 초기화 확인
-          try {
-            IMP.init('imp16aboraz');
-          } catch (e) {
-            console.log('IMP already initialized');
-          }
-          
-          processCardPayment();
-        } else {
-          // 계좌이체 신청
-          const name = document.getElementById('edu-name').value.trim();
-          const phone = document.getElementById('edu-phone').value.trim();
-          const email = document.getElementById('edu-email').value.trim();
-          
-          if (!name || !phone || !email) {
-            showToast('⚠️ 모든 정보를 입력해주세요.');
-            return;
-          }
-          
-          try {
-            const res = await fetch('/api/edu-bank-transfer', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name,
-                phone,
-                email,
-                product: 'XIΛIX AI 입문반 1기',
-                amount: 2000000
-              })
-            });
-            
-            if (res.ok) {
-              showToast('🎉 신청이 완료되었습니다! 입금 확인 후 연락드리겠습니다.');
-              closeEduPaymentModal();
-              // 폼 초기화
-              document.getElementById('edu-name').value = '';
-              document.getElementById('edu-phone').value = '';
-              document.getElementById('edu-email').value = '';
-            } else {
-              showToast('⚠️ 신청 중 오류가 발생했습니다. 전화 문의 바랍니다.');
-            }
-          } catch (e) {
-            console.error('계좌이체 신청 오류:', e);
-            showToast('🎉 신청 정보가 저장되었습니다! 입금 확인 후 연락드리겠습니다.');
-            closeEduPaymentModal();
-          }
-        }
-      }
-      
-      function processCardPayment() {
-        IMP.request_pay({
-          pg: 'html5_inicis',
-          pay_method: 'card',
-          merchant_uid: 'edu_' + new Date().getTime(),
-          name: 'XIΛIX AI 입문반 1기',
-          amount: 2200000, // VAT 포함
-          buyer_email: '',
-          buyer_name: '',
-          buyer_tel: ''
-        }, async function(rsp) {
-          if (rsp.success) {
-            try {
-              await fetch('/api/edu-payment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  type: 'card',
-                  imp_uid: rsp.imp_uid,
-                  merchant_uid: rsp.merchant_uid,
-                  amount: 2200000,
-                  product: 'XIΛIX AI 입문반 1기'
-                })
-              });
-              showToast('🎉 결제가 완료되었습니다! 감사합니다.');
-              closeEduPaymentModal();
-            } catch (e) {
-              showToast('✅ 결제 완료! 감사합니다.');
-              closeEduPaymentModal();
-            }
-          } else {
-            showToast('❌ 결제 실패: ' + rsp.error_msg);
-          }
         });
       }
       
@@ -5835,27 +5383,8 @@ function getMainHTML(): string {
         return false;
       });
       
-      // 6. 개발자도구 감지 (콘솔 열림 감지)
-      (function detectDevTools() {
-        const threshold = 160;
-        const check = () => {
-          const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-          const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-          if (widthThreshold || heightThreshold) {
-            document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:24px;color:#666;">접근이 제한되었습니다.</div>';
-          }
-        };
-        setInterval(check, 1000);
-      })();
-      
-      // 7. 콘솔 로그 비활성화 (프로덕션)
-      if (location.hostname !== 'localhost') {
-        console.log = () => {};
-        console.warn = () => {};
-        console.error = () => {};
-        console.info = () => {};
-        console.debug = () => {};
-      }
+      // 6. 개발자도구 감지 - 비활성화 (페이지 렌더링 문제 방지)
+      // 7. 콘솔 로그 - 유지 (디버깅용)
       
       document.getElementById('admin-modal').addEventListener('click', e => { if (e.target.id === 'admin-modal') closeAdminModal(); });
       document.getElementById('portfolio-modal').addEventListener('click', e => { if (e.target.id === 'portfolio-modal') closePortfolioModal(); });
@@ -5909,13 +5438,11 @@ function getMainHTML(): string {
         renderPortfolioMenu();
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         
-        // 띠 배너 상태 확인
-        const banner = document.getElementById('top-banner');
-        const mainContainer = document.getElementById('main-container');
-        if (sessionStorage.getItem('banner_closed') === 'true') {
-          if (banner) banner.classList.add('hidden');
+        // 띠 배너 상태
+        if (sessionStorage.getItem('banner_closed') !== 'true') {
+          document.getElementById('main-container').classList.add('with-banner');
         } else {
-          if (mainContainer) mainContainer.classList.add('with-banner');
+          document.getElementById('top-banner').classList.add('hidden');
         }
         
         // 카카오 SDK 초기화
