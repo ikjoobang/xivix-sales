@@ -1953,63 +1953,10 @@ app.get('/login', (c) => c.html(getLoginHTML()))
 app.get('/my', (c) => c.html(getMyPageHTML()))
 app.get('/admin', (c) => c.html(getAdminHTML()))
 
-// OG 이미지 (카카오톡, SNS 공유용)
+// OG 이미지 (카카오톡, SNS 공유용) - 실제 이미지로 리다이렉트
 app.get('/og-image.png', async (c) => {
-  // SVG로 이미지 생성
-  const svg = `
-    <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#0a0a0c"/>
-          <stop offset="50%" style="stop-color:#1a1a2e"/>
-          <stop offset="100%" style="stop-color:#0a0a0c"/>
-        </linearGradient>
-        <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style="stop-color:#a855f7"/>
-          <stop offset="100%" style="stop-color:#ec4899"/>
-        </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-      
-      <!-- 배경 -->
-      <rect width="1200" height="630" fill="url(#bg)"/>
-      
-      <!-- 장식 원들 -->
-      <circle cx="150" cy="150" r="200" fill="#a855f7" opacity="0.1"/>
-      <circle cx="1050" cy="480" r="250" fill="#ec4899" opacity="0.08"/>
-      <circle cx="600" cy="315" r="180" fill="#22d3ee" opacity="0.05"/>
-      
-      <!-- 로고 텍스트 -->
-      <text x="600" y="250" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="100" font-weight="900" fill="url(#purple)" filter="url(#glow)">X I Λ I X</text>
-      
-      <!-- 서브타이틀 -->
-      <text x="600" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" fill="#ffffff" opacity="0.9">AI 마케팅 전문 에이전시</text>
-      
-      <!-- 구분선 -->
-      <rect x="400" y="380" width="400" height="2" fill="url(#purple)" opacity="0.6"/>
-      
-      <!-- 설명 -->
-      <text x="600" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#a0a0a0">SNS · 블로그 · 유튜브 · 광고</text>
-      <text x="600" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#a0a0a0">통합 마케팅 솔루션</text>
-      
-      <!-- CTA -->
-      <rect x="420" y="540" width="360" height="50" rx="25" fill="url(#purple)"/>
-      <text x="600" y="575" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#ffffff">🚀 첫 달 최대 30% 할인</text>
-    </svg>
-  `
-  
-  return new Response(svg, {
-    headers: {
-      'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=86400'
-    }
-  })
+  // 생성된 OG 이미지로 리다이렉트
+  return c.redirect('https://www.genspark.ai/api/files/s/g876OmZQ')
 })
 
 // ========================================
@@ -5116,7 +5063,7 @@ function getMainHTML(): string {
           content: {
             title: '🎁 친구 초대하면 15% 할인!',
             description: 'AI 마케팅 전문 에이전시 XIVIX에서 SNS 마케팅, 웹사이트 제작, 브랜드 컨설팅을 받아보세요!',
-            imageUrl: 'https://xivix.kr/og-image.png',
+            imageUrl: 'https://www.genspark.ai/api/files/s/g876OmZQ',
             link: {
               mobileWebUrl: shareUrl,
               webUrl: shareUrl
