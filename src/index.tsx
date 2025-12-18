@@ -2811,7 +2811,8 @@ function getMainHTML(): string {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <!-- PortOne SDK v1 (IMP 결제) -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <!-- 카카오 SDK (최신 버전) -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
@@ -5623,22 +5624,20 @@ function getMainHTML(): string {
       
       async function submitEduPayment(type) {
         if (type === 'card') {
-          // PortOne 결제
-          showToast('💳 결제 모듈 로딩 중...');
-          
-          // PortOne SDK 동적 로딩
+          // PortOne 결제 (SDK는 페이지 로드 시 이미 로드됨)
           if (!window.IMP) {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.iamport.kr/v1/iamport.js';
-            script.onload = () => {
-              IMP.init('imp16aboraz');
-              processCardPayment();
-            };
-            document.head.appendChild(script);
-          } else {
-            if (!IMP.isInitialized) IMP.init('imp16aboraz');
-            processCardPayment();
+            showToast('⚠️ 결제 모듈 로딩 중... 잠시 후 다시 클릭해주세요.');
+            return;
           }
+          
+          // IMP 초기화 확인
+          try {
+            IMP.init('imp16aboraz');
+          } catch (e) {
+            console.log('IMP already initialized');
+          }
+          
+          processCardPayment();
         } else {
           // 계좌이체 신청
           const name = document.getElementById('edu-name').value.trim();
