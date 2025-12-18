@@ -5060,6 +5060,11 @@ function getMainHTML(): string {
               totalAmount: data.totalAmount, 
               currency: 'KRW', 
               payMethod: 'CARD',
+              windowType: {
+                pc: 'IFRAME',
+                mobile: 'REDIRECTION'
+              },
+              redirectUrl: 'https://xivix.kr/?cart_payment=success&orderId=' + data.orderId,
               customer: {
                 email: customerEmail,
                 fullName: customerName,
@@ -5558,6 +5563,24 @@ function getMainHTML(): string {
           } else if (paymentId) {
             // code 없고 paymentId 있으면 결제 성공
             showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+          }
+          // URL 정리
+          window.history.replaceState({}, '', window.location.pathname);
+        }
+        
+        // 모바일 장바구니 결제 완료 처리 (리디렉션 방식)
+        if (urlParams.get('cart_payment') === 'success') {
+          const code = urlParams.get('code');
+          const paymentId = urlParams.get('paymentId');
+          const message = urlParams.get('message');
+          
+          if (code) {
+            showToast('❌ 결제 실패: ' + decodeURIComponent(message || '알 수 없는 오류'));
+          } else if (paymentId) {
+            showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+            // 장바구니 비우기
+            cart = [];
+            updateCart();
           }
           // URL 정리
           window.history.replaceState({}, '', window.location.pathname);
