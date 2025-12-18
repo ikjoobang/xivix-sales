@@ -1962,6 +1962,50 @@ app.get('/api/booking/available-times', async (c) => {
 })
 
 // ========================================
+// 수강 신청 API (카드결제 / 계좌이체)
+// ========================================
+app.post('/api/edu-payment', async (c) => {
+  const { type, imp_uid, merchant_uid, amount, product } = await c.req.json()
+  
+  // DB에 저장 (선택사항)
+  try {
+    await c.env.DB.prepare(
+      "INSERT INTO edu_payments (type, imp_uid, merchant_uid, amount, product, created_at) VALUES (?, ?, ?, ?, ?, datetime('now'))"
+    ).bind(type, imp_uid || '', merchant_uid || '', amount, product).run()
+  } catch (e) {
+    console.log('DB 저장 스킵 (테이블 없음)')
+  }
+  
+  return c.json({ success: true, message: '결제 정보가 저장되었습니다.' })
+})
+
+app.post('/api/edu-bank-transfer', async (c) => {
+  const { name, phone, email, product, amount } = await c.req.json()
+  
+  if (!name || !phone || !email) {
+    return c.json({ error: '모든 필드를 입력해주세요.' }, 400)
+  }
+  
+  // DB에 저장
+  try {
+    await c.env.DB.prepare(
+      "INSERT INTO edu_payments (type, name, phone, email, amount, product, status, created_at) VALUES ('bank_transfer', ?, ?, ?, ?, ?, 'pending', datetime('now'))"
+    ).bind(name, phone, email, amount, product).run()
+  } catch (e) {
+    console.log('DB 저장 스킵:', e)
+  }
+  
+  // 콘솔 로그
+  console.log('=== 수강 신청 알림 === 상품:', product, '이름:', name, '연락처:', phone, '이메일:', email, '금액:', amount)
+  
+  return c.json({ 
+    success: true, 
+    message: '신청이 완료되었습니다. 입금 확인 후 연락드리겠습니다.',
+    data: { name, phone, email, product, amount }
+  })
+})
+
+// ========================================
 // PAGE ROUTES
 // ========================================
 app.get('/', (c) => c.html(getMainHTML()))
@@ -4166,6 +4210,102 @@ function getMainHTML(): string {
       </div>
     </div>
     
+    <!-- 수강 신청 결제 모달 -->
+    <div id="edu-payment-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);z-index:10000;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+      <div style="background:linear-gradient(145deg,#12121a,#1a1a24);border:2px solid var(--neon-purple);border-radius:24px;padding:32px;max-width:480px;width:100%;margin:auto;position:relative;animation:loginPop 0.4s ease;">
+        <button onclick="closeEduPaymentModal()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-tertiary);font-size:1.5rem;cursor:pointer;z-index:10;">&times;</button>
+        
+        <!-- 헤더 -->
+        <div style="text-align:center;margin-bottom:24px;">
+          <div style="font-size:2.5rem;margin-bottom:8px;">🎓</div>
+          <div style="background:linear-gradient(135deg,#ef4444,#f97316);display:inline-block;padding:6px 16px;border-radius:20px;font-size:0.8rem;font-weight:700;color:#fff;margin-bottom:12px;">
+            🔥 선착순 5명 중 잔여 2석!
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;">1월 개강 · 조기 마감 예정</p>
+          <h2 style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,var(--neon-purple),var(--neon-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XIΛIX AI 입문반 1기</h2>
+          <div style="margin-top:12px;">
+            <span style="font-size:1.8rem;font-weight:800;color:#fff;">2,000,000</span>
+            <span style="font-size:1rem;color:var(--text-secondary);">원</span>
+          </div>
+          <p style="font-size:0.75rem;color:var(--text-tertiary);margin-top:4px;">(카드결제 시 VAT 별도)</p>
+          <p style="font-size:0.8rem;color:var(--neon-cyan);margin-top:8px;">6주 과정 · 1월 개강 · 선착순 5명 마감</p>
+        </div>
+        
+        <!-- 결제 방법 선택 -->
+        <div style="margin-bottom:20px;">
+          <p style="font-size:0.9rem;font-weight:600;color:var(--text-secondary);margin-bottom:12px;text-align:center;">결제 방법 선택</p>
+          <div style="display:flex;gap:12px;">
+            <button id="edu-card-btn" onclick="selectEduPayment('card')" style="flex:1;padding:16px;background:rgba(59,130,246,0.1);border:2px solid rgba(59,130,246,0.3);border-radius:12px;cursor:pointer;transition:all 0.3s;">
+              <div style="font-size:1.5rem;margin-bottom:4px;">💳</div>
+              <div style="font-size:0.9rem;font-weight:600;color:#3b82f6;">카드결제</div>
+            </button>
+            <button id="edu-bank-btn" onclick="selectEduPayment('bank')" style="flex:1;padding:16px;background:rgba(34,197,94,0.1);border:2px solid rgba(34,197,94,0.3);border-radius:12px;cursor:pointer;transition:all 0.3s;">
+              <div style="font-size:1.5rem;margin-bottom:4px;">🏦</div>
+              <div style="font-size:0.9rem;font-weight:600;color:#22c55e;">계좌이체</div>
+            </button>
+          </div>
+        </div>
+        
+        <!-- 계좌이체 정보 (기본 숨김) -->
+        <div id="edu-bank-info" style="display:none;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:16px;padding:20px;margin-bottom:20px;">
+          <h3 style="font-size:1rem;font-weight:700;color:#22c55e;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><i class="fas fa-university"></i> 계좌이체 안내</h3>
+          
+          <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:16px;margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-size:0.85rem;color:var(--text-tertiary);">입금 은행</span>
+              <span style="font-size:0.95rem;font-weight:600;color:#fff;">케이뱅크 (K-Bank)</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-size:0.85rem;color:var(--text-tertiary);">계좌번호</span>
+              <span style="font-size:1.1rem;font-weight:700;color:var(--neon-green);font-family:monospace;">100124491987</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.85rem;color:var(--text-tertiary);">예금주</span>
+              <span style="font-size:0.95rem;font-weight:600;color:#fff;">방익주</span>
+            </div>
+          </div>
+          
+          <button onclick="copyAccount()" style="width:100%;padding:12px;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.5);border-radius:8px;color:#22c55e;font-weight:600;cursor:pointer;margin-bottom:16px;">
+            <i class="fas fa-copy"></i> 계좌번호 복사
+          </button>
+          
+          <div style="font-size:0.8rem;color:var(--text-tertiary);line-height:1.6;">
+            <p>✔️ 입금자명은 신청자 성함과 동일하게 해주세요.</p>
+            <p>✔️ 입금 후 아래 정보 입력하시면 등록 완료됩니다.</p>
+            <p>✔️ 계좌 이체는 <strong style="color:#22c55e;">2,000,000원</strong>입니다.</p>
+          </div>
+        </div>
+        
+        <!-- 신청자 정보 입력 (계좌이체 선택시) -->
+        <div id="edu-form-section" style="display:none;margin-bottom:20px;">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div>
+              <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">성함 *</label>
+              <input type="text" id="edu-name" placeholder="홍길동" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">연락처 *</label>
+              <input type="tel" id="edu-phone" placeholder="010-1234-5678" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">이메일 *</label>
+              <input type="email" id="edu-email" placeholder="example@email.com" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+            </div>
+          </div>
+        </div>
+        
+        <!-- 결제 버튼 -->
+        <button id="edu-submit-btn" onclick="submitEduPayment()" style="width:100%;padding:16px;background:linear-gradient(135deg,var(--neon-purple),var(--neon-pink));border:none;border-radius:12px;color:white;font-size:1rem;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;gap:8px;">
+          <i class="fas fa-credit-card"></i> 카드결제 진행
+        </button>
+        
+        <!-- 문의 안내 -->
+        <p style="text-align:center;margin-top:20px;font-size:0.8rem;color:var(--text-tertiary);">
+          결제 관련 문의: 📞 010-4845-3065 (방익주 대표)
+        </p>
+      </div>
+    </div>
+    
     <!-- 로그인 유도 모달 -->
     <div class="login-modal" id="login-modal">
       <div class="login-modal-content" style="position:relative;">
@@ -4562,9 +4702,19 @@ function getMainHTML(): string {
       
       function renderSysDevHTML() {
         return sysDevOptions.map(s => {
-          // 결제 링크는 외부 링크로 처리
+          // AI 입문반 수강 신청 카드
           if (s.isExternal) {
-            return '<div class="card" style="border: 2px solid var(--neon-green);"><h3 class="card-name" style="color: var(--neon-green);"><i class="fas fa-link"></i> ' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value" style="font-size: 1rem;">바로가기</span></div><button class="btn btn-primary btn-small" style="width:100%; background: linear-gradient(135deg, #22c55e, #16a34a);" onclick="openClassPage()"><i class="fas fa-external-link-alt"></i> 이동</button></div>';
+            return '<div class="card" style="border: 2px solid var(--neon-purple); background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(236,72,153,0.1));">' +
+              '<div style="position:absolute;top:-10px;right:10px;background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;">🔥 NEW</div>' +
+              '<h3 class="card-name" style="color: var(--neon-purple);margin-top:8px;"><i class="fas fa-graduation-cap"></i> 수강 신청</h3>' +
+              '<p class="card-desc" style="font-size:0.85rem;">XIΛIX AI 입문반 1기<br><span style="color:var(--neon-orange);">선착순 5명 · 1월 개강</span></p>' +
+              '<div class="card-price"><span class="price-value">200</span><span class="price-unit">만원</span></div>' +
+              '<p style="font-size:0.7rem;color:var(--text-tertiary);margin:-8px 0 12px;">(카드결제 시 VAT 별도)</p>' +
+              '<div style="display:flex;gap:6px;">' +
+                '<button class="btn btn-small" style="flex:1;background:linear-gradient(135deg,#3b82f6,#1d4ed8);font-size:0.8rem;" onclick="openEduPaymentModal(\\'card\\')"><i class="fas fa-credit-card"></i> 카드</button>' +
+                '<button class="btn btn-small" style="flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);font-size:0.8rem;" onclick="openEduPaymentModal(\\'bank\\')"><i class="fas fa-university"></i> 계좌</button>' +
+              '</div>' +
+            '</div>';
           }
           return '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>';
         }).join('');
@@ -5100,7 +5250,138 @@ function getMainHTML(): string {
       }
       
       function openClassPage() {
-        openClassModal();
+        openEduPaymentModal('card');
+      }
+      
+      // 수강 신청 결제 모달
+      let selectedEduPayment = '';
+      
+      function openEduPaymentModal(type) {
+        document.getElementById('edu-payment-modal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        selectEduPayment(type);
+      }
+      
+      function closeEduPaymentModal() {
+        document.getElementById('edu-payment-modal').style.display = 'none';
+        document.body.style.overflow = '';
+        selectedEduPayment = '';
+        // 폼 초기화
+        document.getElementById('edu-name').value = '';
+        document.getElementById('edu-phone').value = '';
+        document.getElementById('edu-email').value = '';
+      }
+      
+      function selectEduPayment(type) {
+        selectedEduPayment = type;
+        const cardBtn = document.getElementById('edu-card-btn');
+        const bankBtn = document.getElementById('edu-bank-btn');
+        const bankInfo = document.getElementById('edu-bank-info');
+        const formSection = document.getElementById('edu-form-section');
+        const submitBtn = document.getElementById('edu-submit-btn');
+        
+        if (type === 'card') {
+          cardBtn.style.background = 'rgba(59,130,246,0.3)';
+          cardBtn.style.borderColor = '#3b82f6';
+          bankBtn.style.background = 'rgba(34,197,94,0.1)';
+          bankBtn.style.borderColor = 'rgba(34,197,94,0.3)';
+          bankInfo.style.display = 'none';
+          formSection.style.display = 'none';
+          submitBtn.style.display = 'flex';
+          submitBtn.innerHTML = '<i class="fas fa-credit-card"></i> 카드결제 진행';
+          submitBtn.style.background = 'linear-gradient(135deg,#3b82f6,#1d4ed8)';
+        } else {
+          bankBtn.style.background = 'rgba(34,197,94,0.3)';
+          bankBtn.style.borderColor = '#22c55e';
+          cardBtn.style.background = 'rgba(59,130,246,0.1)';
+          cardBtn.style.borderColor = 'rgba(59,130,246,0.3)';
+          bankInfo.style.display = 'block';
+          formSection.style.display = 'block';
+          submitBtn.style.display = 'flex';
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 계좌이체 신청하기';
+          submitBtn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+        }
+      }
+      
+      function copyAccount() {
+        navigator.clipboard.writeText('100124491987').then(() => {
+          showToast('✅ 계좌번호가 복사되었습니다!');
+        });
+      }
+      
+      async function submitEduPayment() {
+        if (selectedEduPayment === 'card') {
+          // 카드 결제 - PortOne 결제 진행
+          try {
+            const orderName = 'XIΛIX AI 입문반 1기';
+            const amount = 2200000; // VAT 포함
+            
+            if (typeof IMP === 'undefined') {
+              alert('결제 모듈을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+              return;
+            }
+            
+            IMP.init('imp16aboraz');
+            IMP.request_pay({
+              pg: 'html5_inicis',
+              pay_method: 'card',
+              merchant_uid: 'edu_' + Date.now(),
+              name: orderName,
+              amount: amount,
+              buyer_email: '',
+              buyer_name: '',
+              buyer_tel: ''
+            }, async function(rsp) {
+              if (rsp.success) {
+                showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+                closeEduPaymentModal();
+                // 결제 정보 서버에 저장
+                await fetch('/api/edu-payment', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    type: 'card',
+                    imp_uid: rsp.imp_uid,
+                    merchant_uid: rsp.merchant_uid,
+                    amount: amount,
+                    product: orderName
+                  })
+                });
+              } else {
+                alert('결제가 취소되었습니다: ' + rsp.error_msg);
+              }
+            });
+          } catch (err) {
+            alert('결제 오류: ' + err.message);
+          }
+        } else {
+          // 계좌이체 신청
+          const name = document.getElementById('edu-name').value.trim();
+          const phone = document.getElementById('edu-phone').value.trim();
+          const email = document.getElementById('edu-email').value.trim();
+          
+          if (!name || !phone || !email) {
+            alert('모든 필드를 입력해주세요.');
+            return;
+          }
+          
+          try {
+            const response = await fetch('/api/edu-bank-transfer', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, phone, email, product: 'XIΛIX AI 입문반 1기', amount: 2000000 })
+            });
+            
+            if (response.ok) {
+              showToast('🎉 신청이 완료되었습니다! 입금 확인 후 연락드리겠습니다. 감사합니다!');
+              closeEduPaymentModal();
+            } else {
+              alert('신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+            }
+          } catch (err) {
+            alert('신청 오류: ' + err.message);
+          }
+        }
       }
       
       // 페이지 로드 시 배너 상태 확인
