@@ -2769,7 +2769,9 @@ function getMainHTML(): string {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- PortOne v1 결제 SDK -->
+    <!-- PortOne v2 결제 SDK (기존 장바구니 결제용) -->
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <!-- PortOne v1 결제 SDK (수강신청용) -->
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <!-- 카카오 SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
