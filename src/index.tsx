@@ -2819,10 +2819,9 @@ function getMainHTML(): string {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- PortOne 결제 SDK (v1 for IMP) -->
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-    <!-- 카카오 SDK (최신 버전) -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <!-- PortOne 결제 SDK - 필요 시 동적 로딩 -->
+    <!-- 카카오 SDK (async 로딩) -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js" async></script>
     
     <style>
       :root {
@@ -5310,49 +5309,45 @@ function getMainHTML(): string {
         });
       }
       
-      async function submitEduPayment() {
+      function loadImpAndPay() {
+        const orderName = 'XIΛIX AI 입문반 1기';
+        const amount = 2200000;
+        
+        if (window.IMP) {
+          window.IMP.init('imp16aboraz');
+          window.IMP.request_pay({
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: 'edu_' + Date.now(),
+            name: orderName,
+            amount: amount
+          }, function(rsp) {
+            if (rsp.success) {
+              showToast('🎉 결제 완료! 감사합니다.');
+              closeEduPaymentModal();
+              fetch('/api/edu-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'card', imp_uid: rsp.imp_uid, merchant_uid: rsp.merchant_uid, amount: amount, product: orderName })
+              }).catch(function() {});
+            } else {
+              showToast('❌ ' + (rsp.error_msg || '결제 취소'));
+            }
+          });
+        } else {
+          showToast('⏳ 결제 모듈 로딩 중...');
+          var s = document.createElement('script');
+          s.src = 'https://cdn.iamport.kr/v1/iamport.js';
+          s.onload = function() { 
+            showToast('✅ 로딩 완료! 다시 클릭해주세요.'); 
+          };
+          document.head.appendChild(s);
+        }
+      }
+      
+      function submitEduPayment() {
         if (selectedEduPayment === 'card') {
-          // 카드 결제 - PortOne 결제 진행
-          const orderName = 'XIΛIX AI 입문반 1기';
-          const amount = 2200000; // VAT 포함
-          
-          // SDK 로딩 확인
-          if (typeof IMP === 'undefined' || !window.IMP) {
-            showToast('⏳ 결제 모듈 로딩 중...');
-            // SDK 동적 로딩 후 재시도
-            const script = document.createElement('script');
-            script.src = 'https://cdn.iamport.kr/v1/iamport.js';
-            script.onload = function() {
-              showToast('✅ 로딩 완료! 다시 클릭해주세요.');
-            };
-            document.head.appendChild(script);
-            return;
-          }
-          
-          try {
-            IMP.init('imp16aboraz');
-            IMP.request_pay({
-              pg: 'html5_inicis',
-              pay_method: 'card',
-              merchant_uid: 'edu_' + Date.now(),
-              name: orderName,
-              amount: amount
-            }, function(rsp) {
-              if (rsp.success) {
-                showToast('🎉 결제 완료! 감사합니다.');
-                closeEduPaymentModal();
-                fetch('/api/edu-payment', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ type: 'card', imp_uid: rsp.imp_uid, merchant_uid: rsp.merchant_uid, amount: amount, product: orderName })
-                }).catch(function(e) { console.log('저장:', e); });
-              } else {
-                showToast('❌ ' + (rsp.error_msg || '결제 취소'));
-              }
-            });
-          } catch (err) {
-            showToast('❌ 오류: ' + err.message);
-          }
+          loadImpAndPay();
         } else {
           // 계좌이체 신청
           const name = document.getElementById('edu-name').value.trim();
