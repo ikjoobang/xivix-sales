@@ -4170,21 +4170,35 @@ function getMainHTML(): string {
       }
 
       /* ========================================
-         🎯 아코디언 스타일
+         🎯 아코디언 스타일 - 포인트 강조 (확대)
          ======================================== */
       .accordion {
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-lg);
-        margin-bottom: var(--space-md);
+        background: linear-gradient(145deg, var(--bg-card), var(--bg-tertiary));
+        border: 3px solid rgba(168, 85, 247, 0.4);
+        border-radius: var(--radius-2xl);
+        margin-bottom: var(--space-lg);
         overflow: hidden;
+        box-shadow: 0 8px 40px rgba(168, 85, 247, 0.15), 0 4px 20px rgba(0,0,0,0.3);
+        position: relative;
+      }
+      .accordion::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink), var(--neon-cyan));
+      }
+      .accordion:hover {
+        border-color: rgba(168, 85, 247, 0.7);
+        box-shadow: 0 12px 50px rgba(168, 85, 247, 0.25), 0 6px 30px rgba(0,0,0,0.4);
+        transform: translateY(-2px);
       }
       .accordion-header {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--space-md) var(--space-lg);
+        padding: 28px 32px;
         background: transparent;
         border: none;
         cursor: pointer;
@@ -4192,25 +4206,42 @@ function getMainHTML(): string {
         transition: all 0.3s ease;
       }
       .accordion-header:hover {
-        background: rgba(168, 85, 247, 0.05);
+        background: rgba(168, 85, 247, 0.1);
       }
       .accordion-title {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-size: 1.1rem;
-        font-weight: 700;
+        gap: 18px;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
       }
       .accordion-title i {
-        color: var(--neon-purple);
-        font-size: 1.2rem;
+        width: 56px; height: 56px;
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        color: white;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
       }
       .accordion-arrow {
         color: var(--text-tertiary);
+        font-size: 1.3rem;
         transition: transform 0.3s ease;
+        width: 44px; height: 44px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .accordion.open .accordion-arrow {
         transform: rotate(180deg);
+        background: rgba(168, 85, 247, 0.25);
+        color: var(--neon-purple);
       }
       .accordion-content {
         max-height: 0;
@@ -4218,22 +4249,22 @@ function getMainHTML(): string {
         transition: max-height 0.4s ease;
       }
       .accordion.open .accordion-content {
-        max-height: 1000px;
+        max-height: 1200px;
       }
       .accordion-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 0 var(--space-md) var(--space-md);
+        gap: 16px;
+        padding: 0 28px 28px;
       }
       .accordion-item {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 12px 14px;
-        background: var(--bg-tertiary);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-md);
+        gap: 16px;
+        padding: 20px 22px;
+        background: linear-gradient(145deg, var(--bg-secondary), rgba(168, 85, 247, 0.05));
+        border: 2px solid rgba(168, 85, 247, 0.2);
+        border-radius: var(--radius-xl);
         cursor: pointer;
         transition: all 0.3s ease;
         text-align: left;
@@ -4242,32 +4273,37 @@ function getMainHTML(): string {
       }
       .accordion-item:hover {
         border-color: var(--neon-purple);
-        background: rgba(168, 85, 247, 0.08);
-        transform: translateY(-2px);
+        background: linear-gradient(145deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.08));
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
       }
       .item-icon {
-        width: 32px; height: 32px;
-        border-radius: 8px;
+        width: 50px; height: 50px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.9rem;
+        font-size: 1.2rem;
         flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       }
       .item-text {
-        font-size: 0.85rem;
-        font-weight: 600;
+        font-size: 1.1rem;
+        font-weight: 700;
         flex: 1;
+        line-height: 1.3;
       }
       .item-badge {
         position: absolute;
-        top: -6px;
-        right: -6px;
-        padding: 2px 6px;
-        border-radius: 8px;
-        font-size: 0.6rem;
-        font-weight: 700;
+        top: -8px;
+        right: -8px;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 800;
         color: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        animation: badgePulse 2s ease-in-out infinite;
       }
       .item-badge.hot {
         background: linear-gradient(135deg, #f97316, #ef4444);
@@ -4275,15 +4311,51 @@ function getMainHTML(): string {
       .item-badge.premium {
         background: linear-gradient(135deg, #eab308, #ca8a04);
       }
+      @media (max-width: 768px) {
+        .accordion {
+          border-width: 2px;
+          margin-bottom: var(--space-md);
+        }
+        .accordion-header {
+          padding: 22px 24px;
+        }
+        .accordion-title {
+          font-size: 1.25rem;
+          gap: 14px;
+        }
+        .accordion-title i {
+          width: 48px; height: 48px;
+          font-size: 1.2rem;
+        }
+      }
       @media (max-width: 480px) {
         .accordion-grid {
           grid-template-columns: 1fr;
+          padding: 0 20px 20px;
+          gap: 12px;
+        }
+        .accordion-header {
+          padding: 18px 20px;
         }
         .accordion-title {
+          font-size: 1.1rem;
+          gap: 12px;
+        }
+        .accordion-title i {
+          width: 42px; height: 42px;
+          font-size: 1rem;
+          border-radius: 12px;
+        }
+        .accordion-item {
+          padding: 16px 18px;
+          gap: 12px;
+        }
+        .item-icon {
+          width: 42px; height: 42px;
           font-size: 1rem;
         }
         .item-text {
-          font-size: 0.8rem;
+          font-size: 0.95rem;
         }
       }
       @media (max-width: 768px) {
@@ -4608,9 +4680,13 @@ function getMainHTML(): string {
         </div>
       </section>
       
-      <!-- 아코디언 섹션 - 포트폴리오 & 서비스 -->
-      <section id="menu-section" class="section">
-        <div class="container" style="max-width: 700px;">
+      <!-- 아코디언 섹션 - 포트폴리오 & 서비스 (강조) -->
+      <section id="menu-section" class="section" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
+        <div class="container" style="max-width: 800px;">
+          <div class="section-header reveal" style="margin-bottom: var(--space-xl);">
+            <p class="section-eyebrow">나에게 딱 맞는 서비스 찾기</p>
+            <h2 class="section-title" style="font-size: clamp(1.5rem, 4vw, 2.2rem);">클릭해서 <span class="gradient-text">상세 정보</span> 확인</h2>
+          </div>
           
           <!-- 포트폴리오 아코디언 -->
           <div class="accordion reveal" id="accordion-portfolio">
