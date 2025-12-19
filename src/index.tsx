@@ -3146,13 +3146,13 @@ function getMainHTML(): string {
       .status-dot { width: 10px; height: 10px; background: var(--neon-lime); border-radius: 50%; animation: pulse 2s infinite; }
       @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
       
-      /* 🎯 메인 카피 - 40px+ 폰트 */
+      /* 🎯 메인 카피 - 폰트 크기 줄임 */
       .hero-title { 
-        font-size: clamp(2.2rem, 6vw, 3.5rem); 
-        font-weight: 900; 
-        letter-spacing: -0.02em; 
-        margin-bottom: var(--space-md);
-        line-height: 1.2;
+        font-size: clamp(1.6rem, 4vw, 2.4rem); 
+        font-weight: 800; 
+        letter-spacing: -0.01em; 
+        margin-bottom: var(--space-sm);
+        line-height: 1.3;
         color: var(--text-primary);
       }
       .hero-title .highlight {
@@ -3164,11 +3164,11 @@ function getMainHTML(): string {
       
       /* 🎯 서브 카피 */
       .hero-tagline { 
-        font-size: clamp(1rem, 2.5vw, 1.35rem); 
+        font-size: clamp(0.9rem, 2vw, 1.1rem); 
         color: var(--text-secondary); 
-        max-width: 700px; 
-        margin: 0 auto var(--space-xl);
-        line-height: 1.8; 
+        max-width: 600px; 
+        margin: 0 auto var(--space-lg);
+        line-height: 1.7; 
         font-weight: 400;
       }
       .hero-tagline strong { color: var(--neon-orange); font-weight: 700; }
@@ -3182,11 +3182,11 @@ function getMainHTML(): string {
       .btn-lime {
         background: linear-gradient(135deg, var(--neon-lime), #65a30d);
         color: #000;
-        font-weight: 800;
-        font-size: 1.1rem;
-        padding: 20px 40px;
-        border-radius: var(--radius-lg);
-        box-shadow: 0 8px 30px rgba(132, 204, 22, 0.4);
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 14px 28px;
+        border-radius: var(--radius-md);
+        box-shadow: 0 6px 24px rgba(132, 204, 22, 0.4);
         transition: all 0.3s ease;
       }
       .btn-lime:hover {
