@@ -4172,7 +4172,7 @@ function getMainHTML(): string {
       <section class="hero">
         <!-- 한국인 사장님 이미지 배경 -->
         <div class="hero-image-bg">
-          <img src="https://www.genspark.ai/api/files/s/z3Mzyied" alt="성공한 한국인 사장님" loading="eager">
+          <img src="https://www.genspark.ai/api/files/s/WTa0XFhV" alt="성공한 한국인 사장님" loading="eager">
           <div class="hero-image-overlay"></div>
         </div>
         
@@ -4219,7 +4219,7 @@ function getMainHTML(): string {
       <section class="problem-section">
         <div class="problem-layout">
           <div class="problem-image reveal">
-            <img src="https://www.genspark.ai/api/files/s/hOq1eCfB" alt="마케팅에 지친 사장님" loading="lazy">
+            <img src="https://www.genspark.ai/api/files/s/qFBzKuAe" alt="마케팅에 지친 사장님" loading="lazy">
           </div>
           <div class="problem-content">
             <div class="section-header reveal" style="text-align:left;padding:0;">
@@ -4293,7 +4293,7 @@ function getMainHTML(): string {
             </button>
           </div>
           <div class="solution-image reveal">
-            <img src="https://www.genspark.ai/api/files/s/gT2iFebS" alt="마케팅 성과 분석" loading="lazy">
+            <img src="https://www.genspark.ai/api/files/s/xRn0HIrt" alt="마케팅 성과 분석" loading="lazy">
           </div>
         </div>
       </section>
@@ -4308,7 +4308,7 @@ function getMainHTML(): string {
             <h2 class="section-title">이미 <span class="gradient-text">결과</span>를 보고 있습니다</h2>
           </div>
           <div class="proof-image reveal">
-            <img src="https://www.genspark.ai/api/files/s/gwWErcGh" alt="성공한 비즈니스 팀" loading="lazy">
+            <img src="https://www.genspark.ai/api/files/s/MKPRklae" alt="성공한 비즈니스 팀" loading="lazy">
           </div>
           <div class="proof-stats reveal">
             <div class="proof-stat">
