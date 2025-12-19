@@ -5046,6 +5046,12 @@ function getMainHTML(): string {
       
       // 실제 결제 실행
       async function executePayment(customerEmail, customerName, customerPhone) {
+        // 모바일 체크 - 현재 모바일 카드결제 미지원
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          alert('📱 모바일 카드결제 안내\\n\\n현재 모바일 카드결제는 준비 중입니다.\\n(약 1개월 소요 예정)\\n\\n✅ PC에서 카드결제 가능합니다.');
+          return;
+        }
         
         const isRegional = document.getElementById('regional-fee').checked;
         try {
@@ -5220,6 +5226,13 @@ function getMainHTML(): string {
       
       // 수강 신청 카드결제 (PortOne v2 - 기존 결제와 동일한 자격증명 사용)
       async function eduCardPay() {
+        // 모바일 체크 - 현재 모바일 카드결제 미지원
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          alert('📱 모바일 카드결제 안내\\n\\n현재 모바일 카드결제는 준비 중입니다.\\n(약 1개월 소요 예정)\\n\\n✅ PC에서 카드결제 가능합니다.\\n✅ 계좌이체는 모바일에서도 가능합니다.');
+          return;
+        }
+        
         if (typeof PortOne === 'undefined') {
           showToast('⚠️ 결제 모듈 로딩 중... 잠시 후 다시 시도해주세요.');
           return;
