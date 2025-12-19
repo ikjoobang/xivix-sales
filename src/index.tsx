@@ -4663,6 +4663,7 @@ function getMainHTML(): string {
                 '<button class="btn btn-small" style="background:linear-gradient(135deg,var(--neon-purple),var(--neon-pink));" onclick="eduCardPay()"><i class="fas fa-credit-card"></i> 카드</button>' +
                 '<button class="btn btn-small" style="background:linear-gradient(135deg,var(--neon-green),#16a34a);" onclick="openEduModal()"><i class="fas fa-university"></i> 계좌</button>' +
               '</div>' +
+              '<p style="font-size:0.7rem;color:#888;margin-top:10px;text-align:center;">💻 카드결제는 PC에서 가능합니다</p>' +
             '</div>';
           }
           return '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>';
