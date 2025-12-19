@@ -3146,14 +3146,15 @@ function getMainHTML(): string {
       .status-dot { width: 10px; height: 10px; background: var(--neon-lime); border-radius: 50%; animation: pulse 2s infinite; }
       @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
       
-      /* 🎯 메인 카피 - 폰트 크기 줄임 */
+      /* 🎯 메인 카피 - 한 줄로 */
       .hero-title { 
-        font-size: clamp(1.6rem, 4vw, 2.4rem); 
-        font-weight: 800; 
+        font-size: clamp(1.1rem, 3vw, 1.8rem); 
+        font-weight: 700; 
         letter-spacing: -0.01em; 
-        margin-bottom: var(--space-sm);
-        line-height: 1.3;
+        margin-bottom: var(--space-xs);
+        line-height: 1.4;
         color: var(--text-primary);
+        white-space: nowrap;
       }
       .hero-title .highlight {
         background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
@@ -3164,11 +3165,11 @@ function getMainHTML(): string {
       
       /* 🎯 서브 카피 */
       .hero-tagline { 
-        font-size: clamp(0.9rem, 2vw, 1.1rem); 
+        font-size: clamp(0.8rem, 1.8vw, 0.95rem); 
         color: var(--text-secondary); 
-        max-width: 600px; 
-        margin: 0 auto var(--space-lg);
-        line-height: 1.7; 
+        max-width: 500px; 
+        margin: 0 auto var(--space-md);
+        line-height: 1.6; 
         font-weight: 400;
       }
       .hero-tagline strong { color: var(--neon-orange); font-weight: 700; }
@@ -4343,14 +4344,12 @@ function getMainHTML(): string {
           
           <!-- 메인 카피 -->
           <h1 class="hero-title animate-fade-in-up delay-1">
-            사장님은 <span class="highlight">장사만</span> 하세요.<br>
-            마케팅은 <span class="highlight">AI</span>가 다 해드립니다.
+            사장님은 <span class="highlight">장사만</span>, 마케팅은 <span class="highlight">AI</span>가
           </h1>
           
           <!-- 서브 카피 -->
           <p class="hero-tagline animate-fade-in-up delay-2">
-            직원 뽑지 마세요. 블로그, 인스타, 영상 편집...<br>
-            XIVIX 시스템이 <strong>월급 없이 24시간</strong> 일합니다.
+            블로그, 인스타, 영상... XIVIX가 <strong>24시간</strong> 대신 일합니다
           </p>
           
           <!-- CTA 버튼 -->
