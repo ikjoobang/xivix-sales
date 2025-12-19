@@ -3194,6 +3194,50 @@ function getMainHTML(): string {
         box-shadow: 0 12px 40px rgba(132, 204, 22, 0.6);
       }
       
+      /* 🎯 Hero 신뢰 지표 */
+      .hero-trust {
+        display: flex;
+        gap: var(--space-lg);
+        justify-content: center;
+        margin-top: var(--space-xl);
+        flex-wrap: wrap;
+      }
+      .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+      .trust-item i { color: var(--neon-lime); }
+      
+      /* 🎯 Hero 이미지 배경 */
+      .hero-image-bg {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 0;
+      }
+      .hero-image-bg img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        object-position: center 20%;
+      }
+      .hero-image-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.75) 100%);
+      }
+      
+      /* 🎯 Section Eyebrow */
+      .section-eyebrow {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--neon-lime);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+      }
+      
       /* ========================================
          🎯 버튼 시스템 - 표준화된 사이즈
          ======================================== */
@@ -3269,116 +3313,179 @@ function getMainHTML(): string {
         line-height: 1.8;
       }
       
-      /* 🎯 Problem Section - "아직도 블로그 직접 쓰시나요?" */
+      /* 🎯 Problem Section - 2컬럼 레이아웃 (이미지 + 리스트) */
       .problem-section {
-        background: linear-gradient(180deg, rgba(239,68,68,0.05) 0%, transparent 100%);
+        background: linear-gradient(180deg, rgba(239,68,68,0.03) 0%, transparent 100%);
         padding: var(--space-3xl) var(--space-lg);
       }
-      .problem-grid {
+      .problem-layout {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: var(--space-lg);
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2xl);
         max-width: 1200px;
         margin: 0 auto;
+        align-items: center;
       }
-      .problem-card {
-        background: rgba(239, 68, 68, 0.08);
-        border: 1px solid rgba(239, 68, 68, 0.2);
-        border-radius: var(--radius-xl);
-        padding: var(--space-xl);
-        text-align: center;
-        transition: all 0.3s ease;
-      }
-      .problem-card:hover {
-        transform: translateY(-8px);
-        border-color: rgba(239, 68, 68, 0.4);
-        box-shadow: 0 20px 50px rgba(239, 68, 68, 0.15);
-      }
-      .problem-icon {
-        font-size: 3rem;
-        margin-bottom: var(--space-md);
-      }
-      .problem-title {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #ef4444;
-        margin-bottom: var(--space-sm);
-      }
-      .problem-desc {
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
-      }
-      
-      /* 🎯 Solution Section - 3 Icons */
-      .solution-section {
-        background: linear-gradient(180deg, rgba(132,204,22,0.05) 0%, transparent 100%);
-        padding: var(--space-3xl) var(--space-lg);
-      }
-      .solution-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-xl);
-        max-width: 1100px;
-        margin: 0 auto;
-      }
-      .solution-card {
-        background: rgba(132, 204, 22, 0.08);
-        border: 2px solid rgba(132, 204, 22, 0.25);
+      .problem-image {
         border-radius: var(--radius-2xl);
-        padding: var(--space-2xl) var(--space-xl);
-        text-align: center;
-        transition: all 0.4s ease;
-        position: relative;
         overflow: hidden;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.4);
       }
-      .solution-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--neon-lime), var(--neon-green));
+      .problem-image img {
+        width: 100%;
+        height: auto;
+        display: block;
       }
-      .solution-card:hover {
-        transform: translateY(-12px) scale(1.02);
-        border-color: var(--neon-lime);
-        box-shadow: 0 25px 60px rgba(132, 204, 22, 0.2);
+      .problem-content {
+        padding: var(--space-lg) 0;
       }
-      .solution-icon {
-        width: 80px; height: 80px;
-        margin: 0 auto var(--space-lg);
-        background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
+      .problem-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+      }
+      .problem-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-md);
+        padding: var(--space-md);
+        background: rgba(239, 68, 68, 0.06);
+        border-left: 4px solid #ef4444;
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      }
+      .problem-check {
+        width: 32px; height: 32px;
+        background: rgba(239, 68, 68, 0.2);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2rem;
-        color: #000;
+        color: #ef4444;
+        flex-shrink: 0;
       }
-      .solution-title {
-        font-size: 1.4rem;
-        font-weight: 800;
+      .problem-text strong {
+        display: block;
+        font-size: 1.05rem;
         color: var(--text-primary);
-        margin-bottom: var(--space-sm);
+        margin-bottom: 4px;
       }
-      .solution-value {
-        font-size: 2.5rem;
+      .problem-text span {
+        font-size: 0.9rem;
+        color: var(--text-tertiary);
+      }
+      
+      /* 🎯 Solution Section - 2컬럼 레이아웃 (수치 + 이미지) */
+      .solution-section {
+        background: linear-gradient(180deg, rgba(132,204,22,0.03) 0%, transparent 100%);
+        padding: var(--space-3xl) var(--space-lg);
+      }
+      .solution-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2xl);
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: center;
+      }
+      .solution-content {
+        padding: var(--space-lg) 0;
+      }
+      .solution-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+      }
+      .stat-item {
+        text-align: center;
+        padding: var(--space-lg);
+        background: rgba(132, 204, 22, 0.08);
+        border: 1px solid rgba(132, 204, 22, 0.2);
+        border-radius: var(--radius-lg);
+      }
+      .stat-value {
+        font-size: 2rem;
         font-weight: 900;
-        background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
+        color: var(--neon-lime);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 8px 0 4px;
+      }
+      .stat-desc {
+        font-size: 0.8rem;
+        color: var(--text-tertiary);
+      }
+      .solution-image {
+        border-radius: var(--radius-2xl);
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(132, 204, 22, 0.15);
+      }
+      .solution-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      /* 🎯 Proof Section - 성과 증명 */
+      .proof-section {
+        padding: var(--space-3xl) var(--space-lg);
+        text-align: center;
+      }
+      .proof-image {
+        max-width: 900px;
+        margin: 0 auto var(--space-2xl);
+        border-radius: var(--radius-2xl);
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      }
+      .proof-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .proof-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-2xl);
+        flex-wrap: wrap;
+      }
+      .proof-stat {
+        text-align: center;
+        min-width: 120px;
+      }
+      .proof-number {
+        font-size: 3rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        margin-bottom: var(--space-sm);
       }
-      .solution-desc {
+      .proof-label {
         font-size: 1rem;
         color: var(--text-secondary);
-        line-height: 1.6;
+        margin-top: 8px;
       }
       
-      @media (max-width: 768px) {
-        .solution-grid { grid-template-columns: 1fr; gap: var(--space-lg); }
-        .problem-grid { grid-template-columns: 1fr; }
+      /* 반응형 */
+      @media (max-width: 968px) {
+        .problem-layout { grid-template-columns: 1fr; }
+        .problem-image { order: -1; }
+        .solution-layout { grid-template-columns: 1fr; }
+        .solution-image { order: -1; }
+        .solution-stats { grid-template-columns: repeat(3, 1fr); }
+      }
+      @media (max-width: 600px) {
+        .solution-stats { grid-template-columns: 1fr; }
+        .stat-item { padding: var(--space-md); }
+        .stat-value { font-size: 1.8rem; }
+        .proof-stats { gap: var(--space-lg); }
+        .proof-number { font-size: 2.2rem; }
       }
       
       /* ========================================
@@ -4060,24 +4167,22 @@ function getMainHTML(): string {
     
     <div class="main-container" id="main-container">
       <!-- ========================================
-           🎯 Section 1: Hero - AI 영상 배경 + 메인 카피
+           🎯 Section 1: Hero - 전문적인 비즈니스 이미지 + 메인 카피
            ======================================== -->
       <section class="hero">
-        <!-- AI 영상 배경 (선택적) -->
-        <div class="hero-video-bg">
-          <video autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-futuristic-devices-99786-large.mp4" type="video/mp4">
-          </video>
-          <div class="hero-video-overlay"></div>
+        <!-- 한국인 사장님 이미지 배경 -->
+        <div class="hero-image-bg">
+          <img src="https://www.genspark.ai/api/files/s/z3Mzyied" alt="성공한 한국인 사장님" loading="eager">
+          <div class="hero-image-overlay"></div>
         </div>
         
         <div class="hero-content">
           <div class="hero-badge animate-fade-in-up">
             <span class="status-dot"></span>
-            <span>AI 마케팅 자동화 시스템</span>
+            <span>소상공인 AI 마케팅 파트너</span>
           </div>
           
-          <!-- 메인 카피 (40px+) -->
+          <!-- 메인 카피 -->
           <h1 class="hero-title animate-fade-in-up delay-1">
             사장님은 <span class="highlight">장사만</span> 하세요.<br>
             마케팅은 <span class="highlight">AI</span>가 다 해드립니다.
@@ -4085,91 +4190,140 @@ function getMainHTML(): string {
           
           <!-- 서브 카피 -->
           <p class="hero-tagline animate-fade-in-up delay-2">
-            직원 뽑지 마세요. <strong>블로그, 인스타, 영상 편집...</strong><br>
+            직원 뽑지 마세요. 블로그, 인스타, 영상 편집...<br>
             XIVIX 시스템이 <strong>월급 없이 24시간</strong> 일합니다.
           </p>
           
-          <!-- CTA 버튼 - 라임색 -->
+          <!-- CTA 버튼 -->
           <div class="hero-buttons animate-fade-in-up delay-3">
             <button class="btn btn-lime" onclick="openChat()">
               <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
             </button>
-            <button class="btn btn-secondary" onclick="scrollTo('portfolio')">
-              <i class="fas fa-images"></i> 포트폴리오 보기
+            <button class="btn btn-secondary" onclick="scrollTo('services')">
+              <i class="fas fa-list-ul"></i> 서비스 보기
             </button>
           </div>
+          
+          <!-- 신뢰 지표 -->
+          <div class="hero-trust animate-fade-in-up delay-3">
+            <div class="trust-item"><i class="fas fa-check-circle"></i> 무료 상담</div>
+            <div class="trust-item"><i class="fas fa-check-circle"></i> 강매 없음</div>
+            <div class="trust-item"><i class="fas fa-check-circle"></i> 성과 보장</div>
+          </div>
         </div>
       </section>
       
       <!-- ========================================
-           🎯 Section 2: Problem - "아직도 블로그 직접 쓰시나요?"
+           🎯 Section 2: Problem - 지친 사장님 이미지
            ======================================== -->
       <section class="problem-section">
-        <div class="section-header reveal">
-          <h2 class="section-title">아직도 <span style="color:#ef4444;">직접</span> 하시나요?</h2>
-          <p class="section-desc">사장님의 시간은 영업과 고객 응대에 써야 합니다</p>
-        </div>
-        <div class="problem-grid">
-          <div class="problem-card reveal">
-            <div class="problem-icon">😫</div>
-            <div class="problem-title">블로그 쓰다 지침</div>
-            <div class="problem-desc">하루 2시간 블로그 작성...<br>본업에 집중할 시간이 없어요</div>
+        <div class="problem-layout">
+          <div class="problem-image reveal">
+            <img src="https://www.genspark.ai/api/files/s/hOq1eCfB" alt="마케팅에 지친 사장님" loading="lazy">
           </div>
-          <div class="problem-card reveal">
-            <div class="problem-icon">💸</div>
-            <div class="problem-title">직원 인건비 부담</div>
-            <div class="problem-desc">마케팅 담당자 월급 300만원...<br>성과는 불확실해요</div>
-          </div>
-          <div class="problem-card reveal">
-            <div class="problem-icon">📉</div>
-            <div class="problem-title">효과 없는 광고비</div>
-            <div class="problem-desc">매달 광고비만 나가고<br>문의는 늘지 않아요</div>
-          </div>
-          <div class="problem-card reveal">
-            <div class="problem-icon">🤷</div>
-            <div class="problem-title">뭘 해야 할지 모름</div>
-            <div class="problem-desc">인스타? 블로그? 유튜브?<br>뭐부터 해야 할지...</div>
+          <div class="problem-content">
+            <div class="section-header reveal" style="text-align:left;padding:0;">
+              <p class="section-eyebrow">이런 고민 있으시죠?</p>
+              <h2 class="section-title">아직도 <span style="color:#ef4444;">혼자</span> 하시나요?</h2>
+            </div>
+            <div class="problem-list reveal">
+              <div class="problem-item">
+                <div class="problem-check"><i class="fas fa-times"></i></div>
+                <div class="problem-text">
+                  <strong>하루 2시간 블로그 작성</strong>
+                  <span>본업에 집중할 시간이 없어요</span>
+                </div>
+              </div>
+              <div class="problem-item">
+                <div class="problem-check"><i class="fas fa-times"></i></div>
+                <div class="problem-text">
+                  <strong>마케팅 직원 월급 300만원</strong>
+                  <span>인건비 부담, 성과는 불확실</span>
+                </div>
+              </div>
+              <div class="problem-item">
+                <div class="problem-check"><i class="fas fa-times"></i></div>
+                <div class="problem-text">
+                  <strong>광고비만 나가고 문의는 제자리</strong>
+                  <span>뭘 해야 할지 모르겠어요</span>
+                </div>
+              </div>
+              <div class="problem-item">
+                <div class="problem-check"><i class="fas fa-times"></i></div>
+                <div class="problem-text">
+                  <strong>인스타? 블로그? 유튜브?</strong>
+                  <span>뭐부터 시작해야 할지...</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
       
       <!-- ========================================
-           🎯 Section 3: Solution - 3 Icons (시간절감/비용절감/매출증가)
+           🎯 Section 3: Solution - 성공 이미지 + 수치
            ======================================== -->
       <section class="solution-section">
-        <div class="section-header reveal">
-          <h2 class="section-title">XIVIX <span class="gradient-text">시스템</span>이면 됩니다</h2>
-          <p class="section-desc">AI 자동화로 마케팅 걱정 없이 매출에만 집중하세요</p>
+        <div class="solution-layout">
+          <div class="solution-content">
+            <div class="section-header reveal" style="text-align:left;padding:0;">
+              <p class="section-eyebrow">XIVIX 솔루션</p>
+              <h2 class="section-title">AI가 <span class="gradient-text">대신</span> 일합니다</h2>
+              <p class="section-desc" style="margin:0;text-align:left;">마케팅 걱정 없이 매출에만 집중하세요</p>
+            </div>
+            <div class="solution-stats reveal">
+              <div class="stat-item">
+                <div class="stat-value">-90%</div>
+                <div class="stat-label">시간 절감</div>
+                <div class="stat-desc">하루 2시간 → 15분</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">-70%</div>
+                <div class="stat-label">비용 절감</div>
+                <div class="stat-desc">월 300만원 → 55만원</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">+250%</div>
+                <div class="stat-label">문의량 증가</div>
+                <div class="stat-desc">3개월 평균 성과</div>
+              </div>
+            </div>
+            <button class="btn btn-lime reveal" onclick="openChat()" style="margin-top:32px;">
+              <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
+            </button>
+          </div>
+          <div class="solution-image reveal">
+            <img src="https://www.genspark.ai/api/files/s/gT2iFebS" alt="마케팅 성과 분석" loading="lazy">
+          </div>
         </div>
-        <div class="solution-grid">
-          <div class="solution-card reveal">
-            <div class="solution-icon"><i class="fas fa-clock"></i></div>
-            <div class="solution-title">시간 절감</div>
-            <div class="solution-value">-90%</div>
-            <div class="solution-desc">하루 2시간 마케팅 업무를<br><strong>15분</strong>으로 줄입니다</div>
+      </section>
+      
+      <!-- ========================================
+           🎯 Section 4: Social Proof - 성공 사례
+           ======================================== -->
+      <section class="proof-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <p class="section-eyebrow">실제 고객 성과</p>
+            <h2 class="section-title">이미 <span class="gradient-text">결과</span>를 보고 있습니다</h2>
           </div>
-          <div class="solution-card reveal">
-            <div class="solution-icon"><i class="fas fa-won-sign"></i></div>
-            <div class="solution-title">비용 절감</div>
-            <div class="solution-value">-70%</div>
-            <div class="solution-desc">월 300만원 인건비를<br><strong>월 55만원</strong>으로</div>
+          <div class="proof-image reveal">
+            <img src="https://www.genspark.ai/api/files/s/gwWErcGh" alt="성공한 비즈니스 팀" loading="lazy">
           </div>
-          <div class="solution-card reveal">
-            <div class="solution-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="solution-title">매출 증가</div>
-            <div class="solution-value">+250%</div>
-            <div class="solution-desc">3개월 후 문의량<br><strong>2.5배 증가</strong> 평균</div>
+          <div class="proof-stats reveal">
+            <div class="proof-stat">
+              <div class="proof-number">127+</div>
+              <div class="proof-label">누적 고객사</div>
+            </div>
+            <div class="proof-stat">
+              <div class="proof-number">4.9</div>
+              <div class="proof-label">고객 만족도</div>
+            </div>
+            <div class="proof-stat">
+              <div class="proof-number">89%</div>
+              <div class="proof-label">재계약률</div>
+            </div>
           </div>
-        </div>
-        
-        <!-- CTA 반복 -->
-        <div style="text-align:center;margin-top:var(--space-2xl);">
-          <button class="btn btn-lime" onclick="openChat()" style="font-size:1.2rem;padding:24px 48px;">
-            <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
-          </button>
-          <p style="margin-top:var(--space-md);color:var(--text-tertiary);font-size:0.9rem;">
-            <i class="fas fa-check-circle" style="color:var(--neon-lime);"></i> 무료 상담 · 강매 없음 · 5분이면 끝
-          </p>
         </div>
       </section>
       
