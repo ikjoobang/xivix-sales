@@ -4015,6 +4015,166 @@ function getMainHTML(): string {
       .checkout-btn:hover { transform: scale(1.05); }
       
       /* ========================================
+         🎯 Problem/Solution/Proof 섹션 스타일
+         ======================================== */
+      .problem-section {
+        padding: var(--space-3xl) var(--space-lg);
+        position: relative;
+        overflow: hidden;
+      }
+      .problem-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('/images/problem.jpg') center/cover no-repeat;
+        opacity: 0.15;
+        z-index: 0;
+      }
+      .problem-section > .container { position: relative; z-index: 1; }
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+      }
+      .problem-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .problem-card:hover {
+        transform: translateY(-4px);
+        border-color: #ef4444;
+        box-shadow: 0 8px 30px rgba(239, 68, 68, 0.2);
+      }
+      .problem-icon {
+        width: 56px; height: 56px;
+        background: rgba(239, 68, 68, 0.15);
+        border-radius: var(--radius-md);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto var(--space-sm);
+        font-size: 1.5rem; color: #ef4444;
+      }
+      .problem-title {
+        font-size: 1rem; font-weight: 700;
+        margin-bottom: 4px; color: var(--text-primary);
+      }
+      .problem-desc {
+        font-size: 0.85rem; color: var(--text-secondary);
+      }
+      @media (max-width: 1024px) {
+        .problem-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 768px) {
+        .problem-grid { grid-template-columns: 1fr; }
+        .problem-section { padding: var(--space-2xl) var(--space-md); }
+      }
+
+      .solution-section {
+        padding: var(--space-3xl) var(--space-lg);
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .solution-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('/images/solution.jpg') center/cover no-repeat;
+        opacity: 0.1;
+        z-index: 0;
+      }
+      .solution-section > .container { position: relative; z-index: 1; }
+      .solution-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-lg);
+        margin-top: var(--space-xl);
+      }
+      .solution-card {
+        background: linear-gradient(145deg, var(--bg-card), var(--bg-tertiary));
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .solution-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--neon-lime);
+        box-shadow: 0 12px 40px rgba(132, 204, 22, 0.2);
+      }
+      .solution-icon {
+        width: 64px; height: 64px;
+        background: linear-gradient(135deg, rgba(132, 204, 22, 0.2), rgba(34, 197, 94, 0.2));
+        border-radius: var(--radius-lg);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto var(--space-md);
+        font-size: 1.8rem; color: var(--neon-lime);
+      }
+      .solution-value {
+        font-size: 2.5rem; font-weight: 900;
+        background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+      }
+      .solution-title {
+        font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
+        margin-bottom: 8px;
+      }
+      .solution-desc {
+        font-size: 0.9rem; color: var(--text-secondary);
+      }
+      .solution-desc strong { color: var(--neon-lime); }
+      @media (max-width: 768px) {
+        .solution-grid { grid-template-columns: 1fr; }
+        .solution-section { padding: var(--space-2xl) var(--space-md); }
+        .solution-value { font-size: 2rem; }
+      }
+
+      .proof-section {
+        padding: var(--space-3xl) var(--space-lg);
+        position: relative;
+        overflow: hidden;
+      }
+      .proof-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('/images/proof.jpg') center/cover no-repeat;
+        opacity: 0.12;
+        z-index: 0;
+      }
+      .proof-section > .container { position: relative; z-index: 1; }
+      .proof-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-2xl);
+        margin-top: var(--space-xl);
+        flex-wrap: wrap;
+      }
+      .proof-stat {
+        text-align: center;
+        padding: var(--space-lg);
+      }
+      .proof-number {
+        font-size: 3.5rem; font-weight: 900;
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      }
+      .proof-label {
+        font-size: 1rem; color: var(--text-secondary); margin-top: 8px;
+      }
+      @media (max-width: 768px) {
+        .proof-stats { gap: var(--space-lg); }
+        .proof-number { font-size: 2.5rem; }
+        .proof-section { padding: var(--space-2xl) var(--space-md); }
+      }
+
+      /* ========================================
          🎯 반응형 레이아웃 시스템
          ======================================== */
       
@@ -4167,15 +4327,14 @@ function getMainHTML(): string {
     
     <div class="main-container" id="main-container">
       <!-- ========================================
-           🎯 Section 1: Hero - 전문적인 비즈니스 이미지 + 메인 카피
+           🎯 Section 1: Hero - 한국인 CEO 이미지 배경
            ======================================== -->
       <section class="hero">
-        <!-- 한국인 사장님 이미지 배경 -->
+        <!-- Hero 이미지 배경 -->
         <div class="hero-image-bg">
-          <img src="https://www.genspark.ai/api/files/s/WTa0XFhV" alt="성공한 한국인 사장님" loading="eager">
+          <img src="/images/hero.jpg" alt="성공한 한국인 사업자" loading="eager">
           <div class="hero-image-overlay"></div>
         </div>
-        
         <div class="hero-content">
           <div class="hero-badge animate-fade-in-up">
             <span class="status-dot"></span>
@@ -4214,92 +4373,79 @@ function getMainHTML(): string {
       </section>
       
       <!-- ========================================
-           🎯 Section 2: Problem - 지친 사장님 이미지
+           🎯 Section 2: Problem - 아이콘 기반 깔끔한 디자인
            ======================================== -->
       <section class="problem-section">
-        <div class="problem-layout">
-          <div class="problem-image reveal">
-            <img src="https://www.genspark.ai/api/files/s/qFBzKuAe" alt="마케팅에 지친 사장님" loading="lazy">
+        <div class="container">
+          <div class="section-header reveal">
+            <p class="section-eyebrow">이런 고민 있으시죠?</p>
+            <h2 class="section-title">아직도 <span style="color:#ef4444;">혼자</span> 하시나요?</h2>
           </div>
-          <div class="problem-content">
-            <div class="section-header reveal" style="text-align:left;padding:0;">
-              <p class="section-eyebrow">이런 고민 있으시죠?</p>
-              <h2 class="section-title">아직도 <span style="color:#ef4444;">혼자</span> 하시나요?</h2>
+          <div class="problem-grid reveal">
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-pen-fancy"></i></div>
+              <div class="problem-title">하루 2시간 블로그 작성</div>
+              <div class="problem-desc">본업에 집중할 시간이 없어요</div>
             </div>
-            <div class="problem-list reveal">
-              <div class="problem-item">
-                <div class="problem-check"><i class="fas fa-times"></i></div>
-                <div class="problem-text">
-                  <strong>하루 2시간 블로그 작성</strong>
-                  <span>본업에 집중할 시간이 없어요</span>
-                </div>
-              </div>
-              <div class="problem-item">
-                <div class="problem-check"><i class="fas fa-times"></i></div>
-                <div class="problem-text">
-                  <strong>마케팅 직원 월급 300만원</strong>
-                  <span>인건비 부담, 성과는 불확실</span>
-                </div>
-              </div>
-              <div class="problem-item">
-                <div class="problem-check"><i class="fas fa-times"></i></div>
-                <div class="problem-text">
-                  <strong>광고비만 나가고 문의는 제자리</strong>
-                  <span>뭘 해야 할지 모르겠어요</span>
-                </div>
-              </div>
-              <div class="problem-item">
-                <div class="problem-check"><i class="fas fa-times"></i></div>
-                <div class="problem-text">
-                  <strong>인스타? 블로그? 유튜브?</strong>
-                  <span>뭐부터 시작해야 할지...</span>
-                </div>
-              </div>
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-wallet"></i></div>
+              <div class="problem-title">마케팅 직원 월급 300만원</div>
+              <div class="problem-desc">인건비 부담, 성과는 불확실</div>
+            </div>
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-chart-line"></i></div>
+              <div class="problem-title">광고비만 나가고 문의는 제자리</div>
+              <div class="problem-desc">뭘 해야 할지 모르겠어요</div>
+            </div>
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-question-circle"></i></div>
+              <div class="problem-title">인스타? 블로그? 유튜브?</div>
+              <div class="problem-desc">뭐부터 시작해야 할지...</div>
             </div>
           </div>
         </div>
       </section>
       
       <!-- ========================================
-           🎯 Section 3: Solution - 성공 이미지 + 수치
+           🎯 Section 3: Solution - 핵심 수치 + 깔끔한 카드
            ======================================== -->
       <section class="solution-section">
-        <div class="solution-layout">
-          <div class="solution-content">
-            <div class="section-header reveal" style="text-align:left;padding:0;">
-              <p class="section-eyebrow">XIVIX 솔루션</p>
-              <h2 class="section-title">AI가 <span class="gradient-text">대신</span> 일합니다</h2>
-              <p class="section-desc" style="margin:0;text-align:left;">마케팅 걱정 없이 매출에만 집중하세요</p>
+        <div class="container">
+          <div class="section-header reveal">
+            <p class="section-eyebrow">XIVIX 솔루션</p>
+            <h2 class="section-title">AI가 <span class="gradient-text">대신</span> 일합니다</h2>
+            <p class="section-desc">마케팅 걱정 없이 매출에만 집중하세요</p>
+          </div>
+          <div class="solution-grid reveal">
+            <div class="solution-card">
+              <div class="solution-icon"><i class="fas fa-clock"></i></div>
+              <div class="solution-value">-90%</div>
+              <div class="solution-title">시간 절감</div>
+              <div class="solution-desc">하루 2시간 → <strong>15분</strong></div>
             </div>
-            <div class="solution-stats reveal">
-              <div class="stat-item">
-                <div class="stat-value">-90%</div>
-                <div class="stat-label">시간 절감</div>
-                <div class="stat-desc">하루 2시간 → 15분</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value">-70%</div>
-                <div class="stat-label">비용 절감</div>
-                <div class="stat-desc">월 300만원 → 55만원</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-value">+250%</div>
-                <div class="stat-label">문의량 증가</div>
-                <div class="stat-desc">3개월 평균 성과</div>
-              </div>
+            <div class="solution-card">
+              <div class="solution-icon"><i class="fas fa-won-sign"></i></div>
+              <div class="solution-value">-70%</div>
+              <div class="solution-title">비용 절감</div>
+              <div class="solution-desc">월 300만원 → <strong>55만원</strong></div>
             </div>
-            <button class="btn btn-lime reveal" onclick="openChat()" style="margin-top:32px;">
+            <div class="solution-card">
+              <div class="solution-icon"><i class="fas fa-rocket"></i></div>
+              <div class="solution-value">+250%</div>
+              <div class="solution-title">문의량 증가</div>
+              <div class="solution-desc">3개월 평균 <strong>2.5배</strong></div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:var(--space-2xl);" class="reveal">
+            <button class="btn btn-lime" onclick="openChat()">
               <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
             </button>
           </div>
-          <div class="solution-image reveal">
-            <img src="https://www.genspark.ai/api/files/s/xRn0HIrt" alt="마케팅 성과 분석" loading="lazy">
-          </div>
         </div>
       </section>
       
       <!-- ========================================
-           🎯 Section 4: Social Proof - 성공 사례
+           🎯 Section 4: Social Proof - 실적 수치
            ======================================== -->
       <section class="proof-section">
         <div class="container">
@@ -4307,12 +4453,9 @@ function getMainHTML(): string {
             <p class="section-eyebrow">실제 고객 성과</p>
             <h2 class="section-title">이미 <span class="gradient-text">결과</span>를 보고 있습니다</h2>
           </div>
-          <div class="proof-image reveal">
-            <img src="https://www.genspark.ai/api/files/s/MKPRklae" alt="성공한 비즈니스 팀" loading="lazy">
-          </div>
           <div class="proof-stats reveal">
             <div class="proof-stat">
-              <div class="proof-number">127+</div>
+              <div class="proof-number">127<span style="font-size:0.5em;">+</span></div>
               <div class="proof-label">누적 고객사</div>
             </div>
             <div class="proof-stat">
@@ -4320,7 +4463,7 @@ function getMainHTML(): string {
               <div class="proof-label">고객 만족도</div>
             </div>
             <div class="proof-stat">
-              <div class="proof-number">89%</div>
+              <div class="proof-number">89<span style="font-size:0.5em;">%</span></div>
               <div class="proof-label">재계약률</div>
             </div>
           </div>
