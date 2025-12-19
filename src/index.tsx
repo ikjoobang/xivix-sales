@@ -4168,6 +4168,124 @@ function getMainHTML(): string {
       .proof-label {
         font-size: 1rem; color: var(--text-secondary); margin-top: 8px;
       }
+
+      /* ========================================
+         🎯 아코디언 스타일
+         ======================================== */
+      .accordion {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        margin-bottom: var(--space-md);
+        overflow: hidden;
+      }
+      .accordion-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-md) var(--space-lg);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+      .accordion-header:hover {
+        background: rgba(168, 85, 247, 0.05);
+      }
+      .accordion-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+      .accordion-title i {
+        color: var(--neon-purple);
+        font-size: 1.2rem;
+      }
+      .accordion-arrow {
+        color: var(--text-tertiary);
+        transition: transform 0.3s ease;
+      }
+      .accordion.open .accordion-arrow {
+        transform: rotate(180deg);
+      }
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .accordion.open .accordion-content {
+        max-height: 1000px;
+      }
+      .accordion-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0 var(--space-md) var(--space-md);
+      }
+      .accordion-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: left;
+        color: var(--text-primary);
+        position: relative;
+      }
+      .accordion-item:hover {
+        border-color: var(--neon-purple);
+        background: rgba(168, 85, 247, 0.08);
+        transform: translateY(-2px);
+      }
+      .item-icon {
+        width: 32px; height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+      .item-text {
+        font-size: 0.85rem;
+        font-weight: 600;
+        flex: 1;
+      }
+      .item-badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        padding: 2px 6px;
+        border-radius: 8px;
+        font-size: 0.6rem;
+        font-weight: 700;
+        color: white;
+      }
+      .item-badge.hot {
+        background: linear-gradient(135deg, #f97316, #ef4444);
+      }
+      .item-badge.premium {
+        background: linear-gradient(135deg, #eab308, #ca8a04);
+      }
+      @media (max-width: 480px) {
+        .accordion-grid {
+          grid-template-columns: 1fr;
+        }
+        .accordion-title {
+          font-size: 1rem;
+        }
+        .item-text {
+          font-size: 0.8rem;
+        }
+      }
       @media (max-width: 768px) {
         .proof-stats { gap: var(--space-lg); }
         .proof-number { font-size: 2.5rem; }
@@ -4490,77 +4608,65 @@ function getMainHTML(): string {
         </div>
       </section>
       
-      <!-- 포트폴리오 섹션 -->
-      <section id="portfolio" class="section">
-        <div class="container">
-          <div class="section-header reveal">
-            <h2 class="section-title"><span class="gradient-text">포트폴리오</span></h2>
-            <p class="section-desc">카테고리를 클릭하면 프로젝트를 확인할 수 있어요</p>
+      <!-- 아코디언 섹션 - 포트폴리오 & 서비스 -->
+      <section id="menu-section" class="section">
+        <div class="container" style="max-width: 700px;">
+          
+          <!-- 포트폴리오 아코디언 -->
+          <div class="accordion reveal" id="accordion-portfolio">
+            <button class="accordion-header" onclick="toggleAccordion('portfolio')">
+              <div class="accordion-title">
+                <i class="fas fa-briefcase"></i>
+                <span>포트폴리오</span>
+              </div>
+              <i class="fas fa-chevron-down accordion-arrow" id="arrow-portfolio"></i>
+            </button>
+            <div class="accordion-content" id="content-portfolio">
+              <div class="accordion-grid" id="portfolio-menu"></div>
+            </div>
           </div>
-          <div class="service-menu-grid" id="portfolio-menu"></div>
-        </div>
-      </section>
-      
-      <!-- 서비스 메뉴 섹션 - 컴팩트한 버튼 형태 -->
-      <section id="services" class="section">
-        <div class="container">
-          <div class="section-header reveal">
-            <h2 class="section-title"><span class="gradient-text">서비스</span> 메뉴</h2>
-            <p class="section-desc">클릭하면 상세 내용을 확인할 수 있어요</p>
+          
+          <!-- 서비스 메뉴 아코디언 -->
+          <div class="accordion reveal" id="accordion-services">
+            <button class="accordion-header" onclick="toggleAccordion('services')">
+              <div class="accordion-title">
+                <i class="fas fa-concierge-bell"></i>
+                <span>서비스 메뉴</span>
+              </div>
+              <i class="fas fa-chevron-down accordion-arrow" id="arrow-services"></i>
+            </button>
+            <div class="accordion-content" id="content-services">
+              <div class="accordion-grid">
+                <button class="accordion-item" onclick="openServiceModal('sets')">
+                  <span class="item-icon" style="background: rgba(249,115,22,0.15); color: #f97316;"><i class="fas fa-fire"></i></span>
+                  <span class="item-text">SNS 셋트 메뉴</span>
+                  <span class="item-badge hot">추천</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('pricing')">
+                  <span class="item-icon" style="background: rgba(168,85,247,0.15); color: #a855f7;"><i class="fas fa-tags"></i></span>
+                  <span class="item-text">채널별 가격표</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('websites')">
+                  <span class="item-icon" style="background: rgba(34,197,94,0.15); color: #22c55e;"><i class="fas fa-globe"></i></span>
+                  <span class="item-text">웹사이트 구축</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('sysdev')">
+                  <span class="item-icon" style="background: rgba(6,182,212,0.15); color: #06b6d4;"><i class="fas fa-cogs"></i></span>
+                  <span class="item-text">시스템 개발</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('addons')">
+                  <span class="item-icon" style="background: rgba(139,92,246,0.15); color: #8b5cf6;"><i class="fas fa-plus-circle"></i></span>
+                  <span class="item-text">부가 서비스</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('consulting')">
+                  <span class="item-icon" style="background: rgba(234,179,8,0.15); color: #eab308;"><i class="fas fa-handshake"></i></span>
+                  <span class="item-text">브랜드 컨설팅</span>
+                  <span class="item-badge premium">프리미엄</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="service-menu-grid reveal">
-            <button class="service-menu-btn hot" onclick="openServiceModal('sets')" style="--btn-color: #f97316">
-              <i class="fas fa-fire menu-icon"></i>
-              <div class="menu-text">
-                <span class="menu-name">🔥 SNS 셋트 메뉴</span>
-                <span class="menu-desc">셋팅+월관리 통합 패키지 (89만~499만)</span>
-              </div>
-              <span class="menu-badge hot">추천</span>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
-            <button class="service-menu-btn" onclick="openServiceModal('pricing')" style="--btn-color: #a855f7">
-              <i class="fas fa-tags menu-icon"></i>
-              <div class="menu-text">
-                <span class="menu-name">📋 채널별 가격표</span>
-                <span class="menu-desc">셋팅비 + 월관리비 상세 안내</span>
-              </div>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
-            <button class="service-menu-btn" onclick="openServiceModal('websites')" style="--btn-color: #22c55e">
-              <i class="fas fa-globe menu-icon"></i>
-              <div class="menu-text">
-                <span class="menu-name">🌐 웹사이트 구축</span>
-                <span class="menu-desc">99만~750만 (AI 상담봇 포함)</span>
-              </div>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
-
-            <button class="service-menu-btn" onclick="openServiceModal('sysdev')" style="--btn-color: #06b6d4">
-              <i class="fas fa-cogs menu-icon"></i>
-              <div class="menu-text">
-                <span class="menu-name">⚙️ 시스템 개발</span>
-                <span class="menu-desc">지도연동/카카오/자동화/AI봇 (190만~990만)</span>
-              </div>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
-            <button class="service-menu-btn" onclick="openServiceModal('addons')" style="--btn-color: #8b5cf6">
-              <i class="fas fa-plus-circle menu-icon"></i>
-              <div class="menu-text">
-                <span class="menu-name">➕ 부가 서비스</span>
-                <span class="menu-desc">리틀리/브랜드영상/상세페이지/부스팅</span>
-              </div>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
-            <button class="service-menu-btn" onclick="openServiceModal('consulting')" style="--btn-color: #eab308">
-              <i class="fas fa-handshake menu-icon"></i>
-              <div class="menu-text">
-                <span class="menu-name">🏢 브랜드/프랜차이즈 컨설팅</span>
-                <span class="menu-desc">1년 계약 · 단계별 요금 (월150만~300만)</span>
-              </div>
-              <span class="menu-badge" style="background: linear-gradient(135deg, #eab308, #ca8a04);">프리미엄</span>
-              <i class="fas fa-chevron-right menu-arrow"></i>
-            </button>
-          </div>
+          
         </div>
       </section>
       
@@ -5066,11 +5172,17 @@ function getMainHTML(): string {
         });
       }, { threshold: 0.1 });
       
+      // 아코디언 토글 함수
+      function toggleAccordion(id) {
+        const accordion = document.getElementById('accordion-' + id);
+        accordion.classList.toggle('open');
+      }
+      
       function renderPortfolioMenu() {
         const container = document.getElementById('portfolio-menu');
         container.innerHTML = portfolioData.categories.map(cat => {
           const count = portfolioData.items.filter(i => i.category === cat.id).length;
-          return '<button class="service-menu-btn portfolio-cat-btn" data-category="' + cat.id + '" style="--btn-color:' + cat.color + '"><i class="fas ' + cat.icon + '"></i><div class="menu-text"><span class="menu-name">' + cat.name + '</span><span class="menu-desc">' + count + '개 프로젝트</span></div><i class="fas fa-chevron-right menu-arrow"></i></button>';
+          return '<button class="accordion-item portfolio-cat-btn" data-category="' + cat.id + '"><span class="item-icon" style="background:' + cat.color + '22;color:' + cat.color + ';"><i class="fas ' + cat.icon + '"></i></span><span class="item-text">' + cat.name + ' (' + count + ')</span></button>';
         }).join('');
         // 이벤트 리스너 추가
         container.querySelectorAll('.portfolio-cat-btn').forEach(btn => {
