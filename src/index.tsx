@@ -2666,14 +2666,14 @@ function getMainHTML(): string {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>X I Λ I X | AI 마케팅 전문 에이전시</title>
-    <meta name="description" content="AI 기반 통합 마케팅 솔루션 | SNS·블로그·유튜브·광고 한 번에! 첫 달 최대 30% 할인">
+    <title>X I Λ I X | 사장님은 장사만 하세요, 마케팅은 AI가 다 해드립니다</title>
+    <meta name="description" content="직원 뽑지 마세요. 블로그, 인스타, 영상 편집... XIVIX AI 시스템이 월급 없이 24시간 일합니다. 시간 -90%, 비용 -70%, 매출 +250%">
     
     <!-- Open Graph (카카오톡, 페이스북 등) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xivix.kr">
-    <meta property="og:title" content="X I Λ I X | AI 마케팅 전문 에이전시">
-    <meta property="og:description" content="🚀 AI 기반 통합 마케팅 솔루션 | SNS·블로그·유튜브·광고 한 번에 해결! 지금 상담받고 첫 달 최대 30% 할인받으세요 ✨">
+    <meta property="og:title" content="X I Λ I X | 사장님은 장사만 하세요">
+    <meta property="og:description" content="🚀 직원 뽑지 마세요! 블로그, 인스타, 영상 편집... XIVIX AI 시스템이 월급 없이 24시간 일합니다. 내 가게 무료 진단받기 →">
     <meta property="og:image" content="https://xivix.kr/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -2682,8 +2682,8 @@ function getMainHTML(): string {
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="X I Λ I X | AI 마케팅 전문 에이전시">
-    <meta name="twitter:description" content="🚀 AI 기반 통합 마케팅 솔루션 | SNS·블로그·유튜브·광고 한 번에 해결!">
+    <meta name="twitter:title" content="X I Λ I X | 사장님은 장사만 하세요">
+    <meta name="twitter:description" content="🚀 직원 뽑지 마세요! XIVIX AI 시스템이 마케팅을 대신합니다. 시간 -90%, 비용 -70%">
     <meta name="twitter:image" content="https://xivix.kr/og-image.png">
     
     <!-- 추가 SEO / AEO / C-RANK / GEO 최적화 -->
@@ -2777,42 +2777,45 @@ function getMainHTML(): string {
     
     <style>
       :root {
-        --bg-primary: #0a0a0c;
-        --bg-secondary: #111115;
-        --bg-tertiary: #18181d;
-        --bg-card: rgba(24, 24, 29, 0.8);
+        /* 🎯 Deep Black 배경 (사용자 요청) */
+        --bg-primary: #000000;
+        --bg-secondary: #0a0a0a;
+        --bg-tertiary: #121212;
+        --bg-card: rgba(18, 18, 18, 0.9);
         --neon-purple: #a855f7;
         --neon-pink: #ec4899;
         --neon-cyan: #22d3ee;
         --neon-orange: #f97316;
         --neon-green: #22c55e;
+        --neon-lime: #84cc16;
         --text-primary: #ffffff;
-        --text-secondary: rgba(255, 255, 255, 0.7);
-        --text-tertiary: rgba(255, 255, 255, 0.4);
+        --text-secondary: rgba(255, 255, 255, 0.75);
+        --text-tertiary: rgba(255, 255, 255, 0.45);
         --border-subtle: rgba(255, 255, 255, 0.08);
-        --border-hover: rgba(255, 255, 255, 0.15);
+        --border-hover: rgba(255, 255, 255, 0.18);
         
-        /* 🎯 Design System - 일관된 간격 */
-        --space-xs: 8px;
-        --space-sm: 12px;
-        --space-md: 16px;
-        --space-lg: 24px;
-        --space-xl: 32px;
-        --space-2xl: 48px;
-        --space-3xl: 64px;
+        /* 🎯 Design System - 간격 2배 확대 */
+        --space-xs: 16px;
+        --space-sm: 24px;
+        --space-md: 32px;
+        --space-lg: 48px;
+        --space-xl: 64px;
+        --space-2xl: 96px;
+        --space-3xl: 128px;
         
-        /* 🎯 Container 너비 */
-        --container-sm: 480px;
-        --container-md: 640px;
-        --container-lg: 900px;
-        --container-xl: 1200px;
+        /* 🎯 Full-Width Container 너비 */
+        --container-sm: 600px;
+        --container-md: 800px;
+        --container-lg: 1100px;
+        --container-xl: 1400px;
+        --container-full: 100%;
         
         /* 🎯 Border radius */
-        --radius-sm: 8px;
-        --radius-md: 12px;
-        --radius-lg: 16px;
-        --radius-xl: 20px;
-        --radius-2xl: 24px;
+        --radius-sm: 12px;
+        --radius-md: 16px;
+        --radius-lg: 20px;
+        --radius-xl: 28px;
+        --radius-2xl: 36px;
       }
       
       /* 띠 배너 */
@@ -3073,7 +3076,7 @@ function getMainHTML(): string {
       }
       
       /* ========================================
-         🎯 Container & Section 시스템
+         🎯 Container & Section 시스템 (Full-Width)
          ======================================== */
       .container { 
         max-width: var(--container-xl); 
@@ -3083,36 +3086,113 @@ function getMainHTML(): string {
       .container-sm { max-width: var(--container-sm); }
       .container-md { max-width: var(--container-md); }
       .container-lg { max-width: var(--container-lg); }
+      .container-full { max-width: 100%; padding: 0; }
       
+      /* 🎯 Hero Section - Full Width with Video Background */
       .hero {
         min-height: 100vh;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 100px 20px 60px;
+        padding: var(--space-3xl) var(--space-lg);
+        position: relative;
+        overflow: hidden;
       }
+      
+      /* AI Video Background */
+      .hero-video-bg {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .hero-video-bg video {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        opacity: 0.3;
+      }
+      .hero-video-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.8) 100%);
+      }
+      
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+        padding: 0 var(--space-md);
+      }
+      
       .hero-badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: rgba(168, 85, 247, 0.1);
-        border: 1px solid rgba(168, 85, 247, 0.3);
+        gap: 12px;
+        padding: 12px 24px;
+        background: rgba(132, 204, 22, 0.15);
+        border: 2px solid var(--neon-lime);
         border-radius: 50px;
-        font-size: 13px;
-        color: var(--neon-purple);
-        margin-bottom: 24px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--neon-lime);
+        margin-bottom: var(--space-lg);
+        animation: badgePulse 2s ease-in-out infinite;
       }
-      .status-dot { width: 8px; height: 8px; background: var(--neon-green); border-radius: 50%; animation: pulse 2s infinite; }
-      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-      .hero-title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
-      .hero-tagline { font-size: clamp(0.9rem, 2vw, 1.1rem); color: var(--text-tertiary); max-width: 400px; margin-bottom: 24px; line-height: 1.7; }
-      .hero-company { font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 32px; }
+      @keyframes badgePulse { 0%, 100% { box-shadow: 0 0 20px rgba(132, 204, 22, 0.3); } 50% { box-shadow: 0 0 40px rgba(132, 204, 22, 0.6); } }
+      
+      .status-dot { width: 10px; height: 10px; background: var(--neon-lime); border-radius: 50%; animation: pulse 2s infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
+      
+      /* 🎯 메인 카피 - 40px+ 폰트 */
+      .hero-title { 
+        font-size: clamp(2.2rem, 6vw, 3.5rem); 
+        font-weight: 900; 
+        letter-spacing: -0.02em; 
+        margin-bottom: var(--space-md);
+        line-height: 1.2;
+        color: var(--text-primary);
+      }
+      .hero-title .highlight {
+        background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      /* 🎯 서브 카피 */
+      .hero-tagline { 
+        font-size: clamp(1rem, 2.5vw, 1.35rem); 
+        color: var(--text-secondary); 
+        max-width: 700px; 
+        margin: 0 auto var(--space-xl);
+        line-height: 1.8; 
+        font-weight: 400;
+      }
+      .hero-tagline strong { color: var(--neon-orange); font-weight: 700; }
+      
+      .hero-company { font-size: 1rem; color: var(--text-tertiary); margin-bottom: var(--space-xl); }
       .hero-company strong { color: var(--text-secondary); }
       
-      .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+      /* 🎯 CTA 버튼 - 라임색 */
+      .hero-buttons { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; }
+      
+      .btn-lime {
+        background: linear-gradient(135deg, var(--neon-lime), #65a30d);
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        padding: 20px 40px;
+        border-radius: var(--radius-lg);
+        box-shadow: 0 8px 30px rgba(132, 204, 22, 0.4);
+        transition: all 0.3s ease;
+      }
+      .btn-lime:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 12px 40px rgba(132, 204, 22, 0.6);
+      }
       
       /* ========================================
          🎯 버튼 시스템 - 표준화된 사이즈
@@ -3160,26 +3240,145 @@ function getMainHTML(): string {
       }
       
       /* ========================================
-         🎯 Section 시스템 - 통일된 여백
+         🎯 Section 시스템 - Full-Width + 2배 여백
          ======================================== */
       .section { 
-        padding: var(--space-3xl) var(--space-lg); 
+        padding: var(--space-3xl) var(--space-lg);
+        width: 100%;
+      }
+      .section-full {
+        padding: var(--space-3xl) 0;
+        width: 100%;
       }
       .section-header { 
         text-align: center; 
-        margin-bottom: var(--space-2xl); 
+        margin-bottom: var(--space-2xl);
+        padding: 0 var(--space-lg);
       }
       .section-title { 
-        font-size: clamp(1.5rem, 4vw, 2.25rem); 
+        font-size: clamp(1.8rem, 5vw, 2.8rem); 
         font-weight: 800; 
-        margin-bottom: var(--space-sm); 
+        margin-bottom: var(--space-md);
+        line-height: 1.3;
       }
       .section-desc { 
-        font-size: 0.95rem; 
-        color: var(--text-tertiary); 
-        max-width: 500px; 
+        font-size: 1.1rem; 
+        color: var(--text-secondary); 
+        max-width: 700px; 
         margin: 0 auto; 
+        line-height: 1.8;
+      }
+      
+      /* 🎯 Problem Section - "아직도 블로그 직접 쓰시나요?" */
+      .problem-section {
+        background: linear-gradient(180deg, rgba(239,68,68,0.05) 0%, transparent 100%);
+        padding: var(--space-3xl) var(--space-lg);
+      }
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--space-lg);
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .problem-card {
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .problem-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 0 20px 50px rgba(239, 68, 68, 0.15);
+      }
+      .problem-icon {
+        font-size: 3rem;
+        margin-bottom: var(--space-md);
+      }
+      .problem-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #ef4444;
+        margin-bottom: var(--space-sm);
+      }
+      .problem-desc {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
         line-height: 1.6;
+      }
+      
+      /* 🎯 Solution Section - 3 Icons */
+      .solution-section {
+        background: linear-gradient(180deg, rgba(132,204,22,0.05) 0%, transparent 100%);
+        padding: var(--space-3xl) var(--space-lg);
+      }
+      .solution-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-xl);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .solution-card {
+        background: rgba(132, 204, 22, 0.08);
+        border: 2px solid rgba(132, 204, 22, 0.25);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-2xl) var(--space-xl);
+        text-align: center;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .solution-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--neon-lime), var(--neon-green));
+      }
+      .solution-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        border-color: var(--neon-lime);
+        box-shadow: 0 25px 60px rgba(132, 204, 22, 0.2);
+      }
+      .solution-icon {
+        width: 80px; height: 80px;
+        margin: 0 auto var(--space-lg);
+        background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #000;
+      }
+      .solution-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: var(--space-sm);
+      }
+      .solution-value {
+        font-size: 2.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: var(--space-sm);
+      }
+      .solution-desc {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+      
+      @media (max-width: 768px) {
+        .solution-grid { grid-template-columns: 1fr; gap: var(--space-lg); }
+        .problem-grid { grid-template-columns: 1fr; }
       }
       
       /* ========================================
@@ -3725,34 +3924,41 @@ function getMainHTML(): string {
         .channel-grid { grid-template-columns: repeat(2, 1fr); }
       }
       
-      /* 모바일 (768px 이하) */
+      /* 모바일 (768px 이하) - 카드형 레이아웃 */
       @media (max-width: 768px) {
         :root {
-          --space-lg: 16px;
-          --space-xl: 24px;
-          --space-2xl: 32px;
-          --space-3xl: 48px;
+          --space-xs: 12px;
+          --space-sm: 16px;
+          --space-md: 24px;
+          --space-lg: 32px;
+          --space-xl: 48px;
+          --space-2xl: 64px;
+          --space-3xl: 80px;
         }
         
         .hero { 
-          padding: 80px var(--space-md) 40px; 
-          min-height: auto; 
+          padding: var(--space-2xl) var(--space-md); 
+          min-height: 90vh; 
         }
-        .hero-title { font-size: 2.5rem; }
+        .hero-title { font-size: 1.8rem; line-height: 1.3; }
+        .hero-tagline { font-size: 1rem; }
+        .btn-lime { padding: 16px 28px; font-size: 1rem; }
+        
         .section { padding: var(--space-2xl) var(--space-md); }
         .section-header { margin-bottom: var(--space-lg); }
-        .section-title { font-size: 1.4rem; }
+        .section-title { font-size: 1.5rem; }
+        .section-desc { font-size: 1rem; }
         
         .hero-buttons { 
           flex-direction: column; 
           width: 100%; 
-          max-width: 300px;
+          max-width: 320px;
           gap: var(--space-sm);
         }
         .hero-buttons .btn { 
           width: 100%; 
           justify-content: center;
-          padding: 14px 20px;
+          padding: 16px 24px;
         }
         
         .chat-window { 
@@ -3853,41 +4059,134 @@ function getMainHTML(): string {
     <div class="bg-animated"><div class="bg-gradient"></div></div>
     
     <div class="main-container" id="main-container">
+      <!-- ========================================
+           🎯 Section 1: Hero - AI 영상 배경 + 메인 카피
+           ======================================== -->
       <section class="hero">
-        <div class="hero-badge animate-fade-in-up">
-          <span class="status-dot"></span>
-          <span>Available for Projects</span>
+        <!-- AI 영상 배경 (선택적) -->
+        <div class="hero-video-bg">
+          <video autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-futuristic-devices-99786-large.mp4" type="video/mp4">
+          </video>
+          <div class="hero-video-overlay"></div>
         </div>
-        <h1 class="hero-title animate-fade-in-up delay-1"><span class="gradient-text">X I Λ I X</span></h1>
-        <p class="hero-tagline animate-fade-in-up delay-2">
-          남들이 <strong>'V'</strong>(Vision)를 볼 때,<br>
-          우리는 세상을 뒤집어 <strong>'∧'</strong>(Angle)를 봅니다.
-        </p>
-        <div class="hero-company animate-fade-in-up delay-2">
-          <strong>Combine Technology & Business</strong><br>
-          사장님의 Business에 최신 Technology(AI)를 결합합니다.
-        </div>
-        <div class="hero-buttons animate-fade-in-up delay-3">
-          <button class="btn btn-primary" onclick="scrollTo('portfolio')"><i class="fas fa-images"></i>포트폴리오</button>
-          <button class="btn btn-secondary" onclick="openChat()"><i class="fas fa-comments"></i>AI 상담</button>
-          <button class="btn" style="background: linear-gradient(135deg, #eab308, #ca8a04);" onclick="openBookingModal()"><i class="fas fa-calendar-check"></i>상담 예약</button>
+        
+        <div class="hero-content">
+          <div class="hero-badge animate-fade-in-up">
+            <span class="status-dot"></span>
+            <span>AI 마케팅 자동화 시스템</span>
+          </div>
+          
+          <!-- 메인 카피 (40px+) -->
+          <h1 class="hero-title animate-fade-in-up delay-1">
+            사장님은 <span class="highlight">장사만</span> 하세요.<br>
+            마케팅은 <span class="highlight">AI</span>가 다 해드립니다.
+          </h1>
+          
+          <!-- 서브 카피 -->
+          <p class="hero-tagline animate-fade-in-up delay-2">
+            직원 뽑지 마세요. <strong>블로그, 인스타, 영상 편집...</strong><br>
+            XIVIX 시스템이 <strong>월급 없이 24시간</strong> 일합니다.
+          </p>
+          
+          <!-- CTA 버튼 - 라임색 -->
+          <div class="hero-buttons animate-fade-in-up delay-3">
+            <button class="btn btn-lime" onclick="openChat()">
+              <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
+            </button>
+            <button class="btn btn-secondary" onclick="scrollTo('portfolio')">
+              <i class="fas fa-images"></i> 포트폴리오 보기
+            </button>
+          </div>
         </div>
       </section>
       
-      <!-- 친구 초대 혜택 배너 (컴팩트) -->
-      <section id="referral-benefits" class="section" style="padding: 24px 20px;">
-        <div class="container" style="max-width: 600px;">
-          <div class="reveal" style="background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(34,197,94,0.1)); border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;">
-            <div style="font-size: 2rem;">🎁</div>
-            <div style="flex: 1; min-width: 200px;">
-              <div style="font-size: 1.1rem; font-weight: 700; color: var(--neon-green);">친구 초대 = 15% 할인!</div>
-              <div style="font-size: 0.8rem; color: var(--text-secondary);">추천인 5% 적립 · 2차 추천 2% 추가</div>
+      <!-- ========================================
+           🎯 Section 2: Problem - "아직도 블로그 직접 쓰시나요?"
+           ======================================== -->
+      <section class="problem-section">
+        <div class="section-header reveal">
+          <h2 class="section-title">아직도 <span style="color:#ef4444;">직접</span> 하시나요?</h2>
+          <p class="section-desc">사장님의 시간은 영업과 고객 응대에 써야 합니다</p>
+        </div>
+        <div class="problem-grid">
+          <div class="problem-card reveal">
+            <div class="problem-icon">😫</div>
+            <div class="problem-title">블로그 쓰다 지침</div>
+            <div class="problem-desc">하루 2시간 블로그 작성...<br>본업에 집중할 시간이 없어요</div>
+          </div>
+          <div class="problem-card reveal">
+            <div class="problem-icon">💸</div>
+            <div class="problem-title">직원 인건비 부담</div>
+            <div class="problem-desc">마케팅 담당자 월급 300만원...<br>성과는 불확실해요</div>
+          </div>
+          <div class="problem-card reveal">
+            <div class="problem-icon">📉</div>
+            <div class="problem-title">효과 없는 광고비</div>
+            <div class="problem-desc">매달 광고비만 나가고<br>문의는 늘지 않아요</div>
+          </div>
+          <div class="problem-card reveal">
+            <div class="problem-icon">🤷</div>
+            <div class="problem-title">뭘 해야 할지 모름</div>
+            <div class="problem-desc">인스타? 블로그? 유튜브?<br>뭐부터 해야 할지...</div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- ========================================
+           🎯 Section 3: Solution - 3 Icons (시간절감/비용절감/매출증가)
+           ======================================== -->
+      <section class="solution-section">
+        <div class="section-header reveal">
+          <h2 class="section-title">XIVIX <span class="gradient-text">시스템</span>이면 됩니다</h2>
+          <p class="section-desc">AI 자동화로 마케팅 걱정 없이 매출에만 집중하세요</p>
+        </div>
+        <div class="solution-grid">
+          <div class="solution-card reveal">
+            <div class="solution-icon"><i class="fas fa-clock"></i></div>
+            <div class="solution-title">시간 절감</div>
+            <div class="solution-value">-90%</div>
+            <div class="solution-desc">하루 2시간 마케팅 업무를<br><strong>15분</strong>으로 줄입니다</div>
+          </div>
+          <div class="solution-card reveal">
+            <div class="solution-icon"><i class="fas fa-won-sign"></i></div>
+            <div class="solution-title">비용 절감</div>
+            <div class="solution-value">-70%</div>
+            <div class="solution-desc">월 300만원 인건비를<br><strong>월 55만원</strong>으로</div>
+          </div>
+          <div class="solution-card reveal">
+            <div class="solution-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="solution-title">매출 증가</div>
+            <div class="solution-value">+250%</div>
+            <div class="solution-desc">3개월 후 문의량<br><strong>2.5배 증가</strong> 평균</div>
+          </div>
+        </div>
+        
+        <!-- CTA 반복 -->
+        <div style="text-align:center;margin-top:var(--space-2xl);">
+          <button class="btn btn-lime" onclick="openChat()" style="font-size:1.2rem;padding:24px 48px;">
+            <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
+          </button>
+          <p style="margin-top:var(--space-md);color:var(--text-tertiary);font-size:0.9rem;">
+            <i class="fas fa-check-circle" style="color:var(--neon-lime);"></i> 무료 상담 · 강매 없음 · 5분이면 끝
+          </p>
+        </div>
+      </section>
+      
+      <!-- 친구 초대 혜택 배너 -->
+      <section id="referral-benefits" class="section" style="padding: var(--space-xl) var(--space-lg);">
+        <div class="container" style="max-width: 700px;">
+          <div class="reveal" style="background: linear-gradient(135deg, rgba(132,204,22,0.1), rgba(34,197,94,0.1)); border: 2px solid rgba(132,204,22,0.3); border-radius: var(--radius-xl); padding: var(--space-lg); display: flex; align-items: center; gap: var(--space-lg); flex-wrap: wrap; justify-content: center;">
+            <div style="font-size: 2.5rem;">🎁</div>
+            <div style="flex: 1; min-width: 220px;">
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--neon-lime);">친구 초대 = 15% 할인!</div>
+              <div style="font-size: 0.9rem; color: var(--text-secondary);">추천인 5% 적립 · 2차 추천 2% 추가</div>
             </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button class="btn btn-small" onclick="shareKakao()" style="background: #FEE500; color: #191919; white-space: nowrap;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button class="btn btn-small" onclick="shareKakao()" style="background: #FEE500; color: #191919; white-space: nowrap; padding: 14px 20px;">
                 <i class="fas fa-comment"></i> 카카오 공유
               </button>
-              <button class="btn btn-primary btn-small" onclick="openChat()" style="white-space: nowrap;">
+              <button class="btn btn-primary btn-small" onclick="openChat()" style="white-space: nowrap; padding: 14px 20px;">
                 <i class="fas fa-comments"></i> 코드 받기
               </button>
             </div>
@@ -3895,6 +4194,7 @@ function getMainHTML(): string {
         </div>
       </section>
       
+      <!-- 포트폴리오 섹션 -->
       <section id="portfolio" class="section">
         <div class="container">
           <div class="section-header reveal">
@@ -3970,8 +4270,11 @@ function getMainHTML(): string {
       
       <footer class="footer">
         <div class="footer-logo gradient-text">X I Λ I X</div>
-        <div class="footer-company">Combine Technology & Business | 대표: 방익주</div>
-        <div class="footer-copy">© 2026 X I Λ I X. All rights reserved.</div>
+        <div class="footer-company">AI 마케팅 자동화 시스템 | 대표: 방익주</div>
+        <div style="font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 12px;">
+          📞 010-4845-3065 | 📧 contact@xivix.kr
+        </div>
+        <div class="footer-copy">© 2025 X I Λ I X. All rights reserved.</div>
       </footer>
     </div>
     
