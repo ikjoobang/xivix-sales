@@ -6464,295 +6464,272 @@ function getContractHTML(): string {
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>마케팅 서비스 계약서 | 컴바인티엔비</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마케팅 서비스 계약서 - 컴바인티엔비</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
       @media print {
         body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         .no-print { display: none !important; }
-        .contract-page { page-break-after: always; }
+        .contract-page { box-shadow: none; }
       }
-      
-      * { margin: 0; padding: 0; box-sizing: border-box; }
       
       body {
         font-family: 'Noto Sans KR', -apple-system, sans-serif;
-        background: #f5f5f5;
-        color: #1a1a1a;
-        line-height: 1.7;
+        background: #f0f0f0;
+        color: #000;
+        line-height: 1.8;
         font-size: 14px;
       }
       
       .contract-wrapper {
-        max-width: 800px;
+        max-width: 210mm;
         margin: 20px auto;
-        padding: 20px;
+        padding: 0 15px 100px;
       }
       
       .contract-page {
-        background: #ffffff;
-        padding: 50px 60px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        min-height: 1100px;
+        background: #fff;
+        padding: 50px 55px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
       }
       
-      /* 계약서 헤더 */
+      /* 헤더 */
       .contract-header {
         text-align: center;
-        margin-bottom: 40px;
-        padding-bottom: 20px;
-        border-bottom: 3px double #1a1a1a;
+        border-bottom: 3px double #000;
+        padding-bottom: 25px;
+        margin-bottom: 35px;
       }
       
       .contract-title {
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 700;
-        letter-spacing: 8px;
-        margin-bottom: 10px;
+        letter-spacing: 6px;
+        margin-bottom: 8px;
       }
       
       .contract-subtitle {
         font-size: 13px;
         color: #666;
-        letter-spacing: 2px;
       }
       
-      .contract-number {
-        margin-top: 15px;
-        font-size: 12px;
-        color: #888;
-      }
-      
-      /* 전문 */
-      .contract-intro {
-        text-align: justify;
+      .contract-date-row {
+        text-align: right;
         margin-bottom: 30px;
         font-size: 14px;
-        line-height: 1.9;
-        text-indent: 1em;
       }
       
-      /* 테이블 스타일 */
-      .info-table {
+      /* 섹션 */
+      .section {
+        margin-bottom: 28px;
+      }
+      
+      .section-title {
+        font-size: 15px;
+        font-weight: 700;
+        background: #f5f5f5;
+        padding: 10px 15px;
+        border-left: 4px solid #333;
+        margin-bottom: 15px;
+      }
+      
+      /* 테이블 */
+      table {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 25px;
-        font-size: 13px;
+        margin-bottom: 15px;
       }
       
-      .info-table th,
-      .info-table td {
+      th, td {
         border: 1px solid #333;
-        padding: 12px 15px;
+        padding: 10px 12px;
         text-align: left;
+        vertical-align: middle;
       }
       
-      .info-table th {
-        background: #f8f8f8;
+      th {
+        background: #f9f9f9;
         font-weight: 600;
-        width: 120px;
+        width: 100px;
         text-align: center;
       }
       
-      .info-table .section-header {
-        background: #1a1a1a;
-        color: #fff;
+      .party-header {
+        background: #eee;
         text-align: center;
         font-weight: 700;
         font-size: 14px;
       }
       
-      .info-table input,
-      .info-table textarea {
+      .input-field {
         width: 100%;
         border: none;
-        padding: 4px 0;
-        font-family: inherit;
-        font-size: 13px;
         background: transparent;
+        font-family: inherit;
+        font-size: 14px;
         outline: none;
+        padding: 2px 0;
       }
       
-      .info-table input::placeholder,
-      .info-table textarea::placeholder {
-        color: #999;
-      }
+      .input-field::placeholder { color: #999; }
       
-      .info-table textarea {
-        resize: none;
-        min-height: 60px;
-      }
-      
-      /* 결제 방식 체크박스 */
-      .payment-check-group {
-        display: flex;
-        gap: 30px;
-        align-items: center;
-      }
-      
-      .payment-check-item {
+      /* 서비스 선택 */
+      .service-check {
         display: flex;
         align-items: center;
         gap: 8px;
-        cursor: pointer;
       }
       
-      .payment-check-item input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-        accent-color: #1a1a1a;
+      .service-check input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #333;
       }
       
-      .payment-check-item label {
-        font-size: 14px;
+      .price-cell {
+        text-align: right;
         font-weight: 500;
-        cursor: pointer;
       }
       
-      /* 계약 조항 */
-      .article {
-        margin-bottom: 20px;
-      }
-      
-      .article-title {
-        font-weight: 700;
-        font-size: 14px;
-        margin-bottom: 8px;
-      }
-      
-      .article-content {
-        font-size: 13px;
-        line-height: 1.8;
-        text-align: justify;
-      }
-      
-      .article-content ol {
-        padding-left: 25px;
-        margin-top: 5px;
-      }
-      
-      .article-content li {
-        margin-bottom: 4px;
-      }
-      
-      /* 서명란 */
-      .signature-section {
-        margin-top: 50px;
-        padding-top: 30px;
-        border-top: 1px solid #ddd;
-      }
-      
-      .signature-date {
-        text-align: center;
-        margin-bottom: 40px;
-        font-size: 15px;
-        font-weight: 600;
-      }
-      
-      .signature-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-      }
-      
-      .signature-box {
-        border: 1px solid #333;
-        padding: 25px;
-      }
-      
-      .signature-box-title {
-        font-weight: 700;
-        font-size: 15px;
-        text-align: center;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ddd;
-      }
-      
-      .signature-info-row {
+      /* 결제 방식 */
+      .payment-row {
         display: flex;
-        margin-bottom: 10px;
-        font-size: 13px;
+        gap: 30px;
+        padding: 10px 0;
       }
       
-      .signature-info-label {
-        width: 70px;
-        font-weight: 600;
-      }
-      
-      .signature-info-value {
-        flex: 1;
-      }
-      
-      .signature-info-value input {
-        width: 100%;
-        border: none;
-        border-bottom: 1px dotted #999;
-        padding: 2px 0;
-        font-family: inherit;
-        font-size: 13px;
-        background: transparent;
-        outline: none;
-      }
-      
-      .signature-canvas-area {
-        margin-top: 15px;
-        text-align: center;
-      }
-      
-      .signature-canvas-label {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 8px;
-      }
-      
-      .signature-canvas-wrapper {
-        background: #fafafa;
-        border: 1px dashed #ccc;
-        height: 80px;
+      .payment-item {
         display: flex;
         align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
+        gap: 8px;
+        padding: 10px 20px;
+        border: 2px solid #ddd;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .payment-item:has(input:checked) {
+        border-color: #333;
+        background: #f9f9f9;
+      }
+      
+      .payment-item input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #333;
+      }
+      
+      .payment-item span {
+        font-weight: 600;
+      }
+      
+      .bank-info-box {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        margin-top: 12px;
+        font-size: 13px;
+        display: none;
+      }
+      
+      .bank-info-box.show { display: block; }
+      
+      /* 금액 */
+      .total-row {
+        background: #f5f5f5;
+      }
+      
+      .total-row td {
+        font-size: 17px;
+        font-weight: 700;
+      }
+      
+      /* 조항 */
+      .terms-content {
+        font-size: 13px;
+        line-height: 1.9;
+      }
+      
+      .terms-content h4 {
+        font-size: 13px;
+        font-weight: 700;
+        margin: 15px 0 6px;
+      }
+      
+      .terms-content ol { padding-left: 22px; }
+      .terms-content li { margin-bottom: 4px; }
+      
+      .agree-box {
+        margin: 20px 0;
+        padding: 15px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+      }
+      
+      .agree-box label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      
+      .agree-box input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #333;
+      }
+      
+      /* 서명 */
+      .signature-section {
+        margin-top: 35px;
+      }
+      
+      .signature-table td { height: auto; }
+      
+      .signature-canvas-box {
+        background: #fff;
+        border: 1px dashed #999;
+        height: 70px;
+        margin-top: 8px;
+        cursor: crosshair;
       }
       
       .signature-canvas {
         width: 100%;
         height: 100%;
-        cursor: crosshair;
-        touch-action: none;
-        background: #fff;
+        display: block;
       }
       
-      .signature-clear-btn {
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
+      .clear-sig-btn {
+        font-size: 11px;
+        color: #666;
+        background: #f5f5f5;
+        border: 1px solid #ccc;
         padding: 3px 8px;
-        font-size: 11px;
-        background: #f0f0f0;
-        border: 1px solid #ddd;
-        border-radius: 3px;
         cursor: pointer;
+        margin-top: 5px;
       }
       
-      .signature-stamp {
-        font-size: 11px;
-        color: #999;
-        margin-top: 8px;
+      .clear-sig-btn:hover { background: #eee; }
+      
+      .contract-footer {
+        text-align: center;
+        margin-top: 35px;
+        font-size: 16px;
+        font-weight: 700;
       }
       
-      /* 하단 버튼 영역 */
+      /* 버튼 */
       .action-buttons {
         position: fixed;
         bottom: 0;
@@ -6760,101 +6737,44 @@ function getContractHTML(): string {
         right: 0;
         background: #fff;
         border-top: 1px solid #ddd;
-        padding: 15px 20px;
+        padding: 15px;
         display: flex;
         justify-content: center;
         gap: 15px;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         z-index: 100;
       }
       
       .action-btn {
-        padding: 14px 35px;
-        font-size: 15px;
+        padding: 12px 28px;
+        font-size: 14px;
         font-weight: 600;
-        border-radius: 5px;
+        border: none;
         cursor: pointer;
-        transition: all 0.2s;
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-family: inherit;
+        gap: 6px;
       }
       
       .action-btn.primary {
-        background: #1a1a1a;
-        color: #fff;
-        border: none;
-      }
-      
-      .action-btn.primary:hover {
         background: #333;
+        color: #fff;
       }
       
-      .action-btn.primary:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-      }
+      .action-btn.primary:hover { background: #000; }
       
       .action-btn.secondary {
         background: #fff;
-        color: #1a1a1a;
-        border: 2px solid #1a1a1a;
-      }
-      
-      .action-btn.secondary:hover {
-        background: #f5f5f5;
-      }
-      
-      /* 서비스 체크박스 스타일 */
-      .service-check-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 13px;
-      }
-      
-      .service-check-table th,
-      .service-check-table td {
+        color: #333;
         border: 1px solid #333;
-        padding: 10px 12px;
       }
       
-      .service-check-table th {
-        background: #f8f8f8;
-        font-weight: 600;
-        text-align: center;
-      }
-      
-      .service-check-table .service-check-cell {
-        text-align: center;
-        width: 60px;
-      }
-      
-      .service-check-table input[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        accent-color: #1a1a1a;
-        cursor: pointer;
-      }
-      
-      .service-check-table .price-cell {
-        text-align: right;
-        width: 120px;
-        font-weight: 500;
-      }
-      
-      /* 금액 합계 */
-      .total-amount-row {
-        background: #f0f0f0;
-        font-weight: 700;
-      }
-      
-      .total-amount-row td {
-        font-size: 14px;
+      .action-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
       
       /* 모달 */
-      .modal-overlay {
+      .modal-bg {
         position: fixed;
         inset: 0;
         background: rgba(0,0,0,0.5);
@@ -6864,728 +6784,556 @@ function getContractHTML(): string {
         z-index: 1000;
       }
       
-      .modal-overlay.show {
-        display: flex;
-      }
+      .modal-bg.show { display: flex; }
       
       .modal-box {
         background: #fff;
-        padding: 40px;
-        border-radius: 10px;
+        padding: 35px;
+        max-width: 380px;
         text-align: center;
-        max-width: 400px;
-        width: 90%;
+        border-radius: 4px;
       }
       
       .modal-icon {
-        font-size: 50px;
-        margin-bottom: 20px;
+        width: 55px;
+        height: 55px;
+        background: #4CAF50;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin: 0 auto 18px;
       }
       
       .modal-title {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
         margin-bottom: 10px;
       }
       
       .modal-desc {
         color: #666;
-        margin-bottom: 25px;
-        line-height: 1.6;
-      }
-      
-      .modal-btn {
-        padding: 12px 30px;
-        border: none;
-        border-radius: 5px;
+        margin-bottom: 22px;
+        line-height: 1.7;
         font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        margin: 0 5px;
-        font-family: inherit;
       }
       
-      .modal-btn.primary {
-        background: #1a1a1a;
-        color: #fff;
-      }
-      
-      .modal-btn.secondary {
-        background: #f0f0f0;
-        color: #333;
+      .modal-btns {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
       }
       
       /* 반응형 */
       @media (max-width: 768px) {
-        .contract-wrapper {
-          padding: 10px;
-          margin: 10px auto 80px;
-        }
-        
-        .contract-page {
-          padding: 30px 25px;
-          min-height: auto;
-        }
-        
-        .contract-title {
-          font-size: 22px;
-          letter-spacing: 4px;
-        }
-        
-        .info-table th {
-          width: 90px;
-          padding: 10px;
-        }
-        
-        .signature-grid {
-          grid-template-columns: 1fr;
-          gap: 20px;
-        }
-        
-        .payment-check-group {
-          flex-direction: column;
-          gap: 15px;
-          align-items: flex-start;
-        }
-        
-        .action-buttons {
-          flex-direction: column;
-          padding: 15px;
-        }
-        
-        .action-btn {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-      
-      /* 계약서 패딩 조정 (하단 버튼 영역) */
-      .contract-wrapper {
-        padding-bottom: 100px;
+        .contract-page { padding: 30px 25px; }
+        th { width: 80px; font-size: 13px; }
+        .payment-row { flex-direction: column; gap: 10px; }
+        .action-buttons { flex-direction: column; padding: 15px 20px; }
+        .action-btn { width: 100%; justify-content: center; }
       }
     </style>
 </head>
 <body>
-    <div class="contract-wrapper">
-      <div class="contract-page" id="contract-content">
-        <!-- 계약서 헤더 -->
+    <div class="contract-wrapper" id="contract-content">
+      <div class="contract-page">
+        
+        <!-- 헤더 -->
         <header class="contract-header">
           <h1 class="contract-title">마 케 팅 서 비 스 계 약 서</h1>
-          <p class="contract-subtitle">MARKETING SERVICE AGREEMENT</p>
-          <p class="contract-number">계약번호: <span id="contract-no"></span></p>
+          <p class="contract-subtitle">Marketing Service Agreement</p>
         </header>
         
-        <!-- 계약 전문 -->
-        <p class="contract-intro">
-          컴바인티엔비(이하 "갑"이라 함)와 아래 명시된 의뢰인(이하 "을"이라 함)은 마케팅 서비스 제공에 관하여 다음과 같이 계약을 체결합니다.
-        </p>
+        <div class="contract-date-row">
+          계약일자: <span id="contract-date"></span>
+        </div>
         
-        <!-- 갑 (업체) 정보 -->
-        <table class="info-table">
-          <tr>
-            <td colspan="4" class="section-header">갑 (서비스 제공자)</td>
-          </tr>
-          <tr>
-            <th>상호</th>
-            <td>컴바인티엔비 (COMBINE T&B)</td>
-            <th>대표자</th>
-            <td>방익주</td>
-          </tr>
-          <tr>
-            <th>연락처</th>
-            <td>010-4845-3065</td>
-            <th>이메일</th>
-            <td>contact@xivix.kr</td>
-          </tr>
-        </table>
-        
-        <!-- 을 (고객) 정보 -->
-        <table class="info-table">
-          <tr>
-            <td colspan="4" class="section-header">을 (의뢰인)</td>
-          </tr>
-          <tr>
-            <th>상호/성명</th>
-            <td><input type="text" id="client-company" placeholder="업체명 또는 성명을 입력해주세요"></td>
-            <th>대표자</th>
-            <td><input type="text" id="client-name" placeholder="대표자명"></td>
-          </tr>
-          <tr>
-            <th>연락처</th>
-            <td><input type="tel" id="client-phone" placeholder="010-0000-0000"></td>
-            <th>이메일</th>
-            <td><input type="email" id="client-email" placeholder="email@example.com"></td>
-          </tr>
-          <tr>
-            <th>주소</th>
-            <td colspan="3"><input type="text" id="client-address" placeholder="사업장 주소"></td>
-          </tr>
-        </table>
+        <!-- 당사자 정보 -->
+        <div class="section">
+          <h2 class="section-title">제1조 당사자</h2>
+          
+          <table>
+            <tr>
+              <td colspan="4" class="party-header">갑 (서비스 제공자)</td>
+            </tr>
+            <tr>
+              <th>상 호</th>
+              <td>컴바인티엔비 (COMBINE T&B)</td>
+              <th>대 표</th>
+              <td>방익주</td>
+            </tr>
+            <tr>
+              <th>연락처</th>
+              <td>010-4845-3065</td>
+              <th>이메일</th>
+              <td>contact@xivix.kr</td>
+            </tr>
+          </table>
+          
+          <table>
+            <tr>
+              <td colspan="4" class="party-header">을 (고객)</td>
+            </tr>
+            <tr>
+              <th>상 호</th>
+              <td><input type="text" class="input-field" id="client-company" placeholder="상호/업체명"></td>
+              <th>대 표</th>
+              <td><input type="text" class="input-field" id="client-name" placeholder="대표자명"></td>
+            </tr>
+            <tr>
+              <th>연락처</th>
+              <td><input type="tel" class="input-field" id="client-phone" placeholder="010-0000-0000"></td>
+              <th>이메일</th>
+              <td><input type="email" class="input-field" id="client-email" placeholder="이메일 (선택)"></td>
+            </tr>
+            <tr>
+              <th>주 소</th>
+              <td colspan="3"><input type="text" class="input-field" id="client-address" placeholder="사업장 주소 (선택)"></td>
+            </tr>
+          </table>
+        </div>
         
         <!-- 계약 서비스 -->
-        <table class="info-table">
-          <tr>
-            <td colspan="4" class="section-header">계약 서비스 내역</td>
-          </tr>
-        </table>
+        <div class="section">
+          <h2 class="section-title">제2조 계약 서비스</h2>
+          <p style="font-size:12px; color:#666; margin-bottom:10px;">※ 해당 서비스에 체크(✓)해 주세요</p>
+          
+          <table>
+            <thead>
+              <tr>
+                <th style="width:55%">서비스 항목</th>
+                <th style="width:45%">금액 (VAT 포함)</th>
+              </tr>
+            </thead>
+            <tbody id="service-list">
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="890000"> SNS 스타터 셋트</label></td>
+                <td class="price-cell">890,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="1490000"> SNS 성장 셋트</label></td>
+                <td class="price-cell">1,490,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="2790000"> 바이럴 마스터</label></td>
+                <td class="price-cell">2,790,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="4990000"> 지역 장악 셋트</label></td>
+                <td class="price-cell">4,990,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="990000"> 웹사이트 (랜딩형)</label></td>
+                <td class="price-cell">990,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="1990000"> 웹사이트 (스탠다드)</label></td>
+                <td class="price-cell">1,990,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="550000"> 월관리 베이직</label></td>
+                <td class="price-cell">550,000원/월</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="990000"> 월관리 퍼포먼스</label></td>
+                <td class="price-cell">990,000원/월</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div style="font-size:12px; color:#666; margin-bottom:5px;">기타/추가 서비스:</div>
+                  <input type="text" class="input-field" id="etc-service" placeholder="추가 요청사항 직접 입력" style="border-bottom:1px solid #ccc;">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         
-        <table class="service-check-table" style="margin-bottom: 25px;">
-          <thead>
+        <!-- 계약 금액 -->
+        <div class="section">
+          <h2 class="section-title">제3조 계약 금액</h2>
+          <table>
             <tr>
-              <th class="service-check-cell">선택</th>
-              <th>서비스명</th>
-              <th class="price-cell">금액(원)</th>
-            </tr>
-          </thead>
-          <tbody id="service-tbody">
-            <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="890000" data-name="SNS 스타터 셋트"></td>
-              <td>SNS 스타터 셋트 (네이버플레이스 + 인스타그램 + 블로그)</td>
-              <td class="price-cell">890,000</td>
+              <th>서비스 합계</th>
+              <td id="subtotal-display" style="text-align:right;">0원</td>
             </tr>
             <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="1490000" data-name="SNS 성장 셋트"></td>
-              <td>SNS 성장 셋트 (스타터 + 구글비즈니스 + 유튜브)</td>
-              <td class="price-cell">1,490,000</td>
+              <th>협의 금액</th>
+              <td><input type="number" class="input-field" id="custom-amt" placeholder="별도 협의 금액 입력 (선택)" style="text-align:right;"></td>
             </tr>
             <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="2790000" data-name="바이럴 마스터"></td>
-              <td>바이럴 마스터 (성장셋트 + 틱톡 + 체험단)</td>
-              <td class="price-cell">2,790,000</td>
+              <th>부가세</th>
+              <td>
+                <label style="margin-right:20px;"><input type="radio" name="vat" value="included" checked> 포함</label>
+                <label><input type="radio" name="vat" value="excluded"> 별도 (+10%)</label>
+              </td>
             </tr>
-            <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="4990000" data-name="지역 장악 셋트"></td>
-              <td>지역 장악 셋트 (바이럴마스터 + 광고 + 브랜드영상)</td>
-              <td class="price-cell">4,990,000</td>
+            <tr class="total-row">
+              <th>총 계약금액</th>
+              <td id="total-display" style="text-align:right;">￦ 0</td>
             </tr>
-            <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="990000" data-name="웹사이트 랜딩형"></td>
-              <td>웹사이트 제작 - 랜딩페이지형 (1페이지)</td>
-              <td class="price-cell">990,000</td>
-            </tr>
-            <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="1990000" data-name="웹사이트 스탠다드"></td>
-              <td>웹사이트 제작 - 스탠다드 (5페이지 브랜딩)</td>
-              <td class="price-cell">1,990,000</td>
-            </tr>
-            <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="550000" data-name="월관리 베이직"></td>
-              <td>월 관리 서비스 - 베이직 (월)</td>
-              <td class="price-cell">550,000</td>
-            </tr>
-            <tr>
-              <td class="service-check-cell"><input type="checkbox" data-price="990000" data-name="월관리 퍼포먼스"></td>
-              <td>월 관리 서비스 - 퍼포먼스 (월)</td>
-              <td class="price-cell">990,000</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr class="total-amount-row">
-              <td colspan="2" style="text-align: right; padding-right: 20px;">합계 금액</td>
-              <td class="price-cell" id="total-display">0</td>
-            </tr>
-          </tfoot>
-        </table>
+          </table>
+        </div>
         
-        <!-- 기타 요청사항 -->
-        <table class="info-table">
-          <tr>
-            <th style="width: 120px;">기타 요청사항</th>
-            <td><textarea id="additional-services" placeholder="추가 요청사항이나 협의 내용을 기재해주세요"></textarea></td>
-          </tr>
-        </table>
-        
-        <!-- 계약 금액 및 결제 -->
-        <table class="info-table">
-          <tr>
-            <td colspan="4" class="section-header">계약 금액 및 결제 조건</td>
-          </tr>
-          <tr>
-            <th>총 계약금액</th>
-            <td>
-              <input type="text" id="final-amount" placeholder="협의된 최종 금액 (숫자만 입력)"> 원
-              <span style="font-size: 12px; color: #666; margin-left: 10px;">
-                (부가세 <select id="vat-option" style="border: 1px solid #ddd; padding: 2px;">
-                  <option value="included">포함</option>
-                  <option value="excluded">별도</option>
-                </select>)
-              </span>
-            </td>
-            <th>계약 기간</th>
-            <td><input type="text" id="contract-period" placeholder="예: 계약일로부터 3개월"></td>
-          </tr>
-          <tr>
-            <th>결제 방식</th>
-            <td colspan="3">
-              <div class="payment-check-group">
-                <div class="payment-check-item">
-                  <input type="checkbox" id="pay-card">
-                  <label for="pay-card">□ 카드결제</label>
-                </div>
-                <div class="payment-check-item">
-                  <input type="checkbox" id="pay-cash">
-                  <label for="pay-cash">□ 현금/계좌이체</label>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr id="bank-row" style="display: none;">
-            <th>입금 계좌</th>
-            <td colspan="3">
-              <strong>케이뱅크 (K-Bank) 100124491987 예금주: 방익주</strong>
-            </td>
-          </tr>
-          <tr>
-            <th>결제 일정</th>
-            <td colspan="3">
-              <select id="payment-schedule" style="border: 1px solid #ddd; padding: 5px 10px; font-size: 13px;">
-                <option value="full">일시불 (계약 체결 시)</option>
-                <option value="split2">2회 분할 (계약금 50% / 잔금 50%)</option>
-                <option value="split3">3회 분할 (35% / 35% / 30%)</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>서비스 시작일</th>
-            <td colspan="3"><input type="date" id="start-date"></td>
-          </tr>
-        </table>
+        <!-- 결제 방식 -->
+        <div class="section">
+          <h2 class="section-title">제4조 결제 방식</h2>
+          
+          <div class="payment-row">
+            <label class="payment-item">
+              <input type="radio" name="pay-method" value="card">
+              <span>☐ 카드결제</span>
+            </label>
+            <label class="payment-item">
+              <input type="radio" name="pay-method" value="cash">
+              <span>☐ 현금/계좌이체</span>
+            </label>
+          </div>
+          
+          <div class="bank-info-box" id="bank-box">
+            <strong>입금 계좌</strong><br>
+            은행: 케이뱅크 (K-Bank) ｜ 계좌번호: 100-124-491987 ｜ 예금주: 방익주
+          </div>
+          
+          <table style="margin-top:15px;">
+            <tr>
+              <th>결제일정</th>
+              <td>
+                <select class="input-field" id="pay-schedule" style="border:1px solid #ccc; padding:5px;">
+                  <option value="full">일시불</option>
+                  <option value="split2">2회 분할 (50% + 50%)</option>
+                  <option value="split3">3회 분할 (35% + 35% + 30%)</option>
+                </select>
+              </td>
+              <th>시작일</th>
+              <td><input type="date" class="input-field" id="start-date" style="border:1px solid #ccc; padding:5px;"></td>
+            </tr>
+          </table>
+        </div>
         
         <!-- 계약 조항 -->
-        <div style="margin: 30px 0;">
-          <div style="background: #1a1a1a; color: #fff; padding: 10px 15px; font-weight: 700; text-align: center; font-size: 14px; margin-bottom: 15px;">계약 조항</div>
-          
-          <div class="article">
-            <div class="article-title">제1조 (목적)</div>
-            <div class="article-content">
-              본 계약은 갑이 을에게 마케팅 서비스를 제공함에 있어 필요한 사항을 정함을 목적으로 한다.
-            </div>
-          </div>
-          
-          <div class="article">
-            <div class="article-title">제2조 (서비스 내용)</div>
-            <div class="article-content">
-              <ol>
-                <li>갑은 본 계약서에 명시된 서비스를 성실히 수행한다.</li>
-                <li>서비스 범위는 계약서에 명시된 내용에 한하며, 추가 서비스는 별도 협의한다.</li>
-                <li>월 관리 서비스의 경우 매월 정해진 콘텐츠 수량을 제작 및 배포한다.</li>
-              </ol>
-            </div>
-          </div>
-          
-          <div class="article">
-            <div class="article-title">제3조 (계약 기간)</div>
-            <div class="article-content">
-              <ol>
-                <li>셋팅 서비스: 계약일로부터 30일 이내 완료를 원칙으로 한다.</li>
-                <li>월 관리 서비스: 계약일로부터 명시된 기간 동안 유효하다.</li>
-                <li>계약 만료 7일 전까지 별도 통보가 없으면 동일 조건으로 자동 연장된다.</li>
-              </ol>
-            </div>
-          </div>
-          
-          <div class="article">
-            <div class="article-title">제4조 (비용 및 결제)</div>
-            <div class="article-content">
-              <ol>
-                <li>계약 금액은 본 계약서에 명시된 금액으로 한다.</li>
-                <li>결제는 선택된 결제 방식으로 진행한다.</li>
-                <li>분할 결제 시 각 회차별 금액은 협의된 일정에 따른다.</li>
-                <li>광고비는 본 계약 금액에 포함되지 않으며 별도 정산한다.</li>
-              </ol>
-            </div>
-          </div>
-          
-          <div class="article">
-            <div class="article-title">제5조 (환불 규정)</div>
-            <div class="article-content">
-              <ol>
-                <li>서비스 시작 전: 100% 환불</li>
-                <li>서비스 시작 후 7일 이내: 50% 환불</li>
-                <li>서비스 시작 후 7일 경과: 환불 불가 (진행 비용 차감)</li>
-                <li>월 관리 서비스는 해당 월 서비스 시작 후 환불 불가</li>
-              </ol>
-            </div>
-          </div>
-          
-          <div class="article">
-            <div class="article-title">제6조 (비밀유지)</div>
-            <div class="article-content">
-              갑과 을은 본 계약과 관련하여 취득한 상대방의 영업비밀 및 개인정보를 제3자에게 누설하지 않는다.
-            </div>
-          </div>
-          
-          <div class="article">
-            <div class="article-title">제7조 (분쟁 해결)</div>
-            <div class="article-content">
-              본 계약과 관련한 분쟁은 상호 협의하여 해결하며, 협의가 이루어지지 않을 경우 갑의 소재지 관할 법원에서 해결한다.
-            </div>
-          </div>
-        </div>
-        
-        <!-- 동의 체크박스 -->
-        <div style="margin: 30px 0; padding: 15px; border: 2px solid #1a1a1a; background: #fafafa;">
-          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-            <input type="checkbox" id="terms-agree" style="width: 20px; height: 20px; accent-color: #1a1a1a;">
-            <span style="font-size: 14px; font-weight: 600;">본인은 위 계약 내용을 모두 확인하였으며, 이에 동의합니다.</span>
-          </label>
-        </div>
-        
-        <!-- 서명란 -->
-        <div class="signature-section">
-          <div class="signature-date">
-            <span id="sign-date"></span>
-          </div>
-          
-          <div class="signature-grid">
-            <!-- 갑 서명 -->
-            <div class="signature-box">
-              <div class="signature-box-title">갑 (서비스 제공자)</div>
-              <div class="signature-info-row">
-                <span class="signature-info-label">상 호</span>
-                <span class="signature-info-value">컴바인티엔비</span>
-              </div>
-              <div class="signature-info-row">
-                <span class="signature-info-label">대 표 자</span>
-                <span class="signature-info-value">방익주</span>
-              </div>
-              <div class="signature-info-row">
-                <span class="signature-info-label">연 락 처</span>
-                <span class="signature-info-value">010-4845-3065</span>
-              </div>
-              <div class="signature-canvas-area">
-                <div class="signature-canvas-label">(서명 또는 날인)</div>
-                <div class="signature-canvas-wrapper">
-                  <canvas id="signature-company" class="signature-canvas"></canvas>
-                  <button class="signature-clear-btn" onclick="clearSignature('company')">지우기</button>
-                </div>
-              </div>
-            </div>
+        <div class="section">
+          <h2 class="section-title">제5조 계약 조건</h2>
+          <div class="terms-content">
+            <h4>1. 서비스 범위</h4>
+            <ol>
+              <li>갑은 본 계약서에 명시된 서비스를 성실히 수행한다.</li>
+              <li>서비스 범위는 본 계약서에 명시된 내용에 한하며, 추가 서비스는 별도 협의한다.</li>
+            </ol>
             
-            <!-- 을 서명 -->
-            <div class="signature-box">
-              <div class="signature-box-title">을 (의뢰인)</div>
-              <div class="signature-info-row">
-                <span class="signature-info-label">상 호</span>
-                <span class="signature-info-value"><input type="text" id="sig-company" placeholder="업체명"></span>
-              </div>
-              <div class="signature-info-row">
-                <span class="signature-info-label">대 표 자</span>
-                <span class="signature-info-value"><input type="text" id="sig-name" placeholder="성명"></span>
-              </div>
-              <div class="signature-info-row">
-                <span class="signature-info-label">연 락 처</span>
-                <span class="signature-info-value"><input type="tel" id="sig-phone" placeholder="연락처"></span>
-              </div>
-              <div class="signature-canvas-area">
-                <div class="signature-canvas-label">(서명 또는 날인) <span style="color: #c00;">* 필수</span></div>
-                <div class="signature-canvas-wrapper">
-                  <canvas id="signature-client" class="signature-canvas"></canvas>
-                  <button class="signature-clear-btn" onclick="clearSignature('client')">지우기</button>
-                </div>
-              </div>
-            </div>
+            <h4>2. 계약 기간</h4>
+            <ol>
+              <li>셋팅 서비스: 계약일로부터 30일 이내 완료</li>
+              <li>월 관리 서비스: 계약일로부터 명시된 기간 동안 유효</li>
+              <li>계약 만료 7일 전까지 별도 통보가 없으면 동일 조건으로 자동 연장</li>
+            </ol>
+            
+            <h4>3. 비용 및 결제</h4>
+            <ol>
+              <li>계약 금액은 본 계약서에 명시된 금액으로 한다.</li>
+              <li>광고비는 본 계약 금액에 포함되지 않으며 별도 정산한다.</li>
+            </ol>
+            
+            <h4>4. 환불 규정</h4>
+            <ol>
+              <li>서비스 시작 전: 100% 환불</li>
+              <li>서비스 시작 후 7일 이내: 50% 환불</li>
+              <li>서비스 시작 후 7일 경과: 환불 불가</li>
+            </ol>
+            
+            <h4>5. 비밀유지 및 분쟁해결</h4>
+            <p>갑과 을은 본 계약 관련 취득한 영업비밀 및 개인정보를 제3자에게 누설하지 않으며, 분쟁 발생 시 갑의 소재지 관할 법원에서 해결한다.</p>
+          </div>
+          
+          <div class="agree-box">
+            <label>
+              <input type="checkbox" id="agree-check">
+              위 계약 내용을 모두 확인하였으며, 이에 동의합니다.
+            </label>
           </div>
         </div>
+        
+        <!-- 서명 -->
+        <div class="section signature-section">
+          <h2 class="section-title">제6조 서명 날인</h2>
+          <p style="font-size:12px; color:#666; margin-bottom:12px;">본 계약의 성립을 증명하기 위하여 갑과 을이 서명 날인 후 각 1통씩 보관한다.</p>
+          
+          <table class="signature-table">
+            <tr>
+              <td colspan="2" class="party-header">갑 (서비스 제공자)</td>
+              <td colspan="2" class="party-header">을 (고객)</td>
+            </tr>
+            <tr>
+              <th>상호</th>
+              <td>컴바인티엔비</td>
+              <th>상호</th>
+              <td id="sig-company">-</td>
+            </tr>
+            <tr>
+              <th>대표</th>
+              <td>방익주</td>
+              <th>대표</th>
+              <td id="sig-name">-</td>
+            </tr>
+            <tr>
+              <th>연락처</th>
+              <td>010-4845-3065</td>
+              <th>연락처</th>
+              <td id="sig-phone">-</td>
+            </tr>
+            <tr>
+              <th>서명</th>
+              <td>
+                <div class="signature-canvas-box">
+                  <canvas id="canvas-gap" class="signature-canvas"></canvas>
+                </div>
+                <button type="button" class="clear-sig-btn no-print" onclick="clearCanvas('gap')">지우기</button>
+              </td>
+              <th>서명</th>
+              <td>
+                <div class="signature-canvas-box">
+                  <canvas id="canvas-eul" class="signature-canvas"></canvas>
+                </div>
+                <button type="button" class="clear-sig-btn no-print" onclick="clearCanvas('eul')">지우기</button>
+              </td>
+            </tr>
+          </table>
+          
+          <div class="contract-footer">
+            <span id="footer-year"></span>년 <span id="footer-month"></span>월 <span id="footer-day"></span>일
+          </div>
+        </div>
+        
       </div>
     </div>
     
-    <!-- 하단 버튼 -->
+    <!-- 버튼 -->
     <div class="action-buttons no-print">
-      <button class="action-btn secondary" onclick="window.print()">
-        🖨️ 인쇄하기
-      </button>
-      <button class="action-btn primary" id="submit-btn" onclick="submitContract()" disabled>
-        ✍️ 계약서 제출 및 PDF 다운로드
-      </button>
+      <button type="button" class="action-btn secondary" onclick="window.print()">🖨️ 인쇄</button>
+      <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled>✍️ 계약서 제출 및 PDF 다운로드</button>
     </div>
     
-    <!-- 완료 모달 -->
-    <div class="modal-overlay" id="success-modal">
+    <!-- 모달 -->
+    <div class="modal-bg" id="done-modal">
       <div class="modal-box">
-        <div class="modal-icon">✅</div>
+        <div class="modal-icon">✓</div>
         <h3 class="modal-title">계약서 제출 완료</h3>
-        <p class="modal-desc">
-          계약서가 성공적으로 제출되었습니다.<br>
-          PDF 파일을 다운로드하여 보관해주세요.<br>
-          담당자가 확인 후 연락드리겠습니다.
-        </p>
-        <div>
-          <button class="modal-btn secondary" onclick="closeModal()">닫기</button>
-          <button class="modal-btn primary" onclick="downloadPDF()">PDF 다운로드</button>
+        <p class="modal-desc">계약서가 성공적으로 제출되었습니다.<br>PDF를 다운로드하여 보관해 주세요.</p>
+        <div class="modal-btns">
+          <button class="action-btn secondary" onclick="closeModal()">닫기</button>
+          <button class="action-btn primary" id="pdf-btn" onclick="downloadPDF()">📄 PDF 다운로드</button>
         </div>
       </div>
     </div>
     
     <script>
-      // 계약번호 및 날짜 설정
-      const today = new Date();
-      const contractNo = 'CTR-' + today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0') + '-' + String(Math.floor(Math.random()*9000)+1000);
-      document.getElementById('contract-no').textContent = contractNo;
-      document.getElementById('sign-date').textContent = today.getFullYear() + '년 ' + (today.getMonth()+1) + '월 ' + today.getDate() + '일';
-      document.getElementById('start-date').valueAsDate = today;
+      // 날짜
+      const now = new Date();
+      document.getElementById('contract-date').textContent = now.getFullYear() + '년 ' + (now.getMonth()+1) + '월 ' + now.getDate() + '일';
+      document.getElementById('footer-year').textContent = now.getFullYear();
+      document.getElementById('footer-month').textContent = now.getMonth()+1;
+      document.getElementById('footer-day').textContent = now.getDate();
+      document.getElementById('start-date').valueAsDate = now;
       
-      // 서비스 체크박스 이벤트
-      const serviceCheckboxes = document.querySelectorAll('#service-tbody input[type="checkbox"]');
-      serviceCheckboxes.forEach(cb => {
-        cb.addEventListener('change', updateTotal);
-      });
-      
-      function updateTotal() {
-        let total = 0;
-        serviceCheckboxes.forEach(cb => {
-          if (cb.checked) {
-            total += parseInt(cb.dataset.price);
-          }
+      // 금액 계산
+      function calcTotal() {
+        let sub = 0;
+        document.querySelectorAll('input[name="svc"]:checked').forEach(c => {
+          sub += parseInt(c.dataset.price) || 0;
         });
-        document.getElementById('total-display').textContent = total.toLocaleString();
         
-        // 최종 금액 자동 입력 (비어있을 경우)
-        const finalInput = document.getElementById('final-amount');
-        if (!finalInput.value || finalInput.dataset.auto === 'true') {
-          finalInput.value = total > 0 ? total.toLocaleString() : '';
-          finalInput.dataset.auto = 'true';
+        const custom = parseInt(document.getElementById('custom-amt').value) || 0;
+        let total = custom > 0 ? custom : sub;
+        
+        if (document.querySelector('input[name="vat"][value="excluded"]').checked) {
+          total = Math.round(total * 1.1);
         }
         
-        checkFormValid();
+        document.getElementById('subtotal-display').textContent = sub.toLocaleString() + '원';
+        document.getElementById('total-display').textContent = '￦ ' + total.toLocaleString();
+        checkValid();
       }
       
-      // 최종 금액 직접 입력 시
-      document.getElementById('final-amount').addEventListener('input', function() {
-        this.dataset.auto = 'false';
-        checkFormValid();
+      document.querySelectorAll('input[name="svc"]').forEach(c => c.addEventListener('change', calcTotal));
+      document.getElementById('custom-amt').addEventListener('input', calcTotal);
+      document.querySelectorAll('input[name="vat"]').forEach(r => r.addEventListener('change', calcTotal));
+      
+      // 결제 방식
+      document.querySelectorAll('input[name="pay-method"]').forEach(r => {
+        r.addEventListener('change', function() {
+          document.getElementById('bank-box').classList.toggle('show', this.value === 'cash');
+          checkValid();
+        });
       });
       
-      // 결제 방식 체크박스
-      const payCard = document.getElementById('pay-card');
-      const payCash = document.getElementById('pay-cash');
-      const bankRow = document.getElementById('bank-row');
-      
-      payCard.addEventListener('change', () => {
-        if (payCard.checked) payCash.checked = false;
-        bankRow.style.display = 'none';
-        checkFormValid();
+      // 고객 정보 연동
+      document.getElementById('client-company').addEventListener('input', e => {
+        document.getElementById('sig-company').textContent = e.target.value || '-';
+      });
+      document.getElementById('client-name').addEventListener('input', e => {
+        document.getElementById('sig-name').textContent = e.target.value || '-';
+      });
+      document.getElementById('client-phone').addEventListener('input', e => {
+        document.getElementById('sig-phone').textContent = e.target.value || '-';
       });
       
-      payCash.addEventListener('change', () => {
-        if (payCash.checked) payCard.checked = false;
-        bankRow.style.display = payCash.checked ? 'table-row' : 'none';
-        checkFormValid();
-      });
-      
-      // 정보 동기화
-      document.getElementById('client-company').addEventListener('input', (e) => {
-        document.getElementById('sig-company').value = e.target.value;
-        checkFormValid();
-      });
-      document.getElementById('client-name').addEventListener('input', (e) => {
-        document.getElementById('sig-name').value = e.target.value;
-        checkFormValid();
-      });
-      document.getElementById('client-phone').addEventListener('input', (e) => {
-        document.getElementById('sig-phone').value = e.target.value;
-        checkFormValid();
-      });
-      
-      // 역방향 동기화
-      document.getElementById('sig-company').addEventListener('input', (e) => {
-        document.getElementById('client-company').value = e.target.value;
-        checkFormValid();
-      });
-      document.getElementById('sig-name').addEventListener('input', (e) => {
-        document.getElementById('client-name').value = e.target.value;
-        checkFormValid();
-      });
-      document.getElementById('sig-phone').addEventListener('input', (e) => {
-        document.getElementById('client-phone').value = e.target.value;
-        checkFormValid();
-      });
-      
-      // 서명 캔버스 설정
-      function setupSignatureCanvas(canvasId) {
-        const canvas = document.getElementById(canvasId);
+      // 서명 캔버스
+      function initCanvas(id) {
+        const box = document.getElementById('canvas-' + id).parentElement;
+        const canvas = document.getElementById('canvas-' + id);
         const ctx = canvas.getContext('2d');
-        let isDrawing = false;
-        let lastX = 0;
-        let lastY = 0;
+        let drawing = false, lx = 0, ly = 0;
         
         function resize() {
-          const rect = canvas.getBoundingClientRect();
-          canvas.width = rect.width * 2;
-          canvas.height = rect.height * 2;
+          const r = box.getBoundingClientRect();
+          canvas.width = r.width * 2;
+          canvas.height = r.height * 2;
           ctx.scale(2, 2);
           ctx.strokeStyle = '#000';
           ctx.lineWidth = 2;
           ctx.lineCap = 'round';
-          ctx.lineJoin = 'round';
         }
-        
         resize();
         window.addEventListener('resize', resize);
         
         function getPos(e) {
-          const rect = canvas.getBoundingClientRect();
-          if (e.touches) {
-            return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-          }
-          return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+          const r = canvas.getBoundingClientRect();
+          const t = e.touches ? e.touches[0] : e;
+          return { x: t.clientX - r.left, y: t.clientY - r.top };
         }
         
-        function startDrawing(e) {
+        function start(e) {
           e.preventDefault();
-          isDrawing = true;
-          const pos = getPos(e);
-          lastX = pos.x;
-          lastY = pos.y;
+          drawing = true;
+          const p = getPos(e);
+          lx = p.x; ly = p.y;
         }
         
         function draw(e) {
-          if (!isDrawing) return;
+          if (!drawing) return;
           e.preventDefault();
-          const pos = getPos(e);
+          const p = getPos(e);
           ctx.beginPath();
-          ctx.moveTo(lastX, lastY);
-          ctx.lineTo(pos.x, pos.y);
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(p.x, p.y);
           ctx.stroke();
-          lastX = pos.x;
-          lastY = pos.y;
-          checkFormValid();
+          lx = p.x; ly = p.y;
+          checkValid();
         }
         
-        function stopDrawing() {
-          isDrawing = false;
-        }
+        function stop() { drawing = false; }
         
-        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousedown', start);
         canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing);
-        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('mouseup', stop);
+        canvas.addEventListener('mouseout', stop);
+        canvas.addEventListener('touchstart', start);
         canvas.addEventListener('touchmove', draw);
-        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('touchend', stop);
         
-        return { canvas, ctx, resize };
+        return {
+          canvas, ctx,
+          hasData: () => {
+            const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            for (let i = 3; i < d.length; i += 4) if (d[i] > 0) return true;
+            return false;
+          },
+          clear: () => ctx.clearRect(0, 0, canvas.width, canvas.height)
+        };
       }
       
-      const companyCanvas = setupSignatureCanvas('signature-company');
-      const clientCanvas = setupSignatureCanvas('signature-client');
+      const canvasGap = initCanvas('gap');
+      const canvasEul = initCanvas('eul');
       
-      function clearSignature(type) {
-        const canvas = type === 'company' ? companyCanvas : clientCanvas;
-        canvas.ctx.clearRect(0, 0, canvas.canvas.width, canvas.canvas.height);
-        checkFormValid();
+      function clearCanvas(type) {
+        if (type === 'gap') canvasGap.clear();
+        else canvasEul.clear();
+        checkValid();
       }
       
-      function hasSignature(canvasObj) {
-        const imageData = canvasObj.ctx.getImageData(0, 0, canvasObj.canvas.width, canvasObj.canvas.height);
-        const data = imageData.data;
-        for (let i = 0; i < data.length; i += 4) {
-          if (data[i + 3] !== 0) return true;
-        }
-        return false;
-      }
+      // 동의 체크
+      document.getElementById('agree-check').addEventListener('change', checkValid);
       
-      // 동의 체크박스
-      document.getElementById('terms-agree').addEventListener('change', checkFormValid);
-      
-      // 폼 유효성 검사
-      function checkFormValid() {
-        const clientCompany = document.getElementById('client-company').value.trim();
-        const clientName = document.getElementById('client-name').value.trim();
-        const clientPhone = document.getElementById('client-phone').value.trim();
-        const termsAgreed = document.getElementById('terms-agree').checked;
-        const paymentSelected = payCard.checked || payCash.checked;
-        const hasServices = Array.from(serviceCheckboxes).some(cb => cb.checked) || document.getElementById('final-amount').value;
-        const hasClientSig = hasSignature(clientCanvas);
+      // 유효성 검사
+      function checkValid() {
+        const company = document.getElementById('client-company').value.trim();
+        const name = document.getElementById('client-name').value.trim();
+        const phone = document.getElementById('client-phone').value.trim();
+        const agreed = document.getElementById('agree-check').checked;
+        const payment = document.querySelector('input[name="pay-method"]:checked');
+        const hasSvc = document.querySelectorAll('input[name="svc"]:checked').length > 0 || 
+                       parseInt(document.getElementById('custom-amt').value) > 0;
+        const hasSig = canvasEul.hasData();
         
-        const isValid = clientCompany && clientName && clientPhone && termsAgreed && paymentSelected && hasServices && hasClientSig;
-        document.getElementById('submit-btn').disabled = !isValid;
+        document.getElementById('submit-btn').disabled = !(company && name && phone && agreed && payment && hasSvc && hasSig);
       }
       
-      // 계약서 제출
-      function submitContract() {
+      ['client-company', 'client-name', 'client-phone'].forEach(id => {
+        document.getElementById(id).addEventListener('input', checkValid);
+      });
+      
+      // 제출
+      function submitForm() {
         const btn = document.getElementById('submit-btn');
         btn.disabled = true;
-        btn.innerHTML = '⏳ 처리 중...';
+        btn.textContent = '처리 중...';
         
         setTimeout(() => {
-          document.getElementById('success-modal').classList.add('show');
-          btn.innerHTML = '✅ 제출 완료';
+          document.getElementById('done-modal').classList.add('show');
+          btn.textContent = '✓ 제출 완료';
         }, 1000);
       }
       
       function closeModal() {
-        document.getElementById('success-modal').classList.remove('show');
-        document.getElementById('submit-btn').innerHTML = '✍️ 계약서 제출 및 PDF 다운로드';
-        checkFormValid();
+        document.getElementById('done-modal').classList.remove('show');
+        document.getElementById('submit-btn').textContent = '✍️ 계약서 제출 및 PDF 다운로드';
+        document.getElementById('submit-btn').disabled = false;
       }
       
-      // PDF 다운로드
+      // PDF
       async function downloadPDF() {
-        const btn = document.querySelector('.modal-btn.primary');
-        btn.innerHTML = '⏳ 생성 중...';
+        const btn = document.getElementById('pdf-btn');
         btn.disabled = true;
+        btn.textContent = '생성 중...';
         
         try {
-          // 버튼 임시 숨기기
-          document.querySelectorAll('.signature-clear-btn').forEach(b => b.style.display = 'none');
-          document.querySelector('.action-buttons').style.display = 'none';
+          const el = document.getElementById('contract-content');
+          const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#fff' });
           
-          const element = document.getElementById('contract-content');
-          const canvas = await html2canvas(element, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff',
-            logging: false
-          });
-          
-          const imgData = canvas.toDataURL('image/png');
           const { jsPDF } = window.jspdf;
           const pdf = new jsPDF('p', 'mm', 'a4');
           
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = pdf.internal.pageSize.getHeight();
-          const imgWidth = canvas.width;
-          const imgHeight = canvas.height;
-          const ratio = pdfWidth / imgWidth;
+          const pW = pdf.internal.pageSize.getWidth();
+          const pH = pdf.internal.pageSize.getHeight();
+          const iW = canvas.width;
+          const iH = canvas.height;
+          const ratio = pW / iW;
+          const scaledH = iH * ratio;
           
-          let heightLeft = imgHeight * ratio;
-          let position = 0;
-          let page = 1;
-          
-          while (heightLeft > 0) {
-            if (page > 1) pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight * ratio);
-            heightLeft -= pdfHeight;
-            position -= pdfHeight;
-            page++;
+          let y = 0;
+          while (y < scaledH) {
+            if (y > 0) pdf.addPage();
+            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, -y, pW, scaledH);
+            y += pH;
           }
           
           const clientName = document.getElementById('client-name').value || 'customer';
-          const fileName = '컴바인티엔비_계약서_' + clientName + '_' + today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0') + '.pdf';
+          const d = new Date();
+          const fname = '마케팅서비스계약서_' + clientName + '_' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') + '.pdf';
           
-          pdf.save(fileName);
-          
-          btn.innerHTML = '✅ 완료!';
-          setTimeout(() => {
-            btn.innerHTML = 'PDF 다운로드';
-            btn.disabled = false;
-          }, 2000);
-          
-        } catch (error) {
-          console.error('PDF 생성 오류:', error);
-          alert('PDF 생성 중 오류가 발생했습니다.');
-          btn.innerHTML = 'PDF 다운로드';
+          pdf.save(fname);
+          btn.textContent = '✓ 완료';
+          setTimeout(() => { btn.textContent = '📄 PDF 다운로드'; btn.disabled = false; }, 2000);
+        } catch (err) {
+          alert('PDF 생성 오류: ' + err.message);
+          btn.textContent = '📄 PDF 다운로드';
           btn.disabled = false;
-        } finally {
-          // 버튼 복원
-          document.querySelectorAll('.signature-clear-btn').forEach(b => b.style.display = 'block');
-          document.querySelector('.action-buttons').style.display = 'flex';
         }
       }
     </script>
 </body>
-</html>`
+</html>`;
 }
 
 
