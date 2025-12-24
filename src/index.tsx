@@ -1963,6 +1963,7 @@ app.get('/', (c) => c.html(getMainHTML()))
 app.get('/login', (c) => c.html(getLoginHTML()))
 app.get('/my', (c) => c.html(getMyPageHTML()))
 app.get('/admin', (c) => c.html(getAdminHTML()))
+app.get('/contract', (c) => c.html(getContractHTML()))
 
 // OG 이미지 (카카오톡, SNS 공유용) - PNG로 리다이렉트
 app.get('/og-image.png', async (c) => {
@@ -6450,6 +6451,1282 @@ function getMainHTML(): string {
           }
         });
       });
+    </script>
+</body>
+</html>`
+}
+
+// ========================================
+// CONTRACT PAGE - 온라인 계약서 (전자서명)
+// ========================================
+function getContractHTML(): string {
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>X I Λ I X | 마케팅 서비스 계약서</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+      :root {
+        --primary: #a855f7;
+        --primary-dark: #7c3aed;
+        --bg-dark: #0a0a0c;
+        --bg-card: #121214;
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.7);
+        --text-tertiary: rgba(255, 255, 255, 0.4);
+        --border: rgba(255, 255, 255, 0.1);
+        --success: #22c55e;
+        --warning: #f97316;
+        --danger: #ef4444;
+      }
+      
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body {
+        font-family: 'Noto Sans KR', 'Inter', -apple-system, sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+      
+      .contract-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px 100px;
+      }
+      
+      .contract-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid var(--primary);
+      }
+      
+      .contract-logo {
+        font-size: 2rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--primary), #ec4899);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+      }
+      
+      .contract-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      
+      .contract-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+      
+      .contract-date {
+        margin-top: 15px;
+        font-size: 0.9rem;
+        color: var(--text-tertiary);
+      }
+      
+      .contract-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        margin-bottom: 24px;
+      }
+      
+      .section-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .section-title i {
+        width: 32px;
+        height: 32px;
+        background: rgba(168, 85, 247, 0.15);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+      }
+      
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      
+      .form-row.single {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      
+      .form-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+      
+      .form-label .required {
+        color: var(--danger);
+        margin-left: 2px;
+      }
+      
+      .form-input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        outline: none;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+      
+      .form-input:focus {
+        border-color: var(--primary);
+        background: rgba(168, 85, 247, 0.05);
+      }
+      
+      .form-input::placeholder {
+        color: var(--text-tertiary);
+      }
+      
+      textarea.form-input {
+        min-height: 100px;
+        resize: vertical;
+      }
+      
+      /* 서비스 선택 */
+      .service-selector {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      
+      .service-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .service-option:hover {
+        background: rgba(168, 85, 247, 0.08);
+        border-color: rgba(168, 85, 247, 0.3);
+      }
+      
+      .service-option.selected {
+        background: rgba(168, 85, 247, 0.15);
+        border-color: var(--primary);
+      }
+      
+      .service-option input {
+        display: none;
+      }
+      
+      .service-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+      }
+      
+      .service-option.selected .service-checkbox {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      
+      .service-checkbox i {
+        color: white;
+        font-size: 0.7rem;
+        opacity: 0;
+      }
+      
+      .service-option.selected .service-checkbox i {
+        opacity: 1;
+      }
+      
+      .service-name {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      
+      /* 결제 방식 */
+      .payment-options {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      
+      .payment-option {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .payment-option:hover {
+        background: rgba(168, 85, 247, 0.08);
+      }
+      
+      .payment-option.selected {
+        background: rgba(168, 85, 247, 0.12);
+        border-color: var(--primary);
+      }
+      
+      .payment-option input {
+        display: none;
+      }
+      
+      .payment-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(168, 85, 247, 0.15);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--primary);
+      }
+      
+      .payment-option.selected .payment-icon {
+        background: var(--primary);
+        color: white;
+      }
+      
+      .payment-text {
+        text-align: left;
+      }
+      
+      .payment-name {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      
+      .payment-desc {
+        font-size: 0.8rem;
+        color: var(--text-tertiary);
+      }
+      
+      /* 금액 테이블 */
+      .price-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      .price-table th,
+      .price-table td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+      
+      .price-table th {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        background: rgba(255, 255, 255, 0.03);
+      }
+      
+      .price-table .total-row {
+        background: rgba(168, 85, 247, 0.1);
+      }
+      
+      .price-table .total-row td {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 1.1rem;
+      }
+      
+      /* 계약 조항 */
+      .terms-box {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+        font-size: 0.85rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+      }
+      
+      .terms-box h4 {
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        margin: 16px 0 8px;
+      }
+      
+      .terms-box h4:first-child {
+        margin-top: 0;
+      }
+      
+      .terms-box ol {
+        padding-left: 20px;
+      }
+      
+      .terms-box li {
+        margin-bottom: 6px;
+      }
+      
+      /* 서명 영역 */
+      .signature-area {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 30px;
+      }
+      
+      .signature-box {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+      }
+      
+      .signature-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .signature-title .badge {
+        padding: 2px 8px;
+        background: var(--primary);
+        color: white;
+        font-size: 0.7rem;
+        border-radius: 4px;
+      }
+      
+      .signature-info {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+        line-height: 1.6;
+      }
+      
+      .signature-canvas-wrapper {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+      
+      .signature-canvas {
+        width: 100%;
+        height: 120px;
+        cursor: crosshair;
+        touch-action: none;
+      }
+      
+      .signature-actions {
+        display: flex;
+        gap: 8px;
+      }
+      
+      .signature-btn {
+        flex: 1;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .signature-btn:hover {
+        background: rgba(168, 85, 247, 0.1);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      
+      /* 제출 버튼 */
+      .submit-section {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 12, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid var(--border);
+        padding: 16px 20px;
+        z-index: 100;
+      }
+      
+      .submit-content {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      
+      .submit-info {
+        flex: 1;
+      }
+      
+      .submit-total {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+      
+      .submit-amount {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--primary);
+      }
+      
+      .submit-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, var(--primary), #ec4899);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+      }
+      
+      .submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+      
+      /* 완료 모달 */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      
+      .modal-overlay.show {
+        display: flex;
+      }
+      
+      .modal-content {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 480px;
+        width: 100%;
+        text-align: center;
+      }
+      
+      .modal-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--success), #16a34a);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: white;
+        margin: 0 auto 24px;
+      }
+      
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+      }
+      
+      .modal-desc {
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+        line-height: 1.7;
+      }
+      
+      .modal-actions {
+        display: flex;
+        gap: 12px;
+      }
+      
+      .modal-btn {
+        flex: 1;
+        padding: 14px 20px;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      
+      .modal-btn.primary {
+        background: linear-gradient(135deg, var(--primary), #ec4899);
+        border: none;
+        color: white;
+      }
+      
+      .modal-btn.secondary {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+      }
+      
+      /* 반응형 */
+      @media (max-width: 768px) {
+        .contract-container {
+          padding: 20px 16px 120px;
+        }
+        
+        .contract-section {
+          padding: 20px;
+        }
+        
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        
+        .service-selector {
+          grid-template-columns: 1fr;
+        }
+        
+        .payment-options {
+          flex-direction: column;
+        }
+        
+        .signature-area {
+          grid-template-columns: 1fr;
+        }
+        
+        .submit-content {
+          flex-direction: column;
+        }
+        
+        .submit-btn {
+          width: 100%;
+          justify-content: center;
+        }
+        
+        .modal-actions {
+          flex-direction: column;
+        }
+      }
+      
+      /* 스크롤바 */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="contract-container" id="contract-content">
+      <header class="contract-header">
+        <div class="contract-logo">X I Λ I X</div>
+        <h1 class="contract-title">마케팅 서비스 계약서</h1>
+        <p class="contract-subtitle">Marketing Service Agreement</p>
+        <p class="contract-date">계약일자: <span id="contract-date"></span></p>
+      </header>
+      
+      <!-- 업체(갑) 정보 -->
+      <section class="contract-section">
+        <h2 class="section-title"><i class="fas fa-building"></i> 업체 정보 (갑)</h2>
+        <div class="signature-info" style="background: rgba(168, 85, 247, 0.1); padding: 16px; border-radius: 10px; margin-bottom: 0;">
+          <div style="margin-bottom: 8px;"><strong>상호:</strong> 컴바인티엔비 (COMBINE T&B)</div>
+          <div style="margin-bottom: 8px;"><strong>대표자:</strong> 방익주</div>
+          <div style="margin-bottom: 8px;"><strong>연락처:</strong> 010-4845-3065</div>
+          <div><strong>이메일:</strong> contact@xivix.kr</div>
+        </div>
+      </section>
+      
+      <!-- 고객(을) 정보 -->
+      <section class="contract-section">
+        <h2 class="section-title"><i class="fas fa-user"></i> 고객 정보 (을)</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">상호/업체명 <span class="required">*</span></label>
+            <input type="text" class="form-input" id="client-company" placeholder="예: 강남미용실" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">대표자명 <span class="required">*</span></label>
+            <input type="text" class="form-input" id="client-name" placeholder="예: 홍길동" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">연락처 <span class="required">*</span></label>
+            <input type="tel" class="form-input" id="client-phone" placeholder="010-0000-0000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">이메일</label>
+            <input type="email" class="form-input" id="client-email" placeholder="example@email.com">
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-group">
+            <label class="form-label">사업장 주소</label>
+            <input type="text" class="form-input" id="client-address" placeholder="예: 서울시 강남구 테헤란로 123">
+          </div>
+        </div>
+      </section>
+      
+      <!-- 계약 서비스 -->
+      <section class="contract-section">
+        <h2 class="section-title"><i class="fas fa-list-check"></i> 계약 서비스</h2>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">해당하는 서비스를 모두 선택해주세요.</p>
+        
+        <div class="service-selector" id="service-selector">
+          <label class="service-option" data-price="890000">
+            <input type="checkbox" name="services" value="sns_starter">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">🔥 SNS 스타터 셋트 (89만원)</span>
+          </label>
+          <label class="service-option" data-price="1490000">
+            <input type="checkbox" name="services" value="sns_growth">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">⭐ SNS 성장 셋트 (149만원)</span>
+          </label>
+          <label class="service-option" data-price="2790000">
+            <input type="checkbox" name="services" value="sns_viral">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">💎 바이럴 마스터 (279만원)</span>
+          </label>
+          <label class="service-option" data-price="4990000">
+            <input type="checkbox" name="services" value="sns_dominate">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">👑 지역 장악 셋트 (499만원)</span>
+          </label>
+          <label class="service-option" data-price="990000">
+            <input type="checkbox" name="services" value="website_landing">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">🌐 웹사이트 랜딩형 (99만원)</span>
+          </label>
+          <label class="service-option" data-price="1990000">
+            <input type="checkbox" name="services" value="website_standard">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">🌐 웹사이트 스탠다드 (199만원)</span>
+          </label>
+          <label class="service-option" data-price="550000">
+            <input type="checkbox" name="services" value="monthly_basic">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">📅 월관리 베이직 (55만원/월)</span>
+          </label>
+          <label class="service-option" data-price="990000">
+            <input type="checkbox" name="services" value="monthly_performance">
+            <span class="service-checkbox"><i class="fas fa-check"></i></span>
+            <span class="service-name">📅 월관리 퍼포먼스 (99만원/월)</span>
+          </label>
+        </div>
+        
+        <div class="form-row single">
+          <div class="form-group">
+            <label class="form-label">추가 요청사항 / 기타 서비스</label>
+            <textarea class="form-input" id="additional-services" placeholder="위 목록에 없는 서비스나 추가 요청사항을 적어주세요."></textarea>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 계약 금액 -->
+      <section class="contract-section">
+        <h2 class="section-title"><i class="fas fa-won-sign"></i> 계약 금액</h2>
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th style="text-align: right;">금액</th>
+            </tr>
+          </thead>
+          <tbody id="price-tbody">
+            <tr>
+              <td colspan="2" style="text-align: center; color: var(--text-tertiary);">서비스를 선택해주세요</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="total-row">
+              <td>총 계약금액</td>
+              <td style="text-align: right;" id="total-amount">0원</td>
+            </tr>
+          </tfoot>
+        </table>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">직접 입력 금액 (협의된 금액)</label>
+            <input type="number" class="form-input" id="custom-amount" placeholder="협의된 금액이 있으면 입력" onchange="updateCustomAmount()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">부가세 (VAT)</label>
+            <select class="form-input" id="vat-option" onchange="updateTotal()">
+              <option value="included">포함</option>
+              <option value="excluded">별도</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 결제 방식 -->
+      <section class="contract-section">
+        <h2 class="section-title"><i class="fas fa-credit-card"></i> 결제 방식</h2>
+        <div class="payment-options" id="payment-options">
+          <label class="payment-option" data-method="card">
+            <input type="radio" name="payment" value="card">
+            <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+            <div class="payment-text">
+              <div class="payment-name">카드결제</div>
+              <div class="payment-desc">신용카드/체크카드</div>
+            </div>
+          </label>
+          <label class="payment-option" data-method="cash">
+            <input type="radio" name="payment" value="cash">
+            <div class="payment-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <div class="payment-text">
+              <div class="payment-name">현금/계좌이체</div>
+              <div class="payment-desc">무통장입금</div>
+            </div>
+          </label>
+        </div>
+        
+        <div id="bank-info" style="display: none; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; padding: 16px; margin-top: 16px;">
+          <div style="font-weight: 600; color: var(--success); margin-bottom: 10px;"><i class="fas fa-university"></i> 계좌 정보</div>
+          <div style="font-size: 0.9rem; color: var(--text-secondary);">
+            <div>은행: <strong>케이뱅크 (K-Bank)</strong></div>
+            <div>계좌번호: <strong>100124491987</strong></div>
+            <div>예금주: <strong>방익주</strong></div>
+          </div>
+        </div>
+        
+        <div class="form-row" style="margin-top: 20px;">
+          <div class="form-group">
+            <label class="form-label">결제 일정</label>
+            <select class="form-input" id="payment-schedule">
+              <option value="full">일시불</option>
+              <option value="split2">2회 분할 (계약금 50% + 잔금 50%)</option>
+              <option value="split3">3회 분할 (35% + 35% + 30%)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">서비스 시작일</label>
+            <input type="date" class="form-input" id="start-date">
+          </div>
+        </div>
+      </section>
+      
+      <!-- 계약 조항 -->
+      <section class="contract-section">
+        <h2 class="section-title"><i class="fas fa-file-contract"></i> 계약 조항</h2>
+        <div class="terms-box">
+          <h4>제1조 (목적)</h4>
+          <p>본 계약은 갑(컴바인티엔비)이 을(고객)에게 마케팅 서비스를 제공함에 있어 필요한 사항을 정함을 목적으로 합니다.</p>
+          
+          <h4>제2조 (서비스 내용)</h4>
+          <ol>
+            <li>갑은 본 계약서에 명시된 서비스를 성실히 수행합니다.</li>
+            <li>서비스 범위는 계약서에 명시된 내용에 한하며, 추가 서비스는 별도 협의합니다.</li>
+            <li>월 관리 서비스의 경우 매월 정해진 콘텐츠 수량을 제작/배포합니다.</li>
+          </ol>
+          
+          <h4>제3조 (계약 기간)</h4>
+          <ol>
+            <li>셋팅 서비스: 계약일로부터 30일 이내 완료</li>
+            <li>월 관리 서비스: 계약일로부터 명시된 기간동안 유효</li>
+            <li>계약 만료 7일 전까지 별도 통보가 없으면 자동 연장됩니다.</li>
+          </ol>
+          
+          <h4>제4조 (비용 및 결제)</h4>
+          <ol>
+            <li>계약 금액은 본 계약서에 명시된 금액으로 합니다.</li>
+            <li>결제는 선택된 결제 방식으로 진행합니다.</li>
+            <li>분할 결제 시 각 회차별 금액은 협의된 일정에 따릅니다.</li>
+            <li>광고비는 본 계약 금액에 포함되지 않으며 별도 정산합니다.</li>
+          </ol>
+          
+          <h4>제5조 (환불 규정)</h4>
+          <ol>
+            <li>서비스 시작 전: 100% 환불</li>
+            <li>서비스 시작 후 7일 이내: 50% 환불</li>
+            <li>서비스 시작 후 7일 경과: 환불 불가 (진행 비용 차감)</li>
+            <li>월 관리 서비스는 해당 월 서비스 시작 후 환불 불가</li>
+          </ol>
+          
+          <h4>제6조 (비밀유지)</h4>
+          <p>갑과 을은 본 계약과 관련하여 취득한 상대방의 영업비밀 및 개인정보를 제3자에게 누설하지 않습니다.</p>
+          
+          <h4>제7조 (분쟁 해결)</h4>
+          <p>본 계약과 관련한 분쟁은 상호 협의하여 해결하며, 협의가 이루어지지 않을 경우 갑의 소재지 관할 법원에서 해결합니다.</p>
+        </div>
+        
+        <label class="service-option" style="background: rgba(168, 85, 247, 0.05);">
+          <input type="checkbox" id="terms-agree">
+          <span class="service-checkbox"><i class="fas fa-check"></i></span>
+          <span class="service-name" style="font-weight: 600;">위 계약 조항을 모두 읽었으며, 이에 동의합니다. <span style="color: var(--danger);">*</span></span>
+        </label>
+      </section>
+      
+      <!-- 서명 -->
+      <section class="contract-section">
+        <h2 class="section-title"><i class="fas fa-signature"></i> 서명</h2>
+        <div class="signature-area">
+          <div class="signature-box">
+            <div class="signature-title">
+              갑 (업체)
+              <span class="badge">컴바인티엔비</span>
+            </div>
+            <div class="signature-info">
+              대표자: 방익주<br>
+              연락처: 010-4845-3065
+            </div>
+            <div class="signature-canvas-wrapper">
+              <canvas id="signature-company" class="signature-canvas"></canvas>
+            </div>
+            <div class="signature-actions">
+              <button class="signature-btn" onclick="clearSignature('company')"><i class="fas fa-eraser"></i> 지우기</button>
+            </div>
+          </div>
+          
+          <div class="signature-box">
+            <div class="signature-title">
+              을 (고객)
+              <span class="badge" style="background: var(--warning);">서명 필수</span>
+            </div>
+            <div class="signature-info">
+              대표자: <span id="client-name-display">-</span><br>
+              연락처: <span id="client-phone-display">-</span>
+            </div>
+            <div class="signature-canvas-wrapper">
+              <canvas id="signature-client" class="signature-canvas"></canvas>
+            </div>
+            <div class="signature-actions">
+              <button class="signature-btn" onclick="clearSignature('client')"><i class="fas fa-eraser"></i> 지우기</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- 하단 제출 버튼 -->
+    <div class="submit-section">
+      <div class="submit-content">
+        <div class="submit-info">
+          <div class="submit-total">총 계약금액</div>
+          <div class="submit-amount" id="submit-total">0원</div>
+        </div>
+        <button class="submit-btn" id="submit-btn" onclick="submitContract()" disabled>
+          <i class="fas fa-file-signature"></i> 계약서 제출 및 다운로드
+        </button>
+      </div>
+    </div>
+    
+    <!-- 완료 모달 -->
+    <div class="modal-overlay" id="success-modal">
+      <div class="modal-content">
+        <div class="modal-icon"><i class="fas fa-check"></i></div>
+        <h3 class="modal-title">계약서 제출 완료!</h3>
+        <p class="modal-desc">
+          계약서가 성공적으로 제출되었습니다.<br>
+          PDF 파일을 다운로드하여 보관해주세요.<br>
+          담당자가 확인 후 연락드리겠습니다.
+        </p>
+        <div class="modal-actions">
+          <button class="modal-btn secondary" onclick="closeModal()">
+            <i class="fas fa-times"></i> 닫기
+          </button>
+          <button class="modal-btn primary" onclick="downloadPDF()">
+            <i class="fas fa-download"></i> PDF 다운로드
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // 오늘 날짜 설정
+      const today = new Date();
+      document.getElementById('contract-date').textContent = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일';
+      document.getElementById('start-date').valueAsDate = today;
+      
+      // 서비스 선택 이벤트
+      const serviceOptions = document.querySelectorAll('.service-option');
+      serviceOptions.forEach(option => {
+        const checkbox = option.querySelector('input[type="checkbox"]');
+        if (checkbox) {
+          option.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'INPUT') {
+              checkbox.checked = !checkbox.checked;
+            }
+            option.classList.toggle('selected', checkbox.checked);
+            updatePriceTable();
+          });
+        }
+      });
+      
+      // 결제 방식 선택
+      const paymentOptions = document.querySelectorAll('.payment-option');
+      paymentOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          paymentOptions.forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+          option.querySelector('input').checked = true;
+          
+          const method = option.dataset.method;
+          document.getElementById('bank-info').style.display = method === 'cash' ? 'block' : 'none';
+          checkFormValid();
+        });
+      });
+      
+      // 약관 동의 체크박스
+      const termsAgree = document.getElementById('terms-agree');
+      termsAgree.parentElement.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'INPUT') {
+          termsAgree.checked = !termsAgree.checked;
+        }
+        termsAgree.parentElement.classList.toggle('selected', termsAgree.checked);
+        checkFormValid();
+      });
+      
+      // 가격 테이블 업데이트
+      function updatePriceTable() {
+        const tbody = document.getElementById('price-tbody');
+        const selected = document.querySelectorAll('.service-option.selected');
+        
+        if (selected.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="2" style="text-align: center; color: var(--text-tertiary);">서비스를 선택해주세요</td></tr>';
+          document.getElementById('total-amount').textContent = '0원';
+          document.getElementById('submit-total').textContent = '0원';
+          checkFormValid();
+          return;
+        }
+        
+        let html = '';
+        let total = 0;
+        
+        selected.forEach(option => {
+          const name = option.querySelector('.service-name').textContent;
+          const price = parseInt(option.dataset.price);
+          total += price;
+          html += '<tr><td>' + name.replace(/\\([^)]+\\)/, '').trim() + '</td><td style="text-align: right;">' + price.toLocaleString() + '원</td></tr>';
+        });
+        
+        tbody.innerHTML = html;
+        updateTotal();
+      }
+      
+      // 직접 입력 금액
+      function updateCustomAmount() {
+        updateTotal();
+      }
+      
+      // 총액 계산
+      function updateTotal() {
+        const customAmount = document.getElementById('custom-amount').value;
+        let total = 0;
+        
+        if (customAmount && parseInt(customAmount) > 0) {
+          total = parseInt(customAmount);
+        } else {
+          const selected = document.querySelectorAll('.service-option.selected');
+          selected.forEach(option => {
+            total += parseInt(option.dataset.price);
+          });
+        }
+        
+        const vatOption = document.getElementById('vat-option').value;
+        const finalTotal = vatOption === 'excluded' ? Math.round(total * 1.1) : total;
+        const vatText = vatOption === 'excluded' ? ' (VAT 별도)' : ' (VAT 포함)';
+        
+        document.getElementById('total-amount').textContent = finalTotal.toLocaleString() + '원' + vatText;
+        document.getElementById('submit-total').textContent = finalTotal.toLocaleString() + '원';
+        checkFormValid();
+      }
+      
+      // 고객 정보 표시 업데이트
+      document.getElementById('client-name').addEventListener('input', (e) => {
+        document.getElementById('client-name-display').textContent = e.target.value || '-';
+      });
+      document.getElementById('client-phone').addEventListener('input', (e) => {
+        document.getElementById('client-phone-display').textContent = e.target.value || '-';
+      });
+      
+      // 서명 캔버스 설정
+      function setupSignatureCanvas(canvasId) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        
+        // 캔버스 크기 조정
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * 2;
+        canvas.height = rect.height * 2;
+        ctx.scale(2, 2);
+        
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        
+        function getPos(e) {
+          const rect = canvas.getBoundingClientRect();
+          if (e.touches) {
+            return {
+              x: e.touches[0].clientX - rect.left,
+              y: e.touches[0].clientY - rect.top
+            };
+          }
+          return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+          };
+        }
+        
+        function startDrawing(e) {
+          e.preventDefault();
+          isDrawing = true;
+          const pos = getPos(e);
+          lastX = pos.x;
+          lastY = pos.y;
+        }
+        
+        function draw(e) {
+          if (!isDrawing) return;
+          e.preventDefault();
+          const pos = getPos(e);
+          ctx.beginPath();
+          ctx.moveTo(lastX, lastY);
+          ctx.lineTo(pos.x, pos.y);
+          ctx.stroke();
+          lastX = pos.x;
+          lastY = pos.y;
+          checkFormValid();
+        }
+        
+        function stopDrawing() {
+          isDrawing = false;
+        }
+        
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+        
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDrawing);
+        
+        return { canvas, ctx };
+      }
+      
+      const companyCanvas = setupSignatureCanvas('signature-company');
+      const clientCanvas = setupSignatureCanvas('signature-client');
+      
+      function clearSignature(type) {
+        const canvas = type === 'company' ? companyCanvas : clientCanvas;
+        canvas.ctx.clearRect(0, 0, canvas.canvas.width, canvas.canvas.height);
+        checkFormValid();
+      }
+      
+      // 서명 여부 확인
+      function hasSignature(canvasObj) {
+        const canvas = canvasObj.canvas;
+        const ctx = canvasObj.ctx;
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          if (data[i + 3] !== 0) return true;
+        }
+        return false;
+      }
+      
+      // 폼 유효성 검사
+      function checkFormValid() {
+        const clientName = document.getElementById('client-name').value.trim();
+        const clientPhone = document.getElementById('client-phone').value.trim();
+        const clientCompany = document.getElementById('client-company').value.trim();
+        const termsAgreed = document.getElementById('terms-agree').checked;
+        const paymentSelected = document.querySelector('.payment-option.selected');
+        const hasServices = document.querySelectorAll('.service-option.selected').length > 0 || 
+                          document.getElementById('custom-amount').value > 0;
+        const hasClientSig = hasSignature(clientCanvas);
+        
+        const isValid = clientName && clientPhone && clientCompany && termsAgreed && 
+                       paymentSelected && hasServices && hasClientSig;
+        
+        document.getElementById('submit-btn').disabled = !isValid;
+      }
+      
+      // 입력 필드 이벤트
+      ['client-name', 'client-phone', 'client-company', 'client-email', 'custom-amount'].forEach(id => {
+        document.getElementById(id).addEventListener('input', checkFormValid);
+      });
+      
+      // 계약서 제출
+      async function submitContract() {
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리 중...';
+        
+        // 데이터 수집
+        const contractData = {
+          date: document.getElementById('contract-date').textContent,
+          client: {
+            company: document.getElementById('client-company').value,
+            name: document.getElementById('client-name').value,
+            phone: document.getElementById('client-phone').value,
+            email: document.getElementById('client-email').value,
+            address: document.getElementById('client-address').value
+          },
+          services: Array.from(document.querySelectorAll('.service-option.selected'))
+            .map(o => o.querySelector('.service-name').textContent),
+          additionalServices: document.getElementById('additional-services').value,
+          totalAmount: document.getElementById('total-amount').textContent,
+          paymentMethod: document.querySelector('.payment-option.selected')?.dataset.method,
+          paymentSchedule: document.getElementById('payment-schedule').value,
+          startDate: document.getElementById('start-date').value,
+          vatOption: document.getElementById('vat-option').value
+        };
+        
+        console.log('Contract Data:', contractData);
+        
+        // 약간의 딜레이 후 완료 처리
+        setTimeout(() => {
+          document.getElementById('success-modal').classList.add('show');
+          btn.innerHTML = '<i class="fas fa-check"></i> 제출 완료';
+        }, 1500);
+      }
+      
+      function closeModal() {
+        document.getElementById('success-modal').classList.remove('show');
+        document.getElementById('submit-btn').innerHTML = '<i class="fas fa-file-signature"></i> 계약서 제출 및 다운로드';
+        document.getElementById('submit-btn').disabled = false;
+      }
+      
+      // PDF 다운로드
+      async function downloadPDF() {
+        const btn = document.querySelector('.modal-btn.primary');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 생성 중...';
+        btn.disabled = true;
+        
+        try {
+          const element = document.getElementById('contract-content');
+          
+          // html2canvas 옵션
+          const canvas = await html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#0a0a0c',
+            logging: false
+          });
+          
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = canvas.width;
+          const imgHeight = canvas.height;
+          const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+          const imgX = (pdfWidth - imgWidth * ratio) / 2;
+          
+          // 여러 페이지 처리
+          const pageHeight = pdfHeight * imgWidth / pdfWidth;
+          let heightLeft = imgHeight;
+          let position = 0;
+          let page = 1;
+          
+          while (heightLeft > 0) {
+            if (page > 1) {
+              pdf.addPage();
+            }
+            
+            pdf.addImage(imgData, 'PNG', imgX, position * ratio, imgWidth * ratio, imgHeight * ratio);
+            heightLeft -= pageHeight;
+            position -= pageHeight;
+            page++;
+          }
+          
+          const clientName = document.getElementById('client-name').value || 'customer';
+          const today = new Date();
+          const fileName = 'XIVIX_계약서_' + clientName + '_' + today.getFullYear() + (today.getMonth()+1).toString().padStart(2,'0') + today.getDate().toString().padStart(2,'0') + '.pdf';
+          
+          pdf.save(fileName);
+          
+          btn.innerHTML = '<i class="fas fa-check"></i> 완료!';
+          setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-download"></i> PDF 다운로드';
+            btn.disabled = false;
+          }, 2000);
+          
+        } catch (error) {
+          console.error('PDF 생성 오류:', error);
+          alert('PDF 생성 중 오류가 발생했습니다. 다시 시도해주세요.');
+          btn.innerHTML = '<i class="fas fa-download"></i> PDF 다운로드';
+          btn.disabled = false;
+        }
+      }
     </script>
 </body>
 </html>`
