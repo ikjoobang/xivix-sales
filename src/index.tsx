@@ -7079,16 +7079,30 @@ function getContractHTML(): string {
               <td><input type="date" class="input-field input-field-border" id="start-date"></td>
             </tr>
             <tr>
+              <th>계약시 입금액</th>
+              <td><input type="text" class="input-field" id="initial-pay-amount" placeholder="0" style="text-align:right; border:1px solid #ccc; padding:8px; border-radius:4px;" oninput="formatNumber(this)"> 원</td>
+            </tr>
+            <tr>
               <th>정기 결제일</th>
               <td>
                 매월 <input type="number" class="input-field" id="pay-day" placeholder="1" style="width:50px; text-align:center; border:1px solid #ccc; padding:5px; border-radius:4px;" min="1" max="31">일
               </td>
             </tr>
             <tr>
-              <th>월 결제 금액</th>
-              <td><input type="number" class="input-field" id="monthly-pay-amount" placeholder="월 결제 금액 입력" style="text-align:right; border:1px solid #ccc; padding:8px; border-radius:4px;"> 원</td>
+              <th>매월 결제금액</th>
+              <td><input type="text" class="input-field" id="monthly-pay-amount" placeholder="0" style="text-align:right; border:1px solid #ccc; padding:8px; border-radius:4px;" oninput="formatNumber(this)"> 원</td>
             </tr>
           </table>
+          
+          <div style="margin-top:15px; padding:15px; background:#f9f9f9; border:1px solid #ddd; border-radius:6px;">
+            <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+              <input type="checkbox" id="sms-agree" style="width:20px; height:20px; margin-top:2px; accent-color:#333;">
+              <span style="font-size:13px; line-height:1.6;">
+                <strong>결제 알림 수신 동의</strong><br>
+                <span style="color:#666;">매월 정기 결제일 2일 전, 문자/카카오톡으로 결제 안내 메시지가 발송됩니다.</span>
+              </span>
+            </label>
+          </div>
         </div>
         
         <!-- 제5조 계약 조건 -->
@@ -7473,6 +7487,19 @@ function getContractHTML(): string {
         if (type === 'provider') canvasProvider.clear();
         else canvasClient.clear();
         checkValid();
+      }
+      
+      // ========================================
+      // 금액 포맷 (천 단위 콤마)
+      // ========================================
+      function formatNumber(input) {
+        // 숫자만 추출
+        let value = input.value.replace(/[^0-9]/g, '');
+        // 천 단위 콤마 추가
+        if (value) {
+          value = parseInt(value).toLocaleString();
+        }
+        input.value = value;
       }
       
       // ========================================
