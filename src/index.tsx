@@ -443,6 +443,77 @@ app.get('/api/system-dev-options', (c) => c.json(SYSTEM_DEV_OPTIONS))
 app.get('/api/consulting-options', (c) => c.json(CONSULTING_OPTIONS))
 
 // ========================================
+// 계약서 저장 API
+// ========================================
+function genId() {
+  const c = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+  let r = '';
+  for (let i = 0; i < 8; i++) r += c[Math.floor(Math.random() * c.length)];
+  return r;
+}
+
+// 계약서 저장
+app.post('/api/contracts', async (c) => {
+  try {
+    const data = await c.req.json();
+    const id = genId();
+    const db = c.env.DB;
+    if (!db) return c.json({ success: false, error: 'DB not configured' }, 500);
+    
+    await db.prepare(`
+      INSERT INTO contracts (id, title, contract_date, provider_company, provider_rep, provider_phone, provider_email,
+        bank_name, bank_account, bank_holder, services, extra_service, setup_fee, monthly_fee, vat_type,
+        payment_method, start_date, payment_day, initial_amount, monthly_amount, sms_agree, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
+    `).bind(
+      id, data.title, data.contract_date, data.provider_company, data.provider_rep, data.provider_phone, data.provider_email,
+      data.bank_name, data.bank_account, data.bank_holder, JSON.stringify(data.services || []), data.extra_service,
+      data.setup_fee || 0, data.monthly_fee || 0, data.vat_type, data.payment_method, data.start_date,
+      data.payment_day, data.initial_amount, data.monthly_amount, data.sms_agree ? 1 : 0
+    ).run();
+    
+    return c.json({ success: true, id });
+  } catch (e: any) {
+    return c.json({ success: false, error: e.message }, 500);
+  }
+});
+
+// 계약서 조회
+app.get('/api/contracts/:id', async (c) => {
+  try {
+    const id = c.req.param('id');
+    const db = c.env.DB;
+    if (!db) return c.json({ success: false, error: 'DB not configured' }, 500);
+    
+    const row = await db.prepare('SELECT * FROM contracts WHERE id = ?').bind(id).first();
+    if (!row) return c.json({ success: false, error: 'Not found' }, 404);
+    
+    return c.json({ success: true, contract: { ...row, services: JSON.parse(row.services as string || '[]') } });
+  } catch (e: any) {
+    return c.json({ success: false, error: e.message }, 500);
+  }
+});
+
+// 고객 서명 저장
+app.post('/api/contracts/:id/sign', async (c) => {
+  try {
+    const id = c.req.param('id');
+    const data = await c.req.json();
+    const db = c.env.DB;
+    if (!db) return c.json({ success: false, error: 'DB not configured' }, 500);
+    
+    await db.prepare(`
+      UPDATE contracts SET client_company=?, client_name=?, client_phone=?, client_email=?, client_address=?,
+        client_signature=?, status='signed', signed_at=datetime('now') WHERE id=?
+    `).bind(data.client_company, data.client_name, data.client_phone, data.client_email, data.client_address, data.client_signature, id).run();
+    
+    return c.json({ success: true });
+  } catch (e: any) {
+    return c.json({ success: false, error: e.message }, 500);
+  }
+});
+
+// ========================================
 // 카카오 알림톡 API
 // ========================================
 
@@ -2106,6 +2177,7 @@ app.get('/login', (c) => c.html(getLoginHTML()))
 app.get('/my', (c) => c.html(getMyPageHTML()))
 app.get('/admin', (c) => c.html(getAdminHTML()))
 app.get('/contract', (c) => c.html(getContractHTML()))
+app.get('/contract/:id', (c) => c.html(getContractViewHTML(c.req.param('id'))))
 
 // OG 이미지 (카카오톡, SNS 공유용) - PNG로 리다이렉트
 app.get('/og-image.png', async (c) => {
@@ -7092,12 +7164,12 @@ function getContractHTML(): string {
       <div class="contract-page">
         
         <header class="contract-header">
-          <h1 class="contract-title">마 케 팅 서 비 스 계 약 서</h1>
+          <input type="text" class="contract-title editable-field" id="contract-title" value="마 케 팅 서 비 스 계 약 서" style="border:none; background:transparent; text-align:center; width:100%; font-size:inherit; font-weight:inherit; letter-spacing:inherit;" readonly>
           <p class="contract-subtitle">Marketing Service Agreement</p>
         </header>
         
         <div class="contract-date-row">
-          계약일자: <span id="contract-date"></span>
+          계약일자: <input type="date" class="editable-field" id="contract-date-input" style="border:none; background:transparent; font-size:inherit;" readonly>
         </div>
         
         <!-- 제1조 당사자 -->
@@ -7359,12 +7431,33 @@ function getContractHTML(): string {
       </div>
     </div>
     
+    <!-- 편집 모드 배너 -->
+    <div id="edit-banner" style="display:none; position:fixed; top:0; left:0; right:0; background:#333; color:#fff; padding:10px; text-align:center; z-index:1000; font-size:14px;">
+      ✏️ 편집 모드 | 모든 내용을 수정할 수 있습니다
+    </div>
+    
     <!-- 버튼 -->
     <div class="action-buttons no-print">
       <button type="button" class="action-btn secondary" onclick="window.print()">🖨️ 인쇄</button>
-      <button type="button" class="action-btn share" onclick="shareContract()">🔗 링크 공유</button>
+      <button type="button" class="action-btn secondary" onclick="toggleEditMode()" id="edit-btn">✏️ 편집</button>
+      <button type="button" class="action-btn primary" onclick="saveContract()" id="save-btn" style="display:none;">💾 저장</button>
+      <button type="button" class="action-btn share" onclick="shareContract()" id="share-btn" style="display:none;">🔗 링크 공유</button>
       <button type="button" class="action-btn kakao" onclick="openKakaoSendModal()" style="background:#FEE500; color:#191919;">💬 카카오톡 발송</button>
       <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled>✍️ 계약 완료</button>
+    </div>
+    
+    <!-- 저장 완료 모달 -->
+    <div class="modal-bg" id="save-modal">
+      <div class="modal-box">
+        <div class="modal-icon">✓</div>
+        <h3 class="modal-title">저장 완료</h3>
+        <p class="modal-desc">계약서가 저장되었습니다.<br>아래 링크를 고객에게 전달하세요.</p>
+        <div class="share-link-box" id="saved-link"></div>
+        <button class="copy-btn" onclick="copySavedLink()" style="margin-top:10px; padding:10px 20px; cursor:pointer;">📋 링크 복사</button>
+        <div style="margin-top:15px;">
+          <button class="action-btn secondary" onclick="closeSaveModal()" style="width:100%;">확인</button>
+        </div>
+      </div>
     </div>
     
     <!-- 완료 모달 -->
@@ -7437,7 +7530,136 @@ function getContractHTML(): string {
     
     <script>
       // ========================================
-      // 저장된 데이터 로드
+      // 편집 모드
+      // ========================================
+      let isEditMode = false;
+      let savedContractId = null;
+      
+      function toggleEditMode() {
+        isEditMode = !isEditMode;
+        const editBtn = document.getElementById('edit-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const banner = document.getElementById('edit-banner');
+        
+        if (isEditMode) {
+          // 편집 모드 ON
+          editBtn.textContent = '✖ 편집 취소';
+          saveBtn.style.display = 'inline-flex';
+          banner.style.display = 'block';
+          document.body.style.paddingTop = '45px';
+          
+          // 모든 editable-field를 편집 가능하게
+          document.querySelectorAll('.editable-field').forEach(el => {
+            el.removeAttribute('readonly');
+            el.style.background = '#fffbe6';
+            el.style.border = '1px solid #f0c000';
+          });
+          
+          // 모든 input-field도 하이라이트
+          document.querySelectorAll('.input-field').forEach(el => {
+            el.style.background = '#fffbe6';
+          });
+        } else {
+          // 편집 모드 OFF
+          editBtn.textContent = '✏️ 편집';
+          saveBtn.style.display = 'none';
+          if (!savedContractId) shareBtn.style.display = 'none';
+          banner.style.display = 'none';
+          document.body.style.paddingTop = '0';
+          
+          document.querySelectorAll('.editable-field').forEach(el => {
+            el.setAttribute('readonly', 'readonly');
+            el.style.background = 'transparent';
+            el.style.border = 'none';
+          });
+          
+          document.querySelectorAll('.input-field').forEach(el => {
+            el.style.background = '';
+          });
+        }
+      }
+      
+      // ========================================
+      // 계약서 저장
+      // ========================================
+      async function saveContract() {
+        const saveBtn = document.getElementById('save-btn');
+        saveBtn.disabled = true;
+        saveBtn.textContent = '⏳ 저장 중...';
+        
+        // 서비스 항목 수집
+        const services = [];
+        document.querySelectorAll('.service-row').forEach(row => {
+          const name = row.querySelector('.service-name-input')?.value?.trim();
+          const price = parseInt(row.querySelector('.service-price-input')?.value) || 0;
+          if (name || price) services.push({ name, price });
+        });
+        
+        const data = {
+          title: document.getElementById('contract-title').value,
+          contract_date: document.getElementById('contract-date-input').value,
+          provider_company: document.getElementById('company-name').value,
+          provider_rep: document.getElementById('company-rep').value,
+          provider_phone: document.getElementById('company-phone').value,
+          provider_email: document.getElementById('company-email').value,
+          bank_name: document.getElementById('bank-name').value,
+          bank_account: document.getElementById('bank-account').value,
+          bank_holder: document.getElementById('bank-holder').value,
+          services: services,
+          extra_service: document.getElementById('extra-service-name')?.value || '',
+          setup_fee: parseInt(document.getElementById('setup-fee').value) || 0,
+          monthly_fee: parseInt(document.getElementById('monthly-fee').value) || 0,
+          vat_type: document.getElementById('vat-card')?.checked ? 'card' : (document.getElementById('vat-cash')?.checked ? 'cash' : ''),
+          payment_method: document.querySelector('input[name="pay-method"]:checked')?.value || '',
+          start_date: document.getElementById('start-date').value,
+          payment_day: parseInt(document.getElementById('pay-day').value) || 0,
+          initial_amount: parseInt(document.getElementById('initial-pay-amount').value.replace(/,/g, '')) || 0,
+          monthly_amount: parseInt(document.getElementById('monthly-pay-amount').value.replace(/,/g, '')) || 0,
+          sms_agree: document.getElementById('sms-agree').checked
+        };
+        
+        try {
+          const res = await fetch('/api/contracts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const result = await res.json();
+          
+          if (result.success) {
+            savedContractId = result.id;
+            const link = window.location.origin + '/contract/' + result.id;
+            document.getElementById('saved-link').textContent = link;
+            document.getElementById('save-modal').classList.add('show');
+            document.getElementById('share-btn').style.display = 'inline-flex';
+            
+            // 편집 모드 종료
+            toggleEditMode();
+          } else {
+            alert('❌ 저장 실패: ' + result.error);
+          }
+        } catch (e) {
+          alert('❌ 오류: ' + e.message);
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = '💾 저장';
+        }
+      }
+      
+      function copySavedLink() {
+        const link = document.getElementById('saved-link').textContent;
+        navigator.clipboard.writeText(link).then(() => {
+          alert('✅ 링크가 복사되었습니다!');
+        });
+      }
+      
+      function closeSaveModal() {
+        document.getElementById('save-modal').classList.remove('show');
+      }
+      
+      // ========================================
+      // 저장된 데이터 로드 (localStorage)
       // ========================================
       function loadSavedData() {
         const saved = localStorage.getItem('xivix_contract_company');
@@ -7453,7 +7675,6 @@ function getContractHTML(): string {
         }
       }
       
-      // 페이지 로드 시 저장된 데이터 불러오기
       loadSavedData();
       
       // ========================================
@@ -7867,7 +8088,8 @@ function getContractHTML(): string {
       // 초기화
       // ========================================
       const now = new Date();
-      document.getElementById('contract-date').textContent = now.getFullYear() + '년 ' + (now.getMonth()+1) + '월 ' + now.getDate() + '일';
+      const dateStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+      document.getElementById('contract-date-input').value = dateStr;
       document.getElementById('footer-year').textContent = now.getFullYear();
       document.getElementById('footer-month').textContent = now.getMonth()+1;
       document.getElementById('footer-day').textContent = now.getDate();
@@ -7876,6 +8098,227 @@ function getContractHTML(): string {
       
 
     </script>
+</body>
+</html>`;
+}
+
+// ========================================
+// 고객용 계약서 뷰 (저장된 계약서 조회/서명)
+// ========================================
+function getContractViewHTML(id: string): string {
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>계약서 확인</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: -apple-system, sans-serif; background:#f5f5f5; padding:20px; }
+    .loading { text-align:center; padding:100px; }
+    .contract { max-width:800px; margin:0 auto; background:#fff; padding:40px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    h1 { text-align:center; margin-bottom:30px; }
+    .section { margin-bottom:25px; }
+    .section-title { font-size:16px; font-weight:bold; margin-bottom:10px; padding:8px 12px; background:#f5f5f5; border-left:3px solid #333; }
+    table { width:100%; border-collapse:collapse; margin-bottom:15px; }
+    th, td { border:1px solid #ddd; padding:10px; text-align:left; }
+    th { background:#f9f9f9; width:100px; }
+    .input-field { width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-size:14px; }
+    .btn { padding:12px 24px; border:none; border-radius:6px; cursor:pointer; font-size:15px; }
+    .btn-primary { background:#333; color:#fff; }
+    .btn-primary:disabled { background:#ccc; }
+    .sig-box { border:1px dashed #999; height:80px; background:#fff; }
+    canvas { width:100%; height:100%; }
+    .footer { text-align:center; margin-top:30px; color:#666; }
+    .error { color:red; text-align:center; padding:50px; }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading">계약서를 불러오는 중...</div>
+  <div id="contract" class="contract" style="display:none;"></div>
+  <div id="error" class="error" style="display:none;"></div>
+  
+  <script>
+    const CONTRACT_ID = '${id}';
+    let contractData = null;
+    
+    async function loadContract() {
+      try {
+        const res = await fetch('/api/contracts/' + CONTRACT_ID);
+        const result = await res.json();
+        
+        if (!result.success) {
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('error').style.display = 'block';
+          document.getElementById('error').textContent = '계약서를 찾을 수 없습니다.';
+          return;
+        }
+        
+        contractData = result.contract;
+        renderContract();
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('contract').style.display = 'block';
+      } catch (e) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = '오류: ' + e.message;
+      }
+    }
+    
+    function renderContract() {
+      const d = contractData;
+      const services = d.services || [];
+      let serviceHtml = services.map(s => '<tr><td>' + s.name + '</td><td style="text-align:right;">￦ ' + (s.price||0).toLocaleString() + '</td></tr>').join('');
+      
+      const total = services.reduce((sum, s) => sum + (s.price||0), 0) + (d.setup_fee||0) + (d.monthly_fee||0);
+      
+      document.getElementById('contract').innerHTML = \`
+        <h1>\${d.title || '마케팅 서비스 계약서'}</h1>
+        <p style="text-align:right; margin-bottom:20px;">계약일자: \${d.contract_date || '-'}</p>
+        
+        <div class="section">
+          <div class="section-title">서비스 제공자</div>
+          <table>
+            <tr><th>상호</th><td>\${d.provider_company || '-'}</td><th>대표</th><td>\${d.provider_rep || '-'}</td></tr>
+            <tr><th>연락처</th><td>\${d.provider_phone || '-'}</td><th>이메일</th><td>\${d.provider_email || '-'}</td></tr>
+          </table>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">계약 서비스</div>
+          <table>
+            <tr><th style="width:70%">서비스</th><th style="width:30%">금액</th></tr>
+            \${serviceHtml}
+            <tr><th>셋팅비</th><td style="text-align:right;">￦ \${(d.setup_fee||0).toLocaleString()}</td></tr>
+            <tr><th>월관리비</th><td style="text-align:right;">￦ \${(d.monthly_fee||0).toLocaleString()} /월</td></tr>
+            <tr style="background:#f5f5f5;"><th>총 계약금액</th><td style="text-align:right; font-weight:bold; color:#c00;">￦ \${total.toLocaleString()}</td></tr>
+          </table>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">결제 정보</div>
+          <table>
+            <tr><th>입금계좌</th><td>\${d.bank_name || '-'} | \${d.bank_account || '-'} | \${d.bank_holder || '-'}</td></tr>
+            <tr><th>서비스 시작일</th><td>\${d.start_date || '-'}</td></tr>
+            <tr><th>계약시 입금액</th><td>￦ \${(d.initial_amount||0).toLocaleString()}</td></tr>
+            <tr><th>정기 결제일</th><td>매월 \${d.payment_day || '-'}일</td></tr>
+            <tr><th>매월 결제금액</th><td>￦ \${(d.monthly_amount||0).toLocaleString()}</td></tr>
+          </table>
+        </div>
+        
+        \${d.status === 'signed' ? '<div class="footer">✅ 이 계약서는 이미 서명되었습니다.</div>' : \`
+        <div class="section">
+          <div class="section-title">고객사 정보 입력</div>
+          <table>
+            <tr><th>상호</th><td><input type="text" class="input-field" id="client-company" placeholder="상호/업체명"></td></tr>
+            <tr><th>대표</th><td><input type="text" class="input-field" id="client-name" placeholder="대표자명"></td></tr>
+            <tr><th>연락처</th><td><input type="tel" class="input-field" id="client-phone" placeholder="010-0000-0000"></td></tr>
+            <tr><th>이메일</th><td><input type="email" class="input-field" id="client-email" placeholder="이메일 (선택)"></td></tr>
+            <tr><th>주소</th><td><input type="text" class="input-field" id="client-address" placeholder="사업장 주소 (선택)"></td></tr>
+          </table>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">서명</div>
+          <div class="sig-box"><canvas id="sig-canvas"></canvas></div>
+          <button onclick="clearSig()" style="margin-top:5px; padding:5px 10px; cursor:pointer;">지우기</button>
+        </div>
+        
+        <div style="margin:20px 0; padding:15px; background:#fffbe6; border:2px solid #f0c000; border-radius:8px;">
+          <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+            <input type="checkbox" id="agree" style="width:20px; height:20px;">
+            위 계약 내용을 모두 확인하였으며, 이에 동의합니다.
+          </label>
+        </div>
+        
+        <button class="btn btn-primary" id="submit-btn" onclick="submitSign()" disabled style="width:100%;">✍️ 계약 완료</button>
+        \`}
+      \`;
+      
+      if (d.status !== 'signed') {
+        initCanvas();
+        document.querySelectorAll('.input-field, #agree').forEach(el => el.addEventListener('input', checkValid));
+        document.getElementById('agree').addEventListener('change', checkValid);
+      }
+    }
+    
+    let ctx, drawing = false, lx, ly;
+    function initCanvas() {
+      const canvas = document.getElementById('sig-canvas');
+      const box = canvas.parentElement;
+      ctx = canvas.getContext('2d');
+      canvas.width = box.offsetWidth * 2;
+      canvas.height = box.offsetHeight * 2;
+      ctx.scale(2, 2);
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      
+      canvas.addEventListener('mousedown', e => { drawing = true; lx = e.offsetX; ly = e.offsetY; });
+      canvas.addEventListener('mousemove', e => { if (!drawing) return; ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(e.offsetX,e.offsetY); ctx.stroke(); lx=e.offsetX; ly=e.offsetY; checkValid(); });
+      canvas.addEventListener('mouseup', () => drawing = false);
+      canvas.addEventListener('mouseout', () => drawing = false);
+      
+      canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; const t = e.touches[0]; const r = canvas.getBoundingClientRect(); lx = t.clientX - r.left; ly = t.clientY - r.top; });
+      canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const t = e.touches[0]; const r = canvas.getBoundingClientRect(); const x = t.clientX - r.left, y = t.clientY - r.top; ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(x,y); ctx.stroke(); lx=x; ly=y; checkValid(); });
+      canvas.addEventListener('touchend', () => drawing = false);
+    }
+    
+    function clearSig() { ctx.clearRect(0, 0, 9999, 9999); checkValid(); }
+    
+    function hasSig() {
+      const canvas = document.getElementById('sig-canvas');
+      const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      for (let i = 3; i < d.length; i += 4) if (d[i] > 0) return true;
+      return false;
+    }
+    
+    function checkValid() {
+      const company = document.getElementById('client-company').value.trim();
+      const name = document.getElementById('client-name').value.trim();
+      const phone = document.getElementById('client-phone').value.trim();
+      const agreed = document.getElementById('agree').checked;
+      document.getElementById('submit-btn').disabled = !(company && name && phone && agreed && hasSig());
+    }
+    
+    async function submitSign() {
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = '⏳ 제출 중...';
+      
+      try {
+        const canvas = document.getElementById('sig-canvas');
+        const res = await fetch('/api/contracts/' + CONTRACT_ID + '/sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            client_company: document.getElementById('client-company').value,
+            client_name: document.getElementById('client-name').value,
+            client_phone: document.getElementById('client-phone').value,
+            client_email: document.getElementById('client-email').value,
+            client_address: document.getElementById('client-address').value,
+            client_signature: canvas.toDataURL()
+          })
+        });
+        const result = await res.json();
+        
+        if (result.success) {
+          alert('✅ 계약이 완료되었습니다!');
+          location.reload();
+        } else {
+          alert('❌ 오류: ' + result.error);
+          btn.disabled = false;
+          btn.textContent = '✍️ 계약 완료';
+        }
+      } catch (e) {
+        alert('❌ 오류: ' + e.message);
+        btn.disabled = false;
+        btn.textContent = '✍️ 계약 완료';
+      }
+    }
+    
+    loadContract();
+  </script>
 </body>
 </html>`;
 }
