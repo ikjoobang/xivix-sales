@@ -452,6 +452,69 @@ function genId() {
   return r;
 }
 
+// 계약서 목록 조회
+app.get('/api/contracts', async (c) => {
+  try {
+    const db = c.env.DB;
+    if (!db) return c.json({ success: false, error: 'DB not configured' }, 500);
+    
+    const rows = await db.prepare(`
+      SELECT id, title, contract_date, client_company, client_name, client_phone, status, created_at, signed_at
+      FROM contracts 
+      ORDER BY created_at DESC
+    `).all();
+    
+    return c.json({ success: true, contracts: rows.results || [] });
+  } catch (e: any) {
+    return c.json({ success: false, error: e.message }, 500);
+  }
+});
+
+// 계약서 수정
+app.put('/api/contracts/:id', async (c) => {
+  try {
+    const id = c.req.param('id');
+    const data = await c.req.json();
+    const db = c.env.DB;
+    if (!db) return c.json({ success: false, error: 'DB not configured' }, 500);
+    
+    await db.prepare(`
+      UPDATE contracts SET
+        title = ?, contract_date = ?, provider_company = ?, provider_rep = ?, provider_phone = ?, provider_email = ?,
+        bank_name = ?, bank_account = ?, bank_holder = ?, services = ?, extra_service_name = ?, extra_service_price = ?,
+        setup_fee = ?, monthly_fee = ?, service_start_date = ?, payment_day = ?, initial_payment = ?, monthly_payment = ?,
+        agree_sms = ?, remarks = ?, client_company = ?, client_name = ?, client_phone = ?, client_email = ?, client_address = ?
+      WHERE id = ?
+    `).bind(
+      data.title, data.contract_date, data.provider_company, data.provider_rep, data.provider_phone, data.provider_email,
+      data.bank_name, data.bank_account, data.bank_holder, JSON.stringify(data.services || []),
+      data.extra_service_name || '', data.extra_service_price || 0,
+      data.setup_fee || 0, data.monthly_fee || 0, data.start_date,
+      data.payment_day, data.initial_amount, data.monthly_amount, data.sms_agree ? 1 : 0, data.remarks || '',
+      data.client_company || '', data.client_name || '', data.client_phone || '', data.client_email || '', data.client_address || '',
+      id
+    ).run();
+    
+    return c.json({ success: true });
+  } catch (e: any) {
+    return c.json({ success: false, error: e.message }, 500);
+  }
+});
+
+// 계약서 삭제
+app.delete('/api/contracts/:id', async (c) => {
+  try {
+    const id = c.req.param('id');
+    const db = c.env.DB;
+    if (!db) return c.json({ success: false, error: 'DB not configured' }, 500);
+    
+    await db.prepare('DELETE FROM contracts WHERE id = ?').bind(id).run();
+    return c.json({ success: true });
+  } catch (e: any) {
+    return c.json({ success: false, error: e.message }, 500);
+  }
+});
+
 // 계약서 저장
 app.post('/api/contracts', async (c) => {
   try {
@@ -2555,6 +2618,8 @@ function getAdminHTML(): string {
     <div class="sidebar-logo">X I Λ I X<br><small style="font-size:0.7rem;font-weight:400;">Admin</small></div>
     <ul class="sidebar-menu">
       <li class="sidebar-item active" data-tab="dashboard"><i class="fas fa-chart-line"></i> 대시보드</li>
+      <li class="sidebar-item" data-tab="contract-create"><i class="fas fa-file-signature"></i> 계약서 작성</li>
+      <li class="sidebar-item" data-tab="contract-list"><i class="fas fa-folder-open"></i> 계약서 보관</li>
       <li class="sidebar-item" data-tab="payments"><i class="fas fa-credit-card"></i> 결제 관리</li>
       <li class="sidebar-item" data-tab="questionnaires"><i class="fas fa-clipboard-list"></i> 질문지</li>
       <li class="sidebar-item" data-tab="users"><i class="fas fa-users"></i> 고객 관리</li>
@@ -2621,6 +2686,26 @@ function getAdminHTML(): string {
       <p class="page-subtitle">쿠폰 발급 및 관리</p>
       <div class="card" id="coupons-section"><div class="loading"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div></div>
     </div>
+    
+    <div id="contract-create-tab" class="tab-content">
+      <h1 class="page-title">계약서 작성</h1>
+      <p class="page-subtitle">새 계약서를 작성합니다</p>
+      <div class="card">
+        <iframe id="contract-create-iframe" src="/contract" style="width:100%;height:calc(100vh - 180px);border:none;border-radius:12px;"></iframe>
+      </div>
+    </div>
+    
+    <div id="contract-list-tab" class="tab-content">
+      <h1 class="page-title">계약서 보관</h1>
+      <p class="page-subtitle">저장된 계약서 목록</p>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-file-contract"></i> 계약서 목록</h3>
+          <button class="action-btn primary" onclick="switchTab('contract-create')"><i class="fas fa-plus"></i> 새 계약서</button>
+        </div>
+        <div id="contract-list-content"><div class="loading"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div></div>
+      </div>
+    </div>
   </main>
   
   <script>
@@ -2645,15 +2730,21 @@ function getAdminHTML(): string {
       loadTabData(tab);
     }
     
+    let isAdmin = localStorage.getItem('xivix_admin') === 'true';
+    
     async function checkAuth() {
-      const res = await fetch('/api/auth/me');
-      const data = await res.json();
-      if (!data.user || data.user.role !== 'admin') {
-        alert('관리자 권한이 필요합니다.');
-        window.location.href = '/';
-        return false;
+      if (isAdmin) return true;
+      
+      const pwd = prompt('관리자 비밀번호를 입력하세요:');
+      if (pwd === 'xivix2025!') {
+        isAdmin = true;
+        localStorage.setItem('xivix_admin', 'true');
+        return true;
+      } else if (pwd) {
+        alert('비밀번호가 틀렸습니다.');
       }
-      return true;
+      window.location.href = '/';
+      return false;
     }
     
     async function loadTabData(tab) {
@@ -2662,6 +2753,7 @@ function getAdminHTML(): string {
       switch(tab) {
         case 'dashboard': loadDashboard(); break;
         case 'payments': loadPayments(); break;
+        case 'contract-list': loadContractList(); break;
         case 'users': loadUsers(); break;
         case 'tasks': loadTasks(); break;
       }
@@ -2862,7 +2954,72 @@ function getAdminHTML(): string {
     }
     
     function logout() {
-      window.location.href = '/api/auth/logout';
+      localStorage.removeItem('xivix_admin');
+      window.location.href = '/';
+    }
+    
+    async function loadContractList() {
+      try {
+        const res = await fetch('/api/contracts');
+        const data = await res.json();
+        
+        if (!data.contracts || data.contracts.length === 0) {
+          document.getElementById('contract-list-content').innerHTML = '<div class="empty">저장된 계약서가 없습니다.<br><br><button class="action-btn primary" onclick="switchTab(\\'contract-create\\')"><i class="fas fa-plus"></i> 새 계약서 작성</button></div>';
+          return;
+        }
+        
+        document.getElementById('contract-list-content').innerHTML = \`
+          <table>
+            <thead><tr><th>계약일</th><th>고객사</th><th>담당자</th><th>연락처</th><th>상태</th><th>액션</th></tr></thead>
+            <tbody>
+              \${data.contracts.map(c => \`
+                <tr>
+                  <td>\${c.contract_date || '-'}</td>
+                  <td>\${c.client_company || '미입력'}</td>
+                  <td>\${c.client_name || '미입력'}</td>
+                  <td>\${c.client_phone || '-'}</td>
+                  <td><span class="badge \${c.status === 'signed' ? 'badge-green' : 'badge-yellow'}">\${c.status === 'signed' ? '서명완료' : '대기중'}</span></td>
+                  <td>
+                    <button class="action-btn" onclick="viewContract('\${c.id}')"><i class="fas fa-eye"></i> 보기</button>
+                    <button class="action-btn" onclick="editContract('\${c.id}')"><i class="fas fa-edit"></i> 수정</button>
+                    <button class="action-btn" onclick="copyContractLink('\${c.id}')"><i class="fas fa-link"></i> 링크</button>
+                    <button class="action-btn" onclick="deleteContract('\${c.id}')" style="color:#ef4444;"><i class="fas fa-trash"></i></button>
+                  </td>
+                </tr>
+              \`).join('')}
+            </tbody>
+          </table>
+        \`;
+      } catch (error) {
+        document.getElementById('contract-list-content').innerHTML = '<div class="empty">데이터를 불러올 수 없습니다.</div>';
+      }
+    }
+    
+    function viewContract(id) {
+      window.open('/contract/' + id, '_blank');
+    }
+    
+    function editContract(id) {
+      document.getElementById('contract-create-iframe').src = '/contract?edit=' + id;
+      switchTab('contract-create');
+    }
+    
+    function copyContractLink(id) {
+      const url = window.location.origin + '/contract/' + id;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('계약서 링크가 복사되었습니다!\\n\\n' + url);
+      });
+    }
+    
+    async function deleteContract(id) {
+      if (!confirm('정말 이 계약서를 삭제하시겠습니까?')) return;
+      
+      try {
+        await fetch('/api/contracts/' + id, { method: 'DELETE' });
+        loadContractList();
+      } catch (e) {
+        alert('삭제 중 오류가 발생했습니다.');
+      }
     }
     
     // 초기 로드
@@ -4967,6 +5124,11 @@ function getMainHTML(): string {
         <div class="footer-company">AI 마케팅 자동화 시스템 | 대표: 방익주</div>
         <div style="font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 12px;">
           📞 010-4845-3065 | 📧 contact@xivix.kr
+        </div>
+        <div style="margin: 16px 0;">
+          <a href="/admin" style="display: inline-block; padding: 10px 24px; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: var(--neon-purple); font-size: 0.85rem; text-decoration: none; transition: all 0.2s;">
+            <i class="fas fa-cog"></i> 관리자
+          </a>
         </div>
         <div class="footer-copy">© 2025 X I Λ I X. All rights reserved.</div>
       </footer>
