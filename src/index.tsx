@@ -7088,10 +7088,6 @@ function getContractHTML(): string {
     </style>
 </head>
 <body>
-    <div class="edit-mode-banner" id="edit-banner">
-      ✏️ 편집 모드 | 노란색 필드를 클릭하여 내용을 수정하세요
-    </div>
-    
     <div class="contract-wrapper" id="contract-content">
       <div class="contract-page">
         
@@ -7112,15 +7108,15 @@ function getContractHTML(): string {
             <tr><td colspan="4" class="party-header">서비스 제공자 (이하 "제공자")</td></tr>
             <tr>
               <th>상 호</th>
-              <td><input type="text" class="input-field editable-company" id="company-name" value="컴바인티엔비 (COMBINE T&B)" readonly></td>
+              <td><input type="text" class="input-field" id="company-name" value="컴바인티엔비 (COMBINE T&B)"></td>
               <th>대 표</th>
-              <td><input type="text" class="input-field editable-company" id="company-rep" value="방익주" readonly></td>
+              <td><input type="text" class="input-field" id="company-rep" value="방익주"></td>
             </tr>
             <tr>
               <th>연락처</th>
-              <td><input type="text" class="input-field editable-company" id="company-phone" value="010-4845-3065" readonly></td>
+              <td><input type="text" class="input-field" id="company-phone" value="010-4845-3065"></td>
               <th>이메일</th>
-              <td><input type="text" class="input-field editable-company" id="company-email" value="comtnb@gmail.com" readonly></td>
+              <td><input type="text" class="input-field" id="company-email" value="comtnb@gmail.com"></td>
             </tr>
           </table>
           
@@ -7221,12 +7217,11 @@ function getContractHTML(): string {
           </div>
           
           <div class="bank-info-box" id="bank-box">
-            <strong>입금 계좌</strong><br>
-            <span id="bank-info-text">은행: 케이뱅크 (K-Bank) ｜ 계좌번호: 100-124-491987 ｜ 예금주: 방익주</span>
-            <div id="bank-edit-fields" style="display:none; margin-top:8px;">
-              <input type="text" class="input-field editable-company" id="bank-name" value="케이뱅크 (K-Bank)" readonly style="border-bottom:1px solid #ccc; margin-bottom:5px;" placeholder="은행명">
-              <input type="text" class="input-field editable-company" id="bank-account" value="100-124-491987" readonly style="border-bottom:1px solid #ccc; margin-bottom:5px;" placeholder="계좌번호">
-              <input type="text" class="input-field editable-company" id="bank-holder" value="방익주" readonly style="border-bottom:1px solid #ccc;" placeholder="예금주">
+            <strong>입금 계좌</strong>
+            <div style="margin-top:8px;">
+              <input type="text" class="input-field" id="bank-name" value="케이뱅크 (K-Bank)" style="border:1px solid #ccc; padding:6px; border-radius:4px; margin-bottom:5px;" placeholder="은행명">
+              <input type="text" class="input-field" id="bank-account" value="100-124-491987" style="border:1px solid #ccc; padding:6px; border-radius:4px; margin-bottom:5px;" placeholder="계좌번호">
+              <input type="text" class="input-field" id="bank-holder" value="방익주" style="border:1px solid #ccc; padding:6px; border-radius:4px;" placeholder="예금주">
             </div>
           </div>
           
@@ -7364,16 +7359,9 @@ function getContractHTML(): string {
       </div>
     </div>
     
-    <!-- 편집 컨트롤 -->
-    <div class="edit-controls" id="edit-controls">
-      <button type="button" class="edit-control-btn save" onclick="saveEdits()">💾 저장</button>
-      <button type="button" class="edit-control-btn" onclick="exitEditMode()">✖ 편집 종료</button>
-    </div>
-    
     <!-- 버튼 -->
     <div class="action-buttons no-print">
       <button type="button" class="action-btn secondary" onclick="window.print()">🖨️ 인쇄</button>
-      <button type="button" class="action-btn secondary" onclick="enterEditMode()" id="edit-mode-btn">✏️ 편집 모드</button>
       <button type="button" class="action-btn share" onclick="shareContract()">🔗 링크 공유</button>
       <button type="button" class="action-btn kakao" onclick="openKakaoSendModal()" style="background:#FEE500; color:#191919;">💬 카카오톡 발송</button>
       <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled>✍️ 계약 완료</button>
@@ -7449,81 +7437,8 @@ function getContractHTML(): string {
     
     <script>
       // ========================================
-      // 편집 모드 기능
+      // 저장된 데이터 로드
       // ========================================
-      let isEditMode = false;
-      
-      function enterEditMode() {
-        isEditMode = true;
-        document.getElementById('edit-banner').classList.add('show');
-        document.getElementById('edit-controls').classList.add('show');
-        document.getElementById('edit-mode-btn').style.display = 'none';
-        
-        document.querySelectorAll('.editable-company').forEach(field => {
-          field.removeAttribute('readonly');
-          field.classList.add('editable-field');
-        });
-        
-        document.getElementById('bank-info-text').style.display = 'none';
-        document.getElementById('bank-edit-fields').style.display = 'block';
-        
-        loadSavedData();
-      }
-      
-      function exitEditMode() {
-        isEditMode = false;
-        document.getElementById('edit-banner').classList.remove('show');
-        document.getElementById('edit-controls').classList.remove('show');
-        document.getElementById('edit-mode-btn').style.display = 'flex';
-        
-        document.querySelectorAll('.editable-company').forEach(field => {
-          field.setAttribute('readonly', 'readonly');
-          field.classList.remove('editable-field');
-        });
-        
-        updateBankInfoText();
-        document.getElementById('bank-info-text').style.display = 'block';
-        document.getElementById('bank-edit-fields').style.display = 'none';
-        
-        updateSignatureSection();
-      }
-      
-      function updateBankInfoText() {
-        const bankName = document.getElementById('bank-name').value;
-        const bankAccount = document.getElementById('bank-account').value;
-        const bankHolder = document.getElementById('bank-holder').value;
-        document.getElementById('bank-info-text').innerHTML = 
-          '은행: ' + bankName + ' ｜ 계좌번호: ' + bankAccount + ' ｜ 예금주: ' + bankHolder;
-      }
-      
-      function updateSignatureSection() {
-        const companyName = document.getElementById('company-name').value.split('(')[0].trim();
-        const companyRep = document.getElementById('company-rep').value;
-        const companyPhone = document.getElementById('company-phone').value;
-        
-        document.getElementById('sig-company-name').textContent = companyName;
-        document.getElementById('sig-company-rep').textContent = companyRep;
-        document.getElementById('sig-company-phone').textContent = companyPhone;
-      }
-      
-      function saveEdits() {
-        const data = {
-          companyName: document.getElementById('company-name').value,
-          companyRep: document.getElementById('company-rep').value,
-          companyPhone: document.getElementById('company-phone').value,
-          companyEmail: document.getElementById('company-email').value,
-          bankName: document.getElementById('bank-name').value,
-          bankAccount: document.getElementById('bank-account').value,
-          bankHolder: document.getElementById('bank-holder').value
-        };
-        
-        localStorage.setItem('xivix_contract_company', JSON.stringify(data));
-        updateSignatureSection();
-        updateBankInfoText();
-        
-        alert('✅ 회사 정보가 저장되었습니다!');
-      }
-      
       function loadSavedData() {
         const saved = localStorage.getItem('xivix_contract_company');
         if (saved) {
@@ -7535,10 +7450,11 @@ function getContractHTML(): string {
           if (data.bankName) document.getElementById('bank-name').value = data.bankName;
           if (data.bankAccount) document.getElementById('bank-account').value = data.bankAccount;
           if (data.bankHolder) document.getElementById('bank-holder').value = data.bankHolder;
-          updateSignatureSection();
-          updateBankInfoText();
         }
       }
+      
+      // 페이지 로드 시 저장된 데이터 불러오기
+      loadSavedData();
       
       // ========================================
       // 서비스 항목 관리
@@ -7958,22 +7874,7 @@ function getContractHTML(): string {
       document.getElementById('start-date').valueAsDate = now;
       document.getElementById('pay-day').value = now.getDate();
       
-      // 저장된 회사 정보 로드
-      window.addEventListener('DOMContentLoaded', function() {
-        const saved = localStorage.getItem('xivix_contract_company');
-        if (saved) {
-          const data = JSON.parse(saved);
-          if (data.companyName) document.getElementById('company-name').value = data.companyName;
-          if (data.companyRep) document.getElementById('company-rep').value = data.companyRep;
-          if (data.companyPhone) document.getElementById('company-phone').value = data.companyPhone;
-          if (data.companyEmail) document.getElementById('company-email').value = data.companyEmail;
-          if (data.bankName) document.getElementById('bank-name').value = data.bankName;
-          if (data.bankAccount) document.getElementById('bank-account').value = data.bankAccount;
-          if (data.bankHolder) document.getElementById('bank-holder').value = data.bankHolder;
-          updateSignatureSection();
-          updateBankInfoText();
-        }
-      });
+
     </script>
 </body>
 </html>`;
