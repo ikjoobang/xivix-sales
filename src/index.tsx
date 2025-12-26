@@ -6851,6 +6851,21 @@ function getContractHTML(): string {
       .signature-section { margin-top: 35px; }
       .signature-table td { height: auto; }
       
+      .sig-input {
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 13px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: #fafafa;
+        box-sizing: border-box;
+      }
+      .sig-input:focus {
+        outline: none;
+        border-color: #333;
+        background: #fff;
+      }
+      
       .signature-canvas-box {
         background: #fff;
         border: 1px dashed #999;
@@ -7302,21 +7317,27 @@ function getContractHTML(): string {
             </tr>
             <tr>
               <th>상호</th>
-              <td id="sig-company-name">컴바인티엔비</td>
+              <td><input type="text" class="sig-input" id="sig-provider-company" value="컴바인티엔비" placeholder="상호"></td>
               <th>상호</th>
               <td id="sig-company">-</td>
             </tr>
             <tr>
               <th>대표</th>
-              <td id="sig-company-rep">방익주</td>
+              <td><input type="text" class="sig-input" id="sig-provider-rep" value="방익주" placeholder="대표자명"></td>
               <th>대표</th>
               <td id="sig-name">-</td>
             </tr>
             <tr>
               <th>연락처</th>
-              <td id="sig-company-phone">010-4845-3065</td>
+              <td><input type="tel" class="sig-input" id="sig-provider-phone" value="010-4845-3065" placeholder="연락처"></td>
               <th>연락처</th>
               <td id="sig-phone">-</td>
+            </tr>
+            <tr>
+              <th>이메일</th>
+              <td><input type="email" class="sig-input" id="sig-provider-email" value="comtnb@gmail.com" placeholder="이메일"></td>
+              <th>이메일</th>
+              <td id="sig-email">-</td>
             </tr>
             <tr>
               <th>서명</th>
@@ -7595,7 +7616,7 @@ function getContractHTML(): string {
       });
       
       // ========================================
-      // 고객 정보 연동
+      // 고객 정보 연동 (의뢰인)
       // ========================================
       document.getElementById('client-company').addEventListener('input', e => {
         document.getElementById('sig-company').textContent = e.target.value || '-';
@@ -7605,6 +7626,40 @@ function getContractHTML(): string {
       });
       document.getElementById('client-phone').addEventListener('input', e => {
         document.getElementById('sig-phone').textContent = e.target.value || '-';
+      });
+      document.getElementById('client-email').addEventListener('input', e => {
+        document.getElementById('sig-email').textContent = e.target.value || '-';
+      });
+      
+      // ========================================
+      // 제공자 정보 연동 (서명란 ↔ 제1조)
+      // ========================================
+      // 서명란 → 제1조 연동
+      document.getElementById('sig-provider-company').addEventListener('input', e => {
+        document.getElementById('company-name').value = e.target.value;
+      });
+      document.getElementById('sig-provider-rep').addEventListener('input', e => {
+        document.getElementById('company-rep').value = e.target.value;
+      });
+      document.getElementById('sig-provider-phone').addEventListener('input', e => {
+        document.getElementById('company-phone').value = e.target.value;
+      });
+      document.getElementById('sig-provider-email').addEventListener('input', e => {
+        document.getElementById('company-email').value = e.target.value;
+      });
+      
+      // 제1조 → 서명란 연동
+      document.getElementById('company-name').addEventListener('input', e => {
+        document.getElementById('sig-provider-company').value = e.target.value;
+      });
+      document.getElementById('company-rep').addEventListener('input', e => {
+        document.getElementById('sig-provider-rep').value = e.target.value;
+      });
+      document.getElementById('company-phone').addEventListener('input', e => {
+        document.getElementById('sig-provider-phone').value = e.target.value;
+      });
+      document.getElementById('company-email').addEventListener('input', e => {
+        document.getElementById('sig-provider-email').value = e.target.value;
       });
       
       // ========================================
