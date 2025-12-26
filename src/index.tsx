@@ -7321,10 +7321,9 @@ function getContractHTML(): string {
             <tr>
               <th>서명</th>
               <td>
-                <div class="signature-canvas-box">
-                  <canvas id="canvas-provider" class="signature-canvas"></canvas>
+                <div class="signature-canvas-box" style="background:#fff; display:flex; align-items:center; justify-content:center;">
+                  <img src="https://www.genspark.ai/api/files/s/fmuWHgLC" alt="방익주 서명" style="max-width:180px; max-height:75px; object-fit:contain;" />
                 </div>
-                <button type="button" class="clear-sig-btn no-print" onclick="clearCanvas('provider')">지우기</button>
               </td>
               <th>서명</th>
               <td>
@@ -7665,12 +7664,11 @@ function getContractHTML(): string {
         };
       }
       
-      const canvasProvider = initCanvas('provider');
+      // 의뢰인 서명 캔버스만 초기화 (제공자는 이미지로 고정)
       const canvasClient = initCanvas('client');
       
       function clearCanvas(type) {
-        if (type === 'provider') canvasProvider.clear();
-        else canvasClient.clear();
+        if (type === 'client') canvasClient.clear();
         checkValid();
       }
       
