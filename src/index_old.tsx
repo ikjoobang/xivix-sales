@@ -6464,7 +6464,7 @@ function getContractHTML(): string {
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마케팅 서비스 계약서 - 컴바인티엔비</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -6502,6 +6502,7 @@ function getContractHTML(): string {
         box-shadow: 0 2px 15px rgba(0,0,0,0.1);
       }
       
+      /* 헤더 */
       .contract-header {
         text-align: center;
         border-bottom: 3px double #000;
@@ -6516,7 +6517,10 @@ function getContractHTML(): string {
         margin-bottom: 8px;
       }
       
-      .contract-subtitle { font-size: 13px; color: #666; }
+      .contract-subtitle {
+        font-size: 13px;
+        color: #666;
+      }
       
       .contract-date-row {
         text-align: right;
@@ -6524,7 +6528,10 @@ function getContractHTML(): string {
         font-size: 14px;
       }
       
-      .section { margin-bottom: 28px; }
+      /* 섹션 */
+      .section {
+        margin-bottom: 28px;
+      }
       
       .section-title {
         font-size: 15px;
@@ -6535,6 +6542,7 @@ function getContractHTML(): string {
         margin-bottom: 15px;
       }
       
+      /* 테이블 */
       table {
         width: 100%;
         border-collapse: collapse;
@@ -6574,60 +6582,25 @@ function getContractHTML(): string {
       
       .input-field::placeholder { color: #999; }
       
-      .input-field-border {
-        border: 1px solid #ccc;
-        padding: 8px 10px;
-        border-radius: 4px;
-      }
-      
-      .service-row {
+      /* 서비스 선택 */
+      .service-check {
         display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
         align-items: center;
+        gap: 8px;
       }
       
-      .service-name-input {
-        flex: 2;
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 4px;
-        font-size: 14px;
+      .service-check input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #333;
       }
       
-      .service-price-input {
-        flex: 1;
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 4px;
-        font-size: 14px;
+      .price-cell {
         text-align: right;
+        font-weight: 500;
       }
       
-      .add-service-btn, .remove-service-btn {
-        padding: 8px 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-      }
-      
-      .add-service-btn {
-        background: #10b981;
-        color: #fff;
-        margin-top: 5px;
-      }
-      
-      .add-service-btn:hover { background: #059669; }
-      
-      .remove-service-btn {
-        background: #ef4444;
-        color: #fff;
-        padding: 8px 10px;
-      }
-      
-      .remove-service-btn:hover { background: #dc2626; }
-      
+      /* 결제 방식 */
       .payment-row {
         display: flex;
         gap: 30px;
@@ -6655,7 +6628,9 @@ function getContractHTML(): string {
         accent-color: #333;
       }
       
-      .payment-item span { font-weight: 600; }
+      .payment-item span {
+        font-weight: 600;
+      }
       
       .bank-info-box {
         background: #f9f9f9;
@@ -6668,9 +6643,17 @@ function getContractHTML(): string {
       
       .bank-info-box.show { display: block; }
       
-      .total-row { background: #f5f5f5; }
-      .total-row td { font-size: 17px; font-weight: 700; }
+      /* 금액 */
+      .total-row {
+        background: #f5f5f5;
+      }
       
+      .total-row td {
+        font-size: 17px;
+        font-weight: 700;
+      }
+      
+      /* 조항 */
       .terms-content {
         font-size: 13px;
         line-height: 1.9;
@@ -6706,7 +6689,11 @@ function getContractHTML(): string {
         accent-color: #333;
       }
       
-      .signature-section { margin-top: 35px; }
+      /* 서명 */
+      .signature-section {
+        margin-top: 35px;
+      }
+      
       .signature-table td { height: auto; }
       
       .signature-canvas-box {
@@ -6742,6 +6729,7 @@ function getContractHTML(): string {
         font-weight: 700;
       }
       
+      /* 버튼 */
       .action-buttons {
         position: fixed;
         bottom: 0;
@@ -6754,7 +6742,6 @@ function getContractHTML(): string {
         justify-content: center;
         gap: 15px;
         z-index: 100;
-        flex-wrap: wrap;
       }
       
       .action-btn {
@@ -6768,7 +6755,11 @@ function getContractHTML(): string {
         gap: 6px;
       }
       
-      .action-btn.primary { background: #333; color: #fff; }
+      .action-btn.primary {
+        background: #333;
+        color: #fff;
+      }
+      
       .action-btn.primary:hover { background: #000; }
       
       .action-btn.secondary {
@@ -6777,11 +6768,12 @@ function getContractHTML(): string {
         border: 1px solid #333;
       }
       
-      .action-btn.share { background: #2563eb; color: #fff; }
-      .action-btn.share:hover { background: #1d4ed8; }
+      .action-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
       
-      .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-      
+      /* 모달 */
       .modal-bg {
         position: fixed;
         inset: 0;
@@ -6797,7 +6789,7 @@ function getContractHTML(): string {
       .modal-box {
         background: #fff;
         padding: 35px;
-        max-width: 420px;
+        max-width: 380px;
         text-align: center;
         border-radius: 4px;
       }
@@ -6815,36 +6807,373 @@ function getContractHTML(): string {
         margin: 0 auto 18px;
       }
       
-      .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-      .modal-desc { color: #666; margin-bottom: 22px; line-height: 1.7; font-size: 14px; }
-      .modal-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-      
-      .share-link-box {
-        background: #f5f5f5;
-        border: 1px solid #ddd;
-        padding: 12px;
-        border-radius: 6px;
-        margin: 15px 0;
-        word-break: break-all;
-        font-size: 12px;
-        text-align: left;
+      .modal-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
       }
       
-      .copy-btn {
-        width: 100%;
-        padding: 10px;
-        background: #333;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+      .modal-desc {
+        color: #666;
+        margin-bottom: 22px;
+        line-height: 1.7;
         font-size: 14px;
-        margin-top: 10px;
       }
       
-      .copy-btn:hover { background: #000; }
+      .modal-btns {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
       
-      /* 편집 모드 */
+      /* ========================================
+         반응형 - 모바일 최적화
+         ======================================== */
+      
+      /* 태블릿 */
+      @media (max-width: 900px) {
+        .contract-wrapper { padding: 10px; }
+        .contract-page { padding: 40px 35px; }
+      }
+      
+      /* 모바일 (768px 이하) */
+      @media (max-width: 768px) {
+        body { font-size: 13px; line-height: 1.7; }
+        
+        .contract-wrapper { 
+          padding: 8px 8px 120px; 
+          margin: 0;
+        }
+        
+        .contract-page { 
+          padding: 24px 16px; 
+          border-radius: 0;
+        }
+        
+        .contract-header {
+          padding-bottom: 18px;
+          margin-bottom: 24px;
+        }
+        
+        .contract-title { 
+          font-size: 18px; 
+          letter-spacing: 3px;
+        }
+        
+        .contract-subtitle { font-size: 11px; }
+        
+        .contract-date-row { 
+          font-size: 13px; 
+          margin-bottom: 20px;
+        }
+        
+        /* 섹션 */
+        .section { margin-bottom: 22px; }
+        
+        .section-title { 
+          font-size: 13px; 
+          padding: 8px 12px;
+          margin-bottom: 12px;
+        }
+        
+        /* 테이블 - 모바일 카드형 변환 */
+        table {
+          display: block;
+          width: 100%;
+        }
+        
+        thead { display: none; }
+        
+        tbody, tr, td, th {
+          display: block;
+          width: 100%;
+        }
+        
+        tr {
+          margin-bottom: 12px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          overflow: hidden;
+          background: #fff;
+        }
+        
+        th {
+          width: 100%;
+          background: #f5f5f5;
+          text-align: left;
+          padding: 10px 14px;
+          border: none;
+          border-bottom: 1px solid #eee;
+          font-size: 12px;
+          color: #666;
+        }
+        
+        td {
+          padding: 12px 14px;
+          border: none;
+          border-bottom: 1px solid #f0f0f0;
+        }
+        
+        td:last-child { border-bottom: none; }
+        
+        /* 당사자 헤더 */
+        .party-header {
+          padding: 12px 14px !important;
+          font-size: 14px;
+          letter-spacing: 1px;
+        }
+        
+        /* 2열 테이블을 1열로 */
+        tr:has(th):has(td) {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        
+        tr:has(th):has(td) th,
+        tr:has(th):has(td) td {
+          flex: 1;
+          min-width: 50%;
+        }
+        
+        /* 입력 필드 */
+        .input-field {
+          font-size: 14px;
+          padding: 6px 0;
+          width: 100%;
+        }
+        
+        .input-field::placeholder { font-size: 12px; }
+        
+        /* 서비스 체크박스 */
+        .service-check {
+          padding: 4px 0;
+          font-size: 13px;
+        }
+        
+        .service-check input[type="checkbox"] {
+          width: 20px;
+          height: 20px;
+        }
+        
+        .price-cell { 
+          text-align: left !important; 
+          color: #333;
+          font-weight: 600;
+          font-size: 14px;
+        }
+        
+        /* 서비스 항목 - 모바일 카드 */
+        #service-list tr {
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+        }
+        
+        #service-list tr td:first-child {
+          padding: 14px;
+          background: #fafafa;
+        }
+        
+        #service-list tr td:last-child {
+          padding: 10px 14px;
+          border-top: 1px dashed #e0e0e0;
+        }
+        
+        /* 결제 방식 */
+        .payment-row { 
+          flex-direction: column; 
+          gap: 12px;
+        }
+        
+        .payment-item {
+          padding: 14px 18px;
+          border-radius: 8px;
+        }
+        
+        .payment-item input[type="radio"] {
+          width: 20px;
+          height: 20px;
+        }
+        
+        .payment-item span { font-size: 14px; }
+        
+        .bank-info-box {
+          padding: 14px;
+          font-size: 12px;
+          border-radius: 8px;
+          margin-top: 15px;
+          line-height: 1.8;
+        }
+        
+        /* 금액 섹션 */
+        .total-row td {
+          font-size: 16px !important;
+          padding: 16px 14px;
+        }
+        
+        /* VAT 라디오 */
+        td label {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-right: 15px;
+          font-size: 13px;
+        }
+        
+        td label input[type="radio"] {
+          width: 18px;
+          height: 18px;
+        }
+        
+        /* 결제 일정 셀렉트 */
+        #pay-schedule {
+          width: 100%;
+          padding: 10px;
+          font-size: 14px;
+          border-radius: 6px;
+        }
+        
+        #start-date {
+          width: 100%;
+          padding: 10px;
+          font-size: 14px;
+          border-radius: 6px;
+        }
+        
+        /* 계약 조항 */
+        .terms-content {
+          font-size: 12px;
+          line-height: 1.8;
+        }
+        
+        .terms-content h4 {
+          font-size: 12px;
+          margin: 12px 0 5px;
+          color: #333;
+        }
+        
+        .terms-content ol { padding-left: 18px; }
+        .terms-content li { margin-bottom: 3px; }
+        
+        .agree-box {
+          padding: 14px;
+          border-radius: 8px;
+        }
+        
+        .agree-box label {
+          font-size: 13px;
+          gap: 12px;
+        }
+        
+        .agree-box input[type="checkbox"] {
+          width: 22px;
+          height: 22px;
+          flex-shrink: 0;
+        }
+        
+        /* 서명 */
+        .signature-section { margin-top: 25px; }
+        
+        .signature-table tr {
+          margin-bottom: 0;
+          border-radius: 0;
+        }
+        
+        .signature-table tr:first-child {
+          border-radius: 8px 8px 0 0;
+        }
+        
+        .signature-table tr:last-child {
+          border-radius: 0 0 8px 8px;
+        }
+        
+        .signature-canvas-box {
+          height: 80px;
+          margin-top: 10px;
+          border-radius: 6px;
+        }
+        
+        .clear-sig-btn {
+          padding: 6px 12px;
+          font-size: 12px;
+          border-radius: 4px;
+        }
+        
+        .contract-footer {
+          margin-top: 28px;
+          font-size: 14px;
+        }
+        
+        /* 하단 버튼 */
+        .action-buttons { 
+          flex-direction: column; 
+          padding: 12px 16px;
+          gap: 10px;
+        }
+        
+        .action-btn { 
+          width: 100%; 
+          justify-content: center;
+          padding: 14px 20px;
+          font-size: 14px;
+          border-radius: 8px;
+        }
+        
+        /* 모달 */
+        .modal-box {
+          margin: 20px;
+          padding: 28px 24px;
+          border-radius: 12px;
+        }
+        
+        .modal-icon {
+          width: 50px;
+          height: 50px;
+          font-size: 24px;
+        }
+        
+        .modal-title { font-size: 16px; }
+        .modal-desc { font-size: 13px; }
+        
+        .modal-btns {
+          flex-direction: column;
+          gap: 8px;
+        }
+        
+        .modal-btns .action-btn { width: 100%; }
+      }
+      
+      /* 소형 모바일 (480px 이하) */
+      @media (max-width: 480px) {
+        body { font-size: 12px; }
+        
+        .contract-wrapper { padding: 5px 5px 130px; }
+        .contract-page { padding: 20px 14px; }
+        
+        .contract-title { 
+          font-size: 16px; 
+          letter-spacing: 2px;
+        }
+        
+        .section-title { font-size: 12px; padding: 7px 10px; }
+        
+        th { padding: 8px 12px; font-size: 11px; }
+        td { padding: 10px 12px; }
+        
+        .input-field { font-size: 13px; }
+        
+        .service-check { font-size: 12px; }
+        
+        .total-row td { font-size: 15px !important; }
+        
+        .terms-content { font-size: 11px; }
+        
+        .signature-canvas-box { height: 70px; }
+        
+        .contract-footer { font-size: 13px; }
+      }
+      
+      /* 편집 모드 스타일 */
       .edit-mode-banner {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: #fff;
@@ -6860,8 +7189,16 @@ function getContractHTML(): string {
       .edit-mode-banner.show { display: block; }
       
       .editable-field {
-        background: #fffbeb !important;
+        background: #fffbeb;
         border: 2px dashed #f59e0b !important;
+        cursor: text;
+        transition: all 0.2s;
+      }
+      
+      .editable-field:focus {
+        background: #fef3c7;
+        border-color: #d97706 !important;
+        outline: none;
       }
       
       .edit-controls {
@@ -6888,56 +7225,38 @@ function getContractHTML(): string {
       }
       
       .edit-control-btn:hover { background: #000; }
+      
       .edit-control-btn.save { background: #10b981; }
       .edit-control-btn.save:hover { background: #059669; }
       
-      /* 반응형 - 모바일 */
       @media (max-width: 768px) {
-        body { font-size: 13px; }
-        .contract-wrapper { padding: 8px 8px 150px; margin: 0; }
-        .contract-page { padding: 24px 16px; }
-        .contract-title { font-size: 18px; letter-spacing: 3px; }
-        .section-title { font-size: 13px; padding: 8px 12px; }
+        .edit-mode-banner { 
+          font-size: 13px;
+          padding: 10px 14px;
+        }
         
-        table { display: block; }
-        thead { display: none; }
-        tbody, tr, td, th { display: block; width: 100%; }
-        tr { margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
-        th { width: 100%; text-align: left; padding: 10px 14px; border: none; font-size: 12px; }
-        td { padding: 12px 14px; border: none; border-bottom: 1px solid #f0f0f0; }
-        td:last-child { border-bottom: none; }
+        .edit-controls {
+          bottom: 130px;
+          right: 16px;
+        }
         
-        .party-header { padding: 12px 14px !important; }
-        .payment-row { flex-direction: column; gap: 12px; }
-        .payment-item { padding: 14px 18px; border-radius: 8px; }
-        
-        .service-row { flex-direction: column; gap: 8px; }
-        .service-name-input, .service-price-input { width: 100%; flex: none; }
-        
-        .action-buttons { flex-direction: column; padding: 12px 16px; gap: 10px; }
-        .action-btn { width: 100%; justify-content: center; padding: 14px 20px; border-radius: 8px; }
-        
-        .modal-box { margin: 20px; padding: 24px 20px; }
-        .modal-btns { flex-direction: column; }
-        .modal-btns .action-btn { width: 100%; }
-        
-        .edit-controls { bottom: 170px; right: 16px; }
-      }
-      
-      @media (max-width: 480px) {
-        .contract-page { padding: 20px 14px; }
-        .contract-title { font-size: 16px; letter-spacing: 2px; }
+        .edit-control-btn {
+          padding: 10px 14px;
+          font-size: 12px;
+        }
       }
     </style>
 </head>
 <body>
+    <!-- 편집 모드 배너 -->
     <div class="edit-mode-banner" id="edit-banner">
-      ✏️ 편집 모드 | 노란색 필드를 클릭하여 내용을 수정하세요
+      ✏️ 편집 모드 | 노란색 필드를 클릭하여 내용을 수정할 수 있습니다
     </div>
     
     <div class="contract-wrapper" id="contract-content">
       <div class="contract-page">
         
+        <!-- 헤더 -->
         <header class="contract-header">
           <h1 class="contract-title">마 케 팅 서 비 스 계 약 서</h1>
           <p class="contract-subtitle">Marketing Service Agreement</p>
@@ -6947,12 +7266,14 @@ function getContractHTML(): string {
           계약일자: <span id="contract-date"></span>
         </div>
         
-        <!-- 제1조 당사자 -->
+        <!-- 당사자 정보 -->
         <div class="section">
           <h2 class="section-title">제1조 당사자</h2>
           
           <table>
-            <tr><td colspan="4" class="party-header">서비스 제공자 (이하 "제공자")</td></tr>
+            <tr>
+              <td colspan="4" class="party-header">갑 (서비스 제공자)</td>
+            </tr>
             <tr>
               <th>상 호</th>
               <td><input type="text" class="input-field editable-company" id="company-name" value="컴바인티엔비 (COMBINE T&B)" readonly></td>
@@ -6963,12 +7284,14 @@ function getContractHTML(): string {
               <th>연락처</th>
               <td><input type="text" class="input-field editable-company" id="company-phone" value="010-4845-3065" readonly></td>
               <th>이메일</th>
-              <td><input type="text" class="input-field editable-company" id="company-email" value="comtnb@gmail.com" readonly></td>
+              <td><input type="text" class="input-field editable-company" id="company-email" value="contact@xivix.kr" readonly></td>
             </tr>
           </table>
           
           <table>
-            <tr><td colspan="4" class="party-header">의뢰인 (이하 "의뢰인")</td></tr>
+            <tr>
+              <td colspan="4" class="party-header">을 (고객)</td>
+            </tr>
             <tr>
               <th>상 호</th>
               <td><input type="text" class="input-field" id="client-company" placeholder="상호/업체명"></td>
@@ -6988,56 +7311,88 @@ function getContractHTML(): string {
           </table>
         </div>
         
-        <!-- 제2조 계약 서비스 -->
+        <!-- 계약 서비스 -->
         <div class="section">
           <h2 class="section-title">제2조 계약 서비스</h2>
-          <p style="font-size:12px; color:#666; margin-bottom:12px;">※ 서비스 항목과 금액(VAT 포함)을 직접 입력해 주세요</p>
+          <p style="font-size:12px; color:#666; margin-bottom:10px;">※ 해당 서비스에 체크(✓)해 주세요</p>
           
-          <div id="service-list">
-            <div class="service-row" data-row="1">
-              <input type="text" class="service-name-input" placeholder="서비스 항목명" data-name>
-              <input type="number" class="service-price-input" placeholder="금액 (VAT포함)" data-price>
-              <button type="button" class="remove-service-btn" onclick="removeServiceRow(this)">✕</button>
-            </div>
-            <div class="service-row" data-row="2">
-              <input type="text" class="service-name-input" placeholder="서비스 항목명" data-name>
-              <input type="number" class="service-price-input" placeholder="금액 (VAT포함)" data-price>
-              <button type="button" class="remove-service-btn" onclick="removeServiceRow(this)">✕</button>
-            </div>
-          </div>
-          <button type="button" class="add-service-btn" onclick="addServiceRow()">+ 서비스 항목 추가</button>
-          
-          <div style="margin-top:15px; padding-top:15px; border-top:1px solid #eee;">
-            <div style="font-size:12px; color:#666; margin-bottom:5px;">기타/추가 서비스 (직접 입력):</div>
-            <input type="text" class="input-field input-field-border" id="etc-service" placeholder="추가 요청사항 직접 입력">
-          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:55%">서비스 항목</th>
+                <th style="width:45%">금액 (VAT 포함)</th>
+              </tr>
+            </thead>
+            <tbody id="service-list">
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="890000"> SNS 스타터 셋트</label></td>
+                <td class="price-cell">890,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="1490000"> SNS 성장 셋트</label></td>
+                <td class="price-cell">1,490,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="2790000"> 바이럴 마스터</label></td>
+                <td class="price-cell">2,790,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="4990000"> 지역 장악 셋트</label></td>
+                <td class="price-cell">4,990,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="990000"> 웹사이트 (랜딩형)</label></td>
+                <td class="price-cell">990,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="1990000"> 웹사이트 (스탠다드)</label></td>
+                <td class="price-cell">1,990,000원</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="550000"> 월관리 베이직</label></td>
+                <td class="price-cell">550,000원/월</td>
+              </tr>
+              <tr>
+                <td><label class="service-check"><input type="checkbox" name="svc" data-price="990000"> 월관리 퍼포먼스</label></td>
+                <td class="price-cell">990,000원/월</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div style="font-size:12px; color:#666; margin-bottom:5px;">기타/추가 서비스:</div>
+                  <input type="text" class="input-field" id="etc-service" placeholder="추가 요청사항 직접 입력" style="border-bottom:1px solid #ccc;">
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         
-        <!-- 제3조 계약 금액 -->
+        <!-- 계약 금액 -->
         <div class="section">
           <h2 class="section-title">제3조 계약 금액</h2>
           <table>
             <tr>
-              <th>셋팅비</th>
-              <td><input type="number" class="input-field" id="setup-fee" placeholder="0" style="text-align:right;" oninput="calcTotal()"> 원 (VAT 포함)</td>
+              <th>서비스 합계</th>
+              <td id="subtotal-display" style="text-align:right;">0원</td>
             </tr>
             <tr>
-              <th>월관리비</th>
-              <td><input type="number" class="input-field" id="monthly-fee" placeholder="0" style="text-align:right;" oninput="calcTotal()"> 원/월 (VAT 포함)</td>
+              <th>협의 금액</th>
+              <td><input type="number" class="input-field" id="custom-amt" placeholder="별도 협의 금액 입력 (선택)" style="text-align:right;"></td>
             </tr>
             <tr>
               <th>부가세</th>
-              <td style="color:#666; font-size:13px;">위 금액은 VAT 포함 금액입니다</td>
+              <td>
+                <label style="margin-right:20px;"><input type="radio" name="vat" value="included" checked> 포함</label>
+                <label><input type="radio" name="vat" value="excluded"> 별도 (+10%)</label>
+              </td>
             </tr>
             <tr class="total-row">
               <th>총 계약금액</th>
               <td id="total-display" style="text-align:right;">￦ 0</td>
             </tr>
           </table>
-          <p style="font-size:12px; color:#888; margin-top:5px;">* 서비스 항목 금액 합계 + 셋팅비 + 월관리비 = 총 계약금액</p>
         </div>
         
-        <!-- 제4조 결제 방식 -->
+        <!-- 결제 방식 -->
         <div class="section">
           <h2 class="section-title">제4조 결제 방식</h2>
           
@@ -7062,31 +7417,29 @@ function getContractHTML(): string {
             </div>
           </div>
           
-          <table style="margin-top:20px;">
+          <table style="margin-top:15px;">
             <tr>
-              <th>서비스 시작일</th>
-              <td><input type="date" class="input-field input-field-border" id="start-date"></td>
-            </tr>
-            <tr>
-              <th>정기 결제일</th>
+              <th>결제일정</th>
               <td>
-                매월 <input type="number" class="input-field" id="pay-day" placeholder="1" style="width:50px; text-align:center; border:1px solid #ccc; padding:5px; border-radius:4px;" min="1" max="31">일
+                <select class="input-field" id="pay-schedule" style="border:1px solid #ccc; padding:5px;">
+                  <option value="full">일시불</option>
+                  <option value="split2">2회 분할 (50% + 50%)</option>
+                  <option value="split3">3회 분할 (35% + 35% + 30%)</option>
+                </select>
               </td>
-            </tr>
-            <tr>
-              <th>월 결제 금액</th>
-              <td><input type="number" class="input-field" id="monthly-pay-amount" placeholder="월 결제 금액 입력" style="text-align:right; border:1px solid #ccc; padding:8px; border-radius:4px;"> 원</td>
+              <th>시작일</th>
+              <td><input type="date" class="input-field" id="start-date" style="border:1px solid #ccc; padding:5px;"></td>
             </tr>
           </table>
         </div>
         
-        <!-- 제5조 계약 조건 -->
+        <!-- 계약 조항 -->
         <div class="section">
           <h2 class="section-title">제5조 계약 조건</h2>
           <div class="terms-content">
             <h4>1. 서비스 범위</h4>
             <ol>
-              <li>제공자는 본 계약서에 명시된 서비스를 성실히 수행한다.</li>
+              <li>갑은 본 계약서에 명시된 서비스를 성실히 수행한다.</li>
               <li>서비스 범위는 본 계약서에 명시된 내용에 한하며, 추가 서비스는 별도 협의한다.</li>
             </ol>
             
@@ -7099,9 +7452,8 @@ function getContractHTML(): string {
             
             <h4>3. 비용 및 결제</h4>
             <ol>
-              <li>계약 금액은 본 계약서에 명시된 금액(VAT 포함)으로 한다.</li>
+              <li>계약 금액은 본 계약서에 명시된 금액으로 한다.</li>
               <li>광고비는 본 계약 금액에 포함되지 않으며 별도 정산한다.</li>
-              <li>의뢰인은 정해진 결제일에 월 결제 금액을 납부한다.</li>
             </ol>
             
             <h4>4. 환불 규정</h4>
@@ -7112,7 +7464,7 @@ function getContractHTML(): string {
             </ol>
             
             <h4>5. 비밀유지 및 분쟁해결</h4>
-            <p>제공자와 의뢰인은 본 계약 관련 취득한 영업비밀 및 개인정보를 제3자에게 누설하지 않으며, 분쟁 발생 시 제공자의 소재지 관할 법원에서 해결한다.</p>
+            <p>갑과 을은 본 계약 관련 취득한 영업비밀 및 개인정보를 제3자에게 누설하지 않으며, 분쟁 발생 시 갑의 소재지 관할 법원에서 해결한다.</p>
           </div>
           
           <div class="agree-box">
@@ -7123,15 +7475,15 @@ function getContractHTML(): string {
           </div>
         </div>
         
-        <!-- 제6조 서명 -->
+        <!-- 서명 -->
         <div class="section signature-section">
           <h2 class="section-title">제6조 서명 날인</h2>
-          <p style="font-size:12px; color:#666; margin-bottom:12px;">본 계약의 성립을 증명하기 위하여 제공자와 의뢰인이 서명 날인 후 각 1통씩 보관한다.</p>
+          <p style="font-size:12px; color:#666; margin-bottom:12px;">본 계약의 성립을 증명하기 위하여 갑과 을이 서명 날인 후 각 1통씩 보관한다.</p>
           
           <table class="signature-table">
             <tr>
-              <td colspan="2" class="party-header">서비스 제공자</td>
-              <td colspan="2" class="party-header">의뢰인</td>
+              <td colspan="2" class="party-header">갑 (서비스 제공자)</td>
+              <td colspan="2" class="party-header">을 (고객)</td>
             </tr>
             <tr>
               <th>상호</th>
@@ -7155,16 +7507,16 @@ function getContractHTML(): string {
               <th>서명</th>
               <td>
                 <div class="signature-canvas-box">
-                  <canvas id="canvas-provider" class="signature-canvas"></canvas>
+                  <canvas id="canvas-gap" class="signature-canvas"></canvas>
                 </div>
-                <button type="button" class="clear-sig-btn no-print" onclick="clearCanvas('provider')">지우기</button>
+                <button type="button" class="clear-sig-btn no-print" onclick="clearCanvas('gap')">지우기</button>
               </td>
               <th>서명</th>
               <td>
                 <div class="signature-canvas-box">
-                  <canvas id="canvas-client" class="signature-canvas"></canvas>
+                  <canvas id="canvas-eul" class="signature-canvas"></canvas>
                 </div>
-                <button type="button" class="clear-sig-btn no-print" onclick="clearCanvas('client')">지우기</button>
+                <button type="button" class="clear-sig-btn no-print" onclick="clearCanvas('eul')">지우기</button>
               </td>
             </tr>
           </table>
@@ -7187,32 +7539,18 @@ function getContractHTML(): string {
     <div class="action-buttons no-print">
       <button type="button" class="action-btn secondary" onclick="window.print()">🖨️ 인쇄</button>
       <button type="button" class="action-btn secondary" onclick="enterEditMode()" id="edit-mode-btn">✏️ 편집 모드</button>
-      <button type="button" class="action-btn share" onclick="shareContract()">🔗 링크 공유</button>
-      <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled>✍️ 계약 완료</button>
+      <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled>✍️ 계약서 제출 및 PDF 다운로드</button>
     </div>
     
-    <!-- 완료 모달 -->
+    <!-- 모달 -->
     <div class="modal-bg" id="done-modal">
       <div class="modal-box">
         <div class="modal-icon">✓</div>
-        <h3 class="modal-title">계약서 작성 완료</h3>
-        <p class="modal-desc">계약서가 성공적으로 작성되었습니다.</p>
+        <h3 class="modal-title">계약서 제출 완료</h3>
+        <p class="modal-desc">계약서가 성공적으로 제출되었습니다.<br>PDF를 다운로드하여 보관해 주세요.</p>
         <div class="modal-btns">
           <button class="action-btn secondary" onclick="closeModal()">닫기</button>
           <button class="action-btn primary" id="pdf-btn" onclick="downloadPDF()">📄 PDF 다운로드</button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- 공유 모달 -->
-    <div class="modal-bg" id="share-modal">
-      <div class="modal-box">
-        <h3 class="modal-title">🔗 계약서 공유</h3>
-        <p class="modal-desc">아래 링크를 고객에게 전달하세요.<br>고객이 링크를 열면 계약서를 작성할 수 있습니다.</p>
-        <div class="share-link-box" id="share-link-text"></div>
-        <button class="copy-btn" onclick="copyShareLink()">📋 링크 복사</button>
-        <div style="margin-top:15px;">
-          <button class="action-btn secondary" onclick="closeShareModal()" style="width:100%;">닫기</button>
         </div>
       </div>
     </div>
@@ -7229,14 +7567,17 @@ function getContractHTML(): string {
         document.getElementById('edit-controls').classList.add('show');
         document.getElementById('edit-mode-btn').style.display = 'none';
         
+        // 회사 정보 필드 편집 가능하게 설정
         document.querySelectorAll('.editable-company').forEach(field => {
           field.removeAttribute('readonly');
           field.classList.add('editable-field');
         });
         
+        // 은행 정보 편집 필드 표시
         document.getElementById('bank-info-text').style.display = 'none';
         document.getElementById('bank-edit-fields').style.display = 'block';
         
+        // localStorage에서 저장된 데이터 로드
         loadSavedData();
       }
       
@@ -7246,15 +7587,18 @@ function getContractHTML(): string {
         document.getElementById('edit-controls').classList.remove('show');
         document.getElementById('edit-mode-btn').style.display = 'flex';
         
+        // 필드 읽기 전용으로 복원
         document.querySelectorAll('.editable-company').forEach(field => {
           field.setAttribute('readonly', 'readonly');
           field.classList.remove('editable-field');
         });
         
+        // 은행 정보 원래 표시로 복원
         updateBankInfoText();
         document.getElementById('bank-info-text').style.display = 'block';
         document.getElementById('bank-edit-fields').style.display = 'none';
         
+        // 서명 섹션 업데이트
         updateSignatureSection();
       }
       
@@ -7267,6 +7611,7 @@ function getContractHTML(): string {
       }
       
       function updateSignatureSection() {
+        // 회사 정보를 서명 섹션에 반영
         const companyName = document.getElementById('company-name').value.split('(')[0].trim();
         const companyRep = document.getElementById('company-rep').value;
         const companyPhone = document.getElementById('company-phone').value;
@@ -7288,16 +7633,19 @@ function getContractHTML(): string {
         };
         
         localStorage.setItem('xivix_contract_company', JSON.stringify(data));
+        
+        // 서명 섹션 업데이트
         updateSignatureSection();
         updateBankInfoText();
         
-        alert('✅ 회사 정보가 저장되었습니다!');
+        alert('✅ 회사 정보가 저장되었습니다!\\n\\n다음에 계약서를 열 때 자동으로 로드됩니다.');
       }
       
       function loadSavedData() {
         const saved = localStorage.getItem('xivix_contract_company');
         if (saved) {
           const data = JSON.parse(saved);
+          
           if (data.companyName) document.getElementById('company-name').value = data.companyName;
           if (data.companyRep) document.getElementById('company-rep').value = data.companyRep;
           if (data.companyPhone) document.getElementById('company-phone').value = data.companyPhone;
@@ -7305,65 +7653,69 @@ function getContractHTML(): string {
           if (data.bankName) document.getElementById('bank-name').value = data.bankName;
           if (data.bankAccount) document.getElementById('bank-account').value = data.bankAccount;
           if (data.bankHolder) document.getElementById('bank-holder').value = data.bankHolder;
+          
+          // 서명 섹션 및 은행 정보 업데이트
           updateSignatureSection();
           updateBankInfoText();
         }
       }
       
-      // ========================================
-      // 서비스 항목 관리
-      // ========================================
-      let serviceRowCount = 2;
-      
-      function addServiceRow() {
-        serviceRowCount++;
-        const container = document.getElementById('service-list');
-        const row = document.createElement('div');
-        row.className = 'service-row';
-        row.setAttribute('data-row', serviceRowCount);
-        row.innerHTML = \`
-          <input type="text" class="service-name-input" placeholder="서비스 항목명" data-name>
-          <input type="number" class="service-price-input" placeholder="금액 (VAT포함)" data-price oninput="calcTotal()">
-          <button type="button" class="remove-service-btn" onclick="removeServiceRow(this)">✕</button>
-        \`;
-        container.appendChild(row);
-        
-        row.querySelector('[data-price]').addEventListener('input', calcTotal);
-      }
-      
-      function removeServiceRow(btn) {
-        const rows = document.querySelectorAll('.service-row');
-        if (rows.length > 1) {
-          btn.closest('.service-row').remove();
-          calcTotal();
+      // 페이지 로드시 저장된 데이터 적용 (편집 모드 아닐 때도)
+      window.addEventListener('DOMContentLoaded', function() {
+        const saved = localStorage.getItem('xivix_contract_company');
+        if (saved) {
+          const data = JSON.parse(saved);
+          
+          if (data.companyName) document.getElementById('company-name').value = data.companyName;
+          if (data.companyRep) document.getElementById('company-rep').value = data.companyRep;
+          if (data.companyPhone) document.getElementById('company-phone').value = data.companyPhone;
+          if (data.companyEmail) document.getElementById('company-email').value = data.companyEmail;
+          if (data.bankName) document.getElementById('bank-name').value = data.bankName;
+          if (data.bankAccount) document.getElementById('bank-account').value = data.bankAccount;
+          if (data.bankHolder) document.getElementById('bank-holder').value = data.bankHolder;
+          
+          // 서명 섹션 및 은행 정보 업데이트
+          updateSignatureSection();
+          updateBankInfoText();
         }
-      }
-      
-      // ========================================
-      // 금액 계산
-      // ========================================
-      function calcTotal() {
-        let serviceTotal = 0;
-        document.querySelectorAll('.service-price-input').forEach(input => {
-          serviceTotal += parseInt(input.value) || 0;
-        });
-        
-        const setupFee = parseInt(document.getElementById('setup-fee').value) || 0;
-        const monthlyFee = parseInt(document.getElementById('monthly-fee').value) || 0;
-        
-        const total = serviceTotal + setupFee + monthlyFee;
-        document.getElementById('total-display').textContent = '￦ ' + total.toLocaleString();
-        
-        checkValid();
-      }
-      
-      document.querySelectorAll('.service-price-input').forEach(input => {
-        input.addEventListener('input', calcTotal);
       });
       
       // ========================================
-      // 결제 방식
+      // 기존 기능
       // ========================================
+      
+      // 날짜
+      const now = new Date();
+      document.getElementById('contract-date').textContent = now.getFullYear() + '년 ' + (now.getMonth()+1) + '월 ' + now.getDate() + '일';
+      document.getElementById('footer-year').textContent = now.getFullYear();
+      document.getElementById('footer-month').textContent = now.getMonth()+1;
+      document.getElementById('footer-day').textContent = now.getDate();
+      document.getElementById('start-date').valueAsDate = now;
+      
+      // 금액 계산
+      function calcTotal() {
+        let sub = 0;
+        document.querySelectorAll('input[name="svc"]:checked').forEach(c => {
+          sub += parseInt(c.dataset.price) || 0;
+        });
+        
+        const custom = parseInt(document.getElementById('custom-amt').value) || 0;
+        let total = custom > 0 ? custom : sub;
+        
+        if (document.querySelector('input[name="vat"][value="excluded"]').checked) {
+          total = Math.round(total * 1.1);
+        }
+        
+        document.getElementById('subtotal-display').textContent = sub.toLocaleString() + '원';
+        document.getElementById('total-display').textContent = '￦ ' + total.toLocaleString();
+        checkValid();
+      }
+      
+      document.querySelectorAll('input[name="svc"]').forEach(c => c.addEventListener('change', calcTotal));
+      document.getElementById('custom-amt').addEventListener('input', calcTotal);
+      document.querySelectorAll('input[name="vat"]').forEach(r => r.addEventListener('change', calcTotal));
+      
+      // 결제 방식
       document.querySelectorAll('input[name="pay-method"]').forEach(r => {
         r.addEventListener('change', function() {
           document.getElementById('bank-box').classList.toggle('show', this.value === 'cash');
@@ -7371,9 +7723,7 @@ function getContractHTML(): string {
         });
       });
       
-      // ========================================
       // 고객 정보 연동
-      // ========================================
       document.getElementById('client-company').addEventListener('input', e => {
         document.getElementById('sig-company').textContent = e.target.value || '-';
       });
@@ -7384,9 +7734,7 @@ function getContractHTML(): string {
         document.getElementById('sig-phone').textContent = e.target.value || '-';
       });
       
-      // ========================================
       // 서명 캔버스
-      // ========================================
       function initCanvas(id) {
         const box = document.getElementById('canvas-' + id).parentElement;
         const canvas = document.getElementById('canvas-' + id);
@@ -7411,15 +7759,25 @@ function getContractHTML(): string {
           return { x: t.clientX - r.left, y: t.clientY - r.top };
         }
         
-        function start(e) { e.preventDefault(); drawing = true; const p = getPos(e); lx = p.x; ly = p.y; }
+        function start(e) {
+          e.preventDefault();
+          drawing = true;
+          const p = getPos(e);
+          lx = p.x; ly = p.y;
+        }
+        
         function draw(e) {
           if (!drawing) return;
           e.preventDefault();
           const p = getPos(e);
-          ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(p.x, p.y); ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
           lx = p.x; ly = p.y;
           checkValid();
         }
+        
         function stop() { drawing = false; }
         
         canvas.addEventListener('mousedown', start);
@@ -7441,64 +7799,37 @@ function getContractHTML(): string {
         };
       }
       
-      const canvasProvider = initCanvas('provider');
-      const canvasClient = initCanvas('client');
+      const canvasGap = initCanvas('gap');
+      const canvasEul = initCanvas('eul');
       
       function clearCanvas(type) {
-        if (type === 'provider') canvasProvider.clear();
-        else canvasClient.clear();
+        if (type === 'gap') canvasGap.clear();
+        else canvasEul.clear();
         checkValid();
       }
       
-      // ========================================
-      // 유효성 검사
-      // ========================================
+      // 동의 체크
       document.getElementById('agree-check').addEventListener('change', checkValid);
       
+      // 유효성 검사
       function checkValid() {
         const company = document.getElementById('client-company').value.trim();
         const name = document.getElementById('client-name').value.trim();
         const phone = document.getElementById('client-phone').value.trim();
         const agreed = document.getElementById('agree-check').checked;
         const payment = document.querySelector('input[name="pay-method"]:checked');
+        const hasSvc = document.querySelectorAll('input[name="svc"]:checked').length > 0 || 
+                       parseInt(document.getElementById('custom-amt').value) > 0;
+        const hasSig = canvasEul.hasData();
         
-        let hasService = false;
-        document.querySelectorAll('.service-name-input').forEach(input => {
-          if (input.value.trim()) hasService = true;
-        });
-        
-        const hasSig = canvasClient.hasData();
-        
-        document.getElementById('submit-btn').disabled = !(company && name && phone && agreed && payment && hasService && hasSig);
+        document.getElementById('submit-btn').disabled = !(company && name && phone && agreed && payment && hasSvc && hasSig);
       }
       
       ['client-company', 'client-name', 'client-phone'].forEach(id => {
         document.getElementById(id).addEventListener('input', checkValid);
       });
       
-      // ========================================
-      // 링크 공유
-      // ========================================
-      function shareContract() {
-        const url = window.location.href.split('?')[0];
-        document.getElementById('share-link-text').textContent = url;
-        document.getElementById('share-modal').classList.add('show');
-      }
-      
-      function copyShareLink() {
-        const link = document.getElementById('share-link-text').textContent;
-        navigator.clipboard.writeText(link).then(() => {
-          alert('✅ 링크가 복사되었습니다!');
-        });
-      }
-      
-      function closeShareModal() {
-        document.getElementById('share-modal').classList.remove('show');
-      }
-      
-      // ========================================
-      // 제출 및 PDF
-      // ========================================
+      // 제출
       function submitForm() {
         const btn = document.getElementById('submit-btn');
         btn.disabled = true;
@@ -7506,16 +7837,17 @@ function getContractHTML(): string {
         
         setTimeout(() => {
           document.getElementById('done-modal').classList.add('show');
-          btn.textContent = '✓ 완료';
+          btn.textContent = '✓ 제출 완료';
         }, 1000);
       }
       
       function closeModal() {
         document.getElementById('done-modal').classList.remove('show');
-        document.getElementById('submit-btn').textContent = '✍️ 계약 완료';
+        document.getElementById('submit-btn').textContent = '✍️ 계약서 제출 및 PDF 다운로드';
         document.getElementById('submit-btn').disabled = false;
       }
       
+      // PDF
       async function downloadPDF() {
         const btn = document.getElementById('pdf-btn');
         btn.disabled = true;
@@ -7530,8 +7862,10 @@ function getContractHTML(): string {
           
           const pW = pdf.internal.pageSize.getWidth();
           const pH = pdf.internal.pageSize.getHeight();
-          const ratio = pW / canvas.width;
-          const scaledH = canvas.height * ratio;
+          const iW = canvas.width;
+          const iH = canvas.height;
+          const ratio = pW / iW;
+          const scaledH = iH * ratio;
           
           let y = 0;
           while (y < scaledH) {
@@ -7553,34 +7887,6 @@ function getContractHTML(): string {
           btn.disabled = false;
         }
       }
-      
-      // ========================================
-      // 초기화
-      // ========================================
-      const now = new Date();
-      document.getElementById('contract-date').textContent = now.getFullYear() + '년 ' + (now.getMonth()+1) + '월 ' + now.getDate() + '일';
-      document.getElementById('footer-year').textContent = now.getFullYear();
-      document.getElementById('footer-month').textContent = now.getMonth()+1;
-      document.getElementById('footer-day').textContent = now.getDate();
-      document.getElementById('start-date').valueAsDate = now;
-      document.getElementById('pay-day').value = now.getDate();
-      
-      // 저장된 회사 정보 로드
-      window.addEventListener('DOMContentLoaded', function() {
-        const saved = localStorage.getItem('xivix_contract_company');
-        if (saved) {
-          const data = JSON.parse(saved);
-          if (data.companyName) document.getElementById('company-name').value = data.companyName;
-          if (data.companyRep) document.getElementById('company-rep').value = data.companyRep;
-          if (data.companyPhone) document.getElementById('company-phone').value = data.companyPhone;
-          if (data.companyEmail) document.getElementById('company-email').value = data.companyEmail;
-          if (data.bankName) document.getElementById('bank-name').value = data.bankName;
-          if (data.bankAccount) document.getElementById('bank-account').value = data.bankAccount;
-          if (data.bankHolder) document.getElementById('bank-holder').value = data.bankHolder;
-          updateSignatureSection();
-          updateBankInfoText();
-        }
-      });
     </script>
 </body>
 </html>`;
