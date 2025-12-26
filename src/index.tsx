@@ -18,6 +18,10 @@ type Bindings = {
   GOOGLE_CLIENT_ID?: string
   GOOGLE_CLIENT_SECRET?: string
   KAKAO_JS_KEY?: string
+  // 카카오 알림톡 (비즈메시지)
+  KAKAO_BIZ_API_KEY?: string
+  KAKAO_BIZ_SENDER_KEY?: string
+  KAKAO_BIZ_PFID?: string  // 플러스친구 ID
 }
 
 // 세션 사용자 타입
@@ -437,6 +441,144 @@ app.get('/api/addon-services', (c) => c.json(ADDON_SERVICES))
 app.get('/api/web-service-options', (c) => c.json(WEB_SERVICE_OPTIONS))
 app.get('/api/system-dev-options', (c) => c.json(SYSTEM_DEV_OPTIONS))
 app.get('/api/consulting-options', (c) => c.json(CONSULTING_OPTIONS))
+
+// ========================================
+// 카카오 알림톡 API
+// ========================================
+
+// 알림톡 메시지 타입
+type AlimtalkMessage = {
+  to: string  // 수신자 휴대폰번호 (01012345678 형식)
+  templateCode: string  // 템플릿 코드
+  variables: Record<string, string>  // 템플릿 변수
+}
+
+// 알림톡 발송 함수
+async function sendAlimtalk(
+  env: Bindings,
+  message: AlimtalkMessage
+): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  const apiKey = env.KAKAO_BIZ_API_KEY
+  const senderKey = env.KAKAO_BIZ_SENDER_KEY
+  
+  if (!apiKey || !senderKey) {
+    return { success: false, error: 'Kakao Alimtalk API key not configured' }
+  }
+  
+  try {
+    // 카카오 비즈메시지 API 호출 (NHN Cloud / 솔라피 / 알리고 등 사용 가능)
+    // 여기서는 일반적인 구조로 작성 - 실제 API 제공업체에 맞게 수정 필요
+    
+    const response = await fetch('https://api.solapi.com/messages/v4/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        message: {
+          to: message.to,
+          from: senderKey,
+          kakaoOptions: {
+            pfId: env.KAKAO_BIZ_PFID,
+            templateId: message.templateCode,
+            variables: message.variables
+          }
+        }
+      })
+    })
+    
+    const result = await response.json() as any
+    
+    if (response.ok) {
+      return { success: true, messageId: result.messageId || result.groupId }
+    } else {
+      return { success: false, error: result.message || 'Failed to send message' }
+    }
+  } catch (error: any) {
+    return { success: false, error: error.message || 'Network error' }
+  }
+}
+
+// 계약서 링크 발송 API
+app.post('/api/alimtalk/send-contract', async (c) => {
+  try {
+    const body = await c.req.json()
+    const { phone, clientName, contractUrl, companyName } = body
+    
+    if (!phone || !clientName || !contractUrl) {
+      return c.json({ success: false, error: 'Missing required fields' }, 400)
+    }
+    
+    // 전화번호 정규화 (하이픈 제거)
+    const normalizedPhone = phone.replace(/-/g, '')
+    
+    // 알림톡 발송
+    const result = await sendAlimtalk(c.env, {
+      to: normalizedPhone,
+      templateCode: 'CONTRACT_LINK',  // 카카오 비즈니스에서 등록한 템플릿 코드
+      variables: {
+        '#{고객명}': clientName,
+        '#{회사명}': companyName || '컴바인티엔비',
+        '#{계약서링크}': contractUrl
+      }
+    })
+    
+    // DB에 발송 기록 저장 (선택사항)
+    if (c.env.DB && result.success) {
+      try {
+        await c.env.DB.prepare(`
+          INSERT INTO alimtalk_logs (phone, template_code, message_id, sent_at, status)
+          VALUES (?, ?, ?, datetime('now'), 'sent')
+        `).bind(normalizedPhone, 'CONTRACT_LINK', result.messageId || '').run()
+      } catch (dbError) {
+        console.error('DB logging error:', dbError)
+      }
+    }
+    
+    return c.json(result)
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500)
+  }
+})
+
+// 결제 알림 발송 API
+app.post('/api/alimtalk/send-payment-reminder', async (c) => {
+  try {
+    const body = await c.req.json()
+    const { phone, clientName, paymentDate, amount, companyName } = body
+    
+    if (!phone || !clientName || !paymentDate || !amount) {
+      return c.json({ success: false, error: 'Missing required fields' }, 400)
+    }
+    
+    const normalizedPhone = phone.replace(/-/g, '')
+    
+    const result = await sendAlimtalk(c.env, {
+      to: normalizedPhone,
+      templateCode: 'PAYMENT_REMINDER',  // 카카오 비즈니스에서 등록한 템플릿 코드
+      variables: {
+        '#{고객명}': clientName,
+        '#{회사명}': companyName || '컴바인티엔비',
+        '#{결제일}': paymentDate,
+        '#{결제금액}': amount
+      }
+    })
+    
+    return c.json(result)
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500)
+  }
+})
+
+// 알림톡 설정 상태 확인 API
+app.get('/api/alimtalk/status', (c) => {
+  const isConfigured = !!(c.env.KAKAO_BIZ_API_KEY && c.env.KAKAO_BIZ_SENDER_KEY)
+  return c.json({ 
+    configured: isConfigured,
+    message: isConfigured ? 'Alimtalk is configured' : 'Alimtalk API keys not set'
+  })
+})
 
 // ========================================
 // 유틸 함수들
@@ -7213,6 +7355,7 @@ function getContractHTML(): string {
       <button type="button" class="action-btn secondary" onclick="window.print()">🖨️ 인쇄</button>
       <button type="button" class="action-btn secondary" onclick="enterEditMode()" id="edit-mode-btn">✏️ 편집 모드</button>
       <button type="button" class="action-btn share" onclick="shareContract()">🔗 링크 공유</button>
+      <button type="button" class="action-btn kakao" onclick="openKakaoSendModal()" style="background:#FEE500; color:#191919;">💬 카카오톡 발송</button>
       <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled>✍️ 계약 완료</button>
     </div>
     
@@ -7239,6 +7382,48 @@ function getContractHTML(): string {
         <div style="margin-top:15px;">
           <button class="action-btn secondary" onclick="closeShareModal()" style="width:100%;">닫기</button>
         </div>
+      </div>
+    </div>
+    
+    <!-- 카카오톡 발송 모달 -->
+    <div class="modal-bg" id="kakao-modal">
+      <div class="modal-box" style="max-width:400px;">
+        <h3 class="modal-title">💬 카카오톡으로 계약서 발송</h3>
+        <p class="modal-desc">고객에게 카카오 알림톡으로 계약서 링크를 발송합니다.</p>
+        
+        <div style="text-align:left; margin-bottom:15px;">
+          <label style="display:block; font-size:13px; font-weight:600; margin-bottom:5px;">고객 이름</label>
+          <input type="text" id="kakao-client-name" class="input-field input-field-border" placeholder="홍길동" style="width:100%;">
+        </div>
+        
+        <div style="text-align:left; margin-bottom:15px;">
+          <label style="display:block; font-size:13px; font-weight:600; margin-bottom:5px;">휴대폰 번호</label>
+          <input type="tel" id="kakao-client-phone" class="input-field input-field-border" placeholder="010-1234-5678" style="width:100%;">
+        </div>
+        
+        <div style="background:#f5f5f5; padding:12px; border-radius:6px; margin-bottom:15px; text-align:left;">
+          <div style="font-size:12px; color:#666; margin-bottom:5px;">발송될 메시지 미리보기</div>
+          <div style="font-size:13px; line-height:1.6;">
+            [컴바인티엔비]<br>
+            <span id="kakao-preview-name">고객</span>님, 안녕하세요.<br>
+            마케팅 서비스 계약서가 도착했습니다.<br>
+            아래 링크에서 확인해 주세요.<br>
+            <span style="color:#2563eb;" id="kakao-preview-link">https://xivix.kr/contract</span>
+          </div>
+        </div>
+        
+        <button class="action-btn kakao" onclick="sendKakaoAlimtalk()" id="kakao-send-btn" style="width:100%; background:#FEE500; color:#191919; justify-content:center;">
+          💬 카카오톡 발송
+        </button>
+        
+        <div style="margin-top:10px;">
+          <button class="action-btn secondary" onclick="closeKakaoModal()" style="width:100%;">취소</button>
+        </div>
+        
+        <p style="font-size:11px; color:#999; margin-top:12px;">
+          * 카카오 알림톡으로 발송됩니다.<br>
+          * 수신자가 카카오톡 미사용 시 문자로 대체 발송됩니다.
+        </p>
       </div>
     </div>
     
@@ -7546,6 +7731,109 @@ function getContractHTML(): string {
       
       function closeShareModal() {
         document.getElementById('share-modal').classList.remove('show');
+      }
+      
+      // ========================================
+      // 카카오톡 발송
+      // ========================================
+      function openKakaoSendModal() {
+        const url = window.location.href.split('?')[0];
+        document.getElementById('kakao-preview-link').textContent = url;
+        document.getElementById('kakao-modal').classList.add('show');
+        
+        // 이름 입력시 미리보기 업데이트
+        document.getElementById('kakao-client-name').addEventListener('input', function() {
+          document.getElementById('kakao-preview-name').textContent = this.value || '고객';
+        });
+      }
+      
+      function closeKakaoModal() {
+        document.getElementById('kakao-modal').classList.remove('show');
+      }
+      
+      async function sendKakaoAlimtalk() {
+        const clientName = document.getElementById('kakao-client-name').value.trim();
+        const clientPhone = document.getElementById('kakao-client-phone').value.trim();
+        const contractUrl = window.location.href.split('?')[0];
+        const companyName = document.getElementById('company-name').value.split('(')[0].trim();
+        
+        if (!clientName) {
+          alert('고객 이름을 입력해 주세요.');
+          return;
+        }
+        
+        if (!clientPhone) {
+          alert('휴대폰 번호를 입력해 주세요.');
+          return;
+        }
+        
+        // 전화번호 유효성 검사
+        const phoneRegex = /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/;
+        if (!phoneRegex.test(clientPhone.replace(/-/g, ''))) {
+          alert('올바른 휴대폰 번호를 입력해 주세요.');
+          return;
+        }
+        
+        const btn = document.getElementById('kakao-send-btn');
+        btn.disabled = true;
+        btn.textContent = '발송 중...';
+        
+        try {
+          const response = await fetch('/api/alimtalk/send-contract', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              phone: clientPhone,
+              clientName: clientName,
+              contractUrl: contractUrl,
+              companyName: companyName
+            })
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            alert('✅ 카카오톡 발송 완료!\\n\\n' + clientName + '님에게 계약서 링크가 발송되었습니다.');
+            closeKakaoModal();
+            
+            // 입력 필드 초기화
+            document.getElementById('kakao-client-name').value = '';
+            document.getElementById('kakao-client-phone').value = '';
+          } else {
+            // API 키가 설정되지 않은 경우 대체 방법 안내
+            if (result.error && result.error.includes('not configured')) {
+              if (confirm('카카오 알림톡이 아직 설정되지 않았습니다.\\n\\n카카오톡 공유하기로 대체 발송하시겠습니까?')) {
+                shareViaKakaoLink(clientName, contractUrl);
+              }
+            } else {
+              alert('발송 실패: ' + (result.error || '알 수 없는 오류'));
+            }
+          }
+        } catch (error) {
+          // 네트워크 오류 시 카카오 공유하기로 대체
+          if (confirm('서버 연결에 실패했습니다.\\n\\n카카오톡 공유하기로 대체 발송하시겠습니까?')) {
+            shareViaKakaoLink(clientName, contractUrl);
+          }
+        } finally {
+          btn.disabled = false;
+          btn.textContent = '💬 카카오톡 발송';
+        }
+      }
+      
+      // 카카오톡 공유하기 (대체 방법)
+      function shareViaKakaoLink(clientName, contractUrl) {
+        const message = '[컴바인티엔비] ' + clientName + '님, 마케팅 서비스 계약서가 도착했습니다. ' + contractUrl;
+        
+        // 카카오톡 공유 URL 스킴 (모바일)
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          window.location.href = 'kakaotalk://msg/text/' + encodeURIComponent(message);
+        } else {
+          // PC에서는 링크 복사
+          navigator.clipboard.writeText(message).then(() => {
+            alert('✅ 메시지가 복사되었습니다!\\n\\n카카오톡에서 붙여넣기 해주세요.');
+          });
+        }
+        closeKakaoModal();
       }
       
       // ========================================
