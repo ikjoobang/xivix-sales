@@ -361,7 +361,7 @@ const ADDON_SERVICES = [
   { id: "video_edu_small", name: "교육/매뉴얼 영상 (20P 미만)", price: 1000000, desc: "시리즈 편당 (20페이지 미만)", perUnit: "1편", category: "video" },
   { id: "video_edu_large", name: "교육/매뉴얼 영상 (50P 미만)", price: 2000000, desc: "시리즈 편당 (50페이지 미만)", perUnit: "1편", category: "video" },
   { id: "video_visit", name: "방문 촬영", price: 1500000, desc: "현장 방문 촬영 영상 1편", perUnit: "1회", category: "video" },
-  { id: "zoom_consult", name: "🎥 ZOOM 상담", price: 30000, desc: "30분 1:1 화상 마케팅 전략 상담", perUnit: "1회", category: "consultation", highlight: true }
+  { id: "zoom_consult", name: "ZOOM 상담", price: 30000, desc: "30분 1:1 화상 마케팅 전략 상담", perUnit: "1회", category: "consultation", highlight: true }
 ]
 
 // ========================================
@@ -1619,40 +1619,37 @@ app.post('/api/chat', async (c) => {
 # FAQ Response (자주 묻는 질문 대응)
 
 **Q1. "너무 비싸요" / "예산이 부족해요"**
-→ "이해해요! 그래서 저희가 세트 메뉴를 만들었어요. SNS 스타터 89만원이면 첫 달 세팅+관리까지 다 되고, 다음 달부터는 55만원이에요. 하루로 치면 1.8만원! 알바생 반나절 비용으로 24시간 마케팅 되는 셈이죠 😊 그리고 친구 초대받으시면 바로 15% 할인이에요! 아니면 분할결제도 가능해요!"
-
-**Q1-1. "분할결제 가능한가요?"**
-→ "네! 셋팅비를 2~3회로 나눠 결제하실 수 있어요. 예를 들어 SNS 성장(149만원)을 계약하시면: 계약금 50만원 → 1주후 49만원 → 세팅완료후 50만원 이렇게요. 월관리비는 매월 따로니까 겹치지 않아요! 😊"
+→ "이해해요! 그래서 저희가 세트 메뉴를 만들었어요. SNS 스타터 89만원이면 첫 달 세팅+관리까지 다 되고, 다음 달부터는 55만원이에요. 하루로 치면 1.8만원! 알바생 반나절 비용으로 24시간 마케팅 되는 셈이죠. 그리고 친구 초대받으시면 바로 15% 할인이에요!"
 
 **Q2. "효과가 바로 나타나나요?"**
-→ "씨앗 심자마자 열매 열리진 않잖아요? 🌱 첫 달은 밭 갈고 씨 뿌리는 '세팅' 기간이에요. 플레이스 최적화하고 인스타 기반 다지고... 제대로 세팅하면 보통 2~3개월째부터 문의가 늘기 시작해요."
+→ "첫 달은 기반 작업인 '세팅' 기간이에요. 플레이스 최적화하고 인스타 기반 다지고... 제대로 세팅하면 보통 2~3개월째부터 문의가 늘기 시작해요."
 
 **Q3. "월관리에 뭐가 포함되어 있어요?"**
 → (위 GRADE별 세부 내용 참조해서 구체적으로 설명. 예: "GRADE 2 퍼포먼스는 월 99만원인데요, 인스타 릴스 4개+피드 4개+카드뉴스 2개, 플레이스 적극 관리, 블로그 4개 포스팅이 포함되어 있어요. 사장님은 콘텐츠 승인만 해주시면 저희가 다 올려드려요!")
 
 **Q4. "인스타 월관리 75만원에 정확히 뭘 해주는 거예요?"**
-→ "릴스(짧은 영상) 4개, 피드(이미지) 4개, 카드뉴스 2개, 스토리 8개를 만들어서 올려드려요. 댓글이나 DM 관리도 해드리고요. 사장님은 촬영 협조만 해주시면 나머지는 저희가 기획-제작-업로드까지 다 해요! 📸"
+→ "릴스(짧은 영상) 4개, 피드(이미지) 4개, 카드뉴스 2개, 스토리 8개를 만들어서 올려드려요. 댓글이나 DM 관리도 해드리고요. 사장님은 촬영 협조만 해주시면 나머지는 저희가 기획-제작-업로드까지 다 해요!"
 
 **Q5. "해약할 수 있나요?"**
-→ "네! 노예계약 없어요 😎 첫 달 써보시고 마음에 안 드시면 언제든 멈추셔도 돼요. 그만큼 실력에 자신 있으니까요."
+→ "네! 노예계약 없어요. 첫 달 써보시고 마음에 안 드시면 언제든 멈추셔도 돼요. 그만큼 실력에 자신 있으니까요."
 
 **Q6. "플레이스 A형이랑 B형 차이가 뭐예요?"**
 → "B형(35만)은 기본 관리예요. 리뷰 답글 달고 정보 업데이트하고. A형(50만)은 적극 공략! 상위노출 전략 짜고, 키워드 모니터링하고, 리뷰 유도까지 해드려요. 경쟁 심한 지역이면 A형 추천해요!"
 
 **Q7. "ZOOM 상담은 뭐예요?"**
-→ "3만원에 30분 동안 1:1로 화상 상담해드려요! 사장님 업종, 상황 듣고 맞춤 전략 조언해드려요. 일단 이것만 신청하셔도 방향이 잡히실 거예요 🎥"
+→ "3만원에 30분 동안 1:1로 화상 상담해드려요! 사장님 업종, 상황 듣고 맞춤 전략 조언해드려요. 일단 이것만 신청하셔도 방향이 잡히실 거예요."
 
 **Q8. "결제는 어떻게 하나요?" / "선입금인가요?"**
-→ "네! 저희는 **선입금 시스템**이에요. 결제 완료 후 작업이 시작됩니다. 정당한 대가 없이는 서비스 제공이 어렵습니다. 대신 품질에 자신 있으니 첫 달 써보시고 마음에 안 드시면 다음 달 해약 가능해요! 😊"
+→ "네! 저희는 **선입금 시스템**이에요. 결제 완료 후 작업이 시작됩니다. 정당한 대가 없이는 서비스 제공이 어렵습니다. 대신 품질에 자신 있으니 첫 달 써보시고 마음에 안 드시면 다음 달 해약 가능해요!"
 
 **Q8-1. "후불 안 되나요?" / "나중에 결제해도 되나요?"**
-→ "죄송해요, 저희는 **선입금 원칙**입니다. 계약금 먼저 결제 → 작업 시작 → 세팅 완료 후 잔금 결제 순서로 진행해요. 분할결제는 가능하지만 후불은 어렵습니다. 신뢰가 쌓인 장기 고객님에게만 예외적으로 협의 가능해요!"
+→ "죄송해요, 저희는 **선입금 원칙**입니다. 계약금 먼저 결제 → 작업 시작 → 세팅 완료 후 잔금 결제 순서로 진행해요. 후불은 어렵습니다. 신뢰가 쌓인 장기 고객님에게만 예외적으로 협의 가능해요!"
 
 **Q9. "계약서 작성하나요?"**
-→ "네! 정식 전자계약서를 작성해요. 서비스 범위, 기간, 금액, 해약 조건이 명시되어 있어서 서로 안심하고 진행할 수 있어요. 계약서 없이는 프로젝트 시작 안 해요! ✍️"
+→ "네! 정식 전자계약서를 작성해요. 서비스 범위, 기간, 금액, 해약 조건이 명시되어 있어서 서로 안심하고 진행할 수 있어요. 계약서 없이는 프로젝트 시작 안 해요!"
 
 # Conversation Flow (대화 순서)
-1. **인사+업종 파악:** "안녕하세요! X I Λ I X 마케팅 상담 AI입니다 😊 어떤 사업 운영하고 계신가요?"
+1. **인사+업종 파악:** "안녕하세요! X I Λ I X 마케팅 상담 AI입니다. 어떤 사업 운영하고 계신가요?"
 2. **호칭 설정+공감:** 업종 맞는 호칭으로 부르며 노고 위로
 3. **니즈 파악:** "지금 가장 고민되시는 게 뭐예요? 손님이 안 오는 건지, 인스타 운영이 어려운 건지..."
 4. **맞춤 추천:** 상황에 맞는 상품을 쉬운 비유와 함께 추천 (세트 메뉴 우선 추천)
@@ -5716,28 +5713,13 @@ function getMainHTML(): string {
           <label class="cart-regional"><input type="checkbox" id="regional-fee" onchange="updateCart()">지방 출장비 (+30만원)</label>
           <div class="cart-total"><span>총 금액</span><span id="cart-total">0원</span></div>
           
-          <!-- 분할결제 옵션 -->
-          <div class="installment-option" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:12px;margin:12px 0;">
-            <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);cursor:pointer;">
-              <input type="checkbox" id="installment-check" onchange="toggleInstallmentInfo()" style="accent-color:var(--neon-purple);">
-              <span><i class="fas fa-calendar-alt"></i> 분할결제 (셋팅비 2~3회 분납)</span>
-            </label>
-            <div id="installment-info" style="display:none;margin-top:10px;font-size:0.8rem;color:var(--text-tertiary);background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;">
-              <div style="margin-bottom:6px;color:var(--neon-cyan);">💡 분할결제 안내</div>
-              <div>• 계약금: 총액의 약 35%</div>
-              <div>• 1주 후: 약 35%</div>
-              <div>• 세팅완료 후: 잔금 30%</div>
-              <div style="margin-top:6px;color:var(--neon-orange);font-size:0.75rem;">※ 월관리비는 매월 별도 결제 (겹치지 않음)</div>
-            </div>
-          </div>
-          
           <!-- 친구초대 혜택 배너 -->
           <div class="referral-banner" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(168,85,247,0.15));border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:12px;margin-bottom:12px;text-align:center;">
             <div style="font-size:0.9rem;font-weight:700;color:var(--neon-green);margin-bottom:4px;">
               <i class="fas fa-gift"></i> 친구 초대하면 바로 15% 할인!
             </div>
             <div style="font-size:0.75rem;color:var(--text-secondary);">
-              추천인도 결제금액의 5% 적립금 획득 🎁
+              추천인도 결제금액의 5% 적립금 획득
             </div>
           </div>
           
@@ -5760,7 +5742,7 @@ function getMainHTML(): string {
           <button class="chat-close" onclick="closeChat()"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-messages" id="chat-messages">
-          <div class="message"><div class="message-avatar"><i class="fas fa-robot"></i></div><div class="message-content">안녕하세요!<br>X I Λ I X 마케팅 상담 <strong>봇</strong>입니다 😊<br><br>20년 경력 마케팅 전문가 기반으로<br>맞춤 솔루션을 안내해드려요!<br><br>어떤 사업을 운영하고 계신가요?</div></div>
+          <div class="message"><div class="message-avatar"><i class="fas fa-robot"></i></div><div class="message-content">안녕하세요!<br>X I Λ I X 비즈니스 상담 <strong>봇</strong>입니다.<br><br>20년 현장 경험을 기반으로<br>맞춤 솔루션을 안내해드립니다.<br><br>어떤 사업을 운영하고 계신가요?</div></div>
         </div>
         <div class="chat-input-area">
           <input type="text" class="chat-input" id="chat-input" placeholder="메시지 입력..." onkeypress="if(event.key==='Enter')sendMessage()">
@@ -5873,7 +5855,7 @@ function getMainHTML(): string {
         </button>
         
         <p style="text-align:center;margin-top:16px;font-size:0.8rem;color:var(--text-tertiary);">
-          예약 확정 후 담당자가 연락드립니다 📞
+          예약 확정 후 담당자가 연락드립니다.
         </p>
       </div>
     </div>
@@ -6600,7 +6582,7 @@ function getMainHTML(): string {
           
           if (data.success) {
             closeBookingModal();
-            showToast('✅ 예약이 완료되었습니다! 담당자가 연락드릴게요 📞');
+            showToast('예약이 완료되었습니다. 담당자가 연락드릴 예정입니다.');
             
             // 입력값 초기화
             document.getElementById('booking-name').value = '';
@@ -6755,7 +6737,7 @@ function getMainHTML(): string {
         const label = document.getElementById('contact-input-label');
         inputArea.style.display = 'block';
         if (type === 'phone') {
-          label.textContent = '📞 전화 상담을 위한 연락처';
+          label.textContent = '전화 상담을 위한 연락처';
         } else {
           label.textContent = '🏢 방문 상담을 위한 연락처';
         }
@@ -8077,7 +8059,7 @@ function getContractHTML(): string {
       <button type="button" class="action-btn primary" onclick="saveContract()" id="save-btn" style="display:none;">💾 저장</button>
       <button type="button" class="action-btn share" onclick="shareContract()" id="share-btn" style="display:none;">🔗 링크 공유</button>
       <button type="button" class="action-btn kakao" onclick="openKakaoSendModal()" style="background:#FEE500; color:#191919;">💬 카카오톡 발송</button>
-      <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled>✍️ 계약 완료</button>
+      <button type="button" class="action-btn primary" id="submit-btn" onclick="submitForm()" disabled><i class="fas fa-signature"></i> 계약 완료</button>
     </div>
     
     <!-- 저장 완료 모달 -->
@@ -8102,7 +8084,7 @@ function getContractHTML(): string {
         <p class="modal-desc">계약서가 성공적으로 작성되었습니다.</p>
         <div class="modal-btns">
           <button class="action-btn secondary" onclick="closeModal()">닫기</button>
-          <button class="action-btn primary" id="pdf-btn" onclick="downloadPDF()">📄 PDF 다운로드</button>
+          <button class="action-btn primary" id="pdf-btn" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF 다운로드</button>
         </div>
       </div>
     </div>
@@ -8678,7 +8660,7 @@ function getContractHTML(): string {
       
       function closeModal() {
         document.getElementById('done-modal').classList.remove('show');
-        document.getElementById('submit-btn').textContent = '✍️ 계약 완료';
+        document.getElementById('submit-btn').innerHTML = '<i class="fas fa-signature"></i> 계약 완료';
         document.getElementById('submit-btn').disabled = false;
       }
       
@@ -8712,10 +8694,10 @@ function getContractHTML(): string {
           
           pdf.save(fname);
           btn.textContent = '✓ 완료';
-          setTimeout(() => { btn.textContent = '📄 PDF 다운로드'; btn.disabled = false; }, 2000);
+          setTimeout(() => { btn.textContent = '<i class="fas fa-file-pdf"></i> PDF 다운로드'; btn.disabled = false; }, 2000);
         } catch (err) {
           alert('PDF 생성 오류: ' + err.message);
-          btn.textContent = '📄 PDF 다운로드';
+          btn.textContent = '<i class="fas fa-file-pdf"></i> PDF 다운로드';
           btn.disabled = false;
         }
       }
@@ -9578,9 +9560,9 @@ function getContractViewHTML(id: string): string {
       // 하단 액션 바 렌더링
       const actionBar = document.getElementById('action-bar');
       if (isSigned) {
-        actionBar.innerHTML = '<div class="btn-wrap"><button class="btn btn-primary" onclick="downloadPDF()">📄 PDF 다운로드</button></div>';
+        actionBar.innerHTML = '<div class="btn-wrap"><button class="btn btn-primary" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF 다운로드</button></div>';
       } else {
-        actionBar.innerHTML = '<div class="btn-wrap"><button class="btn btn-primary" id="submit-btn" onclick="submitSign()" disabled>✍️ 계약 서명하기</button><button class="btn btn-secondary" onclick="downloadPDF()">📄 PDF</button></div>';
+        actionBar.innerHTML = '<div class="btn-wrap"><button class="btn btn-primary" id="submit-btn" onclick="submitSign()" disabled><i class="fas fa-signature"></i> 계약 서명하기</button><button class="btn btn-secondary" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF</button></div>';
         initCanvas();
         initValidation();
       }
@@ -9737,12 +9719,12 @@ function getContractViewHTML(id: string): string {
         } else {
           alert('❌ 오류: ' + result.error);
           btn.disabled = false;
-          btn.innerHTML = '✍️ 계약 서명하기';
+          btn.innerHTML = '<i class="fas fa-signature"></i> 계약 서명하기';
         }
       } catch (e) {
         alert('❌ 오류: ' + e.message);
         btn.disabled = false;
-        btn.innerHTML = '✍️ 계약 서명하기';
+        btn.innerHTML = '<i class="fas fa-signature"></i> 계약 서명하기';
       }
     }
     
