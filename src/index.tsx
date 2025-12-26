@@ -3149,59 +3149,59 @@ function getMainHTML(): string {
     
     <style>
       :root {
-        /* XIVIX Master Theme - Warm White (Studio Ju AI Style) */
-        --bg-primary: #F9F9F8;
-        --bg-secondary: #FAFAFA;
-        --bg-tertiary: #FFFFFF;
-        --bg-card: #FFFFFF;
-        --bg-dark: #1A1A1A;
+        /* XIVIX Premium Dark Theme - studiojuai.club Style */
+        --bg-primary: #0a0a0f;
+        --bg-secondary: #12121a;
+        --bg-tertiary: #1a1a24;
+        --bg-card: rgba(20, 20, 30, 0.8);
+        --bg-dark: #050508;
         
-        /* Minimal Color Palette - 미니멀하고 고급스러운 색상 */
-        --accent-primary: #1A1A1A;
-        --accent-blue: #2563eb;
-        --accent-green: #059669;
-        --accent-orange: #ea580c;
-        --accent-purple: #7c3aed;
+        /* Neon Accent Colors - 화려하고 트렌디한 색상 */
+        --neon-purple: #a855f7;
+        --neon-pink: #ec4899;
+        --neon-cyan: #22d3ee;
+        --neon-lime: #84cc16;
+        --neon-green: #22c55e;
+        --neon-orange: #f97316;
+        --neon-blue: #3b82f6;
         
         /* Text Colors */
-        --text-primary: #1A1A1A;
-        --text-secondary: #4B5563;
-        --text-tertiary: #9CA3AF;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0b0;
+        --text-tertiary: #6b6b7b;
         
         /* Borders */
-        --border-subtle: rgba(0, 0, 0, 0.06);
-        --border-hover: rgba(0, 0, 0, 0.12);
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --border-hover: rgba(255, 255, 255, 0.15);
+        --border-glow: rgba(168, 85, 247, 0.5);
         
-        /* Legacy neon colors → Minimal mapping */
-        --neon-lime: #1A1A1A;
-        --neon-green: #059669;
-        --neon-purple: #1A1A1A;
-        --neon-pink: #4B5563;
-        --neon-cyan: #2563eb;
-        --neon-orange: #ea580c;
+        /* Gradients */
+        --gradient-primary: linear-gradient(135deg, #a855f7, #ec4899);
+        --gradient-secondary: linear-gradient(135deg, #22d3ee, #3b82f6);
+        --gradient-lime: linear-gradient(135deg, #84cc16, #22c55e);
         
-        /* Wide Margin Design System (150px~200px) */
-        --space-xs: 16px;
-        --space-sm: 24px;
-        --space-md: 40px;
-        --space-lg: 64px;
-        --space-xl: 100px;
-        --space-2xl: 160px;
-        --space-3xl: 200px;
+        /* Spacing */
+        --space-xs: 12px;
+        --space-sm: 20px;
+        --space-md: 32px;
+        --space-lg: 48px;
+        --space-xl: 80px;
+        --space-2xl: 120px;
+        --space-3xl: 160px;
         
         /* Container */
         --container-sm: 600px;
         --container-md: 800px;
         --container-lg: 1100px;
-        --container-xl: 1200px;
+        --container-xl: 1280px;
         --container-full: 100%;
         
-        /* Border radius (Softer) */
+        /* Border radius */
         --radius-sm: 8px;
-        --radius-md: 16px;
-        --radius-lg: 24px;
-        --radius-xl: 32px;
-        --radius-2xl: 40px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+        --radius-xl: 28px;
+        --radius-2xl: 36px;
       }
       
       /* 띠 배너 - 미니멀 스타일 */
@@ -3434,14 +3434,93 @@ function getMainHTML(): string {
         user-select: text;
       }
       
-      /* Minimal Background - Clean & Elegant */
-      .bg-animated { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--bg-primary); }
-      .bg-gradient { display: none; }
+      /* Premium Animated Background - Studio Ju AI Style */
+      .bg-animated {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: var(--bg-primary);
+        overflow: hidden;
+      }
+      .bg-gradient {
+        position: absolute;
+        inset: 0;
+        background: 
+          radial-gradient(ellipse 80% 50% at 20% 40%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+          radial-gradient(ellipse 60% 40% at 80% 20%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+          radial-gradient(ellipse 50% 30% at 60% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%);
+        animation: bgPulse 8s ease-in-out infinite;
+      }
+      @keyframes bgPulse {
+        0%, 100% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.05); }
+      }
       
-      /* Minimal Particle - Subtle & Elegant */
-      .particles-container { display: none; }
-      .particle { display: none; }
-      .gradient-orb { display: none; }
+      /* Floating Particles - Premium Effect */
+      .particles-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .particle {
+        position: absolute;
+        bottom: -20px;
+        width: 6px;
+        height: 6px;
+        background: var(--neon-purple);
+        border-radius: 50%;
+        animation: floatUp 15s linear infinite;
+        opacity: 0.6;
+        box-shadow: 0 0 10px currentColor;
+      }
+      .particle:nth-child(odd) { background: var(--neon-pink); }
+      .particle:nth-child(3n) { background: var(--neon-cyan); width: 4px; height: 4px; }
+      .particle:nth-child(4n) { background: var(--neon-lime); width: 8px; height: 8px; }
+      @keyframes floatUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.8; }
+        90% { opacity: 0.6; }
+        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+      }
+      
+      /* Gradient Orbs - Floating Animation */
+      .gradient-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.5;
+        animation: orbFloat 20s ease-in-out infinite;
+      }
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%);
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+      .orb-2 {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, transparent 70%);
+        top: 50%;
+        right: 10%;
+        animation-delay: -7s;
+      }
+      .orb-3 {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+        bottom: 20%;
+        left: 30%;
+        animation-delay: -14s;
+      }
+      @keyframes orbFloat {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.95); }
+      }
       
       /* 4대 블록 비즈니스 섹션 - Minimal Style */
       .business-blocks {
@@ -3663,8 +3742,17 @@ function getMainHTML(): string {
       .reveal.active { opacity: 1; transform: translateY(0); }
       
       .gradient-text {
-        color: var(--text-primary);
-        font-weight: 700;
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink), var(--neon-cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+        background-size: 200% auto;
+        animation: gradientShimmer 4s ease-in-out infinite;
+      }
+      @keyframes gradientShimmer {
+        0%, 100% { background-position: 0% center; }
+        50% { background-position: 200% center; }
       }
       
       /* ========================================
@@ -3680,7 +3768,7 @@ function getMainHTML(): string {
       .container-lg { max-width: var(--container-lg); }
       .container-full { max-width: 100%; padding: 0; }
       
-      /* Hero Section - Minimal & Clean */
+      /* Hero Section - Premium Dark with Video */
       .hero {
         min-height: 100vh;
         width: 100%;
@@ -3692,10 +3780,30 @@ function getMainHTML(): string {
         padding: var(--space-3xl) var(--space-lg);
         position: relative;
         background: var(--bg-primary);
+        overflow: hidden;
       }
       
-      /* Hide video elements - minimal design */
-      .hero-video-bg, .hero-video-overlay, .particles-container { display: none; }
+      /* Hero Video Background */
+      .hero-video-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .hero-video-bg video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.25;
+      }
+      .hero-video-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, 
+          rgba(10, 10, 15, 0.7) 0%, 
+          rgba(10, 10, 15, 0.5) 50%, 
+          rgba(10, 10, 15, 0.9) 100%);
+      }
       
       .hero-content {
         position: relative;
@@ -3708,31 +3816,50 @@ function getMainHTML(): string {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 10px 20px;
-        background: var(--bg-secondary);
-        border: 1px solid var(--border-subtle);
+        padding: 10px 24px;
+        background: rgba(168, 85, 247, 0.15);
+        border: 1px solid rgba(168, 85, 247, 0.4);
         border-radius: 50px;
         font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--text-secondary);
+        font-weight: 600;
+        color: var(--neon-purple);
         margin-bottom: var(--space-lg);
+        backdrop-filter: blur(10px);
+        animation: badgePulse 3s ease-in-out infinite;
+      }
+      @keyframes badgePulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+        50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.4); }
       }
       
-      .status-dot { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; }
+      .status-dot { 
+        width: 10px; 
+        height: 10px; 
+        background: var(--neon-lime); 
+        border-radius: 50%; 
+        animation: dotPulse 1.5s ease-in-out infinite;
+        box-shadow: 0 0 10px var(--neon-lime);
+      }
+      @keyframes dotPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.3); opacity: 0.7; }
+      }
       
-      /* 메인 카피 - Minimal Typography */
+      /* 메인 카피 - Premium Gradient Typography */
       .hero-title { 
-        font-size: clamp(2rem, 5vw, 3rem); 
-        font-weight: 300; 
+        font-size: clamp(1.5rem, 4vw, 2.5rem); 
+        font-weight: 700; 
         letter-spacing: -0.02em; 
-        margin-bottom: var(--space-sm);
-        line-height: 1.25;
+        margin-bottom: var(--space-md);
+        line-height: 1.35;
         color: var(--text-primary);
       }
       .hero-title .highlight {
-        font-weight: 700;
-        color: var(--text-primary);
-        -webkit-text-fill-color: var(--text-primary);
+        font-weight: 800;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
       
       /* 서브 카피 */
@@ -3753,20 +3880,33 @@ function getMainHTML(): string {
       .hero-buttons { display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: center; }
       
       .btn-lime {
-        background: var(--accent-primary);
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
         color: white;
-        font-weight: 600;
-        font-size: 0.9rem;
-        padding: 14px 28px;
-        border-radius: var(--radius-sm);
-        transition: all 0.2s ease;
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 16px 32px;
+        border-radius: var(--radius-md);
+        transition: all 0.3s ease;
         border: none;
         cursor: pointer;
+        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-lime::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+        opacity: 0;
+        transition: opacity 0.3s ease;
       }
       .btn-lime:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
       }
+      .btn-lime:hover::before { opacity: 1; }
+      .btn-lime span, .btn-lime i { position: relative; z-index: 1; }
       
       /* Hero 신뢰 지표 */
       .hero-trust {
@@ -3779,14 +3919,39 @@ function getMainHTML(): string {
       .trust-item {
         display: flex;
         align-items: center;
-        gap: 6px;
-        color: var(--text-tertiary);
-        font-size: 0.85rem;
+        gap: 8px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 30px;
+        border: 1px solid var(--border-subtle);
       }
-      .trust-item i { color: var(--accent-green); }
+      .trust-item i { color: var(--neon-lime); }
       
-      /* Hero 이미지 배경 - Hidden for clean design */
-      .hero-image-bg, .hero-image-overlay { display: none; }
+      /* Hero 이미지 배경 - Visible with overlay */
+      .hero-image-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        overflow: hidden;
+      }
+      .hero-image-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.2;
+        filter: grayscale(30%);
+      }
+      .hero-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, 
+          rgba(10, 10, 15, 0.6) 0%, 
+          rgba(10, 10, 15, 0.4) 30%,
+          rgba(10, 10, 15, 0.7) 70%,
+          rgba(10, 10, 15, 0.95) 100%);
+      }
       
       /* Section Eyebrow - Minimal */
       .section-eyebrow {
@@ -4165,36 +4330,74 @@ function getMainHTML(): string {
       .portfolio-item {
         background: var(--bg-card);
         border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-md);
-        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
-        min-height: 80px;
+        min-height: 160px;
+        position: relative;
+      }
+      .portfolio-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 15, 0.9) 100%);
+        z-index: 1;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
       }
       .portfolio-item:hover { 
-        transform: translateY(-3px); 
-        border-color: var(--border-hover); 
-        background: rgba(168, 85, 247, 0.08);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        transform: translateY(-6px) scale(1.02); 
+        border-color: var(--neon-purple);
+        box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
+      }
+      .portfolio-item:hover::before {
+        opacity: 0.5;
+      }
+      .portfolio-thumbnail {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .portfolio-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.8);
+        transition: filter 0.3s ease;
+      }
+      .portfolio-item:hover .portfolio-thumbnail img {
+        filter: saturate(1.2);
+      }
+      .portfolio-content {
+        position: relative;
+        z-index: 2;
+        padding: var(--space-md);
+        margin-top: auto;
       }
       .portfolio-tag { 
-        font-size: 0.65rem; 
-        font-weight: 600; 
-        padding: 3px 8px; 
-        background: rgba(168, 85, 247, 0.15); 
-        border-radius: 10px; 
-        color: var(--neon-purple); 
+        font-size: 0.7rem; 
+        font-weight: 700; 
+        padding: 4px 10px; 
+        background: linear-gradient(135deg, rgba(168, 85, 247, 0.9), rgba(236, 72, 153, 0.9)); 
+        border-radius: 20px; 
+        color: white; 
         display: inline-block; 
         margin-bottom: var(--space-xs);
         align-self: flex-start;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
       }
       .portfolio-title { 
-        font-size: 0.85rem; 
-        font-weight: 600; 
-        color: var(--text-primary);
+        font-size: 0.95rem; 
+        font-weight: 700; 
+        color: white;
         line-height: 1.4;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      }
+      .portfolio-item.video .portfolio-tag {
+        background: linear-gradient(135deg, #ef4444, #f97316);
       }
       
       @media (max-width: 1024px) {
@@ -4267,11 +4470,12 @@ function getMainHTML(): string {
         gap: var(--space-sm); 
       }
       .service-item {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: var(--radius-md);
-        padding: var(--space-md);
+        background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
         transition: all 0.3s ease;
+        position: relative;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
@@ -4285,14 +4489,18 @@ function getMainHTML(): string {
       }
       .service-info { flex: 1; min-width: 140px; }
       .service-name { 
-        font-weight: 600; 
-        margin-bottom: 4px; 
-        font-size: 0.9rem; 
+        font-weight: 700; 
+        margin-bottom: 6px; 
+        font-size: 1rem; 
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
       .service-desc { 
-        font-size: 0.8rem; 
-        color: var(--text-tertiary);
-        line-height: 1.4;
+        font-size: 0.85rem; 
+        color: var(--text-secondary);
+        line-height: 1.5;
       }
       .service-prices { 
         display: flex; 
@@ -4303,19 +4511,22 @@ function getMainHTML(): string {
         display: flex; 
         flex-direction: column; 
         align-items: center; 
-        padding: 6px 12px; 
-        background: rgba(34, 211, 238, 0.08); 
-        border-radius: var(--radius-sm); 
+        padding: 10px 16px; 
+        background: rgba(34, 211, 238, 0.1); 
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(34, 211, 238, 0.2);
       }
       .service-price-label { 
-        color: var(--text-tertiary); 
-        font-size: 0.7rem; 
-        margin-bottom: 2px; 
+        color: var(--text-secondary); 
+        font-size: 0.75rem; 
+        margin-bottom: 4px;
+        font-weight: 500;
       }
       .service-price-value { 
-        font-weight: 700; 
+        font-weight: 800; 
         color: var(--neon-cyan); 
-        font-size: 0.9rem; 
+        font-size: 1rem;
+        text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
       }
       .service-price.monthly { background: rgba(168, 85, 247, 0.1); }
       .service-price.monthly .service-price-value { color: var(--neon-purple); }
@@ -4382,22 +4593,59 @@ function getMainHTML(): string {
       }
       .cart-panel {
         position: absolute; bottom: 70px; right: 0;
-        width: 340px; max-height: 450px;
-        background: var(--bg-secondary); border: 1px solid var(--border-subtle);
-        border-radius: 20px; overflow: hidden;
+        width: 360px; max-height: 480px;
+        background: linear-gradient(145deg, var(--bg-secondary), var(--bg-tertiary));
+        border: 2px solid rgba(168, 85, 247, 0.3);
+        border-radius: 24px; overflow: hidden;
         display: none; flex-direction: column;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(168, 85, 247, 0.15);
+        backdrop-filter: blur(20px);
       }
       .cart-panel.open { display: flex; }
       .cart-header { padding: 16px 20px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
       .cart-title { font-weight: 700; }
       .cart-close { background: none; border: none; color: var(--text-tertiary); cursor: pointer; }
       .cart-items { flex: 1; overflow-y: auto; padding: 12px; max-height: 200px; }
-      .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 10px; margin-bottom: 8px; }
-      .cart-item-name { font-size: 0.85rem; flex: 1; }
-      .cart-item-price { font-size: 0.85rem; font-weight: 600; margin: 0 12px; }
-      .cart-item-remove { background: none; border: none; color: var(--text-tertiary); cursor: pointer; }
-      .cart-item-remove:hover { color: #ef4444; }
+      .cart-item { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 14px 16px; 
+        background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); 
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px; 
+        margin-bottom: 10px; 
+        transition: all 0.2s ease;
+      }
+      .cart-item:hover {
+        border-color: rgba(168, 85, 247, 0.3);
+        background: rgba(168, 85, 247, 0.08);
+      }
+      .cart-item-name { 
+        font-size: 0.9rem; 
+        flex: 1; 
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+      .cart-item-price { 
+        font-size: 0.95rem; 
+        font-weight: 700; 
+        margin: 0 16px; 
+        color: var(--neon-cyan);
+      }
+      .cart-item-remove { 
+        background: rgba(239, 68, 68, 0.1); 
+        border: 1px solid transparent;
+        border-radius: 8px;
+        color: #ef4444; 
+        cursor: pointer; 
+        padding: 8px 10px;
+        transition: all 0.2s ease;
+      }
+      .cart-item-remove:hover { 
+        background: rgba(239, 68, 68, 0.2); 
+        border-color: #ef4444;
+      }
       .cart-empty { text-align: center; padding: 32px; color: var(--text-tertiary); font-size: 0.85rem; }
       .cart-footer { padding: 16px; border-top: 1px solid var(--border-subtle); }
       .cart-regional { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; }
@@ -4923,10 +5171,17 @@ function getMainHTML(): string {
         }
         
         .hero { 
-          padding: var(--space-2xl) var(--space-md); 
-          min-height: 90vh; 
+          padding: 80px var(--space-md) var(--space-xl); 
+          min-height: 85vh; 
         }
-        .hero-title { font-size: 1.8rem; line-height: 1.3; }
+        .hero-title { 
+          font-size: 1.4rem; 
+          line-height: 1.4; 
+        }
+        .hero-title .highlight {
+          display: block;
+          margin-bottom: 4px;
+        }
         .hero-tagline { font-size: 1rem; }
         .btn-lime { padding: 16px 28px; font-size: 1rem; }
         
@@ -5001,8 +5256,13 @@ function getMainHTML(): string {
           --space-3xl: 40px;
         }
         
-        .hero { padding: 70px var(--space-md) 30px; }
-        .hero-title { font-size: 2rem; }
+        .hero { padding: 60px var(--space-sm) 20px; }
+        .hero-title { font-size: 1.2rem; line-height: 1.5; }
+        .hero-badge { font-size: 0.75rem; padding: 8px 14px; }
+        .hero-tagline { font-size: 0.85rem; line-height: 1.6; }
+        .hero-tagline strong { display: inline; }
+        .hero-trust { gap: 8px; }
+        .trust-item { font-size: 0.75rem; padding: 6px 10px; }
         .section { padding: var(--space-2xl) var(--space-md); }
         
         .portfolio-grid { 
@@ -5055,38 +5315,49 @@ function getMainHTML(): string {
            🎯 Section 1: Hero - 고급스러운 파티클 배경
            ======================================== -->
       <section class="hero">
-        <!-- Particle Background -->
+        <!-- Premium Particle Background -->
         <div class="particles-container">
-          <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-          <div class="particle" style="left: 20%; animation-delay: -3s;"></div>
+          <div class="particle" style="left: 5%; animation-delay: 0s;"></div>
+          <div class="particle" style="left: 15%; animation-delay: -2s;"></div>
+          <div class="particle" style="left: 25%; animation-delay: -4s;"></div>
           <div class="particle" style="left: 35%; animation-delay: -6s;"></div>
-          <div class="particle" style="left: 50%; animation-delay: -9s;"></div>
+          <div class="particle" style="left: 45%; animation-delay: -8s;"></div>
+          <div class="particle" style="left: 55%; animation-delay: -10s;"></div>
           <div class="particle" style="left: 65%; animation-delay: -12s;"></div>
-          <div class="particle" style="left: 80%; animation-delay: -15s;"></div>
-          <div class="particle" style="left: 90%; animation-delay: -18s;"></div>
-          <div class="particle" style="left: 45%; animation-delay: -21s;"></div>
+          <div class="particle" style="left: 75%; animation-delay: -14s;"></div>
+          <div class="particle" style="left: 85%; animation-delay: -16s;"></div>
+          <div class="particle" style="left: 95%; animation-delay: -18s;"></div>
+          <div class="particle" style="left: 10%; animation-delay: -1s;"></div>
+          <div class="particle" style="left: 30%; animation-delay: -5s;"></div>
+          <div class="particle" style="left: 50%; animation-delay: -9s;"></div>
+          <div class="particle" style="left: 70%; animation-delay: -13s;"></div>
+          <div class="particle" style="left: 90%; animation-delay: -17s;"></div>
         </div>
-        <!-- Hero 이미지 배경 -->
-        <div class="hero-image-bg">
-          <img src="/images/hero.jpg" alt="성공한 한국인 사업자" loading="eager">
-          <div class="hero-image-overlay"></div>
+        
+        <!-- Hero Video Background -->
+        <div class="hero-video-bg">
+          <video autoplay muted loop playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-waves-in-a-purple-virtual-background-23463-large.mp4" type="video/mp4">
+          </video>
+          <div class="hero-video-overlay"></div>
         </div>
+        
         <div class="hero-content">
           <div class="hero-badge animate-fade-in-up">
             <span class="status-dot"></span>
             <span>XIVIX BUSINESS ENGINEERING</span>
           </div>
           
-          <!-- 메인 카피 - 20년 현장 데이터 스토리 -->
+          <!-- 메인 카피 - 모바일 최적화 -->
           <h1 class="hero-title animate-fade-in-up delay-1">
-            <span class="highlight">20년 현장 데이터</span>가 설계한 AI,<br>
-            XIVIX가 사장님의 <span class="highlight">노동을 멈춥니다</span>
+            <span class="highlight">20년 현장 데이터</span>가 설계한 AI<br>
+            사장님의 노동을 멈춥니다
           </h1>
           
-          <!-- 서브 카피 - 피벗 스토리 요약 -->
+          <!-- 서브 카피 - 핵심 실적 (압축) -->
           <p class="hero-tagline animate-fade-in-up delay-2">
-            23개 유통망, <strong>1.4만 대 판매</strong>, 24시간 노동의 한계를 넘어<br>
-            제조·홈쇼핑·정부 인증 지식을 AI에 이식했습니다
+            <strong>23개 유통망</strong> · <strong>1.4만대 판매</strong> · <strong>13회 전시회</strong><br>
+            제조·홈쇼핑·정부인증 지식을 AI에 이식했습니다
           </p>
           
           <!-- CTA 버튼 -->
@@ -5963,8 +6234,20 @@ function getMainHTML(): string {
         const grid = document.getElementById('portfolio-items-grid');
         items.forEach(p => {
           const div = document.createElement('div');
-          div.className = 'portfolio-item' + (p.isVideo ? ' video-item' : '');
-          div.innerHTML = '<span class="portfolio-tag">' + (p.isVideo ? '<i class="fas fa-play-circle"></i> ' : '') + p.tag + '</span><div class="portfolio-title">' + p.title + '</div>';
+          div.className = 'portfolio-item' + (p.isVideo ? ' video-item video' : '');
+          
+          // YouTube 영상이면 썸네일 추출
+          let thumbnail = '';
+          if (p.isVideo && p.url.includes('youtube.com/embed/')) {
+            const videoId = p.url.split('youtube.com/embed/')[1].split('?')[0];
+            thumbnail = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+          } else if (!p.isVideo) {
+            // 웹사이트는 placeholder 이미지 사용
+            thumbnail = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop';
+          }
+          
+          div.innerHTML = (thumbnail ? '<div class="portfolio-thumbnail"><img src="' + thumbnail + '" alt="' + p.title + '" loading="lazy" onerror="this.style.display=\\'none\\'"></div>' : '') +
+            '<div class="portfolio-content"><span class="portfolio-tag">' + (p.isVideo ? '<i class="fas fa-play-circle"></i> ' : '<i class="fas fa-external-link-alt"></i> ') + p.tag + '</span><div class="portfolio-title">' + p.title + '</div></div>';
           div.addEventListener('click', () => openPortfolioModal(p.url, p.title, p.isVideo || false));
           grid.appendChild(div);
         });
