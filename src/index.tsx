@@ -462,13 +462,14 @@ app.post('/api/contracts', async (c) => {
     
     await db.prepare(`
       INSERT INTO contracts (id, title, contract_date, provider_company, provider_rep, provider_phone, provider_email,
-        bank_name, bank_account, bank_holder, services, extra_service, setup_fee, monthly_fee, vat_type,
-        payment_method, start_date, payment_day, initial_amount, monthly_amount, sms_agree, remarks, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
+        bank_name, bank_account, bank_holder, services, extra_service_name, extra_service_price, setup_fee, monthly_fee,
+        service_start_date, payment_day, initial_payment, monthly_payment, agree_sms, remarks, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
     `).bind(
       id, data.title, data.contract_date, data.provider_company, data.provider_rep, data.provider_phone, data.provider_email,
-      data.bank_name, data.bank_account, data.bank_holder, JSON.stringify(data.services || []), data.extra_service,
-      data.setup_fee || 0, data.monthly_fee || 0, data.vat_type, data.payment_method, data.start_date,
+      data.bank_name, data.bank_account, data.bank_holder, JSON.stringify(data.services || []), 
+      data.extra_service_name || '', data.extra_service_price || 0,
+      data.setup_fee || 0, data.monthly_fee || 0, data.start_date,
       data.payment_day, data.initial_amount, data.monthly_amount, data.sms_agree ? 1 : 0, data.remarks || ''
     ).run();
     
@@ -7613,7 +7614,8 @@ function getContractHTML(): string {
           bank_account: document.getElementById('bank-account').value,
           bank_holder: document.getElementById('bank-holder').value,
           services: services,
-          extra_service: document.getElementById('extra-service-name')?.value || '',
+          extra_service_name: document.getElementById('extra-service-name')?.value || '',
+          extra_service_price: parseInt(document.getElementById('extra-service-price')?.value?.replace(/,/g, '')) || 0,
           setup_fee: parseInt(document.getElementById('setup-fee').value) || 0,
           monthly_fee: parseInt(document.getElementById('monthly-fee').value) || 0,
           vat_type: document.getElementById('vat-card')?.checked ? 'card' : (document.getElementById('vat-cash')?.checked ? 'cash' : ''),
