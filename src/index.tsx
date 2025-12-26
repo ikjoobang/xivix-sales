@@ -7121,7 +7121,7 @@ function getContractHTML(): string {
           </table>
           
           <table>
-            <tr><td colspan="4" class="party-header">의뢰인 (이하 "의뢰인")</td></tr>
+            <tr><td colspan="4" class="party-header">고객사 (이하 "고객사")</td></tr>
             <tr>
               <th>상 호</th>
               <td><input type="text" class="input-field" id="client-company" placeholder="상호/업체명"></td>
@@ -7278,7 +7278,7 @@ function getContractHTML(): string {
             <ol>
               <li>계약 금액은 본 계약서에 명시된 금액(VAT 포함)으로 한다.</li>
               <li>광고비는 본 계약 금액에 포함되지 않으며 별도 정산한다.</li>
-              <li>의뢰인은 정해진 결제일에 월 결제 금액을 납부한다.</li>
+              <li>고객사은 정해진 결제일에 월 결제 금액을 납부한다.</li>
             </ol>
             
             <h4>4. 환불 규정</h4>
@@ -7289,7 +7289,7 @@ function getContractHTML(): string {
             </ol>
             
             <h4>5. 비밀유지 및 분쟁해결</h4>
-            <p>제공자와 의뢰인은 본 계약 관련 취득한 영업비밀 및 개인정보를 제3자에게 누설하지 않으며, 분쟁 발생 시 제공자의 소재지 관할 법원에서 해결한다.</p>
+            <p>제공자와 고객사은 본 계약 관련 취득한 영업비밀 및 개인정보를 제3자에게 누설하지 않으며, 분쟁 발생 시 제공자의 소재지 관할 법원에서 해결한다.</p>
           </div>
           
           <div class="agree-box">
@@ -7303,12 +7303,12 @@ function getContractHTML(): string {
         <!-- 제6조 서명 -->
         <div class="section signature-section">
           <h2 class="section-title">제6조 서명 날인</h2>
-          <p style="font-size:12px; color:#666; margin-bottom:12px;">본 계약의 성립을 증명하기 위하여 제공자와 의뢰인이 서명 날인 후 각 1통씩 보관한다.</p>
+          <p style="font-size:12px; color:#666; margin-bottom:12px;">본 계약의 성립을 증명하기 위하여 제공자와 고객사가 서명 날인 후 각 1통씩 보관한다.</p>
           
           <table class="signature-table">
             <tr>
               <td colspan="2" class="party-header">서비스 제공자</td>
-              <td colspan="2" class="party-header">의뢰인</td>
+              <td colspan="2" class="party-header">고객사</td>
             </tr>
             <tr>
               <th>상호</th>
@@ -7532,7 +7532,7 @@ function getContractHTML(): string {
       });
       
       // ========================================
-      // 고객 정보 연동 (의뢰인)
+      // 고객 정보 연동 (고객사)
       // ========================================
       document.getElementById('client-company').addEventListener('input', e => {
         document.getElementById('sig-company').textContent = e.target.value || '-';
@@ -7635,7 +7635,7 @@ function getContractHTML(): string {
         };
       }
       
-      // 의뢰인 서명 캔버스만 초기화 (제공자는 이미지로 고정)
+      // 고객사 서명 캔버스만 초기화 (제공자는 이미지로 고정)
       const canvasClient = initCanvas('client');
       
       function clearCanvas(type) {
