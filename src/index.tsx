@@ -7431,7 +7431,9 @@ function getContractHTML(): string {
           </table>
           
           <div class="contract-footer">
-            <span id="footer-year"></span>년 <span id="footer-month"></span>월 <span id="footer-day"></span>일
+            <input type="number" id="footer-year" class="editable-field" style="width:50px; border:none; background:transparent; text-align:right; font-size:inherit;" readonly>년 
+            <input type="number" id="footer-month" class="editable-field" style="width:30px; border:none; background:transparent; text-align:right; font-size:inherit;" min="1" max="12" readonly>월 
+            <input type="number" id="footer-day" class="editable-field" style="width:30px; border:none; background:transparent; text-align:right; font-size:inherit;" min="1" max="31" readonly>일
           </div>
         </div>
         
@@ -8099,9 +8101,9 @@ function getContractHTML(): string {
       const now = new Date();
       const dateStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
       document.getElementById('contract-date-input').value = dateStr;
-      document.getElementById('footer-year').textContent = now.getFullYear();
-      document.getElementById('footer-month').textContent = now.getMonth()+1;
-      document.getElementById('footer-day').textContent = now.getDate();
+      document.getElementById('footer-year').value = now.getFullYear();
+      document.getElementById('footer-month').value = now.getMonth()+1;
+      document.getElementById('footer-day').value = now.getDate();
       document.getElementById('start-date').valueAsDate = now;
       document.getElementById('pay-day').value = now.getDate();
       
