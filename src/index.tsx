@@ -250,7 +250,7 @@ const MONTHLY_GRADES = [
 const SET_MENUS = [
   {
     id: "sns_starter",
-    name: "🔥 SNS 스타터 셋트",
+    name: "SNS 스타터 셋트",
     originalPrice: 1090000,
     price: 890000,
     monthlyPrice: 550000,
@@ -261,7 +261,7 @@ const SET_MENUS = [
   },
   {
     id: "sns_growth",
-    name: "⭐ SNS 성장 셋트",
+    name: "SNS 성장 셋트",
     originalPrice: 1870000,
     price: 1490000,
     monthlyPrice: 990000,
@@ -273,7 +273,7 @@ const SET_MENUS = [
   },
   {
     id: "sns_viral",
-    name: "💎 바이럴 마스터 셋트",
+    name: "바이럴 마스터 셋트",
     originalPrice: 3760000,
     price: 2790000,
     monthlyPrice: 990000,
@@ -284,7 +284,7 @@ const SET_MENUS = [
   },
   {
     id: "sns_dominate",
-    name: "👑 지역 장악 셋트",
+    name: "지역 장악 셋트",
     originalPrice: 6690000,
     price: 4990000,
     monthlyPrice: 1900000,
@@ -373,7 +373,7 @@ const SYSTEM_DEV_OPTIONS = [
   { id: "sys_advanced", name: "시스템 개발 (고급)", price: 4900000, desc: "결제 시스템 / 예약 자동화 / 알림톡 연동" },
   { id: "sys_premium", name: "시스템 개발 (프리미엄)", price: 7900000, desc: "AI 상담봇 설치 / 관리자 대시보드" },
   { id: "sys_enterprise", name: "시스템 개발 (엔터프라이즈)", price: 9900000, desc: "풀커스텀 시스템 (ERP/CRM 연동)" },
-  { id: "edu_ai_class", name: "🎓 XIΛIX AI 입문반 1기", price: 2000000, desc: "6주 과정 · 1월 개강 · 선착순 5명", isEdu: true }
+  { id: "edu_ai_class", name: "XIΛIX AI 입문반 1기", price: 2000000, desc: "6주 과정 · 1월 개강 · 선착순 5명", isEdu: true }
 ]
 
 // ========================================
@@ -388,7 +388,7 @@ const WEB_SERVICE_OPTIONS: any[] = []
 const CONSULTING_OPTIONS = [
   { 
     id: "consult_initial", 
-    name: "🚀 초기 셋업",
+    name: "STEP 1 초기 셋업",
     badge: "STEP 1",
     period: "3개월",
     monthlyFee: 3000000,
@@ -401,7 +401,7 @@ const CONSULTING_OPTIONS = [
   },
   { 
     id: "consult_foundation", 
-    name: "📈 기반 확장",
+    name: "STEP 2 기반 확장",
     badge: "STEP 2",
     period: "3개월",
     monthlyFee: 2000000,
@@ -415,7 +415,7 @@ const CONSULTING_OPTIONS = [
   },
   { 
     id: "consult_growth", 
-    name: "🎯 성장 유지",
+    name: "STEP 3 성장 유지",
     badge: "STEP 3",
     period: "3개월",
     monthlyFee: 1500000,
@@ -3046,7 +3046,7 @@ function getMainHTML(): string {
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xivix.kr">
     <meta property="og:title" content="X I Λ I X | 사장님은 장사만 하세요">
-    <meta property="og:description" content="🚀 직원 뽑지 마세요! 블로그, 인스타, 영상 편집... XIVIX AI 시스템이 월급 없이 24시간 일합니다. 내 가게 무료 진단받기 →">
+    <meta property="og:description" content="직원 뽑지 마세요. 블로그, 인스타, 영상 편집 - XIVIX AI 시스템이 월급 없이 24시간 일합니다. 내 가게 무료 진단받기">
     <meta property="og:image" content="https://xivix.kr/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -3056,7 +3056,7 @@ function getMainHTML(): string {
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="X I Λ I X | 사장님은 장사만 하세요">
-    <meta name="twitter:description" content="🚀 직원 뽑지 마세요! XIVIX AI 시스템이 마케팅을 대신합니다. 시간 -90%, 비용 -70%">
+    <meta name="twitter:description" content="직원 뽑지 마세요. XIVIX AI 시스템이 마케팅을 대신합니다. 시간 -90%, 비용 -70%">
     <meta name="twitter:image" content="https://xivix.kr/og-image.png">
     
     <!-- 추가 SEO / AEO / C-RANK / GEO 최적화 -->
@@ -3152,66 +3152,65 @@ function getMainHTML(): string {
     
     <style>
       :root {
-        /* 🎯 Deep Black 배경 (사용자 요청) */
-        --bg-primary: #000000;
-        --bg-secondary: #0a0a0a;
-        --bg-tertiary: #121212;
-        --bg-card: rgba(18, 18, 18, 0.9);
-        --neon-purple: #a855f7;
-        --neon-pink: #ec4899;
-        --neon-cyan: #22d3ee;
-        --neon-orange: #f97316;
-        --neon-green: #22c55e;
-        --neon-lime: #84cc16;
-        --text-primary: #ffffff;
-        --text-secondary: rgba(255, 255, 255, 0.75);
-        --text-tertiary: rgba(255, 255, 255, 0.45);
-        --border-subtle: rgba(255, 255, 255, 0.08);
-        --border-hover: rgba(255, 255, 255, 0.18);
+        /* XIVIX Master Theme - Warm White (Studio Ju AI Style) */
+        --bg-primary: #F9F9F8;
+        --bg-secondary: #FAFAFA;
+        --bg-tertiary: #FFFFFF;
+        --bg-card: #FFFFFF;
+        --accent-primary: #1A1A1A;
+        --accent-blue: #2563eb;
+        --accent-green: #059669;
+        --accent-orange: #ea580c;
+        --accent-purple: #7c3aed;
+        --text-primary: #1A1A1A;
+        --text-secondary: #4B5563;
+        --text-tertiary: #9CA3AF;
+        --border-subtle: rgba(0, 0, 0, 0.06);
+        --border-hover: rgba(0, 0, 0, 0.12);
         
-        /* 🎯 Design System - 간격 2배 확대 */
+        /* Wide Margin Design System (150px~200px) */
         --space-xs: 16px;
         --space-sm: 24px;
-        --space-md: 32px;
-        --space-lg: 48px;
-        --space-xl: 64px;
-        --space-2xl: 96px;
-        --space-3xl: 128px;
+        --space-md: 40px;
+        --space-lg: 64px;
+        --space-xl: 100px;
+        --space-2xl: 160px;
+        --space-3xl: 200px;
         
-        /* 🎯 Full-Width Container 너비 */
+        /* Container */
         --container-sm: 600px;
         --container-md: 800px;
         --container-lg: 1100px;
-        --container-xl: 1400px;
+        --container-xl: 1200px;
         --container-full: 100%;
         
-        /* 🎯 Border radius */
-        --radius-sm: 12px;
+        /* Border radius (Softer) */
+        --radius-sm: 8px;
         --radius-md: 16px;
-        --radius-lg: 20px;
-        --radius-xl: 28px;
-        --radius-2xl: 36px;
+        --radius-lg: 24px;
+        --radius-xl: 32px;
+        --radius-2xl: 40px;
       }
       
-      /* 띠 배너 */
+      /* 띠 배너 - 미니멀 스타일 */
       .top-banner {
         position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
-        background: linear-gradient(90deg, #a855f7, #ec4899, #f97316);
-        color: white; padding: 12px 20px;
+        background: var(--accent-primary);
+        color: white; padding: 14px 24px;
         display: flex; align-items: center; justify-content: center; gap: 12px;
-        font-size: 0.95rem; font-weight: 600; cursor: pointer;
-        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+        font-size: 0.9rem; font-weight: 500; cursor: pointer;
+        letter-spacing: 0.02em;
       }
-      .top-banner:hover { background: linear-gradient(90deg, #9333ea, #db2777, #ea580c); }
+      .top-banner:hover { background: #2d2d2d; }
       .top-banner .banner-text { flex: 1; text-align: center; }
       .top-banner .banner-close {
-        background: rgba(0,0,0,0.2); border: none; color: white;
+        background: rgba(255,255,255,0.1); border: none; color: white;
         width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
         display: flex; align-items: center; justify-content: center;
       }
-      .top-banner .banner-close:hover { background: rgba(0,0,0,0.4); }
+      .top-banner .banner-close:hover { background: rgba(255,255,255,0.2); }
       .top-banner.hidden { display: none; }
-      .main-container.with-banner { padding-top: 48px; }
+      .main-container.with-banner { padding-top: 52px; }
       
       /* iframe 모달 (외부 페이지 내부 표시) */
       .iframe-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 10000; display: none; flex-direction: column; }
@@ -5179,7 +5178,7 @@ function getMainHTML(): string {
 <body>
     <!-- 띠 배너 -->
     <div class="top-banner" id="top-banner" onclick="openIframeModal()">
-      <span class="banner-text">🎓 XIΛIX AI 입문반 1기 모집중! <strong>선착순 5명</strong> · 1월 개강 →</span>
+      <span class="banner-text">XIΛIX AI 입문반 1기 모집중! <strong>선착순 5명</strong> · 1월 개강</span>
       <button class="banner-close" onclick="event.stopPropagation(); closeBanner()"><i class="fas fa-times"></i></button>
     </div>
     
@@ -5215,18 +5214,19 @@ function getMainHTML(): string {
         <div class="hero-content">
           <div class="hero-badge animate-fade-in-up">
             <span class="status-dot"></span>
-            <span>소상공인 AI 마케팅 파트너</span>
+            <span>XIVIX BUSINESS ENGINEERING</span>
           </div>
           
-          <!-- 메인 카피 -->
+          <!-- 메인 카피 - 20년 현장 데이터 스토리 -->
           <h1 class="hero-title animate-fade-in-up delay-1">
-            사장님은 <span class="highlight">장사만</span><br>
-            마케팅은 <span class="highlight">AI</span>가
+            <span class="highlight">20년 현장 데이터</span>가 설계한 AI,<br>
+            XIVIX가 사장님의 <span class="highlight">노동을 멈춥니다</span>
           </h1>
           
-          <!-- 서브 카피 -->
+          <!-- 서브 카피 - 피벗 스토리 요약 -->
           <p class="hero-tagline animate-fade-in-up delay-2">
-            XIVIX가 <strong>24시간</strong> 대신 일합니다
+            23개 유통망, <strong>1.4만 대 판매</strong>, 24시간 노동의 한계를 넘어<br>
+            제조·홈쇼핑·정부 인증 지식을 AI에 이식했습니다
           </p>
           
           <!-- CTA 버튼 -->
@@ -5399,49 +5399,51 @@ function getMainHTML(): string {
               <div class="block-icon"><i class="fas fa-globe-asia"></i></div>
               <h3 class="block-title">글로벌 제조 및 B2B</h3>
               <p class="block-desc">
-                글로벌 파트너십과 B2B/B2C 통합 판매 경험으로<br>
-                제조-유통 전 과정 지원
+                아모스프로페셔널, RBH, 시세이도, 웰라 등<br>
+                글로벌 파트너십과 B2B/B2C 통합 판매 경험
               </p>
               <div class="block-stats">
                 <div class="block-stat">
                   <div class="block-stat-value">14,807+</div>
-                  <div class="block-stat-label">누적 판매</div>
+                  <div class="block-stat-label">누적 판매대</div>
                 </div>
                 <div class="block-stat">
-                  <div class="block-stat-value">ISO</div>
-                  <div class="block-stat-label">품질 인증</div>
+                  <div class="block-stat-value">4+</div>
+                  <div class="block-stat-label">글로벌 파트너</div>
                 </div>
               </div>
               <div class="block-partners">
-                <div class="partner-badge"><i class="fas fa-industry"></i> HOOBIS</div>
-                <div class="partner-badge"><i class="fas fa-cut"></i> AMANNA</div>
+                <div class="partner-badge"><i class="fas fa-industry"></i> 아모스프로페셔널</div>
                 <div class="partner-badge"><i class="fas fa-handshake"></i> RBH</div>
+                <div class="partner-badge"><i class="fas fa-star"></i> 시세이도</div>
+                <div class="partner-badge"><i class="fas fa-gem"></i> 웰라</div>
               </div>
             </div>
             
-            <!-- Block 3: 규제 특례 및 인증 -->
+            <!-- Block 3: 규제 특례 및 국가 인증 -->
             <div class="block-card block-certification reveal">
               <div class="block-number">03</div>
               <div class="block-icon"><i class="fas fa-certificate"></i></div>
-              <h3 class="block-title">규제 특례 및 인증</h3>
+              <h3 class="block-title">규제 특례 및 국가 인증</h3>
               <p class="block-desc">
-                정부 인증과 특허, 규제 샌드박스 승인으로<br>
-                신뢰할 수 있는 비즈니스 파트너
+                산업부 실증특례, 기술 특허, 메인비즈,<br>
+                ISO 9001/14001, 벤처기업 등 10종 인증 보유
               </p>
               <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">10+</div>
+                  <div class="block-stat-label">국가 인증</div>
+                </div>
                 <div class="block-stat">
                   <div class="block-stat-value">ISO</div>
                   <div class="block-stat-label">9001·14001</div>
                 </div>
-                <div class="block-stat">
-                  <div class="block-stat-value">메인비즈</div>
-                  <div class="block-stat-label">인증 완료</div>
-                </div>
               </div>
               <div class="block-partners">
-                <div class="partner-badge"><i class="fas fa-award"></i> 특허 등록</div>
-                <div class="partner-badge"><i class="fas fa-file-alt"></i> 정부과제 승인</div>
-                <div class="partner-badge"><i class="fas fa-shield-alt"></i> 샌드박스</div>
+                <div class="partner-badge"><i class="fas fa-shield-alt"></i> 규제 샌드박스</div>
+                <div class="partner-badge"><i class="fas fa-award"></i> 메인비즈</div>
+                <div class="partner-badge"><i class="fas fa-rocket"></i> 벤처기업</div>
+                <div class="partner-badge"><i class="fas fa-file-signature"></i> 기술특허</div>
               </div>
             </div>
             
@@ -5451,8 +5453,8 @@ function getMainHTML(): string {
               <div class="block-icon"><i class="fas fa-brain"></i></div>
               <h3 class="block-title">빅데이터 알고리즘</h3>
               <p class="block-desc">
-                RGB-16 알고리즘 기반 1,600만 컬러 추출과<br>
-                헤어 빅데이터 솔루션 보유
+                RGB-16 AI 알고리즘, 1,600만 컬러 추출,<br>
+                실전 데이터 기반 마케팅 자동화 시스템
               </p>
               <div class="block-stats">
                 <div class="block-stat">
@@ -5461,13 +5463,13 @@ function getMainHTML(): string {
                 </div>
                 <div class="block-stat">
                   <div class="block-stat-value">AI</div>
-                  <div class="block-stat-label">자동화</div>
+                  <div class="block-stat-label">마케팅 자동화</div>
                 </div>
               </div>
               <div class="block-partners">
-                <div class="partner-badge"><i class="fas fa-palette"></i> RGB-16</div>
-                <div class="partner-badge"><i class="fas fa-database"></i> 빅데이터</div>
-                <div class="partner-badge"><i class="fas fa-robot"></i> AI 솔루션</div>
+                <div class="partner-badge"><i class="fas fa-palette"></i> RGB-16 AI</div>
+                <div class="partner-badge"><i class="fas fa-database"></i> 실전 빅데이터</div>
+                <div class="partner-badge"><i class="fas fa-robot"></i> 자동화 솔루션</div>
               </div>
             </div>
           </div>
@@ -5497,7 +5499,7 @@ function getMainHTML(): string {
       <section id="referral-benefits" class="section" style="padding: var(--space-xl) var(--space-lg);">
         <div class="container" style="max-width: 700px;">
           <div class="reveal" style="background: linear-gradient(135deg, rgba(132,204,22,0.1), rgba(34,197,94,0.1)); border: 2px solid rgba(132,204,22,0.3); border-radius: var(--radius-xl); padding: var(--space-lg); display: flex; align-items: center; gap: var(--space-lg); flex-wrap: wrap; justify-content: center;">
-            <div style="font-size: 2.5rem;">🎁</div>
+            <div style="font-size: 2.5rem; color: var(--neon-lime);"><i class="fas fa-gift"></i></div>
             <div style="flex: 1; min-width: 220px;">
               <div style="font-size: 1.2rem; font-weight: 800; color: var(--neon-lime);">친구 초대 = 15% 할인!</div>
               <div style="font-size: 0.9rem; color: var(--text-secondary);">추천인 5% 적립 · 2차 추천 2% 추가</div>
@@ -5584,7 +5586,7 @@ function getMainHTML(): string {
         <div class="footer-logo gradient-text">X I Λ I X</div>
         <div class="footer-company">AI 마케팅 자동화 시스템 | 대표: 방익주</div>
         <div style="font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 12px;">
-          📞 010-4845-3065 | 📧 contact@xivix.kr
+          <i class="fas fa-phone-alt" style="margin-right: 6px;"></i>010-4845-3065 | <i class="fas fa-envelope" style="margin-right: 6px;"></i>contact@xivix.kr
         </div>
         <div style="margin: 16px 0;">
           <a href="/admin" style="display: inline-block; padding: 10px 24px; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: var(--neon-purple); font-size: 0.85rem; text-decoration: none; transition: all 0.2s;">
@@ -5598,7 +5600,7 @@ function getMainHTML(): string {
     <!-- iframe 모달 (xivix-class 페이지) -->
     <div class="iframe-modal" id="iframe-modal">
       <div class="iframe-modal-header">
-        <span class="iframe-modal-title">🎓 XIΛIX AI 입문반 1기</span>
+        <span class="iframe-modal-title"><i class="fas fa-graduation-cap" style="margin-right: 8px;"></i>XIΛIX AI 입문반 1기</span>
         <button class="iframe-modal-close" onclick="closeIframeModal()"><i class="fas fa-times"></i></button>
       </div>
       <iframe id="iframe-content" src="about:blank"></iframe>
@@ -5609,12 +5611,12 @@ function getMainHTML(): string {
       <div class="edu-modal-content">
         <div class="edu-modal-header">
           <button class="edu-modal-close" onclick="closeEduModal()"><i class="fas fa-times"></i></button>
-          <h2 style="font-size:1.3rem;font-weight:800;color:var(--text-primary);">🎓 수강 신청</h2>
+          <h2 style="font-size:1.3rem;font-weight:800;color:var(--text-primary);"><i class="fas fa-graduation-cap" style="margin-right: 8px;"></i>수강 신청</h2>
           <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">XIΛIX AI 입문반 1기</p>
         </div>
         <div class="edu-modal-body">
           <div class="edu-product">
-            <div class="edu-badge">🔥 선착순 5명 중 잔여 2석!</div>
+            <div class="edu-badge">선착순 5명 중 잔여 2석!</div>
             <div style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">XIΛIX AI 입문반 1기</div>
             <div class="edu-price">2,000,000원</div>
             <div class="edu-note">(카드결제 시 VAT 별도 → 2,200,000원)</div>
@@ -5623,20 +5625,20 @@ function getMainHTML(): string {
           
           <div style="font-weight:600;margin-bottom:12px;text-align:center;">결제 방법 선택</div>
           <div class="payment-btns">
-            <button class="payment-btn" id="pay-card" onclick="selectPay('card')">💳<br>카드결제</button>
-            <button class="payment-btn" id="pay-bank" onclick="selectPay('bank')">🏦<br>계좌이체</button>
+            <button class="payment-btn" id="pay-card" onclick="selectPay('card')"><i class="fas fa-credit-card" style="font-size:1.5rem;margin-bottom:4px;"></i><br>카드결제</button>
+            <button class="payment-btn" id="pay-bank" onclick="selectPay('bank')"><i class="fas fa-university" style="font-size:1.5rem;margin-bottom:4px;"></i><br>계좌이체</button>
           </div>
           
           <div class="bank-info" id="bank-info">
-            <div style="text-align:center;font-weight:700;color:var(--neon-green);margin-bottom:12px;">🏦 계좌이체 안내</div>
+            <div style="text-align:center;font-weight:700;color:var(--neon-green);margin-bottom:12px;"><i class="fas fa-university" style="margin-right:6px;"></i>계좌이체 안내</div>
             <div class="bank-row"><span>입금 은행</span><span>케이뱅크 (K-Bank)</span></div>
             <div class="bank-row"><span>계좌번호</span><span id="bank-num">100124491987</span></div>
             <div class="bank-row"><span>예금주</span><span>방익주</span></div>
             <button onclick="copyBank()" style="width:100%;padding:10px;background:var(--neon-green);color:white;border:none;border-radius:8px;cursor:pointer;margin:10px 0;"><i class="fas fa-copy"></i> 계좌번호 복사</button>
             <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">
-              ✔️ 입금자명은 신청자 성함과 동일하게<br>
-              ✔️ 입금 후 아래 정보 입력 시 등록 완료<br>
-              ✔️ 계좌이체 금액: 2,000,000원
+              <i class="fas fa-check" style="color:var(--neon-green);margin-right:4px;"></i>입금자명은 신청자 성함과 동일하게<br>
+              <i class="fas fa-check" style="color:var(--neon-green);margin-right:4px;"></i>입금 후 아래 정보 입력 시 등록 완료<br>
+              <i class="fas fa-check" style="color:var(--neon-green);margin-right:4px;"></i>계좌이체 금액: 2,000,000원
             </div>
             <div class="bank-form" style="margin-top:16px;">
               <input type="text" id="edu-name" placeholder="성함 *">
@@ -5645,11 +5647,11 @@ function getMainHTML(): string {
             </div>
           </div>
           
-          <button class="edu-submit card-btn" id="submit-card" onclick="submitCard()" style="display:none;">💳 카드결제 진행 (2,200,000원)</button>
-          <button class="edu-submit bank-btn" id="submit-bank" onclick="submitBank()" style="display:none;">📝 계좌이체 신청하기</button>
+          <button class="edu-submit card-btn" id="submit-card" onclick="submitCard()" style="display:none;"><i class="fas fa-credit-card" style="margin-right:6px;"></i>카드결제 진행 (2,200,000원)</button>
+          <button class="edu-submit bank-btn" id="submit-bank" onclick="submitBank()" style="display:none;"><i class="fas fa-file-signature" style="margin-right:6px;"></i>계좌이체 신청하기</button>
           
           <div style="text-align:center;margin-top:16px;font-size:0.85rem;color:var(--text-secondary);">
-            문의: <a href="tel:010-4845-3065" style="color:var(--neon-cyan);">📞 010-4845-3065</a> (방익주 대표)
+            문의: <a href="tel:010-4845-3065" style="color:var(--neon-cyan);"><i class="fas fa-phone-alt" style="margin-right:4px;"></i>010-4845-3065</a> (방익주 대표)
           </div>
         </div>
       </div>
