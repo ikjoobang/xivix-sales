@@ -463,13 +463,13 @@ app.post('/api/contracts', async (c) => {
     await db.prepare(`
       INSERT INTO contracts (id, title, contract_date, provider_company, provider_rep, provider_phone, provider_email,
         bank_name, bank_account, bank_holder, services, extra_service, setup_fee, monthly_fee, vat_type,
-        payment_method, start_date, payment_day, initial_amount, monthly_amount, sms_agree, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
+        payment_method, start_date, payment_day, initial_amount, monthly_amount, sms_agree, remarks, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
     `).bind(
       id, data.title, data.contract_date, data.provider_company, data.provider_rep, data.provider_phone, data.provider_email,
       data.bank_name, data.bank_account, data.bank_holder, JSON.stringify(data.services || []), data.extra_service,
       data.setup_fee || 0, data.monthly_fee || 0, data.vat_type, data.payment_method, data.start_date,
-      data.payment_day, data.initial_amount, data.monthly_amount, data.sms_agree ? 1 : 0
+      data.payment_day, data.initial_amount, data.monthly_amount, data.sms_agree ? 1 : 0, data.remarks || ''
     ).run();
     
     return c.json({ success: true, id });
@@ -504,8 +504,8 @@ app.post('/api/contracts/:id/sign', async (c) => {
     
     await db.prepare(`
       UPDATE contracts SET client_company=?, client_name=?, client_phone=?, client_email=?, client_address=?,
-        client_signature=?, status='signed', signed_at=datetime('now') WHERE id=?
-    `).bind(data.client_company, data.client_name, data.client_phone, data.client_email, data.client_address, data.client_signature, id).run();
+        client_signature=?, remarks=?, status='signed', signed_at=datetime('now') WHERE id=?
+    `).bind(data.client_company, data.client_name, data.client_phone, data.client_email, data.client_address, data.client_signature, data.remarks || '', id).run();
     
     return c.json({ success: true });
   } catch (e: any) {
@@ -7372,6 +7372,12 @@ function getContractHTML(): string {
           </div>
         </div>
         
+        <!-- 비고 (요청사항/특이사항) -->
+        <div class="section">
+          <h2 class="section-title">비고 (요청사항 / 특이사항)</h2>
+          <textarea id="remarks" class="input-field" style="width:100%; min-height:100px; padding:12px; border:1px solid #ccc; border-radius:6px; font-size:14px; line-height:1.6; resize:vertical;" placeholder="요청사항이나 특이사항을 입력해 주세요."></textarea>
+        </div>
+        
         <!-- 제6조 서명 -->
         <div class="section signature-section">
           <h2 class="section-title">제6조 서명 날인</h2>
@@ -7616,7 +7622,8 @@ function getContractHTML(): string {
           payment_day: parseInt(document.getElementById('pay-day').value) || 0,
           initial_amount: parseInt(document.getElementById('initial-pay-amount').value.replace(/,/g, '')) || 0,
           monthly_amount: parseInt(document.getElementById('monthly-pay-amount').value.replace(/,/g, '')) || 0,
-          sms_agree: document.getElementById('sms-agree').checked
+          sms_agree: document.getElementById('sms-agree').checked,
+          remarks: document.getElementById('remarks').value
         };
         
         try {
@@ -8206,6 +8213,11 @@ function getContractViewHTML(id: string): string {
           </table>
         </div>
         
+        <div class="section">
+          <div class="section-title">비고 (요청사항 / 특이사항)</div>
+          <textarea id="remarks" class="input-field" style="width:100%; min-height:80px; padding:10px; resize:vertical;" \${d.status === 'signed' ? 'disabled' : ''} placeholder="요청사항이나 특이사항을 입력해 주세요.">\${d.remarks || ''}</textarea>
+        </div>
+        
         \${d.status === 'signed' ? '<div class="footer">✅ 이 계약서는 이미 서명되었습니다.</div>' : \`
         <div class="section">
           <div class="section-title">고객사 정보 입력</div>
@@ -8297,7 +8309,8 @@ function getContractViewHTML(id: string): string {
             client_phone: document.getElementById('client-phone').value,
             client_email: document.getElementById('client-email').value,
             client_address: document.getElementById('client-address').value,
-            client_signature: canvas.toDataURL()
+            client_signature: canvas.toDataURL(),
+            remarks: document.getElementById('remarks').value
           })
         });
         const result = await res.json();
