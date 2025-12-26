@@ -6991,17 +6991,17 @@ function getContractHTML(): string {
         <!-- 제2조 계약 서비스 -->
         <div class="section">
           <h2 class="section-title">제2조 계약 서비스</h2>
-          <p style="font-size:12px; color:#666; margin-bottom:12px;">※ 서비스 항목과 금액(VAT 포함)을 직접 입력해 주세요</p>
+          <p style="font-size:12px; color:#666; margin-bottom:12px;">※ 서비스 항목과 금액을 직접 입력해 주세요</p>
           
           <div id="service-list">
             <div class="service-row" data-row="1">
               <input type="text" class="service-name-input" placeholder="서비스 항목명" data-name>
-              <input type="number" class="service-price-input" placeholder="금액 (VAT포함)" data-price>
+              <input type="number" class="service-price-input" placeholder="금액" data-price>
               <button type="button" class="remove-service-btn" onclick="removeServiceRow(this)">✕</button>
             </div>
             <div class="service-row" data-row="2">
               <input type="text" class="service-name-input" placeholder="서비스 항목명" data-name>
-              <input type="number" class="service-price-input" placeholder="금액 (VAT포함)" data-price>
+              <input type="number" class="service-price-input" placeholder="금액" data-price>
               <button type="button" class="remove-service-btn" onclick="removeServiceRow(this)">✕</button>
             </div>
           </div>
@@ -7019,22 +7019,33 @@ function getContractHTML(): string {
           <table>
             <tr>
               <th>셋팅비</th>
-              <td><input type="number" class="input-field" id="setup-fee" placeholder="0" style="text-align:right;" oninput="calcTotal()"> 원 (VAT 포함)</td>
+              <td><input type="number" class="input-field" id="setup-fee" placeholder="0" style="text-align:right;" oninput="calcTotal()"> 원</td>
             </tr>
             <tr>
               <th>월관리비</th>
-              <td><input type="number" class="input-field" id="monthly-fee" placeholder="0" style="text-align:right;" oninput="calcTotal()"> 원/월 (VAT 포함)</td>
-            </tr>
-            <tr>
-              <th>부가세</th>
-              <td style="color:#666; font-size:13px;">위 금액은 VAT 포함 금액입니다</td>
+              <td><input type="number" class="input-field" id="monthly-fee" placeholder="0" style="text-align:right;" oninput="calcTotal()"> 원/월</td>
             </tr>
             <tr class="total-row">
               <th>총 계약금액</th>
               <td id="total-display" style="text-align:right;">￦ 0</td>
             </tr>
+            <tr>
+              <th>부가세</th>
+              <td style="font-size:13px;">
+                <label style="display:inline-flex; align-items:center; gap:6px; margin-right:15px; cursor:pointer;">
+                  <input type="checkbox" id="vat-card" style="width:16px; height:16px;"> 카드 발행 시 (+10%)
+                </label>
+                <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                  <input type="checkbox" id="vat-cash" style="width:16px; height:16px;"> 현금영수증 발행 시 (+10%)
+                </label>
+              </td>
+            </tr>
+            <tr class="total-row">
+              <th>최종 금액</th>
+              <td id="final-display" style="text-align:right; color:#e11d48;">￦ 0</td>
+            </tr>
           </table>
-          <p style="font-size:12px; color:#888; margin-top:5px;">* 서비스 항목 금액 합계 + 셋팅비 + 월관리비 = 총 계약금액</p>
+          <p style="font-size:12px; color:#888; margin-top:5px;">* 서비스 항목 합계 + 셋팅비 + 월관리비 = 총 계약금액<br>* 카드 발행 또는 현금영수증 발행 시 부가세(10%) 별도</p>
         </div>
         
         <!-- 제4조 결제 방식 -->
@@ -7323,7 +7334,7 @@ function getContractHTML(): string {
         row.setAttribute('data-row', serviceRowCount);
         row.innerHTML = \`
           <input type="text" class="service-name-input" placeholder="서비스 항목명" data-name>
-          <input type="number" class="service-price-input" placeholder="금액 (VAT포함)" data-price oninput="calcTotal()">
+          <input type="number" class="service-price-input" placeholder="금액" data-price oninput="calcTotal()">
           <button type="button" class="remove-service-btn" onclick="removeServiceRow(this)">✕</button>
         \`;
         container.appendChild(row);
@@ -7354,12 +7365,26 @@ function getContractHTML(): string {
         const total = serviceTotal + setupFee + monthlyFee;
         document.getElementById('total-display').textContent = '￦ ' + total.toLocaleString();
         
+        // 부가세 계산 (카드 또는 현금영수증 발행 시)
+        const vatCard = document.getElementById('vat-card').checked;
+        const vatCash = document.getElementById('vat-cash').checked;
+        
+        let finalTotal = total;
+        if (vatCard || vatCash) {
+          finalTotal = Math.round(total * 1.1);
+        }
+        document.getElementById('final-display').textContent = '￦ ' + finalTotal.toLocaleString();
+        
         checkValid();
       }
       
       document.querySelectorAll('.service-price-input').forEach(input => {
         input.addEventListener('input', calcTotal);
       });
+      
+      // 부가세 체크박스 이벤트
+      document.getElementById('vat-card').addEventListener('change', calcTotal);
+      document.getElementById('vat-cash').addEventListener('change', calcTotal);
       
       // ========================================
       // 결제 방식
