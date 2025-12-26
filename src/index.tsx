@@ -3141,6 +3141,8 @@ function getMainHTML(): string {
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Pretendard 폰트 (한글 최적화) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
     <!-- PortOne v2 결제 SDK -->
@@ -3389,7 +3391,7 @@ function getMainHTML(): string {
         overflow-x: hidden;
       }
       body {
-        font-family: 'Inter', -apple-system, sans-serif;
+        font-family: 'Pretendard Variable', 'Pretendard', 'Inter', -apple-system, sans-serif;
         background: var(--bg-primary);
         color: var(--text-primary);
         line-height: 1.6;
@@ -3431,6 +3433,296 @@ function getMainHTML(): string {
         animation: bgPulse 20s ease-in-out infinite;
       }
       @keyframes bgPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+      
+      /* 🎯 Premium Particle Background */
+      .particles-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(168, 85, 247, 0.6);
+        border-radius: 50%;
+        animation: floatParticle 15s infinite ease-in-out;
+      }
+      .particle:nth-child(2) { width: 6px; height: 6px; background: rgba(236, 72, 153, 0.5); animation-delay: -2s; animation-duration: 18s; }
+      .particle:nth-child(3) { width: 3px; height: 3px; background: rgba(34, 211, 238, 0.6); animation-delay: -4s; animation-duration: 12s; }
+      .particle:nth-child(4) { width: 5px; height: 5px; background: rgba(132, 204, 22, 0.5); animation-delay: -6s; animation-duration: 20s; }
+      .particle:nth-child(5) { width: 4px; height: 4px; background: rgba(249, 115, 22, 0.6); animation-delay: -8s; animation-duration: 16s; }
+      .particle:nth-child(6) { width: 7px; height: 7px; background: rgba(168, 85, 247, 0.4); animation-delay: -10s; animation-duration: 22s; }
+      .particle:nth-child(7) { width: 3px; height: 3px; background: rgba(34, 197, 94, 0.5); animation-delay: -12s; animation-duration: 14s; }
+      .particle:nth-child(8) { width: 5px; height: 5px; background: rgba(236, 72, 153, 0.4); animation-delay: -14s; animation-duration: 17s; }
+      @keyframes floatParticle {
+        0%, 100% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+        10% { opacity: 1; transform: translateY(80vh) translateX(10px) scale(1); }
+        50% { transform: translateY(40vh) translateX(-20px) scale(1.2); }
+        90% { opacity: 1; transform: translateY(10vh) translateX(15px) scale(0.8); }
+      }
+      
+      /* 🎯 Animated Gradient Orbs */
+      .gradient-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        animation: orbFloat 20s ease-in-out infinite;
+        opacity: 0.4;
+      }
+      .orb-1 { width: 400px; height: 400px; background: linear-gradient(135deg, #a855f7, #ec4899); top: 10%; left: 5%; animation-delay: 0s; }
+      .orb-2 { width: 350px; height: 350px; background: linear-gradient(135deg, #22d3ee, #3b82f6); top: 50%; right: 5%; animation-delay: -5s; }
+      .orb-3 { width: 300px; height: 300px; background: linear-gradient(135deg, #84cc16, #22c55e); bottom: 10%; left: 30%; animation-delay: -10s; }
+      @keyframes orbFloat {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(30px, -30px) scale(1.1); }
+        50% { transform: translate(-20px, 20px) scale(0.9); }
+        75% { transform: translate(20px, 10px) scale(1.05); }
+      }
+      
+      /* 🎯 4대 블록 비즈니스 섹션 */
+      .business-blocks {
+        padding: var(--space-3xl) var(--space-lg);
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .business-blocks::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.5), transparent);
+      }
+      .business-blocks::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.5), transparent);
+      }
+      .blocks-header {
+        text-align: center;
+        margin-bottom: var(--space-2xl);
+      }
+      .blocks-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 20px;
+        background: rgba(168, 85, 247, 0.1);
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--neon-purple);
+        margin-bottom: var(--space-md);
+        animation: pulseGlow 3s ease-in-out infinite;
+      }
+      @keyframes pulseGlow {
+        0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+        50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.4); }
+      }
+      .blocks-title {
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        line-height: 1.2;
+        margin-bottom: var(--space-md);
+      }
+      .blocks-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+      
+      /* 4대 블록 그리드 */
+      .blocks-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-lg);
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      @media (max-width: 900px) {
+        .blocks-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+      }
+      
+      .block-card {
+        background: linear-gradient(145deg, var(--bg-card), rgba(18, 18, 18, 0.7));
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .block-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: var(--block-color);
+        opacity: 0.8;
+      }
+      .block-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--block-color);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px var(--block-glow);
+      }
+      .block-card:hover .block-icon {
+        transform: scale(1.1) rotate(5deg);
+      }
+      .block-card:hover .block-number {
+        opacity: 0.2;
+      }
+      
+      .block-number {
+        position: absolute;
+        top: var(--space-md);
+        right: var(--space-md);
+        font-size: 4rem;
+        font-weight: 900;
+        color: var(--block-color);
+        opacity: 0.1;
+        line-height: 1;
+        transition: opacity 0.4s ease;
+      }
+      
+      .block-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: var(--radius-lg);
+        background: linear-gradient(135deg, var(--block-color), var(--block-color-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        margin-bottom: var(--space-md);
+        box-shadow: 0 8px 24px var(--block-glow);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .block-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin-bottom: var(--space-xs);
+        color: var(--text-primary);
+      }
+      
+      .block-desc {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: var(--space-md);
+      }
+      
+      .block-stats {
+        display: flex;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-md);
+      }
+      .block-stat {
+        text-align: center;
+        padding: var(--space-sm);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius-md);
+        flex: 1;
+        min-width: 80px;
+      }
+      .block-stat-value {
+        font-size: 1.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--block-color), var(--block-color-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .block-stat-label {
+        font-size: 0.75rem;
+        color: var(--text-tertiary);
+        margin-top: 4px;
+      }
+      
+      .block-partners {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        flex-wrap: wrap;
+      }
+      .partner-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-subtle);
+        border-radius: 20px;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+      .partner-badge img {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+      }
+      
+      /* 블록 색상 */
+      .block-commerce { --block-color: #f97316; --block-color-dark: #ea580c; --block-glow: rgba(249, 115, 22, 0.3); }
+      .block-global { --block-color: #3b82f6; --block-color-dark: #2563eb; --block-glow: rgba(59, 130, 246, 0.3); }
+      .block-certification { --block-color: #22c55e; --block-color-dark: #16a34a; --block-glow: rgba(34, 197, 94, 0.3); }
+      .block-bigdata { --block-color: #a855f7; --block-color-dark: #9333ea; --block-glow: rgba(168, 85, 247, 0.3); }
+      
+      /* 파트너 로고 섹션 */
+      .partners-section {
+        padding: var(--space-2xl) var(--space-lg);
+        background: var(--bg-secondary);
+        text-align: center;
+      }
+      .partners-title {
+        font-size: 0.9rem;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: var(--space-lg);
+      }
+      .partners-logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-xl);
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .partner-logo {
+        padding: var(--space-md);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-subtle);
+        transition: all 0.3s ease;
+      }
+      .partner-logo:hover {
+        transform: translateY(-4px);
+        border-color: var(--neon-purple);
+        box-shadow: 0 8px 24px rgba(168, 85, 247, 0.2);
+      }
+      .partner-logo img {
+        height: 40px;
+        width: auto;
+        filter: grayscale(1) brightness(2);
+        opacity: 0.6;
+        transition: all 0.3s ease;
+      }
+      .partner-logo:hover img {
+        filter: grayscale(0) brightness(1);
+        opacity: 1;
+      }
       
       .main-container { position: relative; z-index: 10; }
       
@@ -4891,13 +5183,30 @@ function getMainHTML(): string {
       <button class="banner-close" onclick="event.stopPropagation(); closeBanner()"><i class="fas fa-times"></i></button>
     </div>
     
-    <div class="bg-animated"><div class="bg-gradient"></div></div>
+    <div class="bg-animated">
+      <div class="bg-gradient"></div>
+      <!-- Premium Gradient Orbs -->
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+    </div>
     
     <div class="main-container" id="main-container">
       <!-- ========================================
-           🎯 Section 1: Hero - 한국인 CEO 이미지 배경
+           🎯 Section 1: Hero - 고급스러운 파티클 배경
            ======================================== -->
       <section class="hero">
+        <!-- Particle Background -->
+        <div class="particles-container">
+          <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+          <div class="particle" style="left: 20%; animation-delay: -3s;"></div>
+          <div class="particle" style="left: 35%; animation-delay: -6s;"></div>
+          <div class="particle" style="left: 50%; animation-delay: -9s;"></div>
+          <div class="particle" style="left: 65%; animation-delay: -12s;"></div>
+          <div class="particle" style="left: 80%; animation-delay: -15s;"></div>
+          <div class="particle" style="left: 90%; animation-delay: -18s;"></div>
+          <div class="particle" style="left: 45%; animation-delay: -21s;"></div>
+        </div>
         <!-- Hero 이미지 배경 -->
         <div class="hero-image-bg">
           <img src="/images/hero.jpg" alt="성공한 한국인 사업자" loading="eager">
@@ -5032,6 +5341,153 @@ function getMainHTML(): string {
             <div class="proof-stat">
               <div class="proof-number">89<span style="font-size:0.5em;">%</span></div>
               <div class="proof-label">재계약률</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- ========================================
+           🎯 Section 5: 4대 블록 비즈니스 스토리텔링
+           ======================================== -->
+      <section class="business-blocks">
+        <div class="container">
+          <div class="blocks-header reveal">
+            <div class="blocks-eyebrow">
+              <i class="fas fa-building"></i>
+              <span>XIVIX BUSINESS ENGINEERING GROUP</span>
+            </div>
+            <h2 class="blocks-title">
+              데이터로 검증된<br>
+              <span class="gradient-text">4대 비즈니스 블록</span>
+            </h2>
+            <p class="blocks-subtitle">
+              현장에서 축적한 실질 데이터와 파트너십으로<br>
+              비즈니스 성장을 지원합니다
+            </p>
+          </div>
+          
+          <div class="blocks-grid">
+            <!-- Block 1: 커머스 유통 설계 -->
+            <div class="block-card block-commerce reveal">
+              <div class="block-number">01</div>
+              <div class="block-icon"><i class="fas fa-store"></i></div>
+              <h3 class="block-title">커머스 유통 설계</h3>
+              <p class="block-desc">
+                전국 유통망과 홈쇼핑 계약을 기반으로<br>
+                자사몰·온라인 통합 운영 시스템 구축
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">23</div>
+                  <div class="block-stat-label">전국 대리점</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">3+</div>
+                  <div class="block-stat-label">홈쇼핑 계약</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-tv"></i> 신세계TV쇼핑</div>
+                <div class="partner-badge"><i class="fas fa-shopping-cart"></i> K홈쇼핑</div>
+                <div class="partner-badge"><i class="fas fa-globe"></i> 자사몰 통합</div>
+              </div>
+            </div>
+            
+            <!-- Block 2: 글로벌 제조 및 B2B -->
+            <div class="block-card block-global reveal">
+              <div class="block-number">02</div>
+              <div class="block-icon"><i class="fas fa-globe-asia"></i></div>
+              <h3 class="block-title">글로벌 제조 및 B2B</h3>
+              <p class="block-desc">
+                글로벌 파트너십과 B2B/B2C 통합 판매 경험으로<br>
+                제조-유통 전 과정 지원
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">14,807+</div>
+                  <div class="block-stat-label">누적 판매</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">ISO</div>
+                  <div class="block-stat-label">품질 인증</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-industry"></i> HOOBIS</div>
+                <div class="partner-badge"><i class="fas fa-cut"></i> AMANNA</div>
+                <div class="partner-badge"><i class="fas fa-handshake"></i> RBH</div>
+              </div>
+            </div>
+            
+            <!-- Block 3: 규제 특례 및 인증 -->
+            <div class="block-card block-certification reveal">
+              <div class="block-number">03</div>
+              <div class="block-icon"><i class="fas fa-certificate"></i></div>
+              <h3 class="block-title">규제 특례 및 인증</h3>
+              <p class="block-desc">
+                정부 인증과 특허, 규제 샌드박스 승인으로<br>
+                신뢰할 수 있는 비즈니스 파트너
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">ISO</div>
+                  <div class="block-stat-label">9001·14001</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">메인비즈</div>
+                  <div class="block-stat-label">인증 완료</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-award"></i> 특허 등록</div>
+                <div class="partner-badge"><i class="fas fa-file-alt"></i> 정부과제 승인</div>
+                <div class="partner-badge"><i class="fas fa-shield-alt"></i> 샌드박스</div>
+              </div>
+            </div>
+            
+            <!-- Block 4: 빅데이터 알고리즘 -->
+            <div class="block-card block-bigdata reveal">
+              <div class="block-number">04</div>
+              <div class="block-icon"><i class="fas fa-brain"></i></div>
+              <h3 class="block-title">빅데이터 알고리즘</h3>
+              <p class="block-desc">
+                RGB-16 알고리즘 기반 1,600만 컬러 추출과<br>
+                헤어 빅데이터 솔루션 보유
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">1,600만</div>
+                  <div class="block-stat-label">컬러 추출</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">AI</div>
+                  <div class="block-stat-label">자동화</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-palette"></i> RGB-16</div>
+                <div class="partner-badge"><i class="fas fa-database"></i> 빅데이터</div>
+                <div class="partner-badge"><i class="fas fa-robot"></i> AI 솔루션</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 파트너 로고 -->
+          <div class="reveal" style="margin-top: var(--space-2xl); text-align: center;">
+            <p class="partners-title">TRUSTED PARTNERS</p>
+            <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: var(--space-lg);">
+              <a href="https://hoobis.kr" target="_blank" class="partner-logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary);">
+                <i class="fas fa-vacuum" style="font-size: 1.5rem; color: var(--neon-orange);"></i>
+                <span style="font-weight: 700;">HOOBIS</span>
+              </a>
+              <a href="https://amanna.hair" target="_blank" class="partner-logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary);">
+                <i class="fas fa-cut" style="font-size: 1.5rem; color: var(--neon-pink);"></i>
+                <span style="font-weight: 700;">AMANNA</span>
+              </a>
+              <div class="partner-logo" style="display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-tv" style="font-size: 1.5rem; color: var(--neon-cyan);"></i>
+                <span style="font-weight: 700;">신세계TV쇼핑</span>
+              </div>
             </div>
           </div>
         </div>
