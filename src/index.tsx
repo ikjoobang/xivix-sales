@@ -3384,13 +3384,18 @@ function getMainHTML(): string {
       .service-modal-body { padding-bottom: 40px; }
       
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      html { 
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
       body {
         font-family: 'Inter', -apple-system, sans-serif;
         background: var(--bg-primary);
         color: var(--text-primary);
         line-height: 1.6;
         overflow-x: hidden;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
         -webkit-font-smoothing: antialiased;
         -webkit-user-select: none;
         -moz-user-select: none;
