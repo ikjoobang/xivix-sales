@@ -3433,7 +3433,7 @@ function getMainHTML(): string {
         overflow: hidden;
       }
       
-      /* 풀스크린 배경 비디오 */
+      /* 배경 비디오 - 50% 축소 */
       .hero-video-bg {
         position: absolute;
         top: 0;
@@ -3449,13 +3449,13 @@ function getMainHTML(): string {
         position: absolute;
         top: 50%;
         left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
+        width: 50%;
         height: auto;
         transform: translate(-50%, -50%);
-        object-fit: cover;
+        object-fit: contain;
         pointer-events: none;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       }
       
       /* 비디오 위 오버레이 (텍스트 가독성) */
