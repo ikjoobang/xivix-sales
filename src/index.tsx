@@ -43,8 +43,8 @@ app.use('/static/*', serveStatic())
 // ========================================
 const PORTFOLIO_DATA = {
   categories: [
-    { id: "branding", name: "브랜딩", icon: "fa-gem", color: "#a855f7" },
-    { id: "beauty", name: "뷰티", icon: "fa-spa", color: "#ec4899" },
+    { id: "branding", name: "브랜딩", icon: "fa-gem", color: "#1e90ff" },
+    { id: "beauty", name: "뷰티", icon: "fa-spa", color: "#00ff88" },
     { id: "commerce", name: "커머스", icon: "fa-shopping-bag", color: "#22d3ee" },
     { id: "system", name: "시스템/AI", icon: "fa-robot", color: "#f97316" },
     { id: "content", name: "콘텐츠", icon: "fa-pen-fancy", color: "#22c55e" },
@@ -2259,10 +2259,10 @@ function getLoginHTML(): string {
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --text-primary: #ffffff; --text-secondary: #a0a0b0; --neon-purple: #a855f7; --neon-pink: #ec4899; }
+    :root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --text-primary: #ffffff; --text-secondary: #a0a0b0; --accent-blue: #1e90ff; --neon-pink: #00ff88; }
     body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Pretendard', -apple-system, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .login-card { background: var(--bg-secondary); border-radius: 24px; padding: 48px; max-width: 420px; width: 100%; margin: 20px; }
-    .logo { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 8px; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent-blue), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 40px; }
     .social-btn { width: 100%; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px; transition: all 0.3s ease; border: none; }
     .social-btn:hover { transform: translateY(-2px); }
@@ -2275,7 +2275,7 @@ function getLoginHTML(): string {
     .referral-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; color: var(--text-primary); font-size: 0.95rem; }
     .referral-input::placeholder { color: var(--text-secondary); }
     .back-link { display: block; text-align: center; margin-top: 32px; color: var(--text-secondary); text-decoration: none; }
-    .back-link:hover { color: var(--neon-purple); }
+    .back-link:hover { color: var(--accent-blue); }
     .error-msg { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 12px 16px; margin-bottom: 24px; color: #ef4444; font-size: 0.9rem; text-align: center; }
   </style>
 </head>
@@ -2301,7 +2301,7 @@ function getLoginHTML(): string {
     <div class="referral-section">
       <input type="text" id="referral-code" class="referral-input" placeholder="추천코드 입력 (예: XIVAB123)" maxlength="10">
       <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px;text-align:center;">
-        추천코드 입력 시 <strong style="color:var(--neon-purple);">첫 결제 5% 할인</strong> 쿠폰 지급!
+        추천코드 입력 시 <strong style="color:var(--accent-blue);">첫 결제 5% 할인</strong> 쿠폰 지급!
       </p>
     </div>
     
@@ -2354,12 +2354,12 @@ function getMyPageHTML(): string {
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-tertiary: #1a1a24; --text-primary: #ffffff; --text-secondary: #a0a0b0; --neon-purple: #a855f7; --neon-pink: #ec4899; --neon-cyan: #22d3ee; --neon-green: #22c55e; }
+    :root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-tertiary: #1a1a24; --text-primary: #ffffff; --text-secondary: #a0a0b0; --accent-blue: #1e90ff; --neon-pink: #00ff88; --neon-cyan: #22d3ee; --neon-green: #22c55e; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Pretendard', -apple-system, sans-serif; min-height: 100vh; }
     .header { background: var(--bg-secondary); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
     .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+    .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-blue), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
     .user-menu { display: flex; align-items: center; gap: 16px; }
     .user-name { font-weight: 600; }
     .logout-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-secondary); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
@@ -2368,12 +2368,12 @@ function getMyPageHTML(): string {
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
     .card { background: var(--bg-secondary); border-radius: 16px; padding: 24px; border: 1px solid rgba(255,255,255,0.05); }
     .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-    .card-title i { color: var(--neon-purple); }
-    .stat-value { font-size: 2rem; font-weight: 800; color: var(--neon-purple); }
+    .card-title i { color: var(--accent-blue); }
+    .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent-blue); }
     .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; }
-    .referral-box { background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(236,72,153,0.2)); border-radius: 12px; padding: 20px; margin-top: 16px; text-align: center; }
+    .referral-box { background: linear-gradient(135deg, rgba(30,144,255,0.2), rgba(236,72,153,0.2)); border-radius: 12px; padding: 20px; margin-top: 16px; text-align: center; }
     .referral-code { font-size: 1.8rem; font-weight: 800; letter-spacing: 4px; color: var(--neon-cyan); margin: 12px 0; }
-    .copy-btn { background: var(--neon-purple); color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .copy-btn { background: var(--accent-blue); color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; }
     .copy-btn:hover { opacity: 0.9; }
     .list-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .list-item:last-child { border-bottom: none; }
@@ -2384,7 +2384,7 @@ function getMyPageHTML(): string {
     .status-completed { background: rgba(34,197,94,0.2); color: var(--neon-green); }
     .status-pending { background: rgba(251,191,36,0.2); color: #fbbf24; }
     .status-active { background: rgba(34,211,238,0.2); color: var(--neon-cyan); }
-    .coupon-item { background: var(--bg-tertiary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border-left: 4px solid var(--neon-purple); }
+    .coupon-item { background: var(--bg-tertiary); border-radius: 12px; padding: 16px; margin-bottom: 12px; border-left: 4px solid var(--accent-blue); }
     .coupon-name { font-weight: 700; margin-bottom: 4px; }
     .coupon-value { font-size: 1.5rem; font-weight: 800; color: var(--neon-pink); }
     .coupon-expire { font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; }
@@ -2566,14 +2566,14 @@ function getAdminHTML(): string {
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-tertiary: #1a1a24; --text-primary: #ffffff; --text-secondary: #a0a0b0; --neon-purple: #a855f7; --neon-pink: #ec4899; --neon-cyan: #22d3ee; --neon-green: #22c55e; --neon-orange: #f97316; }
+    :root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-tertiary: #1a1a24; --text-primary: #ffffff; --text-secondary: #a0a0b0; --accent-blue: #1e90ff; --neon-pink: #00ff88; --neon-cyan: #22d3ee; --neon-green: #22c55e; --neon-orange: #f97316; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Pretendard', -apple-system, sans-serif; min-height: 100vh; }
     .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 240px; background: var(--bg-secondary); border-right: 1px solid rgba(255,255,255,0.05); padding: 24px 0; overflow-y: auto; }
-    .sidebar-logo { font-size: 1.5rem; font-weight: 800; text-align: center; padding: 0 24px 24px; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sidebar-logo { font-size: 1.5rem; font-weight: 800; text-align: center; padding: 0 24px 24px; background: linear-gradient(135deg, var(--accent-blue), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .sidebar-menu { list-style: none; }
     .sidebar-item { padding: 14px 24px; cursor: pointer; display: flex; align-items: center; gap: 12px; color: var(--text-secondary); transition: all 0.2s; }
-    .sidebar-item:hover, .sidebar-item.active { background: rgba(168,85,247,0.1); color: var(--neon-purple); border-right: 3px solid var(--neon-purple); }
+    .sidebar-item:hover, .sidebar-item.active { background: rgba(30,144,255,0.1); color: var(--accent-blue); border-right: 3px solid var(--accent-blue); }
     .sidebar-item i { width: 20px; text-align: center; }
     .main-content { margin-left: 240px; padding: 24px 32px; }
     .page-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
@@ -2581,7 +2581,7 @@ function getAdminHTML(): string {
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px; }
     .stat-card { background: var(--bg-secondary); border-radius: 16px; padding: 24px; }
     .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 16px; }
-    .stat-icon.purple { background: rgba(168,85,247,0.2); color: var(--neon-purple); }
+    .stat-icon.purple { background: rgba(30,144,255,0.2); color: var(--accent-blue); }
     .stat-icon.green { background: rgba(34,197,94,0.2); color: var(--neon-green); }
     .stat-icon.cyan { background: rgba(34,211,238,0.2); color: var(--neon-cyan); }
     .stat-icon.orange { background: rgba(249,115,22,0.2); color: var(--neon-orange); }
@@ -2590,7 +2590,7 @@ function getAdminHTML(): string {
     .card { background: var(--bg-secondary); border-radius: 16px; padding: 24px; margin-bottom: 24px; }
     .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .card-title { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-    .card-title i { color: var(--neon-purple); }
+    .card-title i { color: var(--accent-blue); }
     table { width: 100%; border-collapse: collapse; }
     th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
     th { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; }
@@ -2600,8 +2600,8 @@ function getAdminHTML(): string {
     .badge-red { background: rgba(239,68,68,0.2); color: #ef4444; }
     .badge-cyan { background: rgba(34,211,238,0.2); color: var(--neon-cyan); }
     .action-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin-right: 8px; }
-    .action-btn:hover { border-color: var(--neon-purple); color: var(--neon-purple); }
-    .action-btn.primary { background: var(--neon-purple); border-color: var(--neon-purple); color: white; }
+    .action-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .action-btn.primary { background: var(--accent-blue); border-color: var(--accent-blue); color: white; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
     .loading { text-align: center; padding: 60px; color: var(--text-secondary); }
@@ -3097,47 +3097,49 @@ function getMainHTML(): string {
     
     <style>
       /* ========================================
-         ProVisual Style V2 - Deep Purple Theme
-         딥 퍼플 + 다크블루 그라디언트, 네온 액센트
+         ProVisual Style V3 - Dark Blue Theme
+         다크 블루/차콜 + 브라이트 블루 & 네온 그린 액센트
+         (provisual.app 동일 색상)
          ======================================== */
       :root {
-        /* ProVisual 배경 - 딥 퍼플 + 다크블루 */
-        --bg-primary: #0d0118;
-        --bg-secondary: #130820;
-        --bg-tertiary: #1a0a2e;
-        --bg-card: rgba(26, 10, 46, 0.8);
-        --bg-hover: #1f0d35;
+        /* ProVisual 배경 - 다크 블루/차콜 (보라색 X) */
+        --bg-primary: #0f0f14;
+        --bg-secondary: #16161d;
+        --bg-tertiary: #1a1a24;
+        --bg-card: rgba(22, 22, 29, 0.9);
+        --bg-hover: #1e1e28;
         
-        /* 네온 액센트 색상 */
-        --neon-purple: #a855f7;
-        --neon-pink: #ec4899;
+        /* ProVisual 액센트 색상 (브라이트 블루 + 네온 그린) */
+        --accent-blue: #1e90ff;
+        --accent-green: #00ff88;
+        --accent-cyan: #22d3ee;
+        --neon-green: #00ff88;
+        --neon-blue: #1e90ff;
         --neon-cyan: #22d3ee;
-        --neon-green: #10b981;
-        --neon-lime: #84cc16;
-        --neon-orange: #f97316;
         
-        /* 그라디언트 */
-        --gradient-bg: linear-gradient(135deg, #0d0118 0%, #1a0a2e 50%, #0a1628 100%);
-        --gradient-hero: linear-gradient(180deg, #0d0118 0%, #1a0a2e 30%, #0f1a30 70%, #0d0118 100%);
-        --gradient-purple: linear-gradient(135deg, #a855f7, #ec4899);
-        --gradient-cyan: linear-gradient(135deg, #22d3ee, #10b981);
-        --gradient-card: linear-gradient(180deg, rgba(168, 85, 247, 0.08) 0%, transparent 100%);
+        /* 그라디언트 - 다크 블루 기반 */
+        --gradient-bg: linear-gradient(135deg, #0f0f14 0%, #1a1a24 50%, #0f1420 100%);
+        --gradient-hero: linear-gradient(180deg, #0f0f14 0%, #1a1a24 30%, #0f1420 70%, #0f0f14 100%);
+        --gradient-accent: linear-gradient(135deg, #1e90ff, #00ff88);
+        --gradient-blue: linear-gradient(135deg, #1e90ff, #22d3ee);
+        --gradient-card: linear-gradient(180deg, rgba(30, 144, 255, 0.06) 0%, transparent 100%);
         
-        /* 텍스트 */
+        /* 텍스트 - 화이트 & 그레이 */
         --text-primary: #ffffff;
-        --text-secondary: #b4a5c7;
-        --text-tertiary: #7c6a94;
+        --text-secondary: #a0a0b0;
+        --text-tertiary: #6a6a7a;
         
-        /* 보더 */
-        --border-subtle: rgba(168, 85, 247, 0.15);
-        --border-default: rgba(168, 85, 247, 0.25);
-        --border-hover: rgba(168, 85, 247, 0.4);
-        --border-glow: rgba(168, 85, 247, 0.6);
+        /* 보더 - 블루 톤 */
+        --border-subtle: rgba(30, 144, 255, 0.12);
+        --border-default: rgba(30, 144, 255, 0.2);
+        --border-hover: rgba(30, 144, 255, 0.35);
+        --border-glow: rgba(30, 144, 255, 0.5);
         
-        /* 그림자 */
-        --shadow-purple: 0 0 40px rgba(168, 85, 247, 0.2);
+        /* 그림자 - 블루 톤 */
+        --shadow-blue: 0 0 40px rgba(30, 144, 255, 0.15);
         --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
-        --glow-purple: 0 0 60px rgba(168, 85, 247, 0.3);
+        --glow-blue: 0 0 60px rgba(30, 144, 255, 0.2);
+        --glow-green: 0 0 40px rgba(0, 255, 136, 0.15);
         
         /* 간격 */
         --space-xs: 8px;
@@ -3189,7 +3191,7 @@ function getMainHTML(): string {
         left: 50%;
         transform: translateX(-50%);
         z-index: 999;
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(236, 72, 153, 0.95));
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.95), rgba(236, 72, 153, 0.95));
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: var(--radius-xl);
@@ -3197,7 +3199,7 @@ function getMainHTML(): string {
         display: flex;
         align-items: center;
         gap: var(--space-md);
-        box-shadow: var(--shadow-lg), var(--glow-purple);
+        box-shadow: var(--shadow-lg), var(--glow-blue);
         animation: slideDown 0.5s ease, pulse 3s ease-in-out infinite;
       }
       
@@ -3207,8 +3209,8 @@ function getMainHTML(): string {
       }
       
       @keyframes pulse {
-        0%, 100% { box-shadow: var(--shadow-lg), 0 0 30px rgba(168, 85, 247, 0.4); }
-        50% { box-shadow: var(--shadow-lg), 0 0 50px rgba(168, 85, 247, 0.6); }
+        0%, 100% { box-shadow: var(--shadow-lg), 0 0 30px rgba(30, 144, 255, 0.4); }
+        50% { box-shadow: var(--shadow-lg), 0 0 50px rgba(30, 144, 255, 0.6); }
       }
       
       .edu-top-banner.hidden { display: none; }
@@ -3252,7 +3254,7 @@ function getMainHTML(): string {
       
       .edu-banner-btn {
         background: #fff;
-        color: #a855f7;
+        color: #1e90ff;
         border: none;
         padding: 10px 20px;
         border-radius: var(--radius-full);
@@ -3327,7 +3329,7 @@ function getMainHTML(): string {
         text-decoration: none;
       }
       
-      .logo-accent { color: var(--neon-purple); }
+      .logo-accent { color: var(--accent-blue); }
       
       .header-nav {
         display: flex;
@@ -3379,19 +3381,19 @@ function getMainHTML(): string {
       
       .btn-ghost:hover {
         color: #fff;
-        border-color: var(--neon-purple);
-        background: rgba(168, 85, 247, 0.1);
+        border-color: var(--accent-blue);
+        background: rgba(30, 144, 255, 0.1);
       }
       
       .btn-primary {
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         color: #fff;
-        box-shadow: var(--shadow-purple);
+        box-shadow: var(--shadow-blue);
       }
       
       .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: var(--glow-purple);
+        box-shadow: var(--glow-blue);
       }
       
       .btn-large {
@@ -3449,7 +3451,7 @@ function getMainHTML(): string {
       .orb-1 {
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(30, 144, 255, 0.4) 0%, transparent 70%);
         top: 10%;
         left: 5%;
         animation-delay: 0s;
@@ -3500,12 +3502,12 @@ function getMainHTML(): string {
         align-items: center;
         gap: var(--space-xs);
         padding: var(--space-xs) var(--space-md);
-        background: rgba(168, 85, 247, 0.15);
+        background: rgba(30, 144, 255, 0.15);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-full);
         font-size: 0.85rem;
         font-weight: 500;
-        color: var(--neon-purple);
+        color: var(--accent-blue);
         margin-bottom: var(--space-lg);
       }
       
@@ -3531,7 +3533,7 @@ function getMainHTML(): string {
       }
       
       .hero-title-accent {
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -3555,7 +3557,7 @@ function getMainHTML(): string {
         position: relative;
         border-radius: var(--radius-xl);
         overflow: hidden;
-        box-shadow: var(--shadow-lg), var(--glow-purple);
+        box-shadow: var(--shadow-lg), var(--glow-blue);
         border: 1px solid var(--border-default);
         aspect-ratio: 16/10;
         background: var(--bg-card);
@@ -3595,7 +3597,7 @@ function getMainHTML(): string {
         margin-bottom: var(--space-xs);
       }
       
-      .hero-stat-value span { color: var(--neon-purple); }
+      .hero-stat-value span { color: var(--accent-blue); }
       
       .hero-stat-label {
         font-size: 0.9rem;
@@ -3640,12 +3642,12 @@ function getMainHTML(): string {
         align-items: center;
         gap: var(--space-xs);
         padding: var(--space-xs) var(--space-sm);
-        background: rgba(168, 85, 247, 0.1);
+        background: rgba(30, 144, 255, 0.1);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-full);
         font-size: 0.8rem;
         font-weight: 600;
-        color: var(--neon-purple);
+        color: var(--accent-blue);
         text-transform: uppercase;
         letter-spacing: 0.1em;
         margin-bottom: var(--space-md);
@@ -3684,9 +3686,9 @@ function getMainHTML(): string {
       }
       
       .portfolio-card:hover {
-        border-color: var(--neon-purple);
+        border-color: var(--accent-blue);
         transform: translateY(-8px);
-        box-shadow: var(--shadow-lg), var(--shadow-purple);
+        box-shadow: var(--shadow-lg), var(--shadow-blue);
       }
       
       .portfolio-thumb {
@@ -3705,7 +3707,7 @@ function getMainHTML(): string {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.1), rgba(236, 72, 153, 0.1));
         opacity: 0;
         transition: opacity 0.3s;
       }
@@ -3724,7 +3726,7 @@ function getMainHTML(): string {
       
       .portfolio-tag {
         font-size: 0.85rem;
-        color: var(--neon-purple);
+        color: var(--accent-blue);
       }
       
       /* 영상 포트폴리오 */
@@ -3744,8 +3746,8 @@ function getMainHTML(): string {
       }
       
       .portfolio-video-card:hover {
-        border-color: var(--neon-purple);
-        box-shadow: var(--shadow-purple);
+        border-color: var(--accent-blue);
+        box-shadow: var(--shadow-blue);
       }
       
       .portfolio-video-card iframe {
@@ -3780,14 +3782,14 @@ function getMainHTML(): string {
         left: 0;
         right: 0;
         height: 3px;
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         opacity: 0;
         transition: opacity 0.3s;
       }
       
       .block-card:hover {
         border-color: var(--border-hover);
-        box-shadow: var(--shadow-purple);
+        box-shadow: var(--shadow-blue);
       }
       
       .block-card:hover::before { opacity: 1; }
@@ -3798,7 +3800,7 @@ function getMainHTML(): string {
         right: var(--space-md);
         font-size: 4rem;
         font-weight: 900;
-        color: rgba(168, 85, 247, 0.1);
+        color: rgba(30, 144, 255, 0.1);
         line-height: 1;
       }
       
@@ -3808,11 +3810,11 @@ function getMainHTML(): string {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.1));
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.2), rgba(236, 72, 153, 0.1));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         font-size: 1.5rem;
-        color: var(--neon-purple);
+        color: var(--accent-blue);
         margin-bottom: var(--space-md);
       }
       
@@ -3839,14 +3841,14 @@ function getMainHTML(): string {
         flex: 1;
         text-align: center;
         padding: var(--space-sm);
-        background: rgba(168, 85, 247, 0.08);
+        background: rgba(30, 144, 255, 0.08);
         border-radius: var(--radius-md);
       }
       
       .block-stat-value {
         font-size: 1.5rem;
         font-weight: 800;
-        color: var(--neon-purple);
+        color: var(--accent-blue);
       }
       
       .block-stat-label {
@@ -3863,7 +3865,7 @@ function getMainHTML(): string {
       
       .block-tag {
         padding: 4px 12px;
-        background: rgba(168, 85, 247, 0.1);
+        background: rgba(30, 144, 255, 0.1);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-full);
         font-size: 0.75rem;
@@ -3904,9 +3906,9 @@ function getMainHTML(): string {
       }
       
       .service-card:hover {
-        border-color: var(--neon-purple);
+        border-color: var(--accent-blue);
         transform: translateY(-4px);
-        box-shadow: var(--shadow-lg), var(--shadow-purple);
+        box-shadow: var(--shadow-lg), var(--shadow-blue);
       }
       
       .service-card:hover::after { opacity: 1; }
@@ -3929,7 +3931,7 @@ function getMainHTML(): string {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.1));
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(236, 72, 153, 0.1));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         font-size: 1.5rem;
@@ -3940,7 +3942,7 @@ function getMainHTML(): string {
       .service-icon.insta { color: #E4405F; }
       .service-icon.youtube { color: #FF0000; }
       .service-icon.tiktok { color: #00f2ea; }
-      .service-icon.web { color: var(--neon-purple); }
+      .service-icon.web { color: var(--accent-blue); }
       .service-icon.system { color: var(--neon-cyan); }
       
       .service-card-info { flex: 1; }
@@ -3956,7 +3958,7 @@ function getMainHTML(): string {
       
       .service-card-badge {
         padding: 3px 10px;
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         border-radius: var(--radius-full);
         font-size: 0.7rem;
         font-weight: 700;
@@ -3986,7 +3988,7 @@ function getMainHTML(): string {
       }
       
       .service-card:hover .service-card-arrow {
-        background: var(--neon-purple);
+        background: var(--accent-blue);
         color: #fff;
       }
       
@@ -4013,13 +4015,13 @@ function getMainHTML(): string {
       }
       
       .pricing-card.featured {
-        border-color: var(--neon-purple);
-        background: linear-gradient(180deg, rgba(168, 85, 247, 0.1) 0%, var(--bg-card) 100%);
+        border-color: var(--accent-blue);
+        background: linear-gradient(180deg, rgba(30, 144, 255, 0.1) 0%, var(--bg-card) 100%);
       }
       
       .pricing-card:hover {
         transform: translateY(-8px);
-        box-shadow: var(--shadow-lg), var(--shadow-purple);
+        box-shadow: var(--shadow-lg), var(--shadow-blue);
       }
       
       .pricing-badge {
@@ -4028,7 +4030,7 @@ function getMainHTML(): string {
         left: 50%;
         transform: translateX(-50%);
         padding: 6px 16px;
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         border-radius: var(--radius-full);
         font-size: 0.75rem;
         font-weight: 700;
@@ -4051,7 +4053,7 @@ function getMainHTML(): string {
       .pricing-price {
         font-size: 2.5rem;
         font-weight: 800;
-        color: var(--neon-purple);
+        color: var(--accent-blue);
       }
       
       .pricing-period {
@@ -4088,21 +4090,21 @@ function getMainHTML(): string {
         right: var(--space-md);
         width: 64px;
         height: 64px;
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         z-index: 999;
-        box-shadow: var(--shadow-lg), var(--glow-purple);
+        box-shadow: var(--shadow-lg), var(--glow-blue);
         transition: all 0.3s;
         animation: chatPulse 2s ease-in-out infinite;
       }
       
       @keyframes chatPulse {
-        0%, 100% { box-shadow: var(--shadow-lg), 0 0 20px rgba(168, 85, 247, 0.4); }
-        50% { box-shadow: var(--shadow-lg), 0 0 40px rgba(168, 85, 247, 0.7); }
+        0%, 100% { box-shadow: var(--shadow-lg), 0 0 20px rgba(30, 144, 255, 0.4); }
+        50% { box-shadow: var(--shadow-lg), 0 0 40px rgba(30, 144, 255, 0.7); }
       }
       
       .chat-bubble:hover { transform: scale(1.1); }
@@ -4146,7 +4148,7 @@ function getMainHTML(): string {
       .chat-avatar {
         width: 40px;
         height: 40px;
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -4197,7 +4199,7 @@ function getMainHTML(): string {
       }
       
       .chat-message.user {
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         color: #fff;
         align-self: flex-end;
         border-bottom-right-radius: 4px;
@@ -4222,12 +4224,12 @@ function getMainHTML(): string {
         transition: all 0.2s;
       }
       
-      .chat-input:focus { border-color: var(--neon-purple); }
+      .chat-input:focus { border-color: var(--accent-blue); }
       
       .chat-send {
         width: 44px;
         height: 44px;
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
         border: none;
         border-radius: var(--radius-lg);
         color: #fff;
@@ -4284,7 +4286,7 @@ function getMainHTML(): string {
         transition: all 0.2s;
       }
       
-      .footer-links a:hover { color: var(--neon-purple); }
+      .footer-links a:hover { color: var(--accent-blue); }
       
       .footer-bottom {
         margin-top: var(--space-xl);
@@ -4389,7 +4391,7 @@ function getMainHTML(): string {
       
       .edu-modal-header {
         padding: var(--space-lg);
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.1));
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.2), rgba(236, 72, 153, 0.1));
         border-bottom: 1px solid var(--border-subtle);
         text-align: center;
         position: relative;
@@ -4411,7 +4413,7 @@ function getMainHTML(): string {
       .edu-modal-body { padding: var(--space-lg); }
       
       .edu-product {
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.1));
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(236, 72, 153, 0.1));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         padding: var(--space-lg);
@@ -4433,7 +4435,7 @@ function getMainHTML(): string {
       .edu-price {
         font-size: 2.5rem;
         font-weight: 800;
-        color: var(--neon-purple);
+        color: var(--accent-blue);
       }
       
       .edu-original-price {
@@ -4468,8 +4470,8 @@ function getMainHTML(): string {
       }
       
       .payment-btn:hover, .payment-btn.active {
-        border-color: var(--neon-purple);
-        background: rgba(168, 85, 247, 0.1);
+        border-color: var(--accent-blue);
+        background: rgba(30, 144, 255, 0.1);
       }
       
       .bank-info {
@@ -4513,9 +4515,9 @@ function getMainHTML(): string {
         transition: all 0.3s;
       }
       
-      .edu-submit.card-btn { background: var(--gradient-purple); }
+      .edu-submit.card-btn { background: var(--gradient-accent); }
       .edu-submit.bank-btn { background: linear-gradient(135deg, #10b981, #059669); }
-      .edu-submit:hover { transform: translateY(-2px); box-shadow: var(--shadow-purple); }
+      .edu-submit:hover { transform: translateY(-2px); box-shadow: var(--shadow-blue); }
       
       /* iframe Modal */
       .iframe-modal {
@@ -4534,7 +4536,7 @@ function getMainHTML(): string {
         align-items: center;
         justify-content: space-between;
         padding: var(--space-sm) var(--space-md);
-        background: var(--gradient-purple);
+        background: var(--gradient-accent);
       }
       
       .iframe-modal-title { color: #fff; font-weight: 700; font-size: 1rem; }
@@ -4581,13 +4583,13 @@ function getMainHTML(): string {
         transition: all 0.2s;
       }
       
-      .mobile-nav-link:hover { color: var(--neon-purple); }
+      .mobile-nav-link:hover { color: var(--accent-blue); }
       
       /* Scrollbar */
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: var(--bg-secondary); }
       ::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 3px; }
-      ::-webkit-scrollbar-thumb:hover { background: var(--neon-purple); }
+      ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
       
       /* Utilities */
       .hidden { display: none !important; }
@@ -4732,7 +4734,7 @@ function getMainHTML(): string {
         <!-- 영상 포트폴리오 -->
         <div style="margin-top: var(--space-2xl);">
           <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: var(--space-lg);">
-            <i class="fas fa-video" style="color: var(--neon-purple);"></i> 영상 포트폴리오
+            <i class="fas fa-video" style="color: var(--accent-blue);"></i> 영상 포트폴리오
           </h3>
           <div class="portfolio-video-grid" id="videoPortfolioGrid">
             <!-- Dynamic video content -->
@@ -5053,7 +5055,7 @@ function getMainHTML(): string {
             <div class="bank-row"><span>은행</span><strong>케이뱅크</strong></div>
             <div class="bank-row"><span>계좌번호</span><strong>3333-24-8458909</strong></div>
             <div class="bank-row"><span>예금주</span><strong>방익주</strong></div>
-            <div class="bank-row"><span>금액</span><strong style="color: var(--neon-purple);">₩2,000,000</strong></div>
+            <div class="bank-row"><span>금액</span><strong style="color: var(--accent-blue);">₩2,000,000</strong></div>
             <div class="bank-form" style="margin-top: 16px;">
               <input type="text" id="bankName" placeholder="입금자명">
               <input type="tel" id="bankPhone" placeholder="연락처">
@@ -5279,7 +5281,7 @@ function getMainHTML(): string {
         if (service) {
           body.innerHTML = \`
             <div style="padding: 20px 0;">
-              <h3 style="font-size: 1.3rem; margin-bottom: 16px; color: var(--neon-purple);">\${service.name}</h3>
+              <h3 style="font-size: 1.3rem; margin-bottom: 16px; color: var(--accent-blue);">\${service.name}</h3>
               \${service.services ? service.services.map(s => \`
                 <div style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border-subtle);">
                   <div style="font-weight: 600; margin-bottom: 8px;">\${s.name}</div>
