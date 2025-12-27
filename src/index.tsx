@@ -3549,38 +3549,94 @@ function getMainHTML(): string {
         justify-content: center;
       }
       
-      .hero-stats {
-        display: flex;
-        gap: var(--space-xl);
-        margin-top: var(--space-2xl);
-        padding-top: var(--space-xl);
-        border-top: 1px solid var(--border-subtle);
+      /* 통계 섹션 - 히어로 아래 별도 배치 */
+      .stats-section {
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        padding: var(--space-2xl) 0;
+        position: relative;
+        overflow: hidden;
       }
       
-      .hero-stat {
+      .stats-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: 
+          radial-gradient(circle at 20% 50%, rgba(30, 144, 255, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 80% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 50%);
+        pointer-events: none;
+      }
+      
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-lg);
+        max-width: var(--container-lg);
+        margin: 0 auto;
+        padding: 0 var(--space-lg);
+        position: relative;
+      }
+      
+      .stat-card {
         text-align: center;
-        padding: var(--space-md);
-        background: rgba(30, 144, 255, 0.1);
-        border-radius: var(--radius-lg);
-        border: 1px solid rgba(30, 144, 255, 0.2);
+        padding: var(--space-xl);
+        background: var(--bg-card);
         backdrop-filter: blur(10px);
-        min-width: 140px;
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--border-default);
+        transition: all 0.3s ease;
       }
       
-      .hero-stat-value {
-        font-size: 2.8rem;
+      .stat-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-blue);
+        box-shadow: var(--shadow-blue);
+      }
+      
+      .stat-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto var(--space-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(30, 144, 255, 0.15);
+        border-radius: var(--radius-lg);
+        font-size: 1.5rem;
+        color: var(--accent-blue);
+      }
+      
+      .stat-value {
+        font-size: 3rem;
         font-weight: 800;
         line-height: 1;
         margin-bottom: var(--space-xs);
-        text-shadow: 0 0 30px rgba(30, 144, 255, 0.5);
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
       
-      .hero-stat-value span { color: var(--accent-blue); }
+      .stat-label {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: var(--space-sm);
+      }
       
-      .hero-stat-label {
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.7);
-        font-weight: 500;
+      .stat-desc {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+      
+      @media (max-width: 768px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: var(--space-md);
+          padding: 0 var(--space-md);
+        }
+        .stat-value { font-size: 2.5rem; }
       }
       
       @media (max-width: 1024px) {
@@ -3593,7 +3649,7 @@ function getMainHTML(): string {
         .hero-content { padding: 120px var(--space-md) var(--space-xl); }
         .hero-title { font-size: 2rem; }
         .hero-desc { font-size: 1.1rem; }
-        .hero-stats { flex-direction: column; gap: var(--space-md); }
+        .hero-stats { flex-direction: column; gap: var(--space-md); padding: 0 var(--space-md); }
         .hero-stat { min-width: 100%; }
         .hero-actions { flex-direction: column; align-items: center; }
         .hero-actions .btn { width: 100%; max-width: 300px; }
@@ -4695,20 +4751,31 @@ function getMainHTML(): string {
               <i class="fas fa-play"></i> 포트폴리오 보기
             </a>
           </div>
-          
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="hero-stat-value"><span>-90</span>%</div>
-              <div class="hero-stat-label">시간 절감</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-value"><span>-70</span>%</div>
-              <div class="hero-stat-label">비용 절감</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-value"><span>+250</span>%</div>
-              <div class="hero-stat-label">문의량 증가</div>
-            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section (통계 카드 - 히어로 아래 별도 섹션) -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            <div class="stat-value"><span>-90</span>%</div>
+            <div class="stat-label">시간 절감</div>
+            <div class="stat-desc">AI 자동화로 마케팅 업무 시간 대폭 단축</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-coins"></i></div>
+            <div class="stat-value"><span>-70</span>%</div>
+            <div class="stat-label">비용 절감</div>
+            <div class="stat-desc">인건비 없이 24시간 마케팅 운영</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="stat-value"><span>+250</span>%</div>
+            <div class="stat-label">문의량 증가</div>
+            <div class="stat-desc">데이터 기반 타겟팅으로 전환율 극대화</div>
           </div>
         </div>
       </div>
