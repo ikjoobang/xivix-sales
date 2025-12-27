@@ -3447,14 +3447,11 @@ function getMainHTML(): string {
       .hero-video-bg iframe,
       .hero-video-bg video {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
         pointer-events: none;
       }
       
