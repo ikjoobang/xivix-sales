@@ -3994,12 +3994,13 @@ function getMainHTML(): string {
          Hero Section - 풀스크린 배경 비디오
          ======================================== */
       .hero {
-        min-height: 100vh;
+        min-height: 115vh;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
         position: relative;
         overflow: hidden;
+        padding-top: 10vh;
       }
       
       /* 배경 비디오 - 50% 축소 */
@@ -4016,12 +4017,13 @@ function getMainHTML(): string {
       .hero-video-bg iframe,
       .hero-video-bg video {
         position: absolute;
-        top: 50%;
+        top: 70%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
-        height: 100%;
-        object-fit: contain;
+        height: auto;
+        min-height: 140%;
+        object-fit: cover;
         pointer-events: none;
       }
       
@@ -4121,9 +4123,10 @@ function getMainHTML(): string {
       
       /* 통계 섹션 - 히어로 아래 별도 배치 (축소된 버전) */
       .stats-section {
-        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        background: transparent;
         padding: var(--space-lg) 0;
         position: relative;
+        margin-top: -60px;
       }
       
       .stats-grid {
