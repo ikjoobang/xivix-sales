@@ -3187,20 +3187,21 @@ function getMainHTML(): string {
          ======================================== */
       .edu-top-banner {
         position: fixed;
-        top: 80px;
+        top: 70px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 999;
-        background: linear-gradient(135deg, rgba(30, 144, 255, 0.95), rgba(236, 72, 153, 0.95));
+        background: linear-gradient(135deg, rgba(30, 80, 180, 0.95), rgba(60, 60, 120, 0.95));
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: var(--radius-xl);
-        padding: var(--space-sm) var(--space-lg);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: var(--radius-lg);
+        padding: 8px 16px;
         display: flex;
         align-items: center;
-        gap: var(--space-md);
-        box-shadow: var(--shadow-lg), var(--glow-blue);
-        animation: slideDown 0.5s ease, pulse 3s ease-in-out infinite;
+        gap: 12px;
+        box-shadow: var(--shadow-lg);
+        animation: slideDown 0.5s ease;
+        font-size: 0.85rem;
       }
       
       @keyframes slideDown {
@@ -3222,10 +3223,10 @@ function getMainHTML(): string {
       }
       
       .edu-banner-badge {
-        background: rgba(0,0,0,0.3);
-        padding: 4px 12px;
+        background: rgba(0, 200, 150, 0.9);
+        padding: 3px 10px;
         border-radius: var(--radius-full);
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: 700;
         color: #fff;
         white-space: nowrap;
@@ -3233,33 +3234,33 @@ function getMainHTML(): string {
       
       .edu-banner-text {
         font-weight: 600;
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         color: #fff;
       }
       
       .edu-banner-price {
-        font-weight: 800;
-        font-size: 1.1rem;
+        font-weight: 700;
+        font-size: 0.9rem;
         color: #fff;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
       }
       
       .edu-banner-price .original {
         text-decoration: line-through;
-        opacity: 0.6;
-        font-size: 0.85rem;
+        opacity: 0.5;
+        font-size: 0.75rem;
       }
       
       .edu-banner-btn {
-        background: #fff;
-        color: #1e90ff;
+        background: linear-gradient(135deg, #00c896, #00a080);
+        color: #fff;
         border: none;
-        padding: 10px 20px;
+        padding: 6px 14px;
         border-radius: var(--radius-full);
         font-weight: 700;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         cursor: pointer;
         transition: all 0.3s;
         white-space: nowrap;
@@ -3271,14 +3272,14 @@ function getMainHTML(): string {
       }
       
       .edu-banner-close {
-        background: rgba(0,0,0,0.2);
+        background: rgba(255,255,255,0.15);
         border: none;
         color: #fff;
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         cursor: pointer;
-        font-size: 0.9rem;
+        font-size: 0.75rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -3517,11 +3518,11 @@ function getMainHTML(): string {
       }
       
       .hero-title {
-        font-size: clamp(2.8rem, 6vw, 4.5rem);
+        font-size: clamp(2rem, 4.5vw, 3rem);
         font-weight: 800;
-        line-height: 1.1;
+        line-height: 1.2;
         letter-spacing: -0.02em;
-        margin-bottom: var(--space-lg);
+        margin-bottom: var(--space-md);
         text-shadow: 0 4px 30px rgba(0,0,0,0.5);
       }
       
@@ -3534,12 +3535,12 @@ function getMainHTML(): string {
       }
       
       .hero-desc {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         color: rgba(255, 255, 255, 0.85);
-        line-height: 1.8;
-        margin-bottom: var(--space-xl);
+        line-height: 1.7;
+        margin-bottom: var(--space-lg);
         text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        max-width: 700px;
+        max-width: 600px;
         margin-left: auto;
         margin-right: auto;
       }
@@ -3675,14 +3676,34 @@ function getMainHTML(): string {
       
       .portfolio-thumb {
         aspect-ratio: 16/10;
-        background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+        background: var(--bg-tertiary);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.5rem;
+        font-size: 2rem;
         color: var(--text-tertiary);
         position: relative;
         overflow: hidden;
+      }
+      
+      .portfolio-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      
+      .portfolio-thumb .thumb-icon {
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      
+      .portfolio-card:hover .portfolio-thumb .thumb-icon {
+        opacity: 1;
       }
       
       .portfolio-thumb::before {
@@ -4635,17 +4656,15 @@ function getMainHTML(): string {
 
     <!-- Hero Section with Fullscreen Background Video -->
     <section class="hero">
-      <!-- 풀스크린 배경 비디오 (mp4) -->
+      <!-- 풀스크린 배경 비디오 (YouTube) -->
       <div class="hero-video-bg">
-        <video 
-          autoplay 
-          muted 
-          loop 
-          playsinline
-          preload="auto"
-          poster="">
-          <source src="https://www.genspark.ai/api/files/s/ZxRlIX0Z" type="video/mp4">
-        </video>
+        <iframe 
+          src="https://www.youtube.com/embed/uGdcbTFJr-8?autoplay=1&mute=1&loop=1&playlist=uGdcbTFJr-8&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&vq=hd1080" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen
+          loading="lazy"
+          style="pointer-events: none;">
+        </iframe>
       </div>
       
       <!-- 오버레이 (텍스트 가독성) -->
@@ -5101,23 +5120,27 @@ function getMainHTML(): string {
         }
       }
       
-      // 웹 포트폴리오 렌더링 (영상 제외)
+      // 웹 포트폴리오 렌더링 (영상 제외) - 썸네일 포함
       function renderPortfolio() {
         const grid = document.getElementById('portfolioGrid');
         if (!grid || !portfolioData.length) return;
         
         const webItems = portfolioData.filter(item => !item.isVideo).slice(0, 9);
-        grid.innerHTML = webItems.map(item => \`
+        grid.innerHTML = webItems.map(item => {
+          // URL에서 도메인 추출하여 썸네일 생성
+          const thumbUrl = \`https://api.microlink.io/?url=\${encodeURIComponent(item.url)}&screenshot=true&meta=false&embed=screenshot.url\`;
+          return \`
           <div class="portfolio-card" onclick="openPortfolio('\${item.url}', '\${item.title}')">
             <div class="portfolio-thumb">
-              <i class="fas fa-external-link-alt"></i>
+              <img src="\${thumbUrl}" alt="\${item.title}" loading="lazy" onerror="this.style.display='none'">
+              <i class="fas fa-external-link-alt thumb-icon"></i>
             </div>
             <div class="portfolio-info">
               <h4 class="portfolio-title">\${item.title}</h4>
               <span class="portfolio-tag">\${item.tag}</span>
             </div>
           </div>
-        \`).join('');
+        \`;}).join('');
       }
       
       // 영상 포트폴리오 렌더링
