@@ -3860,11 +3860,35 @@ function getMainHTML(): string {
           left: 10px;
           right: 10px;
           transform: none;
-          flex-direction: column;
-          padding: var(--space-sm);
-          gap: var(--space-sm);
+          flex-direction: row;
+          padding: 6px 10px;
+          gap: 8px;
+          background: rgba(30, 60, 120, 0.7);
+          font-size: 0.75rem;
         }
-        .edu-banner-content { flex-wrap: wrap; justify-content: center; }
+        .edu-banner-content { 
+          flex-wrap: nowrap; 
+          gap: 8px;
+        }
+        .edu-banner-badge {
+          padding: 2px 6px;
+          font-size: 0.6rem;
+        }
+        .edu-banner-text {
+          font-size: 0.75rem;
+        }
+        .edu-banner-price {
+          font-size: 0.75rem;
+        }
+        .edu-banner-btn {
+          padding: 4px 10px;
+          font-size: 0.7rem;
+        }
+        .edu-banner-close {
+          width: 20px;
+          height: 20px;
+          font-size: 0.65rem;
+        }
       }
       
       /* ========================================
@@ -4020,8 +4044,10 @@ function getMainHTML(): string {
         top: 60%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
+        width: 177.78vh; /* 16:9 비율로 화면 꽉 채우기 */
+        height: 100vh;
+        min-width: 100%;
+        min-height: 56.25vw;
         object-fit: cover;
         pointer-events: none;
       }
@@ -4086,7 +4112,7 @@ function getMainHTML(): string {
       }
       
       .hero-title {
-        font-size: clamp(2rem, 4.5vw, 3rem);
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
         font-weight: 800;
         line-height: 1.2;
         letter-spacing: -0.02em;
@@ -4211,12 +4237,17 @@ function getMainHTML(): string {
       @media (max-width: 768px) {
         .hero { min-height: 100vh; }
         .hero-content { padding: 120px var(--space-md) var(--space-xl); }
-        .hero-title { font-size: 2rem; }
-        .hero-desc { font-size: 1.1rem; }
+        .hero-title { font-size: 1.6rem; }
+        .hero-desc { font-size: 1rem; }
         .hero-stats { flex-direction: column; gap: var(--space-md); padding: 0 var(--space-md); }
         .hero-stat { min-width: 100%; }
         .hero-actions { flex-direction: column; align-items: center; }
         .hero-actions .btn { width: 100%; max-width: 300px; }
+        /* 모바일 비디오 - 좌우만 10% 축소, 상하 절대 고정 */
+        .hero-video-bg iframe,
+        .hero-video-bg video {
+          transform: translate(-50%, -50%) scaleX(0.9);
+        }
       }
       
       /* ========================================
@@ -5273,17 +5304,15 @@ function getMainHTML(): string {
 
     <!-- Hero Section with Fullscreen Background Video -->
     <section class="hero">
-      <!-- 풀스크린 배경 비디오 (MP4) -->
+      <!-- 풀스크린 배경 비디오 (YouTube) -->
       <div class="hero-video-bg">
-        <video 
+        <iframe 
           id="heroVideo"
-          autoplay 
-          muted 
-          loop 
-          playsinline
-          preload="auto">
-          <source src="https://3002-io6ldv3e0l3jt6e1thqwf-2e77fc33.sandbox.novita.ai/hero-bg.mp4" type="video/mp4">
-        </video>
+          src="https://www.youtube.com/embed/lUgFqogFMKM?autoplay=1&mute=1&loop=1&playlist=lUgFqogFMKM&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
       </div>
       
       <!-- 오버레이 (텍스트 가독성) -->
