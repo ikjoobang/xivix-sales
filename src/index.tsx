@@ -1421,6 +1421,195 @@ app.post('/api/admin/coupons', adminAuth, async (c) => {
   return c.json({ success: true, code })
 })
 
+// ========================================
+// SITE SETTINGS API (사이트 설정 관리)
+// ========================================
+
+// 모든 사이트 설정 조회 (공개)
+app.get('/api/settings', async (c) => {
+  const db = c.env?.DB
+  if (!db) {
+    // DB 없으면 기본값 반환
+    return c.json({
+      hero_badge: 'XIVIX Business Engineering',
+      hero_title: '사장님은 장사만 하세요',
+      hero_title_accent: '마케팅은 AI가 다 해드립니다',
+      hero_description: '직원 뽑지 마세요. 블로그, 인스타, 영상 편집...\\nXIVIX AI 시스템이 월급 없이 24시간 일합니다.',
+      stat_1_value: '-90', stat_1_unit: '%', stat_1_label: '시간 절감',
+      stat_2_value: '-70', stat_2_unit: '%', stat_2_label: '비용 절감',
+      stat_3_value: '+250', stat_3_unit: '%', stat_3_label: '문의량 증가',
+      edu_banner_enabled: '1',
+      edu_banner_badge: '선착순 마감',
+      edu_banner_title: 'AI 입문반 1기',
+      edu_banner_original_price: '₩300만',
+      edu_banner_price: '₩200만 / 6주'
+    })
+  }
+  
+  try {
+    const settings = await db.prepare('SELECT setting_key, setting_value FROM site_settings').all()
+    const result: Record<string, string> = {}
+    for (const row of (settings.results || []) as any[]) {
+      result[row.setting_key] = row.setting_value
+    }
+    return c.json(result)
+  } catch (e) {
+    return c.json({})
+  }
+})
+
+// 카테고리별 사이트 설정 조회 (관리자용)
+app.get('/api/admin/settings', adminAuth, async (c) => {
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    const settings = await db.prepare(`
+      SELECT * FROM site_settings ORDER BY category, setting_key
+    `).all()
+    return c.json({ settings: settings.results })
+  } catch (e) {
+    return c.json({ settings: [] })
+  }
+})
+
+// 사이트 설정 업데이트
+app.put('/api/admin/settings/:key', adminAuth, async (c) => {
+  const key = c.req.param('key')
+  const { value } = await c.req.json()
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    await db.prepare(`
+      UPDATE site_settings SET setting_value = ?, updated_at = datetime('now') WHERE setting_key = ?
+    `).bind(value, key).run()
+    return c.json({ success: true })
+  } catch (e) {
+    return c.json({ error: 'Update failed' }, 500)
+  }
+})
+
+// 포트폴리오 카테고리 조회
+app.get('/api/admin/portfolio-categories', adminAuth, async (c) => {
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    const categories = await db.prepare(`
+      SELECT * FROM portfolio_categories ORDER BY sort_order
+    `).all()
+    return c.json({ categories: categories.results })
+  } catch (e) {
+    return c.json({ categories: [] })
+  }
+})
+
+// 포트폴리오 카테고리 추가
+app.post('/api/admin/portfolio-categories', adminAuth, async (c) => {
+  const { name, slug, icon, color } = await c.req.json()
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    const maxOrder = await db.prepare('SELECT MAX(sort_order) as max FROM portfolio_categories').first() as any
+    const sortOrder = (maxOrder?.max || 0) + 1
+    
+    await db.prepare(`
+      INSERT INTO portfolio_categories (name, slug, icon, color, sort_order) VALUES (?, ?, ?, ?, ?)
+    `).bind(name, slug, icon || 'fa-folder', color || '#1e90ff', sortOrder).run()
+    return c.json({ success: true })
+  } catch (e) {
+    return c.json({ error: 'Insert failed' }, 500)
+  }
+})
+
+// 포트폴리오 카테고리 삭제
+app.delete('/api/admin/portfolio-categories/:id', adminAuth, async (c) => {
+  const id = c.req.param('id')
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    await db.prepare('DELETE FROM portfolio_categories WHERE id = ?').bind(id).run()
+    return c.json({ success: true })
+  } catch (e) {
+    return c.json({ error: 'Delete failed' }, 500)
+  }
+})
+
+// 포트폴리오 항목 조회 (관리자)
+app.get('/api/admin/portfolio-items', adminAuth, async (c) => {
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    const items = await db.prepare(`
+      SELECT pi.*, pc.name as category_name 
+      FROM portfolio_items pi
+      LEFT JOIN portfolio_categories pc ON pi.category_id = pc.id
+      ORDER BY pi.sort_order
+    `).all()
+    return c.json({ items: items.results })
+  } catch (e) {
+    return c.json({ items: [] })
+  }
+})
+
+// 포트폴리오 항목 추가
+app.post('/api/admin/portfolio-items', adminAuth, async (c) => {
+  const { category_id, title, url, thumbnail, description, is_video, video_url } = await c.req.json()
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    const maxOrder = await db.prepare('SELECT MAX(sort_order) as max FROM portfolio_items WHERE category_id = ?').bind(category_id).first() as any
+    const sortOrder = (maxOrder?.max || 0) + 1
+    
+    await db.prepare(`
+      INSERT INTO portfolio_items (category_id, title, url, thumbnail, description, is_video, video_url, sort_order)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(category_id, title, url, thumbnail, description, is_video ? 1 : 0, video_url, sortOrder).run()
+    return c.json({ success: true })
+  } catch (e) {
+    return c.json({ error: 'Insert failed' }, 500)
+  }
+})
+
+// 포트폴리오 항목 수정
+app.put('/api/admin/portfolio-items/:id', adminAuth, async (c) => {
+  const id = c.req.param('id')
+  const { category_id, title, url, thumbnail, description, is_video, video_url, is_active } = await c.req.json()
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    await db.prepare(`
+      UPDATE portfolio_items 
+      SET category_id = ?, title = ?, url = ?, thumbnail = ?, description = ?, 
+          is_video = ?, video_url = ?, is_active = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).bind(category_id, title, url, thumbnail, description, is_video ? 1 : 0, video_url, is_active ? 1 : 0, id).run()
+    return c.json({ success: true })
+  } catch (e) {
+    return c.json({ error: 'Update failed' }, 500)
+  }
+})
+
+// 포트폴리오 항목 삭제
+app.delete('/api/admin/portfolio-items/:id', adminAuth, async (c) => {
+  const id = c.req.param('id')
+  const db = c.env?.DB
+  if (!db) return c.json({ error: 'DB error' }, 500)
+  
+  try {
+    await db.prepare('DELETE FROM portfolio_items WHERE id = ?').bind(id).run()
+    return c.json({ success: true })
+  } catch (e) {
+    return c.json({ error: 'Delete failed' }, 500)
+  }
+})
+
 // AI Chat API - Gemini 2.0 Flash + 20년 SNS 마케팅 영업이사
 app.post('/api/chat', async (c) => {
   const { message, context } = await c.req.json()
@@ -2615,6 +2804,8 @@ function getAdminHTML(): string {
     <div class="sidebar-logo">X I Λ I X<br><small style="font-size:0.7rem;font-weight:400;">Admin</small></div>
     <ul class="sidebar-menu">
       <li class="sidebar-item active" data-tab="dashboard"><i class="fas fa-chart-line"></i> 대시보드</li>
+      <li class="sidebar-item" data-tab="site-settings"><i class="fas fa-cog"></i> 사이트 설정</li>
+      <li class="sidebar-item" data-tab="portfolio-manage"><i class="fas fa-images"></i> 포트폴리오</li>
       <li class="sidebar-item" data-tab="contract-create"><i class="fas fa-file-signature"></i> 계약서 작성</li>
       <li class="sidebar-item" data-tab="contract-list"><i class="fas fa-folder-open"></i> 계약서 보관</li>
       <li class="sidebar-item" data-tab="payments"><i class="fas fa-credit-card"></i> 결제 관리</li>
@@ -2703,7 +2894,119 @@ function getAdminHTML(): string {
         <div id="contract-list-content"><div class="loading"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div></div>
       </div>
     </div>
+    
+    <!-- 사이트 설정 탭 -->
+    <div id="site-settings-tab" class="tab-content">
+      <h1 class="page-title">사이트 설정</h1>
+      <p class="page-subtitle">메인 페이지 콘텐츠를 실시간으로 수정하세요</p>
+      
+      <div class="settings-tabs" style="display:flex;gap:8px;margin-bottom:24px;">
+        <button class="settings-tab-btn active" data-settings-tab="hero" onclick="switchSettingsTab('hero')"><i class="fas fa-home"></i> 히어로</button>
+        <button class="settings-tab-btn" data-settings-tab="stats" onclick="switchSettingsTab('stats')"><i class="fas fa-chart-bar"></i> 통계</button>
+        <button class="settings-tab-btn" data-settings-tab="banner" onclick="switchSettingsTab('banner')"><i class="fas fa-ad"></i> 배너</button>
+        <button class="settings-tab-btn" data-settings-tab="general" onclick="switchSettingsTab('general')"><i class="fas fa-cogs"></i> 일반</button>
+      </div>
+      
+      <div class="card">
+        <div id="settings-content"><div class="loading"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div></div>
+      </div>
+      
+      <div style="margin-top:16px;text-align:right;">
+        <button class="action-btn primary" onclick="saveAllSettings()"><i class="fas fa-save"></i> 모든 설정 저장</button>
+      </div>
+    </div>
+    
+    <!-- 포트폴리오 관리 탭 -->
+    <div id="portfolio-manage-tab" class="tab-content">
+      <h1 class="page-title">포트폴리오 관리</h1>
+      <p class="page-subtitle">카테고리 및 포트폴리오 항목 관리</p>
+      
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-folder"></i> 카테고리</h3>
+          <button class="action-btn primary" onclick="showAddCategoryModal()"><i class="fas fa-plus"></i> 카테고리 추가</button>
+        </div>
+        <div id="categories-list"><div class="loading"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div></div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-images"></i> 포트폴리오 항목</h3>
+          <button class="action-btn primary" onclick="showAddPortfolioModal()"><i class="fas fa-plus"></i> 항목 추가</button>
+        </div>
+        <div id="portfolio-items-list"><div class="loading"><i class="fas fa-spinner fa-spin"></i> 로딩 중...</div></div>
+      </div>
+    </div>
   </main>
+  
+  <!-- 카테고리 추가 모달 -->
+  <div id="category-modal" class="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;">
+    <div class="modal-content" style="background:var(--bg-secondary);border-radius:16px;padding:32px;max-width:500px;width:90%;">
+      <h3 style="margin-bottom:24px;">새 카테고리 추가</h3>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">카테고리 이름</label>
+        <input type="text" id="cat-name" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">슬러그 (영문)</label>
+        <input type="text" id="cat-slug" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;" placeholder="예: branding">
+      </div>
+      <div style="display:flex;gap:16px;margin-bottom:16px;">
+        <div style="flex:1;">
+          <label style="display:block;margin-bottom:8px;font-size:0.9rem;">아이콘 (FontAwesome)</label>
+          <input type="text" id="cat-icon" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;" placeholder="fa-gem" value="fa-folder">
+        </div>
+        <div style="flex:1;">
+          <label style="display:block;margin-bottom:8px;font-size:0.9rem;">색상</label>
+          <input type="color" id="cat-color" style="width:100%;padding:8px;height:48px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;" value="#1e90ff">
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button class="action-btn" onclick="closeCategoryModal()">취소</button>
+        <button class="action-btn primary" onclick="addCategory()">추가</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 포트폴리오 항목 추가 모달 -->
+  <div id="portfolio-modal" class="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;">
+    <div class="modal-content" style="background:var(--bg-secondary);border-radius:16px;padding:32px;max-width:600px;width:90%;max-height:90vh;overflow-y:auto;">
+      <h3 style="margin-bottom:24px;">포트폴리오 항목 추가</h3>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">카테고리</label>
+        <select id="pf-category" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;"></select>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">제목</label>
+        <input type="text" id="pf-title" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">URL (웹사이트 링크)</label>
+        <input type="text" id="pf-url" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;" placeholder="https://example.com">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">썸네일 URL</label>
+        <input type="text" id="pf-thumbnail" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;" placeholder="https://example.com/image.jpg">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:flex;align-items:center;gap:8px;">
+          <input type="checkbox" id="pf-is-video"> 영상 포트폴리오
+        </label>
+      </div>
+      <div style="margin-bottom:16px;" id="video-url-field" style="display:none;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">영상 URL (YouTube/Vimeo)</label>
+        <input type="text" id="pf-video-url" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;" placeholder="https://youtube.com/watch?v=...">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:8px;font-size:0.9rem;">설명</label>
+        <textarea id="pf-description" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;resize:vertical;" rows="3"></textarea>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button class="action-btn" onclick="closePortfolioModal()">취소</button>
+        <button class="action-btn primary" onclick="addPortfolioItem()">추가</button>
+      </div>
+    </div>
+  </div>
   
   <script>
     let currentTab = 'dashboard';
@@ -3018,6 +3321,272 @@ function getAdminHTML(): string {
         alert('삭제 중 오류가 발생했습니다.');
       }
     }
+    
+    // ========================================
+    // 사이트 설정 관리
+    // ========================================
+    let siteSettings = {};
+    let currentSettingsTab = 'hero';
+    let portfolioCategories = [];
+    
+    function switchSettingsTab(tab) {
+      currentSettingsTab = tab;
+      document.querySelectorAll('.settings-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('[data-settings-tab="'+tab+'"]').classList.add('active');
+      renderSettings();
+    }
+    
+    async function loadSettings() {
+      try {
+        const res = await fetch('/api/admin/settings');
+        const data = await res.json();
+        siteSettings = {};
+        for (const s of (data.settings || [])) {
+          siteSettings[s.setting_key] = s;
+        }
+        renderSettings();
+      } catch (e) {
+        document.getElementById('settings-content').innerHTML = '<div class="empty">설정을 불러올 수 없습니다.</div>';
+      }
+    }
+    
+    function renderSettings() {
+      const container = document.getElementById('settings-content');
+      const filtered = Object.values(siteSettings).filter(s => s.category === currentSettingsTab);
+      
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty">이 카테고리에 설정이 없습니다.</div>';
+        return;
+      }
+      
+      container.innerHTML = filtered.map(s => \`
+        <div style="margin-bottom:20px;">
+          <label style="display:block;margin-bottom:8px;font-weight:600;">\${s.label || s.setting_key}</label>
+          <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;">\${s.description || ''}</p>
+          \${s.setting_key.includes('description') || s.setting_value?.length > 100 
+            ? \`<textarea class="setting-input" data-key="\${s.setting_key}" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;resize:vertical;" rows="3">\${s.setting_value}</textarea>\`
+            : \`<input type="text" class="setting-input" data-key="\${s.setting_key}" value="\${s.setting_value}" style="width:100%;padding:12px;background:var(--bg-tertiary);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;">\`
+          }
+        </div>
+      \`).join('');
+    }
+    
+    async function saveAllSettings() {
+      const inputs = document.querySelectorAll('.setting-input');
+      let success = 0;
+      
+      for (const input of inputs) {
+        const key = input.dataset.key;
+        const value = input.value;
+        try {
+          await fetch('/api/admin/settings/' + key, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ value })
+          });
+          success++;
+        } catch (e) {
+          console.error('Save error:', key);
+        }
+      }
+      
+      alert(success + '개 설정이 저장되었습니다.\\n\\n메인 페이지에서 변경사항을 확인하세요.');
+    }
+    
+    // ========================================
+    // 포트폴리오 관리
+    // ========================================
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/admin/portfolio-categories');
+        const data = await res.json();
+        portfolioCategories = data.categories || [];
+        
+        if (portfolioCategories.length === 0) {
+          document.getElementById('categories-list').innerHTML = '<div class="empty">카테고리가 없습니다.</div>';
+          return;
+        }
+        
+        document.getElementById('categories-list').innerHTML = \`
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+            \${portfolioCategories.map(c => \`
+              <div style="background:var(--bg-tertiary);padding:16px;border-radius:12px;display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;background:\${c.color}20;color:\${c.color};border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                  <i class="fas \${c.icon}"></i>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-weight:600;">\${c.name}</div>
+                  <div style="font-size:0.8rem;color:var(--text-secondary);">\${c.slug}</div>
+                </div>
+                <button class="action-btn" onclick="deleteCategory(\${c.id})" style="padding:8px;"><i class="fas fa-trash"></i></button>
+              </div>
+            \`).join('')}
+          </div>
+        \`;
+        
+        // 포트폴리오 모달 카테고리 select 업데이트
+        const select = document.getElementById('pf-category');
+        if (select) {
+          select.innerHTML = portfolioCategories.map(c => \`<option value="\${c.id}">\${c.name}</option>\`).join('');
+        }
+      } catch (e) {
+        document.getElementById('categories-list').innerHTML = '<div class="empty">카테고리를 불러올 수 없습니다.</div>';
+      }
+    }
+    
+    async function loadPortfolioItems() {
+      try {
+        const res = await fetch('/api/admin/portfolio-items');
+        const data = await res.json();
+        const items = data.items || [];
+        
+        if (items.length === 0) {
+          document.getElementById('portfolio-items-list').innerHTML = '<div class="empty">포트폴리오 항목이 없습니다.</div>';
+          return;
+        }
+        
+        document.getElementById('portfolio-items-list').innerHTML = \`
+          <table>
+            <thead><tr><th>제목</th><th>카테고리</th><th>타입</th><th>URL</th><th>액션</th></tr></thead>
+            <tbody>
+              \${items.map(i => \`
+                <tr>
+                  <td>\${i.title}</td>
+                  <td>\${i.category_name || '-'}</td>
+                  <td><span class="badge \${i.is_video ? 'badge-cyan' : 'badge-green'}">\${i.is_video ? '영상' : '웹'}</span></td>
+                  <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;"><a href="\${i.url || i.video_url}" target="_blank" style="color:var(--accent-blue);">\${i.url || i.video_url || '-'}</a></td>
+                  <td>
+                    <button class="action-btn" onclick="deletePortfolioItem(\${i.id})"><i class="fas fa-trash"></i></button>
+                  </td>
+                </tr>
+              \`).join('')}
+            </tbody>
+          </table>
+        \`;
+      } catch (e) {
+        document.getElementById('portfolio-items-list').innerHTML = '<div class="empty">항목을 불러올 수 없습니다.</div>';
+      }
+    }
+    
+    function showAddCategoryModal() {
+      document.getElementById('category-modal').style.display = 'flex';
+    }
+    
+    function closeCategoryModal() {
+      document.getElementById('category-modal').style.display = 'none';
+    }
+    
+    async function addCategory() {
+      const name = document.getElementById('cat-name').value;
+      const slug = document.getElementById('cat-slug').value;
+      const icon = document.getElementById('cat-icon').value;
+      const color = document.getElementById('cat-color').value;
+      
+      if (!name || !slug) {
+        alert('이름과 슬러그를 입력하세요.');
+        return;
+      }
+      
+      try {
+        await fetch('/api/admin/portfolio-categories', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, slug, icon, color })
+        });
+        closeCategoryModal();
+        loadCategories();
+      } catch (e) {
+        alert('카테고리 추가 실패');
+      }
+    }
+    
+    async function deleteCategory(id) {
+      if (!confirm('이 카테고리를 삭제하시겠습니까?')) return;
+      
+      try {
+        await fetch('/api/admin/portfolio-categories/' + id, { method: 'DELETE' });
+        loadCategories();
+      } catch (e) {
+        alert('삭제 실패');
+      }
+    }
+    
+    function showAddPortfolioModal() {
+      document.getElementById('portfolio-modal').style.display = 'flex';
+      // 카테고리 목록 업데이트
+      const select = document.getElementById('pf-category');
+      select.innerHTML = portfolioCategories.map(c => \`<option value="\${c.id}">\${c.name}</option>\`).join('');
+    }
+    
+    function closePortfolioModal() {
+      document.getElementById('portfolio-modal').style.display = 'none';
+    }
+    
+    // 영상 체크박스 변경 시 비디오 URL 필드 표시/숨김
+    document.getElementById('pf-is-video').addEventListener('change', function() {
+      document.getElementById('video-url-field').style.display = this.checked ? 'block' : 'none';
+    });
+    
+    async function addPortfolioItem() {
+      const category_id = document.getElementById('pf-category').value;
+      const title = document.getElementById('pf-title').value;
+      const url = document.getElementById('pf-url').value;
+      const thumbnail = document.getElementById('pf-thumbnail').value;
+      const is_video = document.getElementById('pf-is-video').checked;
+      const video_url = document.getElementById('pf-video-url').value;
+      const description = document.getElementById('pf-description').value;
+      
+      if (!title) {
+        alert('제목을 입력하세요.');
+        return;
+      }
+      
+      try {
+        await fetch('/api/admin/portfolio-items', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ category_id, title, url, thumbnail, is_video, video_url, description })
+        });
+        closePortfolioModal();
+        loadPortfolioItems();
+        
+        // 입력 필드 초기화
+        document.getElementById('pf-title').value = '';
+        document.getElementById('pf-url').value = '';
+        document.getElementById('pf-thumbnail').value = '';
+        document.getElementById('pf-is-video').checked = false;
+        document.getElementById('pf-video-url').value = '';
+        document.getElementById('pf-description').value = '';
+      } catch (e) {
+        alert('항목 추가 실패');
+      }
+    }
+    
+    async function deletePortfolioItem(id) {
+      if (!confirm('이 포트폴리오 항목을 삭제하시겠습니까?')) return;
+      
+      try {
+        await fetch('/api/admin/portfolio-items/' + id, { method: 'DELETE' });
+        loadPortfolioItems();
+      } catch (e) {
+        alert('삭제 실패');
+      }
+    }
+    
+    // 탭 데이터 로드 업데이트
+    function loadTabDataExtended(tab) {
+      switch(tab) {
+        case 'site-settings': loadSettings(); break;
+        case 'portfolio-manage': loadCategories(); loadPortfolioItems(); break;
+      }
+    }
+    
+    // 기존 loadTabData 함수 확장
+    const originalLoadTabData = loadTabData;
+    loadTabData = function(tab) {
+      loadTabDataExtended(tab);
+      originalLoadTabData(tab);
+    };
     
     // 초기 로드
     loadDashboard();
@@ -3447,11 +4016,14 @@ function getMainHTML(): string {
       .hero-video-bg iframe,
       .hero-video-bg video {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: cover;
         pointer-events: none;
       }
       
@@ -3549,68 +4121,57 @@ function getMainHTML(): string {
         justify-content: center;
       }
       
-      /* 통계 섹션 - 히어로 아래 별도 배치 */
+      /* 통계 섹션 - 히어로 아래 별도 배치 (축소된 버전) */
       .stats-section {
         background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-        padding: var(--space-2xl) 0;
+        padding: var(--space-lg) 0;
         position: relative;
-        overflow: hidden;
-      }
-      
-      .stats-section::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: 
-          radial-gradient(circle at 20% 50%, rgba(30, 144, 255, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 80% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 50%);
-        pointer-events: none;
       }
       
       .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-lg);
-        max-width: var(--container-lg);
+        display: flex;
+        justify-content: center;
+        gap: var(--space-md);
+        max-width: 900px;
         margin: 0 auto;
-        padding: 0 var(--space-lg);
-        position: relative;
+        padding: 0 var(--space-md);
       }
       
       .stat-card {
         text-align: center;
-        padding: var(--space-xl);
+        padding: var(--space-md) var(--space-lg);
         background: var(--bg-card);
         backdrop-filter: blur(10px);
-        border-radius: var(--radius-xl);
+        border-radius: var(--radius-lg);
         border: 1px solid var(--border-default);
         transition: all 0.3s ease;
+        flex: 1;
+        max-width: 260px;
       }
       
       .stat-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-3px);
         border-color: var(--accent-blue);
-        box-shadow: var(--shadow-blue);
       }
       
       .stat-icon {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto var(--space-md);
+        width: 44px;
+        height: 44px;
+        margin: 0 auto var(--space-sm);
         display: flex;
         align-items: center;
         justify-content: center;
         background: rgba(30, 144, 255, 0.15);
-        border-radius: var(--radius-lg);
-        font-size: 1.5rem;
+        border-radius: var(--radius-md);
+        font-size: 1.1rem;
         color: var(--accent-blue);
       }
       
       .stat-value {
-        font-size: 3rem;
+        font-size: 2rem;
         font-weight: 800;
         line-height: 1;
-        margin-bottom: var(--space-xs);
+        margin-bottom: 4px;
         background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -3618,25 +4179,28 @@ function getMainHTML(): string {
       }
       
       .stat-label {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
         font-weight: 700;
         color: #fff;
-        margin-bottom: var(--space-sm);
+        margin-bottom: 4px;
       }
       
       .stat-desc {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         color: var(--text-secondary);
-        line-height: 1.5;
+        line-height: 1.4;
+        display: none;
       }
       
       @media (max-width: 768px) {
         .stats-grid {
-          grid-template-columns: 1fr;
-          gap: var(--space-md);
-          padding: 0 var(--space-md);
+          flex-direction: row;
+          gap: var(--space-sm);
         }
-        .stat-value { font-size: 2.5rem; }
+        .stat-card { padding: var(--space-sm); }
+        .stat-value { font-size: 1.5rem; }
+        .stat-label { font-size: 0.8rem; }
+        .stat-icon { width: 36px; height: 36px; font-size: 0.9rem; }
       }
       
       @media (max-width: 1024px) {
@@ -5473,6 +6037,27 @@ function getMainHTML(): string {
         }
       });
     </script>
+    
+    <!-- Footer with Admin Link -->
+    <footer style="background: var(--bg-secondary); padding: 40px 0; margin-top: 80px; border-top: 1px solid var(--border-subtle);">
+      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;">
+          <div>
+            <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">X I Λ I X</div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">사장님은 장사만 하세요, 마케팅은 AI가 다 해드립니다.</p>
+          </div>
+          <div style="display: flex; gap: 24px; align-items: center;">
+            <a href="/login" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">로그인</a>
+            <a href="#portfolio" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">포트폴리오</a>
+            <a href="#pricing" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">가격</a>
+            <a href="/admin" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; opacity: 0.5;">ADMIN</a>
+          </div>
+        </div>
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-subtle); text-align: center;">
+          <p style="color: var(--text-secondary); font-size: 0.8rem;">© 2025 X I Λ I X. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
 </body>
 </html>`;
 }
