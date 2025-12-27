@@ -3449,7 +3449,7 @@ function getMainHTML(): string {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 50%;
+        width: 75%;
         height: auto;
         transform: translate(-50%, -50%);
         object-fit: contain;
