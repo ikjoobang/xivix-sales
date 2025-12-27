@@ -4635,14 +4635,17 @@ function getMainHTML(): string {
 
     <!-- Hero Section with Fullscreen Background Video -->
     <section class="hero">
-      <!-- 풀스크린 배경 비디오 -->
+      <!-- 풀스크린 배경 비디오 (mp4) -->
       <div class="hero-video-bg">
-        <iframe 
-          src="https://www.youtube.com/embed/uGdcbTFJr-8?autoplay=1&mute=1&loop=1&playlist=uGdcbTFJr-8&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1" 
-          allow="autoplay; encrypted-media" 
-          allowfullscreen
-          loading="lazy">
-        </iframe>
+        <video 
+          autoplay 
+          muted 
+          loop 
+          playsinline
+          preload="auto"
+          poster="">
+          <source src="https://www.genspark.ai/api/files/s/ZxRlIX0Z" type="video/mp4">
+        </video>
       </div>
       
       <!-- 오버레이 (텍스트 가독성) -->
