@@ -4017,12 +4017,11 @@ function getMainHTML(): string {
       .hero-video-bg iframe,
       .hero-video-bg video {
         position: absolute;
-        top: 70%;
+        top: 60%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
-        height: auto;
-        min-height: 140%;
+        height: 100%;
         object-fit: cover;
         pointer-events: none;
       }
