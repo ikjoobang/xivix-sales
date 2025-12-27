@@ -3030,11 +3030,6 @@ function getAdminHTML(): string {
 // MAIN PAGE - 깔끔한 메뉴 기반 레이아웃
 // ========================================
 
-// ========================================
-// MAIN PAGE - ProVisual Style UI/UX
-// 넓고 시원한 레이아웃, 정렬된 블록, 반응형 최적화
-// ========================================
-
 function getMainHTML(): string {
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -3143,2236 +3138,4291 @@ function getMainHTML(): string {
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Pretendard 폰트 (한글 최적화) -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- PortOne v2 결제 SDK -->
     <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <!-- 카카오 SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
     <style>
-      /* ========================================
-         ProVisual Style Design System
-         넓고 시원한 레이아웃, 정렬된 블록, 가독성
-         ======================================== */
       :root {
-        /* ProVisual 색상 팔레트 - 밝고 모던한 다크 테마 */
-        --bg-primary: #0f0f12;
-        --bg-secondary: #17171c;
-        --bg-tertiary: #1e1e25;
-        --bg-card: #1a1a21;
-        --bg-hover: #222229;
-        --bg-elevated: #252530;
+        /* XIVIX Premium Dark Theme - studiojuai.club Style */
+        --bg-primary: #0a0a0f;
+        --bg-secondary: #12121a;
+        --bg-tertiary: #1a1a24;
+        --bg-card: rgba(20, 20, 30, 0.8);
+        --bg-dark: #050508;
         
-        /* 액센트 색상 - 부드럽고 프로페셔널한 */
-        --accent-primary: #6366f1;
-        --accent-secondary: #8b5cf6;
-        --accent-success: #10b981;
-        --accent-warning: #f59e0b;
-        --accent-info: #06b6d4;
-        --accent-rose: #f43f5e;
+        /* Neon Accent Colors - 화려하고 트렌디한 색상 */
+        --neon-purple: #a855f7;
+        --neon-pink: #ec4899;
+        --neon-cyan: #22d3ee;
+        --neon-lime: #84cc16;
+        --neon-green: #22c55e;
+        --neon-orange: #f97316;
+        --neon-blue: #3b82f6;
         
-        /* 텍스트 색상 - 높은 가독성 */
-        --text-primary: #f8fafc;
-        --text-secondary: #94a3b8;
-        --text-tertiary: #64748b;
-        --text-muted: #475569;
+        /* Text Colors */
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0b0;
+        --text-tertiary: #6b6b7b;
         
-        /* 보더 */
-        --border-subtle: rgba(255, 255, 255, 0.06);
-        --border-default: rgba(255, 255, 255, 0.1);
+        /* Borders */
+        --border-subtle: rgba(255, 255, 255, 0.08);
         --border-hover: rgba(255, 255, 255, 0.15);
-        --border-accent: rgba(99, 102, 241, 0.4);
+        --border-glow: rgba(168, 85, 247, 0.5);
         
-        /* 그라디언트 */
-        --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
-        --gradient-secondary: linear-gradient(135deg, #06b6d4, #10b981);
-        --gradient-warm: linear-gradient(135deg, #f59e0b, #f43f5e);
-        --gradient-card: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+        /* Gradients */
+        --gradient-primary: linear-gradient(135deg, #a855f7, #ec4899);
+        --gradient-secondary: linear-gradient(135deg, #22d3ee, #3b82f6);
+        --gradient-lime: linear-gradient(135deg, #84cc16, #22c55e);
         
-        /* 간격 - 넓고 시원한 */
-        --space-xs: 8px;
-        --space-sm: 16px;
-        --space-md: 24px;
-        --space-lg: 40px;
-        --space-xl: 64px;
-        --space-2xl: 100px;
-        --space-3xl: 140px;
+        /* Spacing */
+        --space-xs: 12px;
+        --space-sm: 20px;
+        --space-md: 32px;
+        --space-lg: 48px;
+        --space-xl: 80px;
+        --space-2xl: 120px;
+        --space-3xl: 160px;
         
-        /* 컨테이너 */
-        --container-sm: 640px;
-        --container-md: 960px;
-        --container-lg: 1200px;
-        --container-xl: 1400px;
+        /* Container */
+        --container-sm: 600px;
+        --container-md: 800px;
+        --container-lg: 1100px;
+        --container-xl: 1280px;
+        --container-full: 100%;
         
-        /* 라운드 */
+        /* Border radius */
         --radius-sm: 8px;
         --radius-md: 12px;
-        --radius-lg: 16px;
-        --radius-xl: 24px;
-        --radius-2xl: 32px;
-        --radius-full: 9999px;
-        
-        /* 그림자 */
-        --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-        --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-        --shadow-lg: 0 12px 40px rgba(0,0,0,0.35);
-        --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
-        
-        /* 트랜지션 */
-        --transition-fast: 0.15s ease;
-        --transition-normal: 0.25s ease;
-        --transition-slow: 0.4s ease;
+        --radius-lg: 20px;
+        --radius-xl: 28px;
+        --radius-2xl: 36px;
       }
       
-      /* ========================================
-         Base Reset & Typography
-         ======================================== */
-      * { margin: 0; padding: 0; box-sizing: border-box; }
+      /* 띠 배너 - 미니멀 스타일 */
+      .top-banner {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+        background: var(--accent-primary);
+        color: white; padding: 14px 24px;
+        display: flex; align-items: center; justify-content: center; gap: 12px;
+        font-size: 0.9rem; font-weight: 500; cursor: pointer;
+        letter-spacing: 0.02em;
+      }
+      .top-banner:hover { background: #2d2d2d; }
+      .top-banner .banner-text { flex: 1; text-align: center; }
+      .top-banner .banner-close {
+        background: rgba(255,255,255,0.1); border: none; color: white;
+        width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .top-banner .banner-close:hover { background: rgba(255,255,255,0.2); }
+      .top-banner.hidden { display: none; }
+      .main-container.with-banner { padding-top: 52px; }
       
+      /* iframe 모달 (외부 페이지 내부 표시) */
+      .iframe-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 10000; display: none; flex-direction: column; }
+      .iframe-modal.open { display: flex; }
+      .iframe-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: linear-gradient(90deg, #a855f7, #ec4899); }
+      .iframe-modal-title { color: white; font-weight: 700; font-size: 1rem; }
+      .iframe-modal-close { background: rgba(0,0,0,0.3); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; }
+      .iframe-modal-close:hover { background: rgba(0,0,0,0.5); }
+      .iframe-modal iframe { flex: 1; border: none; width: 100%; background: white; }
+      
+      /* 수강 신청 모달 */
+      .edu-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10001; display: none; align-items: center; justify-content: center; }
+      .edu-modal.open { display: flex; }
+      .edu-modal-content { width: 95%; max-width: 480px; max-height: 90vh; overflow-y: auto; background: var(--bg-secondary); border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); }
+      .edu-modal-header { padding: 20px; background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(34, 197, 94, 0.1)); border-bottom: 1px solid var(--border-subtle); text-align: center; position: relative; }
+      .edu-modal-close { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1); border: none; color: var(--text-secondary); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
+      .edu-modal-body { padding: 20px; }
+      .edu-product { background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.08)); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: center; }
+      .edu-badge { display: inline-block; background: linear-gradient(135deg, #ef4444, #f97316); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; }
+      .edu-price { font-size: 1.8rem; font-weight: 900; color: var(--neon-purple); }
+      .edu-note { font-size: 0.8rem; color: var(--neon-orange); margin-top: 4px; }
+      .payment-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+      .payment-btn { padding: 16px; border-radius: 12px; border: 2px solid var(--border-subtle); background: transparent; cursor: pointer; text-align: center; color: var(--text-primary); }
+      .payment-btn:hover, .payment-btn.active { border-color: var(--neon-purple); background: rgba(168, 85, 247, 0.1); }
+      .bank-info { display: none; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 16px; margin: 16px 0; }
+      .bank-info.show { display: block; }
+      .bank-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+      .bank-form input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-subtle); background: rgba(255,255,255,0.05); color: var(--text-primary); margin-bottom: 10px; font-size: 0.95rem; }
+      .edu-submit { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; color: white; }
+      .edu-submit.card-btn { background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); }
+      .edu-submit.bank-btn { background: linear-gradient(135deg, var(--neon-green), #16a34a); }
+      
+      /* 챗봇 Pulse 애니메이션 */
+      @keyframes chatPulse {
+        0%, 100% { box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4); }
+        50% { box-shadow: 0 4px 40px rgba(168, 85, 247, 0.8), 0 0 60px rgba(236, 72, 153, 0.6); }
+      }
+      .chat-bubble.pulse { animation: chatPulse 1.5s ease-in-out infinite; }
+      
+      /* ========================================
+         🎯 서비스 메뉴 그리드 - 균일한 버튼 레이아웃
+         ======================================== */
+      .service-menu-grid { 
+        display: grid !important; 
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 16px !important; 
+        max-width: 900px; 
+        margin: 0 auto; 
+        width: 100%;
+      }
+      .service-menu-btn {
+        display: flex; 
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        background: var(--bg-card); 
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg); 
+        padding: var(--space-lg);
+        cursor: pointer; 
+        transition: all 0.3s ease;
+        text-align: left; 
+        position: relative; 
+        width: 100%;
+        min-height: 120px;
+      }
+      .service-menu-btn:hover { 
+        transform: translateY(-4px); 
+        border-color: var(--btn-color); 
+        background: rgba(168, 85, 247, 0.08);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      }
+      .service-menu-btn .menu-icon { 
+        font-size: 1.5rem; 
+        color: var(--btn-color); 
+        width: 44px; height: 44px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.05);
+        border-radius: var(--radius-md);
+      }
+      .service-menu-btn .menu-text { 
+        flex: 1; 
+        display: flex; 
+        flex-direction: column; 
+        gap: 4px;
+        width: 100%;
+      }
+      .service-menu-btn .menu-name { 
+        font-size: 1rem; 
+        font-weight: 700; 
+        color: var(--text-primary); 
+        line-height: 1.4; 
+      }
+      .service-menu-btn .menu-desc { 
+        font-size: 0.8rem; 
+        color: var(--text-tertiary); 
+        font-weight: 400; 
+        line-height: 1.5; 
+      }
+      .service-menu-btn .menu-arrow { 
+        position: absolute;
+        top: var(--space-lg);
+        right: var(--space-lg);
+        color: var(--text-tertiary); 
+        font-size: 0.9rem; 
+      }
+      .service-menu-btn .menu-badge { 
+        position: absolute; 
+        top: var(--space-sm); 
+        right: var(--space-sm); 
+        padding: 4px 10px; 
+        border-radius: var(--radius-xl); 
+        font-size: 0.65rem; 
+        font-weight: 700; 
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); 
+        color: white; 
+      }
+      .service-menu-btn .menu-badge.hot { 
+        background: linear-gradient(135deg, var(--neon-orange), #ef4444); 
+      }
+      
+      /* 태블릿 서비스 메뉴 (768px 이하에서만 1열) */
+      @media (max-width: 768px) {
+        .service-menu-grid { 
+          grid-template-columns: 1fr !important; 
+          gap: 12px !important;
+          max-width: 100%;
+        }
+        .service-menu-btn {
+          flex-direction: row;
+          align-items: center;
+          min-height: auto;
+          padding: 16px 20px;
+        }
+        .service-menu-btn .menu-icon {
+          width: 40px; height: 40px;
+          font-size: 1.3rem;
+        }
+        .service-menu-btn .menu-arrow {
+          position: static;
+          margin-left: auto;
+        }
+      }
+      
+      /* 모바일 서비스 메뉴 */
+      @media (max-width: 480px) {
+        .service-menu-grid { gap: 8px !important; }
+        .service-menu-btn { 
+          padding: 14px 16px; 
+          gap: 12px; 
+        }
+        .service-menu-btn .menu-icon { 
+          font-size: 1.2rem; 
+          width: 36px; height: 36px;
+        }
+        .service-menu-btn .menu-name { font-size: 0.9rem; }
+        .service-menu-btn .menu-desc { font-size: 0.75rem; }
+        .service-menu-btn .menu-badge { 
+          font-size: 0.6rem; 
+          padding: 3px 8px; 
+        }
+      }
+      
+      /* 서비스 상세 모달 */
+      .service-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 900; display: none; overflow-y: auto; }
+      .service-modal.open { display: block; }
+      .service-modal-content { max-width: 900px; margin: 0 auto; padding: 20px; min-height: 100vh; }
+      .service-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; position: sticky; top: 0; background: rgba(10,10,12,0.95); z-index: 10; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
+      .service-modal-title { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+      .service-modal-close { background: var(--bg-tertiary); border: 1px solid var(--border-subtle); color: var(--text-primary); font-size: 1.25rem; cursor: pointer; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+      .service-modal-close:hover { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
+      .service-modal-body { padding-bottom: 40px; }
+      
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       html { 
         scroll-behavior: smooth;
-        font-size: 16px;
-      }
-      
-      body {
-        font-family: 'Pretendard Variable', 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        line-height: 1.7;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
       }
-      
-      /* 선택 방지 (입력 필드 제외) */
-      body { -webkit-user-select: none; user-select: none; }
-      input, textarea, select { -webkit-user-select: text; user-select: text; }
-      img { -webkit-user-drag: none; user-drag: none; }
-      
-      /* ========================================
-         Layout Containers - 넓은 여백
-         ======================================== */
-      .container {
-        width: 100%;
-        max-width: var(--container-lg);
-        margin: 0 auto;
-        padding: 0 var(--space-lg);
+      body {
+        font-family: 'Pretendard Variable', 'Pretendard', 'Inter', -apple-system, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
+        -webkit-font-smoothing: antialiased;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
       }
       
-      .container-narrow {
-        max-width: var(--container-md);
+      /* 이미지 보호 (클릭은 허용) */
+      img {
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
       }
       
-      .container-wide {
-        max-width: var(--container-xl);
+      /* 입력 필드는 선택 허용 */
+      input, textarea, select {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
       }
       
-      /* ========================================
-         Header - 심플하고 깔끔한
-         ======================================== */
-      .site-header {
+      /* Premium Animated Background - Studio Ju AI Style */
+      .bg-animated {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        background: rgba(15, 15, 18, 0.85);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border-subtle);
-        transition: var(--transition-normal);
-      }
-      
-      .header-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 72px;
-        padding: 0 var(--space-lg);
-        max-width: var(--container-xl);
-        margin: 0 auto;
-      }
-      
-      .logo {
-        font-size: 1.5rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        color: var(--text-primary);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: var(--space-xs);
-      }
-      
-      .logo-accent {
-        color: var(--accent-primary);
-      }
-      
-      .header-nav {
-        display: flex;
-        align-items: center;
-        gap: var(--space-md);
-      }
-      
-      .nav-link {
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.95rem;
-        padding: var(--space-xs) var(--space-sm);
-        border-radius: var(--radius-md);
-        transition: var(--transition-fast);
-      }
-      
-      .nav-link:hover {
-        color: var(--text-primary);
-        background: var(--bg-hover);
-      }
-      
-      .header-cta {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-      }
-      
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--space-xs);
-        padding: var(--space-sm) var(--space-md);
-        font-size: 0.95rem;
-        font-weight: 600;
-        border-radius: var(--radius-lg);
-        text-decoration: none;
-        cursor: pointer;
-        border: none;
-        transition: var(--transition-normal);
-      }
-      
-      .btn-ghost {
-        background: transparent;
-        color: var(--text-secondary);
-        border: 1px solid var(--border-default);
-      }
-      
-      .btn-ghost:hover {
-        color: var(--text-primary);
-        border-color: var(--border-hover);
-        background: var(--bg-hover);
-      }
-      
-      .btn-primary {
-        background: var(--gradient-primary);
-        color: white;
-        box-shadow: var(--shadow-md);
-      }
-      
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg), var(--shadow-glow);
-      }
-      
-      .btn-large {
-        padding: var(--space-md) var(--space-xl);
-        font-size: 1.1rem;
-        border-radius: var(--radius-xl);
-      }
-      
-      /* 모바일 메뉴 버튼 */
-      .mobile-menu-btn {
-        display: none;
-        width: 44px;
-        height: 44px;
-        background: var(--bg-hover);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-md);
-        color: var(--text-primary);
-        font-size: 1.25rem;
-        cursor: pointer;
-      }
-      
-      @media (max-width: 900px) {
-        .header-nav { display: none; }
-        .header-cta .btn-ghost { display: none; }
-        .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
-      }
-      
-      /* ========================================
-         Hero Section - 넓고 시원한 레이아웃
-         ======================================== */
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding: var(--space-3xl) 0;
-        position: relative;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: var(--bg-primary);
         overflow: hidden;
       }
-      
-      .hero-bg {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-      }
-      
-      .hero-gradient {
+      .bg-gradient {
         position: absolute;
         inset: 0;
         background: 
-          radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
-          radial-gradient(ellipse 60% 40% at 100% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 50% at 0% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%);
+          radial-gradient(ellipse 80% 50% at 20% 40%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+          radial-gradient(ellipse 60% 40% at 80% 20%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+          radial-gradient(ellipse 50% 30% at 60% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%);
+        animation: bgPulse 8s ease-in-out infinite;
+      }
+      @keyframes bgPulse {
+        0%, 100% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.05); }
+      }
+      
+      /* Floating Particles - Premium Effect */
+      .particles-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .particle {
+        position: absolute;
+        bottom: -20px;
+        width: 6px;
+        height: 6px;
+        background: var(--neon-purple);
+        border-radius: 50%;
+        animation: floatUp 15s linear infinite;
+        opacity: 0.6;
+        box-shadow: 0 0 10px currentColor;
+      }
+      .particle:nth-child(odd) { background: var(--neon-pink); }
+      .particle:nth-child(3n) { background: var(--neon-cyan); width: 4px; height: 4px; }
+      .particle:nth-child(4n) { background: var(--neon-lime); width: 8px; height: 8px; }
+      @keyframes floatUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.8; }
+        90% { opacity: 0.6; }
+        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+      }
+      
+      /* Gradient Orbs - Floating Animation */
+      .gradient-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.5;
+        animation: orbFloat 20s ease-in-out infinite;
+      }
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%);
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+      .orb-2 {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, transparent 70%);
+        top: 50%;
+        right: 10%;
+        animation-delay: -7s;
+      }
+      .orb-3 {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+        bottom: 20%;
+        left: 30%;
+        animation-delay: -14s;
+      }
+      @keyframes orbFloat {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.95); }
+      }
+      
+      /* 4대 블록 비즈니스 섹션 - Minimal Style */
+      .business-blocks {
+        padding: var(--space-3xl) var(--space-lg);
+        background: var(--bg-primary);
+        position: relative;
+      }
+      .business-blocks::before,
+      .business-blocks::after { display: none; }
+      .blocks-header {
+        text-align: center;
+        margin-bottom: var(--space-2xl);
+      }
+      .blocks-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 20px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-md);
+      }
+      .blocks-title {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.3;
+        margin-bottom: var(--space-md);
+        color: var(--text-primary);
+      }
+      .blocks-subtitle {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+      
+      /* 4대 블록 그리드 */
+      .blocks-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      @media (max-width: 900px) {
+        .blocks-grid { grid-template-columns: 1fr; gap: var(--space-sm); }
+      }
+      
+      /* Block Card - Minimal & Clean */
+      .block-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .block-card::before { display: none; }
+      .block-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+        border-color: var(--border-hover);
+      }
+      
+      .block-number {
+        position: absolute;
+        top: var(--space-sm);
+        right: var(--space-sm);
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--bg-secondary);
+        opacity: 1;
+        line-height: 1;
+      }
+      
+      .block-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius-md);
+        background: var(--bg-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: var(--text-primary);
+        margin-bottom: var(--space-sm);
+      }
+      
+      .block-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: var(--space-xs);
+        color: var(--text-primary);
+      }
+      
+      .block-desc {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: var(--space-sm);
+      }
+      
+      .block-stats {
+        display: flex;
+        gap: var(--space-sm);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-md);
+      }
+      .block-stat {
+        text-align: center;
+        padding: var(--space-xs);
+        background: var(--bg-secondary);
+        border-radius: var(--radius-sm);
+        flex: 1;
+        min-width: 70px;
+      }
+      .block-stat-value {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--text-primary);
+      }
+      .block-stat-label {
+        font-size: 0.7rem;
+        color: var(--text-tertiary);
+        margin-top: 2px;
+      }
+      
+      .block-partners {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .partner-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 16px;
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+      }
+      .partner-badge img {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+      }
+      
+      /* 블록 색상 - Minimal */
+      .block-commerce, .block-global, .block-certification, .block-bigdata { 
+        --block-color: var(--text-primary); 
+        --block-color-dark: var(--text-secondary); 
+      }
+      
+      /* 파트너 로고 섹션 */
+      .partners-section {
+        padding: var(--space-2xl) var(--space-lg);
+        background: var(--bg-secondary);
+        text-align: center;
+      }
+      .partners-title {
+        font-size: 0.9rem;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: var(--space-lg);
+      }
+      .partners-logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-xl);
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .partner-logo {
+        padding: var(--space-md);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-subtle);
+        transition: all 0.3s ease;
+      }
+      .partner-logo:hover {
+        transform: translateY(-4px);
+        border-color: var(--neon-purple);
+        box-shadow: 0 8px 24px rgba(168, 85, 247, 0.2);
+      }
+      .partner-logo img {
+        height: 40px;
+        width: auto;
+        filter: grayscale(1) brightness(2);
+        opacity: 0.6;
+        transition: all 0.3s ease;
+      }
+      .partner-logo:hover img {
+        filter: grayscale(0) brightness(1);
+        opacity: 1;
+      }
+      
+      .main-container { position: relative; z-index: 10; }
+      
+      @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+      .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
+      .delay-1 { animation-delay: 0.1s; }
+      .delay-2 { animation-delay: 0.2s; }
+      .delay-3 { animation-delay: 0.3s; }
+      
+      .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
+      .reveal.active { opacity: 1; transform: translateY(0); }
+      
+      .gradient-text {
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink), var(--neon-cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+        background-size: 200% auto;
+        animation: gradientShimmer 4s ease-in-out infinite;
+      }
+      @keyframes gradientShimmer {
+        0%, 100% { background-position: 0% center; }
+        50% { background-position: 200% center; }
+      }
+      
+      /* ========================================
+         🎯 Container & Section 시스템 (Full-Width)
+         ======================================== */
+      .container { 
+        max-width: var(--container-xl); 
+        margin: 0 auto; 
+        padding: 0 var(--space-lg); 
+      }
+      .container-sm { max-width: var(--container-sm); }
+      .container-md { max-width: var(--container-md); }
+      .container-lg { max-width: var(--container-lg); }
+      .container-full { max-width: 100%; padding: 0; }
+      
+      /* Hero Section - Premium Dark with Video */
+      .hero {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: var(--space-3xl) var(--space-lg);
+        position: relative;
+        background: var(--bg-primary);
+        overflow: hidden;
+      }
+      
+      /* Hero Video Background */
+      .hero-video-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .hero-video-bg video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.25;
+      }
+      .hero-video-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, 
+          rgba(10, 10, 15, 0.7) 0%, 
+          rgba(10, 10, 15, 0.5) 50%, 
+          rgba(10, 10, 15, 0.9) 100%);
       }
       
       .hero-content {
         position: relative;
-        z-index: 1;
-        text-align: center;
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 0 var(--space-lg);
+        z-index: 10;
+        max-width: 800px;
+        padding: 0 var(--space-md);
       }
       
       .hero-badge {
         display: inline-flex;
         align-items: center;
-        gap: var(--space-xs);
-        padding: var(--space-xs) var(--space-md);
-        background: var(--bg-secondary);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-full);
+        gap: 10px;
+        padding: 10px 24px;
+        background: rgba(168, 85, 247, 0.15);
+        border: 1px solid rgba(168, 85, 247, 0.4);
+        border-radius: 50px;
         font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--text-secondary);
+        font-weight: 600;
+        color: var(--neon-purple);
         margin-bottom: var(--space-lg);
+        backdrop-filter: blur(10px);
+        animation: badgePulse 3s ease-in-out infinite;
+      }
+      @keyframes badgePulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+        50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.4); }
       }
       
-      .hero-badge-dot {
-        width: 8px;
-        height: 8px;
-        background: var(--accent-success);
-        border-radius: 50%;
-        animation: pulse 2s ease-in-out infinite;
+      .status-dot { 
+        width: 10px; 
+        height: 10px; 
+        background: var(--neon-lime); 
+        border-radius: 50%; 
+        animation: dotPulse 1.5s ease-in-out infinite;
+        box-shadow: 0 0 10px var(--neon-lime);
+      }
+      @keyframes dotPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.3); opacity: 0.7; }
       }
       
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-      
-      .hero-title {
-        font-size: clamp(2.5rem, 6vw, 4rem);
-        font-weight: 800;
-        line-height: 1.15;
-        letter-spacing: -0.03em;
+      /* 메인 카피 - Premium Gradient Typography */
+      .hero-title { 
+        font-size: clamp(1.5rem, 4vw, 2.5rem); 
+        font-weight: 700; 
+        letter-spacing: -0.02em; 
         margin-bottom: var(--space-md);
+        line-height: 1.35;
+        color: var(--text-primary);
       }
-      
-      .hero-title-accent {
+      .hero-title .highlight {
+        font-weight: 800;
         background: var(--gradient-primary);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
       
-      .hero-desc {
-        font-size: clamp(1.1rem, 2vw, 1.35rem);
-        color: var(--text-secondary);
-        line-height: 1.8;
-        margin-bottom: var(--space-xl);
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
+      /* 서브 카피 */
+      .hero-tagline { 
+        font-size: clamp(0.95rem, 2vw, 1.1rem); 
+        color: var(--text-secondary); 
+        max-width: 500px; 
+        margin: 0 auto var(--space-lg);
+        line-height: 1.7; 
+        font-weight: 400;
       }
+      .hero-tagline strong { color: var(--text-primary); font-weight: 600; }
       
-      .hero-actions {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--space-md);
-        flex-wrap: wrap;
-      }
+      .hero-company { font-size: 0.95rem; color: var(--text-tertiary); margin-bottom: var(--space-xl); }
+      .hero-company strong { color: var(--text-secondary); }
       
-      .hero-stats {
-        display: flex;
-        justify-content: center;
-        gap: var(--space-2xl);
-        margin-top: var(--space-2xl);
-        padding-top: var(--space-xl);
-        border-top: 1px solid var(--border-subtle);
-      }
+      /* CTA 버튼 - Black & Minimal */
+      .hero-buttons { display: flex; gap: var(--space-sm); flex-wrap: wrap; justify-content: center; }
       
-      .hero-stat {
-        text-align: center;
-      }
-      
-      .hero-stat-value {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: var(--text-primary);
-        line-height: 1;
-        margin-bottom: var(--space-xs);
-      }
-      
-      .hero-stat-value span {
-        color: var(--accent-primary);
-      }
-      
-      .hero-stat-label {
-        font-size: 0.9rem;
-        color: var(--text-tertiary);
-      }
-      
-      @media (max-width: 768px) {
-        .hero { padding: 120px 0 var(--space-2xl); min-height: auto; }
-        .hero-stats { flex-direction: column; gap: var(--space-lg); }
-        .hero-actions { flex-direction: column; }
-        .hero-actions .btn { width: 100%; max-width: 320px; }
-      }
-      
-      /* ========================================
-         Section Layout - 정렬된 블록
-         ======================================== */
-      .section {
-        padding: var(--space-3xl) 0;
-        position: relative;
-      }
-      
-      .section-alt {
-        background: var(--bg-secondary);
-      }
-      
-      .section-header {
-        text-align: center;
-        max-width: 800px;
-        margin: 0 auto var(--space-2xl);
-      }
-      
-      .section-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-xs);
-        padding: var(--space-xs) var(--space-sm);
-        background: rgba(99, 102, 241, 0.1);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-radius: var(--radius-full);
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--accent-primary);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: var(--space-md);
-      }
-      
-      .section-title {
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        margin-bottom: var(--space-md);
-      }
-      
-      .section-desc {
-        font-size: 1.15rem;
-        color: var(--text-secondary);
-        line-height: 1.8;
-      }
-      
-      /* ========================================
-         Service Menu Grid - 정렬된 카드
-         ======================================== */
-      .service-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-md);
-        max-width: var(--container-lg);
-        margin: 0 auto;
-      }
-      
-      .service-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-xl);
-        padding: var(--space-lg);
+      .btn-lime {
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 16px 32px;
+        border-radius: var(--radius-md);
+        transition: all 0.3s ease;
+        border: none;
         cursor: pointer;
-        transition: var(--transition-normal);
+        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
         position: relative;
         overflow: hidden;
       }
-      
-      .service-card::before {
+      .btn-lime::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: var(--gradient-card);
+        background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
         opacity: 0;
-        transition: var(--transition-normal);
+        transition: opacity 0.3s ease;
       }
-      
-      .service-card:hover {
-        border-color: var(--border-accent);
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
+      .btn-lime:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
       }
+      .btn-lime:hover::before { opacity: 1; }
+      .btn-lime span, .btn-lime i { position: relative; z-index: 1; }
       
-      .service-card:hover::before {
-        opacity: 1;
-      }
-      
-      .service-card-inner {
-        position: relative;
-        z-index: 1;
-      }
-      
-      .service-card-header {
+      /* Hero 신뢰 지표 */
+      .hero-trust {
         display: flex;
-        align-items: flex-start;
         gap: var(--space-md);
-        margin-bottom: var(--space-md);
-      }
-      
-      .service-icon {
-        width: 56px;
-        height: 56px;
-        display: flex;
-        align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-radius: var(--radius-lg);
-        font-size: 1.5rem;
-        flex-shrink: 0;
+        margin-top: var(--space-lg);
+        flex-wrap: wrap;
       }
-      
-      .service-icon.naver { color: #03C75A; background: rgba(3, 199, 90, 0.1); border-color: rgba(3, 199, 90, 0.2); }
-      .service-icon.insta { color: #E4405F; background: rgba(228, 64, 95, 0.1); border-color: rgba(228, 64, 95, 0.2); }
-      .service-icon.youtube { color: #FF0000; background: rgba(255, 0, 0, 0.1); border-color: rgba(255, 0, 0, 0.2); }
-      .service-icon.tiktok { color: #00f2ea; background: rgba(0, 242, 234, 0.1); border-color: rgba(0, 242, 234, 0.2); }
-      .service-icon.web { color: var(--accent-primary); }
-      .service-icon.system { color: var(--accent-info); background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.2); }
-      
-      .service-card-info {
-        flex: 1;
-      }
-      
-      .service-card-title {
-        font-size: 1.2rem;
-        font-weight: 700;
-        margin-bottom: var(--space-xs);
+      .trust-item {
         display: flex;
         align-items: center;
-        gap: var(--space-xs);
+        gap: 8px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 30px;
+        border: 1px solid var(--border-subtle);
       }
+      .trust-item i { color: var(--neon-lime); }
       
-      .service-card-badge {
-        padding: 3px 10px;
-        background: var(--gradient-warm);
-        border-radius: var(--radius-full);
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: white;
-      }
-      
-      .service-card-desc {
-        font-size: 0.95rem;
-        color: var(--text-tertiary);
-        line-height: 1.6;
-      }
-      
-      .service-card-arrow {
+      /* Hero 이미지 배경 - Visible with overlay */
+      .hero-image-bg {
         position: absolute;
-        top: var(--space-lg);
-        right: var(--space-lg);
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--bg-hover);
-        border-radius: var(--radius-md);
-        color: var(--text-tertiary);
-        transition: var(--transition-fast);
+        inset: 0;
+        z-index: 2;
+        overflow: hidden;
+      }
+      .hero-image-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.2;
+        filter: grayscale(30%);
+      }
+      .hero-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, 
+          rgba(10, 10, 15, 0.6) 0%, 
+          rgba(10, 10, 15, 0.4) 30%,
+          rgba(10, 10, 15, 0.7) 70%,
+          rgba(10, 10, 15, 0.95) 100%);
       }
       
-      .service-card:hover .service-card-arrow {
+      /* Section Eyebrow - Minimal */
+      .section-eyebrow {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+      }
+      
+      /* 버튼 시스템 - Minimal */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 24px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .btn-primary {
         background: var(--accent-primary);
         color: white;
       }
-      
-      @media (max-width: 768px) {
-        .service-grid { grid-template-columns: 1fr; gap: var(--space-sm); }
-        .service-card { padding: var(--space-md); }
-        .service-icon { width: 48px; height: 48px; font-size: 1.25rem; }
+      .btn-primary:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
       }
-      
-      /* ========================================
-         Feature Blocks - 4대 블록
-         ======================================== */
-      .blocks-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-md);
-        max-width: var(--container-lg);
-        margin: 0 auto;
-      }
-      
-      .block-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-xl);
-        padding: var(--space-xl);
-        position: relative;
-        transition: var(--transition-normal);
-      }
-      
-      .block-card:hover {
-        border-color: var(--border-hover);
-        box-shadow: var(--shadow-md);
-      }
-      
-      .block-number {
-        position: absolute;
-        top: var(--space-md);
-        right: var(--space-md);
-        font-size: 4rem;
-        font-weight: 900;
-        color: var(--bg-tertiary);
-        line-height: 1;
-      }
-      
-      .block-icon {
-        width: 56px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--bg-elevated);
-        border-radius: var(--radius-lg);
-        font-size: 1.5rem;
-        color: var(--accent-primary);
-        margin-bottom: var(--space-md);
-      }
-      
-      .block-title {
-        font-size: 1.35rem;
-        font-weight: 700;
-        margin-bottom: var(--space-sm);
-      }
-      
-      .block-desc {
-        font-size: 0.95rem;
+      .btn-secondary {
+        background: transparent;
         color: var(--text-secondary);
-        line-height: 1.7;
-        margin-bottom: var(--space-md);
-      }
-      
-      .block-stats {
-        display: flex;
-        gap: var(--space-md);
-        margin-bottom: var(--space-md);
-      }
-      
-      .block-stat {
-        flex: 1;
-        text-align: center;
-        padding: var(--space-sm);
-        background: var(--bg-secondary);
-        border-radius: var(--radius-md);
-      }
-      
-      .block-stat-value {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: var(--accent-primary);
-      }
-      
-      .block-stat-label {
-        font-size: 0.75rem;
-        color: var(--text-tertiary);
-        margin-top: 4px;
-      }
-      
-      .block-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-xs);
-      }
-      
-      .block-tag {
-        padding: 4px 12px;
-        background: var(--bg-secondary);
         border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-full);
-        font-size: 0.75rem;
-        color: var(--text-tertiary);
       }
-      
-      @media (max-width: 900px) {
-        .blocks-grid { grid-template-columns: 1fr; }
-        .block-card { padding: var(--space-lg); }
+      .btn-secondary:hover { 
+        background: var(--bg-secondary); 
+        border-color: var(--border-hover); 
+        color: var(--text-primary); 
       }
+      .btn-small { padding: 10px 18px; font-size: 0.85rem; }
+      .btn-full { width: 100%; }
       
-      /* ========================================
-         Pricing Cards
-         ======================================== */
-      .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-md);
-        max-width: var(--container-lg);
-        margin: 0 auto;
+      /* Section 시스템 - Minimal */
+      .section { 
+        padding: var(--space-3xl) var(--space-lg);
+        width: 100%;
+        background: var(--bg-primary);
       }
-      
-      .pricing-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-xl);
-        padding: var(--space-xl);
-        transition: var(--transition-normal);
-        position: relative;
+      .section-full {
+        padding: var(--space-3xl) 0;
+        width: 100%;
       }
-      
-      .pricing-card.featured {
-        border-color: var(--accent-primary);
-        background: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, var(--bg-card) 100%);
-      }
-      
-      .pricing-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
-      }
-      
-      .pricing-badge {
-        position: absolute;
-        top: -12px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 6px 16px;
-        background: var(--gradient-primary);
-        border-radius: var(--radius-full);
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: white;
-      }
-      
-      .pricing-header {
-        text-align: center;
-        padding-bottom: var(--space-md);
-        border-bottom: 1px solid var(--border-subtle);
-        margin-bottom: var(--space-md);
-      }
-      
-      .pricing-name {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: var(--space-xs);
-      }
-      
-      .pricing-price {
-        font-size: 2.5rem;
-        font-weight: 800;
-      }
-      
-      .pricing-period {
-        font-size: 0.9rem;
-        color: var(--text-tertiary);
-      }
-      
-      .pricing-features {
-        list-style: none;
-        margin-bottom: var(--space-lg);
-      }
-      
-      .pricing-feature {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        padding: var(--space-sm) 0;
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-      }
-      
-      .pricing-feature i {
-        color: var(--accent-success);
-        font-size: 0.9rem;
-      }
-      
-      @media (max-width: 900px) {
-        .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
-      }
-      
-      /* ========================================
-         Portfolio Grid
-         ======================================== */
-      .portfolio-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: var(--space-md);
-      }
-      
-      .portfolio-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-xl);
-        overflow: hidden;
-        transition: var(--transition-normal);
-        cursor: pointer;
-      }
-      
-      .portfolio-card:hover {
-        border-color: var(--border-accent);
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
-      }
-      
-      .portfolio-thumb {
-        aspect-ratio: 16/10;
-        background: var(--bg-elevated);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        color: var(--text-muted);
-      }
-      
-      .portfolio-info {
-        padding: var(--space-md);
-      }
-      
-      .portfolio-title {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: var(--space-xs);
-      }
-      
-      .portfolio-tag {
-        font-size: 0.8rem;
-        color: var(--accent-primary);
-      }
-      
-      /* ========================================
-         Chatbot - 깔끔한 모던 디자인
-         ======================================== */
-      .chat-bubble {
-        position: fixed;
-        bottom: var(--space-md);
-        right: var(--space-md);
-        width: 64px;
-        height: 64px;
-        background: var(--gradient-primary);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 999;
-        box-shadow: var(--shadow-lg), var(--shadow-glow);
-        transition: var(--transition-normal);
-      }
-      
-      .chat-bubble:hover {
-        transform: scale(1.08);
-      }
-      
-      .chat-bubble i {
-        font-size: 1.5rem;
-        color: white;
-      }
-      
-      .chat-window {
-        position: fixed;
-        bottom: 100px;
-        right: var(--space-md);
-        width: 400px;
-        max-width: calc(100vw - 32px);
-        height: 600px;
-        max-height: calc(100vh - 140px);
-        background: var(--bg-secondary);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-xl);
-        display: none;
-        flex-direction: column;
-        z-index: 998;
-        box-shadow: var(--shadow-lg);
-        overflow: hidden;
-      }
-      
-      .chat-window.open {
-        display: flex;
-      }
-      
-      .chat-header {
-        padding: var(--space-md);
-        background: var(--bg-tertiary);
-        border-bottom: 1px solid var(--border-subtle);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      
-      .chat-header-title {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-      }
-      
-      .chat-avatar {
-        width: 40px;
-        height: 40px;
-        background: var(--gradient-primary);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-        color: white;
-      }
-      
-      .chat-header-info h4 {
-        font-size: 1rem;
-        font-weight: 600;
-      }
-      
-      .chat-header-info span {
-        font-size: 0.8rem;
-        color: var(--accent-success);
-      }
-      
-      .chat-close {
-        width: 36px;
-        height: 36px;
-        background: var(--bg-hover);
-        border: none;
-        border-radius: var(--radius-md);
-        color: var(--text-secondary);
-        font-size: 1rem;
-        cursor: pointer;
-        transition: var(--transition-fast);
-      }
-      
-      .chat-close:hover {
-        background: rgba(244, 63, 94, 0.2);
-        color: var(--accent-rose);
-      }
-      
-      .chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: var(--space-md);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-sm);
-      }
-      
-      .chat-message {
-        max-width: 85%;
-        padding: var(--space-sm) var(--space-md);
-        border-radius: var(--radius-lg);
-        font-size: 0.95rem;
-        line-height: 1.6;
-      }
-      
-      .chat-message.bot {
-        background: var(--bg-tertiary);
-        color: var(--text-primary);
-        align-self: flex-start;
-        border-bottom-left-radius: 4px;
-      }
-      
-      .chat-message.user {
-        background: var(--gradient-primary);
-        color: white;
-        align-self: flex-end;
-        border-bottom-right-radius: 4px;
-      }
-      
-      .chat-input-area {
-        padding: var(--space-md);
-        border-top: 1px solid var(--border-subtle);
-        display: flex;
-        gap: var(--space-sm);
-      }
-      
-      .chat-input {
-        flex: 1;
-        padding: var(--space-sm) var(--space-md);
-        background: var(--bg-tertiary);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-lg);
-        color: var(--text-primary);
-        font-size: 0.95rem;
-        outline: none;
-        transition: var(--transition-fast);
-      }
-      
-      .chat-input:focus {
-        border-color: var(--accent-primary);
-      }
-      
-      .chat-send {
-        width: 44px;
-        height: 44px;
-        background: var(--gradient-primary);
-        border: none;
-        border-radius: var(--radius-lg);
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: var(--transition-fast);
-      }
-      
-      .chat-send:hover {
-        transform: scale(1.05);
-      }
-      
-      /* ========================================
-         Modal System
-         ======================================== */
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(8px);
-        z-index: 1100;
-        display: none;
-        overflow-y: auto;
-      }
-      
-      .modal-overlay.open {
-        display: block;
-      }
-      
-      .modal-content {
-        max-width: 900px;
-        margin: var(--space-xl) auto;
-        padding: var(--space-md);
-      }
-      
-      .modal-header {
-        position: sticky;
-        top: 0;
-        background: rgba(15, 15, 18, 0.95);
-        backdrop-filter: blur(12px);
-        padding: var(--space-md) 0;
-        border-bottom: 1px solid var(--border-subtle);
-        margin-bottom: var(--space-lg);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        z-index: 10;
-      }
-      
-      .modal-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-      }
-      
-      .modal-close {
-        width: 48px;
-        height: 48px;
-        background: var(--bg-hover);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-lg);
-        color: var(--text-primary);
-        font-size: 1.25rem;
-        cursor: pointer;
-        transition: var(--transition-fast);
-      }
-      
-      .modal-close:hover {
-        background: rgba(244, 63, 94, 0.2);
-        border-color: var(--accent-rose);
-        color: var(--accent-rose);
-      }
-      
-      /* ========================================
-         Footer
-         ======================================== */
-      .site-footer {
-        padding: var(--space-2xl) 0 var(--space-xl);
-        background: var(--bg-secondary);
-        border-top: 1px solid var(--border-subtle);
-      }
-      
-      .footer-content {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: var(--space-2xl);
-        max-width: var(--container-lg);
-        margin: 0 auto;
+      .section-header { 
+        text-align: center; 
+        margin-bottom: var(--space-2xl);
         padding: 0 var(--space-lg);
       }
-      
-      .footer-brand {
-        max-width: 300px;
+      .section-title { 
+        font-size: clamp(1.6rem, 4vw, 2.2rem); 
+        font-weight: 600; 
+        margin-bottom: var(--space-sm);
+        line-height: 1.3;
+        color: var(--text-primary);
       }
-      
-      .footer-logo {
-        font-size: 1.5rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        margin-bottom: var(--space-md);
-      }
-      
-      .footer-desc {
-        font-size: 0.95rem;
-        color: var(--text-tertiary);
+      .section-desc { 
+        font-size: 1rem; 
+        color: var(--text-secondary); 
+        max-width: 600px; 
+        margin: 0 auto; 
         line-height: 1.7;
       }
       
-      .footer-links h4 {
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-bottom: var(--space-md);
-        color: var(--text-primary);
+      /* Problem Section - Minimal Cards */
+      .problem-section {
+        background: var(--bg-primary);
+        padding: var(--space-3xl) var(--space-lg);
       }
-      
-      .footer-links a {
+      .problem-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-xl);
+        max-width: 1000px;
+        margin: 0 auto;
+        align-items: center;
+      }
+      .problem-image {
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      }
+      .problem-image img {
+        width: 100%;
+        height: auto;
         display: block;
+      }
+      .problem-content {
+        padding: var(--space-md) 0;
+      }
+      .problem-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        margin-top: var(--space-lg);
+      }
+      .problem-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        padding: var(--space-sm);
+        background: var(--bg-secondary);
+        border-radius: var(--radius-sm);
+      }
+      .problem-check {
+        width: 28px; height: 28px;
+        background: var(--bg-tertiary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: var(--text-tertiary);
-        text-decoration: none;
-        font-size: 0.9rem;
-        padding: var(--space-xs) 0;
-        transition: var(--transition-fast);
+        flex-shrink: 0;
+        font-size: 0.8rem;
+      }
+      .problem-text strong {
+        display: block;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        margin-bottom: 2px;
+      }
+      .problem-text span {
+        font-size: 0.85rem;
+        color: var(--text-tertiary);
       }
       
-      .footer-links a:hover {
+      /* Solution Section - Minimal */
+      .solution-section {
+        background: var(--bg-secondary);
+        padding: var(--space-3xl) var(--space-lg);
+      }
+      .solution-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-xl);
+        max-width: 1000px;
+        margin: 0 auto;
+        align-items: center;
+      }
+      .solution-content {
+        padding: var(--space-md) 0;
+      }
+      .solution-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-sm);
+        margin-top: var(--space-lg);
+      }
+      .stat-item {
+        text-align: center;
+        padding: var(--space-md);
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+      }
+      .stat-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 6px 0 4px;
+      }
+      .stat-desc {
+        font-size: 0.75rem;
+        color: var(--text-tertiary);
+      }
+      .solution-image {
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      }
+      .solution-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      /* Proof Section - Minimal */
+      .proof-section {
+        padding: var(--space-3xl) var(--space-lg);
+        text-align: center;
+        background: var(--bg-primary);
+      }
+      .proof-image {
+        max-width: 800px;
+        margin: 0 auto var(--space-xl);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      }
+      .proof-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .proof-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-xl);
+        flex-wrap: wrap;
+      }
+      .proof-stat {
+        text-align: center;
+        min-width: 100px;
+      }
+      .proof-number {
+        font-size: 2.5rem;
+        font-weight: 700;
         color: var(--text-primary);
       }
-      
-      .footer-bottom {
-        margin-top: var(--space-xl);
-        padding-top: var(--space-lg);
-        border-top: 1px solid var(--border-subtle);
-        text-align: center;
+      .proof-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-top: 6px;
       }
       
-      .footer-copyright {
-        font-size: 0.85rem;
-        color: var(--text-muted);
+      /* 반응형 */
+      @media (max-width: 968px) {
+        .problem-layout { grid-template-columns: 1fr; }
+        .problem-image { order: -1; }
+        .solution-layout { grid-template-columns: 1fr; }
+        .solution-image { order: -1; }
+        .solution-stats { grid-template-columns: repeat(3, 1fr); }
       }
-      
-      @media (max-width: 768px) {
-        .footer-content { grid-template-columns: 1fr; gap: var(--space-lg); text-align: center; }
-        .footer-brand { max-width: none; margin: 0 auto; }
+      @media (max-width: 600px) {
+        .solution-stats { grid-template-columns: 1fr; }
+        .stat-item { padding: var(--space-sm); }
+        .stat-value { font-size: 1.5rem; }
+        .proof-stats { gap: var(--space-md); }
+        .proof-number { font-size: 2rem; }
       }
       
       /* ========================================
-         Education Modal - 수강 신청
+         🎯 Grid 시스템 - 균일한 카드 레이아웃
          ======================================== */
-      .edu-modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.9);
-        z-index: 1200;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-md);
+      .grid { 
+        display: grid; 
+        gap: var(--space-md); 
+      }
+      .grid-2 { 
+        grid-template-columns: repeat(2, 1fr); 
+      }
+      .grid-3 { 
+        grid-template-columns: repeat(3, 1fr); 
+      }
+      .grid-4 { 
+        grid-template-columns: repeat(4, 1fr); 
       }
       
-      .edu-modal.open {
-        display: flex;
-      }
-      
-      .edu-modal-content {
-        width: 100%;
-        max-width: 480px;
-        max-height: 90vh;
-        overflow-y: auto;
-        background: var(--bg-secondary);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-xl);
-      }
-      
-      .edu-modal-header {
+      /* 카드 컴포넌트 - Minimal */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
         padding: var(--space-lg);
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.08));
-        border-bottom: 1px solid var(--border-subtle);
-        text-align: center;
+        transition: all 0.2s ease;
         position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
-      
-      .edu-modal-close {
+      .card:hover { 
+        transform: translateY(-3px); 
+        border-color: var(--border-hover);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+      .card.recommended { 
+        border-color: var(--border-hover); 
+      }
+      .card-badge {
         position: absolute;
         top: var(--space-sm);
         right: var(--space-sm);
-        width: 36px;
-        height: 36px;
-        background: var(--bg-hover);
-        border: none;
-        border-radius: 50%;
-        color: var(--text-secondary);
-        cursor: pointer;
-      }
-      
-      .edu-modal-body {
-        padding: var(--space-lg);
-      }
-      
-      .edu-product {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.05));
-        border: 1px solid var(--border-accent);
-        border-radius: var(--radius-lg);
-        padding: var(--space-lg);
-        margin-bottom: var(--space-md);
-        text-align: center;
-      }
-      
-      .edu-badge {
-        display: inline-block;
-        background: var(--gradient-warm);
+        padding: 4px 10px;
+        background: var(--accent-primary);
         color: white;
-        padding: 6px 14px;
-        border-radius: var(--radius-full);
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin-bottom: var(--space-sm);
+        border-radius: var(--radius-sm);
+        font-size: 0.65rem;
+        font-weight: 600;
       }
-      
-      .edu-price {
-        font-size: 2rem;
-        font-weight: 800;
-        color: var(--accent-primary);
+      .card-tier { 
+        font-size: 0.7rem; 
+        font-weight: 500; 
+        letter-spacing: 1.5px; 
+        color: var(--text-tertiary); 
+        margin-bottom: var(--space-xs); 
+        text-transform: uppercase; 
       }
-      
-      .edu-note {
-        font-size: 0.85rem;
-        color: var(--accent-warning);
-        margin-top: var(--space-xs);
-      }
-      
-      .payment-btns {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-sm);
-        margin: var(--space-md) 0;
-      }
-      
-      .payment-btn {
-        padding: var(--space-md);
-        border-radius: var(--radius-lg);
-        border: 2px solid var(--border-default);
-        background: transparent;
-        cursor: pointer;
-        text-align: center;
+      .card-name { 
+        font-size: 1.1rem; 
+        font-weight: 600; 
+        margin-bottom: 4px; 
+        line-height: 1.3;
         color: var(--text-primary);
-        transition: var(--transition-fast);
       }
-      
-      .payment-btn:hover,
-      .payment-btn.active {
-        border-color: var(--accent-primary);
-        background: rgba(99, 102, 241, 0.1);
+      .card-subtitle { 
+        font-size: 0.85rem; 
+        color: var(--text-secondary); 
+        margin-bottom: var(--space-xs); 
       }
-      
-      .bank-info {
-        display: none;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: var(--radius-lg);
-        padding: var(--space-md);
-        margin: var(--space-md) 0;
+      .card-desc { 
+        font-size: 0.85rem; 
+        color: var(--text-tertiary); 
+        margin-bottom: var(--space-md); 
+        line-height: 1.5;
       }
-      
-      .bank-info.show {
-        display: block;
+      .card-price { margin-bottom: var(--space-md); }
+      .price-value { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+      .price-unit { font-size: 0.85rem; color: var(--text-secondary); }
+      .price-original { font-size: 0.8rem; color: var(--text-tertiary); text-decoration: line-through; }
+      .card-list { list-style: none; margin-bottom: var(--space-md); flex: 1; }
+      .card-list li { 
+        display: flex; 
+        align-items: flex-start; 
+        gap: 8px; 
+        padding: 5px 0; 
+        font-size: 0.85rem; 
+        color: var(--text-secondary); 
       }
-      
-      .bank-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: var(--space-xs);
-        font-size: 0.9rem;
-      }
-      
-      .bank-form input {
-        width: 100%;
-        padding: var(--space-sm);
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border-subtle);
-        background: var(--bg-tertiary);
-        color: var(--text-primary);
-        margin-bottom: var(--space-sm);
-        font-size: 0.95rem;
-      }
-      
-      .edu-submit {
-        width: 100%;
-        padding: var(--space-md);
-        border-radius: var(--radius-lg);
-        border: none;
-        font-size: 1rem;
-        font-weight: 700;
-        cursor: pointer;
-        color: white;
-        transition: var(--transition-fast);
-      }
-      
-      .edu-submit.card-btn {
-        background: var(--gradient-primary);
-      }
-      
-      .edu-submit.bank-btn {
-        background: var(--gradient-secondary);
-      }
-      
-      .edu-submit:hover {
-        transform: translateY(-2px);
-      }
+      .card-list li i { color: var(--accent-green); margin-top: 3px; font-size: 0.7rem; }
       
       /* ========================================
-         iframe Modal
+         🎯 포트폴리오 그리드 - 균일한 레이아웃
          ======================================== */
-      .iframe-modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 1300;
-        display: none;
-        flex-direction: column;
+      .portfolio-categories { 
+        display: flex; 
+        gap: var(--space-sm); 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        margin-bottom: var(--space-lg); 
       }
+      .portfolio-cat-btn { 
+        padding: 10px 18px; 
+        background: var(--bg-card); 
+        border: 1px solid var(--border-subtle); 
+        border-radius: 30px; 
+        color: var(--text-secondary); 
+        font-size: 0.85rem; 
+        cursor: pointer; 
+        transition: all 0.3s ease; 
+        display: flex; 
+        align-items: center; 
+        gap: var(--space-xs); 
+      }
+      .portfolio-cat-btn:hover, .portfolio-cat-btn.active { 
+        background: rgba(168, 85, 247, 0.15); 
+        border-color: var(--neon-purple); 
+        color: var(--neon-purple); 
+      }
+      .portfolio-cat-btn i { font-size: 0.9rem; }
       
-      .iframe-modal.open {
+      .portfolio-grid { 
+        display: grid; 
+        grid-template-columns: repeat(4, 1fr); 
+        gap: var(--space-md); 
+      }
+      .portfolio-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
         display: flex;
+        flex-direction: column;
+        min-height: 160px;
+        position: relative;
+      }
+      .portfolio-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 15, 0.9) 100%);
+        z-index: 1;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+      .portfolio-item:hover { 
+        transform: translateY(-6px) scale(1.02); 
+        border-color: var(--neon-purple);
+        box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
+      }
+      .portfolio-item:hover::before {
+        opacity: 0.5;
+      }
+      .portfolio-thumbnail {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .portfolio-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.8);
+        transition: filter 0.3s ease;
+      }
+      .portfolio-item:hover .portfolio-thumbnail img {
+        filter: saturate(1.2);
+      }
+      .portfolio-content {
+        position: relative;
+        z-index: 2;
+        padding: var(--space-md);
+        margin-top: auto;
+      }
+      .portfolio-tag { 
+        font-size: 0.7rem; 
+        font-weight: 700; 
+        padding: 4px 10px; 
+        background: linear-gradient(135deg, rgba(168, 85, 247, 0.9), rgba(236, 72, 153, 0.9)); 
+        border-radius: 20px; 
+        color: white; 
+        display: inline-block; 
+        margin-bottom: var(--space-xs);
+        align-self: flex-start;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      }
+      .portfolio-title { 
+        font-size: 0.95rem; 
+        font-weight: 700; 
+        color: white;
+        line-height: 1.4;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      }
+      .portfolio-item.video .portfolio-tag {
+        background: linear-gradient(135deg, #ef4444, #f97316);
       }
       
-      .iframe-modal-header {
+      @media (max-width: 1024px) {
+        .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+      }
+      @media (max-width: 768px) {
+        .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      
+      .portfolio-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; display: none; flex-direction: column; }
+      .portfolio-modal.open { display: flex; }
+      .portfolio-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); }
+      .portfolio-modal-title { font-weight: 600; display: flex; align-items: center; gap: 10px; }
+      .portfolio-modal-close { background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer; padding: 8px 16px; }
+      .portfolio-modal-close:hover { color: white; }
+      .portfolio-modal-body { flex: 1; position: relative; min-height: 85vh; }
+      .portfolio-iframe { width: 100%; height: 100%; border: none; min-height: 85vh; }
+      .portfolio-block-layer { position: absolute; inset: 0; z-index: 5; background: transparent; cursor: default; }
+      .portfolio-modal-body.video-mode .portfolio-block-layer { display: none; }
+      .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.75); opacity: 0; pointer-events: none; z-index: 10; transition: opacity 0.25s ease; }
+      .portfolio-overlay.show { opacity: 1; pointer-events: auto; }
+      .portfolio-modal-body.video-mode .portfolio-overlay { display: none; }
+      .portfolio-membership { background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); padding: 16px 32px; border-radius: 16px; text-align: center; box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4); }
+      .portfolio-membership i { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+      .portfolio-membership-text { font-weight: 700; font-size: 0.95rem; }
+      
+      /* ========================================
+         🎯 채널 그리드 - 균일한 카드 레이아웃
+         ======================================== */
+      .channel-grid { 
+        display: grid; 
+        gap: var(--space-lg); 
+        grid-template-columns: repeat(2, 1fr); 
+      }
+      .channel-category {
+        background: linear-gradient(145deg, var(--bg-card), rgba(30, 30, 40, 0.9));
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      .channel-category:hover { 
+        transform: translateY(-4px); 
+        border-color: rgba(168, 85, 247, 0.3); 
+        box-shadow: 0 12px 40px rgba(0,0,0,0.3); 
+      }
+      .channel-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        padding: var(--space-lg);
+        background: rgba(255,255,255,0.03);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .channel-icon { 
+        font-size: 1.6rem; 
+        filter: drop-shadow(0 0 8px currentColor);
+        width: 44px;
+        text-align: center;
+      }
+      .channel-name { 
+        font-size: 1.1rem; 
+        font-weight: 700; 
+        letter-spacing: -0.02em; 
+      }
+      .channel-services { 
+        padding: var(--space-md); 
+        display: grid; 
+        grid-template-columns: 1fr; 
+        gap: var(--space-sm); 
+      }
+      .service-item {
+        background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        transition: all 0.3s ease;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
+      .service-item:hover { 
+        background: rgba(168, 85, 247, 0.1); 
+        border-color: rgba(168, 85, 247, 0.4); 
+      }
+      .service-info { flex: 1; min-width: 140px; }
+      .service-name { 
+        font-weight: 700; 
+        margin-bottom: 6px; 
+        font-size: 1rem; 
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .service-desc { 
+        font-size: 0.85rem; 
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+      .service-prices { 
+        display: flex; 
+        gap: var(--space-sm); 
+        font-size: 0.85rem; 
+      }
+      .service-price { 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        padding: 10px 16px; 
+        background: rgba(34, 211, 238, 0.1); 
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(34, 211, 238, 0.2);
+      }
+      .service-price-label { 
+        color: var(--text-secondary); 
+        font-size: 0.75rem; 
+        margin-bottom: 4px;
+        font-weight: 500;
+      }
+      .service-price-value { 
+        font-weight: 800; 
+        color: var(--neon-cyan); 
+        font-size: 1rem;
+        text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+      }
+      .service-price.monthly { background: rgba(168, 85, 247, 0.1); }
+      .service-price.monthly .service-price-value { color: var(--neon-purple); }
+      .service-price.monthly-b { background: rgba(249, 115, 22, 0.1); }
+      .service-price.monthly-b .service-price-value { color: var(--neon-orange); }
+      .service-add-btn { 
+        padding: 8px 16px; 
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); 
+        border: none; 
+        border-radius: var(--radius-sm); 
+        color: white; 
+        font-size: 0.75rem; 
+        font-weight: 600; 
+        cursor: pointer; 
+        transition: all 0.3s ease; 
+        white-space: nowrap; 
+      }
+      .service-add-btn:hover { 
+        transform: scale(1.05); 
+        box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); 
+      }
+      .service-buttons { 
+        display: flex; 
+        flex-wrap: wrap; 
+        gap: 6px; 
+        margin-top: var(--space-xs); 
+      }
+      .pricing-btn { 
+        padding: 6px 12px; 
+        font-size: 0.7rem; 
+        background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); 
+      }
+      .pricing-btn:hover { 
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); 
+      }
+      
+      @media (max-width: 1024px) {
+        .channel-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 768px) {
+        .channel-grid { grid-template-columns: 1fr; }
+      }
+      .service-item.service-set { background: rgba(34, 211, 238, 0.08); border-color: rgba(34, 211, 238, 0.3); }
+      .set-badge { background: var(--neon-cyan); color: var(--bg-primary); padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; margin-left: 6px; }
+      .service-notice { font-size: 0.7rem; color: var(--neon-orange); padding: 4px 8px; background: rgba(249, 115, 22, 0.1); border-radius: 6px; text-align: center; }
+      .service-notice-small { font-size: 0.7rem; color: var(--neon-orange); margin-top: 6px; }
+      .service-small-notice { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 4px; font-style: italic; }
+      .discount-badge { position: absolute; top: 40px; right: 16px; padding: 3px 10px; background: var(--neon-orange); border-radius: 12px; font-size: 0.7rem; font-weight: 700; color: white; }
+      
+      .cart-floating { position: fixed; bottom: 160px; right: 24px; z-index: 3001; }
+      .cart-btn {
+        width: 56px; height: 56px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+        border: none; color: white; font-size: 1.25rem; cursor: pointer;
+        box-shadow: 0 4px 20px rgba(34, 211, 238, 0.3);
+        position: relative; transition: all 0.3s ease;
+      }
+      .cart-btn:hover { transform: scale(1.1); }
+      .cart-count {
+        position: absolute; top: -4px; right: -4px;
+        width: 22px; height: 22px; background: var(--neon-pink);
+        border-radius: 50%; font-size: 0.75rem; font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .cart-panel {
+        position: absolute; bottom: 70px; right: 0;
+        width: 360px; max-height: 480px;
+        background: linear-gradient(145deg, var(--bg-secondary), var(--bg-tertiary));
+        border: 2px solid rgba(168, 85, 247, 0.3);
+        border-radius: 24px; overflow: hidden;
+        display: none; flex-direction: column;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(168, 85, 247, 0.15);
+        backdrop-filter: blur(20px);
+      }
+      .cart-panel.open { display: flex; }
+      .cart-header { padding: 16px 20px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+      .cart-title { font-weight: 700; }
+      .cart-close { background: none; border: none; color: var(--text-tertiary); cursor: pointer; }
+      .cart-items { flex: 1; overflow-y: auto; padding: 12px; max-height: 200px; }
+      .cart-item { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 14px 16px; 
+        background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); 
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px; 
+        margin-bottom: 10px; 
+        transition: all 0.2s ease;
+      }
+      .cart-item:hover {
+        border-color: rgba(168, 85, 247, 0.3);
+        background: rgba(168, 85, 247, 0.08);
+      }
+      .cart-item-name { 
+        font-size: 0.9rem; 
+        flex: 1; 
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+      .cart-item-price { 
+        font-size: 0.95rem; 
+        font-weight: 700; 
+        margin: 0 16px; 
+        color: var(--neon-cyan);
+      }
+      .cart-item-remove { 
+        background: rgba(239, 68, 68, 0.1); 
+        border: 1px solid transparent;
+        border-radius: 8px;
+        color: #ef4444; 
+        cursor: pointer; 
+        padding: 8px 10px;
+        transition: all 0.2s ease;
+      }
+      .cart-item-remove:hover { 
+        background: rgba(239, 68, 68, 0.2); 
+        border-color: #ef4444;
+      }
+      .cart-empty { text-align: center; padding: 32px; color: var(--text-tertiary); font-size: 0.85rem; }
+      .cart-footer { padding: 16px; border-top: 1px solid var(--border-subtle); }
+      .cart-regional { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; }
+      .cart-regional input { accent-color: var(--neon-purple); }
+      .cart-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; }
+      
+      .chat-widget { position: fixed; bottom: 90px; right: 24px; z-index: 3002; }
+      /* 챗봇이 장바구니보다 위에 표시되도록 z-index 조정 */
+      .chat-bubble {
+        width: 56px; height: 56px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        border: none; color: white; font-size: 1.25rem; cursor: pointer;
+        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+        transition: all 0.3s ease;
+      }
+      .chat-bubble:hover { transform: scale(1.1); }
+      .chat-window {
+        position: absolute; bottom: 70px; right: 0;
+        width: 380px; max-height: 520px;
+        background: var(--bg-secondary); border: 1px solid var(--border-subtle);
+        border-radius: 20px; overflow: hidden;
+        display: none; flex-direction: column;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      }
+      .chat-window.open { display: flex; }
+      .chat-header { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+      .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); display: flex; align-items: center; justify-content: center; }
+      .chat-info { margin-left: 12px; flex: 1; }
+      .chat-name { font-weight: 600; font-size: 0.95rem; }
+      .chat-status { font-size: 0.75rem; color: var(--text-tertiary); }
+      .chat-close { background: none; border: none; color: var(--text-tertiary); cursor: pointer; }
+      .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; max-height: 320px; }
+      .message { display: flex; gap: 10px; max-width: 85%; }
+      .message.user { flex-direction: row-reverse; margin-left: auto; }
+      .message-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.7rem; }
+      .message-content { background: var(--bg-tertiary); padding: 12px 16px; border-radius: 16px; border-top-left-radius: 4px; font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); }
+      .message.user .message-content { background: rgba(168, 85, 247, 0.2); border-radius: 16px; border-top-right-radius: 4px; color: var(--text-primary); }
+      .chat-input-area { padding: 12px 16px; border-top: 1px solid var(--border-subtle); display: flex; gap: 8px; align-items: center; background: var(--bg-tertiary); }
+      .chat-input { flex: 1; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 16px; font-size: 0.85rem; color: var(--text-primary); outline: none; }
+      .chat-input:focus { border-color: rgba(168, 85, 247, 0.5); }
+      .admin-key { background: none; border: none; color: var(--text-tertiary); opacity: 0.3; cursor: pointer; font-size: 0.8rem; }
+      .admin-key:hover { opacity: 1; color: var(--neon-purple); }
+      .chat-send { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); border: none; color: white; cursor: pointer; }
+      
+      .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+      .modal.open { display: flex; }
+      .modal-content { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 24px; padding: 32px; max-width: 420px; width: 100%; max-height: 90vh; overflow-y: auto; }
+      .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+      .modal-title { font-size: 1.25rem; font-weight: 700; }
+      .modal-close { background: none; border: none; color: var(--text-tertiary); cursor: pointer; font-size: 1.25rem; }
+      .admin-input { width: 100%; background: var(--bg-tertiary); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px 18px; font-size: 0.95rem; color: var(--text-primary); outline: none; margin-bottom: 12px; }
+      .admin-input:focus { border-color: rgba(168, 85, 247, 0.5); }
+      .admin-label { display: block; font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 6px; }
+      .admin-success { color: var(--neon-green); font-size: 0.85rem; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+      
+      /* 로그인 유도 모달 */
+      .login-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(12px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; }
+      .login-modal.open { display: flex; }
+      .login-modal-content { background: linear-gradient(145deg, var(--bg-secondary), var(--bg-tertiary)); border: 2px solid var(--neon-purple); border-radius: 24px; padding: 32px; max-width: 420px; width: 100%; text-align: center; animation: loginPop 0.4s ease; }
+      @keyframes loginPop { from { transform: scale(0.9) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+      .login-modal-icon { font-size: 3rem; margin-bottom: 16px; }
+      .login-modal-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+      .login-modal-subtitle { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 24px; }
+      .login-benefits { background: var(--bg-tertiary); border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
+      .login-benefit-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .login-benefit-item:last-child { border-bottom: none; }
+      .login-benefit-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+      .login-benefit-icon.purple { background: rgba(168,85,247,0.2); color: var(--neon-purple); }
+      .login-benefit-icon.green { background: rgba(34,197,94,0.2); color: var(--neon-green); }
+      .login-benefit-icon.cyan { background: rgba(34,211,238,0.2); color: var(--neon-cyan); }
+      .login-benefit-text { flex: 1; }
+      .login-benefit-title { font-weight: 700; font-size: 0.95rem; }
+      .login-benefit-desc { font-size: 0.8rem; color: var(--text-secondary); }
+      .social-login-btn { width: 100%; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; border: none; transition: all 0.3s ease; }
+      .social-login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+      .kakao-login-btn { background: #FEE500; color: #000; }
+      .naver-login-btn { background: #03C75A; color: #fff; }
+      .login-modal-referral { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+      .login-modal-referral input { width: 100%; background: var(--bg-tertiary); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 16px; color: var(--text-primary); font-size: 0.9rem; text-align: center; }
+      .login-modal-referral input::placeholder { color: var(--text-tertiary); }
+      .login-modal-skip { margin-top: 16px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-secondary); padding: 12px; border-radius: 10px; width: 100%; cursor: pointer; font-size: 0.9rem; }
+      .login-modal-skip:hover { border-color: var(--text-secondary); }
+      .login-modal-close { position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: var(--text-tertiary); font-size: 1.2rem; cursor: pointer; }
+      
+      /* 결제 완료 후 모달 */
+      .success-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(12px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; }
+      .success-modal.open { display: flex; }
+      .success-content { background: linear-gradient(145deg, var(--bg-secondary), var(--bg-tertiary)); border: 2px solid var(--neon-green); border-radius: 24px; padding: 32px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; text-align: center; animation: successPop 0.5s ease; }
+      @keyframes successPop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+      .success-icon { font-size: 4rem; color: var(--neon-green); margin-bottom: 16px; animation: checkBounce 0.8s ease; }
+      @keyframes checkBounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-8px); } }
+      .success-title { font-size: 1.8rem; font-weight: 800; color: var(--neon-green); margin-bottom: 8px; }
+      .success-subtitle { font-size: 1rem; color: var(--text-secondary); margin-bottom: 24px; }
+      .success-order-info { background: var(--bg-tertiary); border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
+      .success-order-title { font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 8px; }
+      .success-order-name { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+      .success-order-amount { font-size: 1.5rem; font-weight: 800; color: var(--neon-purple); }
+      
+      .success-section { margin-top: 24px; text-align: left; }
+      .success-section-title { font-size: 1rem; font-weight: 700; color: var(--neon-cyan); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+      .success-questionnaire { background: var(--bg-tertiary); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+      .success-question { margin-bottom: 16px; }
+      .success-question:last-child { margin-bottom: 0; }
+      .success-question label { display: block; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
+      .success-question input, .success-question textarea, .success-question select { width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 12px 16px; font-size: 0.95rem; color: var(--text-primary); outline: none; }
+      .success-question input:focus, .success-question textarea:focus, .success-question select:focus { border-color: var(--neon-purple); }
+      .success-question textarea { resize: vertical; min-height: 80px; }
+      
+      .success-contact-option { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+      .contact-option-btn { flex: 1; min-width: 120px; padding: 14px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; text-align: center; }
+      .contact-option-btn.phone { background: linear-gradient(135deg, #22c55e, #16a34a); border-color: #22c55e; color: white; }
+      .contact-option-btn.visit { background: linear-gradient(135deg, #3b82f6, #2563eb); border-color: #3b82f6; color: white; }
+      .contact-option-btn.submit { background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); border-color: var(--neon-purple); color: white; }
+      .contact-option-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+      
+      .success-footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle); }
+      .success-close-btn { width: 100%; padding: 16px; background: var(--bg-tertiary); border: 1px solid var(--border-subtle); border-radius: 12px; color: var(--text-secondary); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+      .success-close-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+      
+      .footer { padding: 40px 20px 100px; border-top: 1px solid var(--border-subtle); text-align: center; }
+      .footer-logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+      .footer-company { font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 12px; }
+      .footer-copy { font-size: 0.75rem; color: var(--text-tertiary); }
+      
+      /* 하단 고정 결제 바 */
+      .checkout-bar {
+        position: fixed; bottom: 0; left: 0; right: 0; z-index: 3001;
+        background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+        border-top: 1px solid var(--border-subtle);
+        padding: 12px 20px; padding-bottom: max(12px, env(safe-area-inset-bottom));
+        box-shadow: 0 -4px 30px rgba(0,0,0,0.4);
+      }
+      .checkout-bar-content { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; gap: 16px; }
+      .checkout-info { display: flex; align-items: center; gap: 10px; cursor: pointer; flex: 1; }
+      .checkout-info i { color: var(--neon-cyan); font-size: 1.2rem; }
+      .checkout-total { font-weight: 800; font-size: 1.1rem; color: var(--neon-purple); margin-left: auto; }
+      .checkout-btn {
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        border: none; color: white; padding: 14px 28px; border-radius: 12px;
+        font-weight: 700; font-size: 0.95rem; cursor: pointer;
+        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+        transition: all 0.3s ease; white-space: nowrap;
+      }
+      .checkout-btn:hover { transform: scale(1.05); }
+      
+      /* ========================================
+         🎯 Problem/Solution/Proof 섹션 스타일
+         ======================================== */
+      .problem-section {
+        padding: var(--space-3xl) var(--space-lg);
+        position: relative;
+        overflow: hidden;
+      }
+      .problem-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('/images/problem.jpg') center/cover no-repeat;
+        opacity: 0.15;
+        z-index: 0;
+      }
+      .problem-section > .container { position: relative; z-index: 1; }
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+      }
+      .problem-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .problem-card:hover {
+        transform: translateY(-4px);
+        border-color: #ef4444;
+        box-shadow: 0 8px 30px rgba(239, 68, 68, 0.2);
+      }
+      .problem-icon {
+        width: 56px; height: 56px;
+        background: rgba(239, 68, 68, 0.15);
+        border-radius: var(--radius-md);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto var(--space-sm);
+        font-size: 1.5rem; color: #ef4444;
+      }
+      .problem-title {
+        font-size: 1rem; font-weight: 700;
+        margin-bottom: 4px; color: var(--text-primary);
+      }
+      .problem-desc {
+        font-size: 0.85rem; color: var(--text-secondary);
+      }
+      @media (max-width: 1024px) {
+        .problem-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 768px) {
+        .problem-grid { grid-template-columns: 1fr; }
+        .problem-section { padding: var(--space-2xl) var(--space-md); }
+      }
+
+      .solution-section {
+        padding: var(--space-3xl) var(--space-lg);
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .solution-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('/images/solution.jpg') center/cover no-repeat;
+        opacity: 0.1;
+        z-index: 0;
+      }
+      .solution-section > .container { position: relative; z-index: 1; }
+      .solution-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-lg);
+        margin-top: var(--space-xl);
+      }
+      .solution-card {
+        background: linear-gradient(145deg, var(--bg-card), var(--bg-tertiary));
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .solution-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--neon-lime);
+        box-shadow: 0 12px 40px rgba(132, 204, 22, 0.2);
+      }
+      .solution-icon {
+        width: 64px; height: 64px;
+        background: linear-gradient(135deg, rgba(132, 204, 22, 0.2), rgba(34, 197, 94, 0.2));
+        border-radius: var(--radius-lg);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto var(--space-md);
+        font-size: 1.8rem; color: var(--neon-lime);
+      }
+      .solution-value {
+        font-size: 2.5rem; font-weight: 900;
+        background: linear-gradient(135deg, var(--neon-lime), var(--neon-green));
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+      }
+      .solution-title {
+        font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
+        margin-bottom: 8px;
+      }
+      .solution-desc {
+        font-size: 0.9rem; color: var(--text-secondary);
+      }
+      .solution-desc strong { color: var(--neon-lime); }
+      @media (max-width: 768px) {
+        .solution-grid { grid-template-columns: 1fr; }
+        .solution-section { padding: var(--space-2xl) var(--space-md); }
+        .solution-value { font-size: 2rem; }
+      }
+
+      .proof-section {
+        padding: var(--space-3xl) var(--space-lg);
+        position: relative;
+        overflow: hidden;
+      }
+      .proof-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('/images/proof.jpg') center/cover no-repeat;
+        opacity: 0.12;
+        z-index: 0;
+      }
+      .proof-section > .container { position: relative; z-index: 1; }
+      .proof-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-2xl);
+        margin-top: var(--space-xl);
+        flex-wrap: wrap;
+      }
+      .proof-stat {
+        text-align: center;
+        padding: var(--space-lg);
+      }
+      .proof-number {
+        font-size: 3.5rem; font-weight: 900;
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      }
+      .proof-label {
+        font-size: 1rem; color: var(--text-secondary); margin-top: 8px;
+      }
+
+      /* ========================================
+         🎯 아코디언 스타일 - 포인트 강조 (확대)
+         ======================================== */
+      .accordion {
+        background: linear-gradient(145deg, var(--bg-card), var(--bg-tertiary));
+        border: 3px solid rgba(168, 85, 247, 0.4);
+        border-radius: var(--radius-2xl);
+        margin-bottom: var(--space-lg);
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(168, 85, 247, 0.15), 0 4px 20px rgba(0,0,0,0.3);
+        position: relative;
+      }
+      .accordion::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink), var(--neon-cyan));
+      }
+      .accordion:hover {
+        border-color: rgba(168, 85, 247, 0.7);
+        box-shadow: 0 12px 50px rgba(168, 85, 247, 0.25), 0 6px 30px rgba(0,0,0,0.4);
+        transform: translateY(-2px);
+      }
+      .accordion-header {
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--space-sm) var(--space-md);
-        background: var(--gradient-primary);
-      }
-      
-      .iframe-modal-title {
-        color: white;
-        font-weight: 700;
-        font-size: 1rem;
-      }
-      
-      .iframe-modal-close {
-        width: 40px;
-        height: 40px;
-        background: rgba(0, 0, 0, 0.3);
+        padding: 28px 32px;
+        background: transparent;
         border: none;
-        border-radius: 50%;
-        color: white;
-        font-size: 1.1rem;
         cursor: pointer;
-      }
-      
-      .iframe-modal iframe {
-        flex: 1;
-        border: none;
-        width: 100%;
-        background: white;
-      }
-      
-      /* ========================================
-         Mobile Menu
-         ======================================== */
-      .mobile-nav {
-        position: fixed;
-        inset: 0;
-        background: var(--bg-primary);
-        z-index: 1050;
-        display: none;
-        flex-direction: column;
-        padding: 80px var(--space-lg) var(--space-lg);
-      }
-      
-      .mobile-nav.open {
-        display: flex;
-      }
-      
-      .mobile-nav-link {
-        display: block;
-        padding: var(--space-md);
         color: var(--text-primary);
-        text-decoration: none;
-        font-size: 1.25rem;
-        font-weight: 600;
-        border-bottom: 1px solid var(--border-subtle);
-        transition: var(--transition-fast);
+        transition: all 0.3s ease;
       }
-      
-      .mobile-nav-link:hover {
-        color: var(--accent-primary);
+      .accordion-header:hover {
+        background: rgba(168, 85, 247, 0.1);
       }
-      
+      .accordion-title {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .accordion-title i {
+        width: 56px; height: 56px;
+        background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+        color: white;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+      }
+      .accordion-arrow {
+        color: var(--text-tertiary);
+        font-size: 1.3rem;
+        transition: transform 0.3s ease;
+        width: 44px; height: 44px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .accordion.open .accordion-arrow {
+        transform: rotate(180deg);
+        background: rgba(168, 85, 247, 0.25);
+        color: var(--neon-purple);
+      }
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .accordion.open .accordion-content {
+        max-height: 1200px;
+      }
+      .accordion-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 0 28px 28px;
+      }
+      .accordion-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 22px;
+        background: linear-gradient(145deg, var(--bg-secondary), rgba(168, 85, 247, 0.05));
+        border: 2px solid rgba(168, 85, 247, 0.2);
+        border-radius: var(--radius-xl);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: left;
+        color: var(--text-primary);
+        position: relative;
+      }
+      .accordion-item:hover {
+        border-color: var(--neon-purple);
+        background: linear-gradient(145deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.08));
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+      }
+      .item-icon {
+        width: 50px; height: 50px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      }
+      .item-text {
+        font-size: 1.1rem;
+        font-weight: 700;
+        flex: 1;
+        line-height: 1.3;
+      }
+      .item-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        padding: 4px 10px;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        animation: badgePulse 2s ease-in-out infinite;
+      }
+      .item-badge.hot {
+        background: linear-gradient(135deg, #f97316, #ef4444);
+      }
+      .item-badge.premium {
+        background: linear-gradient(135deg, #eab308, #ca8a04);
+      }
+      @media (max-width: 768px) {
+        .accordion {
+          border-width: 2px;
+          margin-bottom: var(--space-md);
+        }
+        .accordion-header {
+          padding: 22px 24px;
+        }
+        .accordion-title {
+          font-size: 1.25rem;
+          gap: 14px;
+        }
+        .accordion-title i {
+          width: 48px; height: 48px;
+          font-size: 1.2rem;
+        }
+      }
+      @media (max-width: 480px) {
+        .accordion-grid {
+          grid-template-columns: 1fr;
+          padding: 0 20px 20px;
+          gap: 12px;
+        }
+        .accordion-header {
+          padding: 18px 20px;
+        }
+        .accordion-title {
+          font-size: 1.1rem;
+          gap: 12px;
+        }
+        .accordion-title i {
+          width: 42px; height: 42px;
+          font-size: 1rem;
+          border-radius: 12px;
+        }
+        .accordion-item {
+          padding: 16px 18px;
+          gap: 12px;
+        }
+        .item-icon {
+          width: 42px; height: 42px;
+          font-size: 1rem;
+        }
+        .item-text {
+          font-size: 0.95rem;
+        }
+      }
+      @media (max-width: 768px) {
+        .proof-stats { gap: var(--space-lg); }
+        .proof-number { font-size: 2.5rem; }
+        .proof-section { padding: var(--space-2xl) var(--space-md); }
+      }
+
       /* ========================================
-         Utility Classes
+         🎯 반응형 레이아웃 시스템
          ======================================== */
-      .text-center { text-align: center; }
-      .text-left { text-align: left; }
-      .text-right { text-align: right; }
       
-      .flex { display: flex; }
-      .flex-col { flex-direction: column; }
-      .items-center { align-items: center; }
-      .justify-center { justify-content: center; }
-      .justify-between { justify-content: space-between; }
-      .gap-sm { gap: var(--space-sm); }
-      .gap-md { gap: var(--space-md); }
-      .gap-lg { gap: var(--space-lg); }
-      
-      .mt-sm { margin-top: var(--space-sm); }
-      .mt-md { margin-top: var(--space-md); }
-      .mt-lg { margin-top: var(--space-lg); }
-      .mt-xl { margin-top: var(--space-xl); }
-      .mb-sm { margin-bottom: var(--space-sm); }
-      .mb-md { margin-bottom: var(--space-md); }
-      .mb-lg { margin-bottom: var(--space-lg); }
-      .mb-xl { margin-bottom: var(--space-xl); }
-      
-      .hidden { display: none !important; }
-      .visible { display: block !important; }
-      
-      /* Scrollbar */
-      ::-webkit-scrollbar { width: 6px; height: 6px; }
-      ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-      ::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 3px; }
-      ::-webkit-scrollbar-thumb:hover { background: var(--bg-hover); }
-      
-      /* Animation */
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+      /* 태블릿 (1024px 이하) */
+      @media (max-width: 1024px) {
+        :root {
+          --space-lg: 20px;
+          --space-xl: 28px;
+          --space-2xl: 40px;
+          --space-3xl: 56px;
+        }
+        .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        .channel-grid { grid-template-columns: repeat(2, 1fr); }
       }
       
-      .animate-in {
-        animation: fadeIn 0.6s ease forwards;
+      /* 모바일 (768px 이하) - 카드형 레이아웃 */
+      @media (max-width: 768px) {
+        :root {
+          --space-xs: 12px;
+          --space-sm: 16px;
+          --space-md: 24px;
+          --space-lg: 32px;
+          --space-xl: 48px;
+          --space-2xl: 64px;
+          --space-3xl: 80px;
+        }
+        
+        .hero { 
+          padding: 80px var(--space-md) var(--space-xl); 
+          min-height: 85vh; 
+        }
+        .hero-title { 
+          font-size: 1.4rem; 
+          line-height: 1.4; 
+        }
+        .hero-title .highlight {
+          display: block;
+          margin-bottom: 4px;
+        }
+        .hero-tagline { font-size: 1rem; }
+        .btn-lime { padding: 16px 28px; font-size: 1rem; }
+        
+        .section { padding: var(--space-2xl) var(--space-md); }
+        .section-header { margin-bottom: var(--space-lg); }
+        .section-title { font-size: 1.5rem; }
+        .section-desc { font-size: 1rem; }
+        
+        .hero-buttons { 
+          flex-direction: column; 
+          width: 100%; 
+          max-width: 320px;
+          gap: var(--space-sm);
+        }
+        .hero-buttons .btn { 
+          width: 100%; 
+          justify-content: center;
+          padding: 16px 24px;
+        }
+        
+        .chat-window { 
+          position: fixed; 
+          bottom: 0; right: 0; left: 0; 
+          width: 100%; 
+          max-height: 75vh; 
+          border-radius: var(--radius-xl) var(--radius-xl) 0 0; 
+        }
+        .cart-panel { 
+          position: fixed; 
+          bottom: 0; right: 0; left: 0; 
+          width: 100%; 
+          max-height: 65vh; 
+          border-radius: var(--radius-xl) var(--radius-xl) 0 0; 
+        }
+        /* 모바일: 챗봇과 장바구니 버튼 위치 분리 (겹침 방지) */
+        .cart-floating { bottom: 150px; right: var(--space-md); }
+        .chat-widget { bottom: 80px; right: var(--space-md); }
+        
+        .portfolio-grid { 
+          grid-template-columns: repeat(2, 1fr); 
+          gap: var(--space-sm); 
+        }
+        .grid-4, .grid-3, .grid-2 { 
+          grid-template-columns: 1fr; 
+          gap: var(--space-md); 
+        }
+        .channel-grid { 
+          grid-template-columns: 1fr; 
+          gap: var(--space-md); 
+        }
+        
+        .service-item { 
+          flex-direction: column; 
+          align-items: stretch; 
+          gap: var(--space-sm); 
+        }
+        .service-prices { justify-content: center; gap: var(--space-sm); }
+        .service-add-btn { width: 100%; padding: var(--space-sm); }
+        
+        .card { padding: var(--space-lg); }
+        .portfolio-categories { gap: var(--space-xs); }
+        .portfolio-cat-btn { padding: 8px 14px; font-size: 0.8rem; }
       }
+      
+      /* 소형 모바일 (480px 이하) */
+      @media (max-width: 480px) {
+        :root {
+          --space-md: 12px;
+          --space-lg: 14px;
+          --space-xl: 20px;
+          --space-2xl: 28px;
+          --space-3xl: 40px;
+        }
+        
+        .hero { padding: 60px var(--space-sm) 20px; }
+        .hero-title { font-size: 1.2rem; line-height: 1.5; }
+        .hero-badge { font-size: 0.75rem; padding: 8px 14px; }
+        .hero-tagline { font-size: 0.85rem; line-height: 1.6; }
+        .hero-tagline strong { display: inline; }
+        .hero-trust { gap: 8px; }
+        .trust-item { font-size: 0.75rem; padding: 6px 10px; }
+        .section { padding: var(--space-2xl) var(--space-md); }
+        
+        .portfolio-grid { 
+          grid-template-columns: repeat(2, 1fr); 
+          gap: var(--space-xs); 
+        }
+        .portfolio-item { padding: var(--space-sm); }
+        .portfolio-title { font-size: 0.8rem; }
+        
+        .card { 
+          padding: var(--space-md); 
+          border-radius: var(--radius-lg); 
+        }
+        .card-name { font-size: 1.1rem; }
+        .price-value { font-size: 1.4rem; }
+        .card-list li { font-size: 0.8rem; }
+        
+        .cart-btn, .chat-bubble { 
+          width: 50px; 
+          height: 50px; 
+          font-size: 1.1rem; 
+        }
+        
+        .btn { padding: 12px 20px; font-size: 0.9rem; }
+        .btn-small { padding: 10px 16px; font-size: 0.85rem; }
+      }
+      
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 3px; }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="site-header">
-      <div class="header-inner">
-        <a href="/" class="logo">
-          X I <span class="logo-accent">Λ</span> I X
-        </a>
-        
-        <nav class="header-nav">
-          <a href="#services" class="nav-link">서비스</a>
-          <a href="#portfolio" class="nav-link">포트폴리오</a>
-          <a href="#pricing" class="nav-link">가격</a>
-          <a href="#education" class="nav-link">AI 입문반</a>
-        </nav>
-        
-        <div class="header-cta">
-          <a href="/login" class="btn btn-ghost">
-            <i class="fas fa-user"></i>
-            로그인
-          </a>
-          <button class="btn btn-primary" onclick="openChat()">
-            <i class="fas fa-comment-dots"></i>
-            무료 상담
-          </button>
-          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars"></i>
-          </button>
-        </div>
-      </div>
-    </header>
-    
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav" id="mobileNav">
-      <a href="#services" class="mobile-nav-link" onclick="closeMobileMenu()">서비스</a>
-      <a href="#portfolio" class="mobile-nav-link" onclick="closeMobileMenu()">포트폴리오</a>
-      <a href="#pricing" class="mobile-nav-link" onclick="closeMobileMenu()">가격</a>
-      <a href="#education" class="mobile-nav-link" onclick="closeMobileMenu()">AI 입문반</a>
-      <a href="/login" class="mobile-nav-link" onclick="closeMobileMenu()">로그인</a>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-bg">
-        <div class="hero-gradient"></div>
-      </div>
-      
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          XIVIX Business Engineering
-        </div>
-        
-        <h1 class="hero-title">
-          사장님은 장사만 하세요<br>
-          <span class="hero-title-accent">마케팅은 AI가 다 해드립니다</span>
-        </h1>
-        
-        <p class="hero-desc">
-          직원 뽑지 마세요. 블로그, 인스타, 영상 편집...<br>
-          XIVIX AI 시스템이 월급 없이 24시간 일합니다.
-        </p>
-        
-        <div class="hero-actions">
-          <button class="btn btn-primary btn-large" onclick="openChat()">
-            <i class="fas fa-magic"></i>
-            무료 진단 받기
-          </button>
-          <a href="#services" class="btn btn-ghost btn-large">
-            <i class="fas fa-arrow-down"></i>
-            서비스 보기
-          </a>
-        </div>
-        
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="hero-stat-value"><span>-90</span>%</div>
-            <div class="hero-stat-label">시간 절감</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value"><span>-70</span>%</div>
-            <div class="hero-stat-label">비용 절감</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value"><span>+250</span>%</div>
-            <div class="hero-stat-label">문의량 증가</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="section" id="services">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">
-            <i class="fas fa-rocket"></i>
-            Services
-          </span>
-          <h2 class="section-title">AI 마케팅 솔루션</h2>
-          <p class="section-desc">
-            20년 현장 데이터를 기반으로 설계된 AI 마케팅 시스템.<br>
-            강매 없음, 성과 보장, 무료 상담.
-          </p>
-        </div>
-        
-        <div class="service-grid" id="serviceGrid">
-          <!-- Services will be loaded dynamically -->
-        </div>
-      </div>
-    </section>
-
-    <!-- 4대 블록 비즈니스 섹션 -->
-    <section class="section section-alt" id="blocks">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">
-            <i class="fas fa-building"></i>
-            Business
-          </span>
-          <h2 class="section-title">20년 현장 데이터 기반</h2>
-          <p class="section-desc">
-            유통, 글로벌 제조, 정부 인증, 빅데이터 알고리즘<br>
-            이 모든 지식을 AI에 이식했습니다.
-          </p>
-        </div>
-        
-        <div class="blocks-grid">
-          <div class="block-card">
-            <span class="block-number">01</span>
-            <div class="block-icon"><i class="fas fa-store"></i></div>
-            <h3 class="block-title">커머스 유통 설계</h3>
-            <p class="block-desc">
-              전국 대리점 네트워크와 홈쇼핑 계약을 통해 검증된 유통망을 구축합니다.
-            </p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">23</div>
-                <div class="block-stat-label">유통망</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">1.4만</div>
-                <div class="block-stat-label">판매대</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">13</div>
-                <div class="block-stat-label">전시회</div>
-              </div>
-            </div>
-            <div class="block-tags">
-              <span class="block-tag">신세계TV쇼핑</span>
-              <span class="block-tag">K홈쇼핑</span>
-              <span class="block-tag">자사몰</span>
-            </div>
-          </div>
-          
-          <div class="block-card">
-            <span class="block-number">02</span>
-            <div class="block-icon"><i class="fas fa-globe"></i></div>
-            <h3 class="block-title">글로벌 제조 & B2B</h3>
-            <p class="block-desc">
-              아모스프로페셔널, RBH, 시세이도, 웰라 등 글로벌 파트너와의 협업 경험.
-            </p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">4+</div>
-                <div class="block-stat-label">글로벌 파트너</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">14,807</div>
-                <div class="block-stat-label">누적 판매대</div>
-              </div>
-            </div>
-            <div class="block-tags">
-              <span class="block-tag">아모스</span>
-              <span class="block-tag">시세이도</span>
-              <span class="block-tag">웰라</span>
-            </div>
-          </div>
-          
-          <div class="block-card">
-            <span class="block-number">03</span>
-            <div class="block-icon"><i class="fas fa-award"></i></div>
-            <h3 class="block-title">규제 특례 & 국가 인증</h3>
-            <p class="block-desc">
-              산업부 실증특례, 기술 특허, 메인비즈, 벤처기업 등 10종 인증 획득.
-            </p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">10+</div>
-                <div class="block-stat-label">인증</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">ISO</div>
-                <div class="block-stat-label">9001/14001</div>
-              </div>
-            </div>
-            <div class="block-tags">
-              <span class="block-tag">실증특례</span>
-              <span class="block-tag">벤처기업</span>
-              <span class="block-tag">메인비즈</span>
-            </div>
-          </div>
-          
-          <div class="block-card">
-            <span class="block-number">04</span>
-            <div class="block-icon"><i class="fas fa-chart-line"></i></div>
-            <h3 class="block-title">빅데이터 알고리즘</h3>
-            <p class="block-desc">
-              RGB-16 AI로 1,600만 컬러를 추출하고 실전 데이터 기반 마케팅을 자동화합니다.
-            </p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">1,600만</div>
-                <div class="block-stat-label">컬러 추출</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">RGB-16</div>
-                <div class="block-stat-label">AI 엔진</div>
-              </div>
-            </div>
-            <div class="block-tags">
-              <span class="block-tag">빅데이터</span>
-              <span class="block-tag">자동화</span>
-              <span class="block-tag">AI</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section class="section" id="portfolio">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">
-            <i class="fas fa-images"></i>
-            Portfolio
-          </span>
-          <h2 class="section-title">포트폴리오</h2>
-          <p class="section-desc">
-            다양한 분야의 성공적인 프로젝트를 확인하세요.
-          </p>
-        </div>
-        
-        <div class="portfolio-grid" id="portfolioGrid">
-          <!-- Portfolio items will be loaded dynamically -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="section section-alt" id="pricing">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">
-            <i class="fas fa-tags"></i>
-            Pricing
-          </span>
-          <h2 class="section-title">가격 안내</h2>
-          <p class="section-desc">
-            투명한 가격, 숨겨진 비용 없음.<br>
-            필요한 서비스만 선택하세요.
-          </p>
-        </div>
-        
-        <div class="pricing-grid">
-          <div class="pricing-card">
-            <div class="pricing-header">
-              <h3 class="pricing-name">GRADE 1</h3>
-              <div class="pricing-price">₩550,000</div>
-              <div class="pricing-period">/월</div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature"><i class="fas fa-check"></i> 베이직 관리</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> SNS 기본 세팅</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 월간 리포트</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 1:1 카톡 상담</li>
-            </ul>
-            <button class="btn btn-ghost" style="width:100%" onclick="openChat()">
-              상담하기
-            </button>
-          </div>
-          
-          <div class="pricing-card featured">
-            <span class="pricing-badge">인기</span>
-            <div class="pricing-header">
-              <h3 class="pricing-name">GRADE 2</h3>
-              <div class="pricing-price">₩990,000</div>
-              <div class="pricing-period">/월</div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature"><i class="fas fa-check"></i> 스탠다드 관리</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> AI 콘텐츠 생성</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 주간 리포트</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 광고 집행</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 줌 미팅 월 2회</li>
-            </ul>
-            <button class="btn btn-primary" style="width:100%" onclick="openChat()">
-              상담하기
-            </button>
-          </div>
-          
-          <div class="pricing-card">
-            <div class="pricing-header">
-              <h3 class="pricing-name">GRADE 3</h3>
-              <div class="pricing-price">₩1,900,000</div>
-              <div class="pricing-period">/월</div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature"><i class="fas fa-check"></i> 토탈 마스터</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> AI 영상 제작</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 전담 매니저</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 바이럴 마케팅</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 방문 컨설팅</li>
-            </ul>
-            <button class="btn btn-ghost" style="width:100%" onclick="openChat()">
-              상담하기
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Education Section -->
-    <section class="section" id="education">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">
-            <i class="fas fa-graduation-cap"></i>
-            Education
-          </span>
-          <h2 class="section-title">AI 입문반 1기</h2>
-          <p class="section-desc">
-            사장님도 AI를 직접 활용할 수 있습니다.<br>
-            실전 중심의 AI 마케팅 교육 프로그램.
-          </p>
-        </div>
-        
-        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-          <div class="edu-product">
-            <span class="edu-badge">선착순 마감</span>
-            <div class="edu-price">₩50,000</div>
-            <div class="edu-note">정가 ₩150,000 → 한정 특가</div>
-          </div>
-          
-          <button class="btn btn-primary btn-large" onclick="openEduModal()">
-            <i class="fas fa-bolt"></i>
-            지금 신청하기
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <div class="footer-logo">X I Λ I X</div>
-          <p class="footer-desc">
-            20년 현장 데이터를 바탕으로<br>
-            AI로 사장님의 노동을 줄여드립니다.
-          </p>
-        </div>
-        
-        <div class="footer-links">
-          <h4>서비스</h4>
-          <a href="#services">마케팅 서비스</a>
-          <a href="#portfolio">포트폴리오</a>
-          <a href="#pricing">가격 안내</a>
-          <a href="#education">AI 입문반</a>
-        </div>
-        
-        <div class="footer-links">
-          <h4>고객지원</h4>
-          <a href="javascript:openChat()">무료 상담</a>
-          <a href="/login">마이페이지</a>
-          <a href="https://www.youtube.com/@studiojuai_officia" target="_blank">유튜브</a>
-        </div>
-      </div>
-      
-      <div class="footer-bottom container">
-        <p class="footer-copyright">
-          &copy; 2024 컴바인티엔비 | XIVIX. All rights reserved.
-        </p>
-      </div>
-    </footer>
-
-    <!-- Chatbot -->
-    <div class="chat-bubble" onclick="toggleChat()">
-      <i class="fas fa-comment-dots"></i>
+    <!-- 띠 배너 -->
+    <div class="top-banner" id="top-banner" onclick="openIframeModal()">
+      <span class="banner-text">XIΛIX AI 입문반 1기 모집중! <strong>선착순 5명</strong> · 1월 개강</span>
+      <button class="banner-close" onclick="event.stopPropagation(); closeBanner()"><i class="fas fa-times"></i></button>
     </div>
     
-    <div class="chat-window" id="chatWindow">
-      <div class="chat-header">
-        <div class="chat-header-title">
-          <div class="chat-avatar"><i class="fas fa-robot"></i></div>
-          <div class="chat-header-info">
-            <h4>XIVIX AI</h4>
-            <span>온라인</span>
+    <div class="bg-animated">
+      <div class="bg-gradient"></div>
+      <!-- Premium Gradient Orbs -->
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+    </div>
+    
+    <div class="main-container" id="main-container">
+      <!-- ========================================
+           🎯 Section 1: Hero - 고급스러운 파티클 배경
+           ======================================== -->
+      <section class="hero">
+        <!-- Premium Particle Background -->
+        <div class="particles-container">
+          <div class="particle" style="left: 5%; animation-delay: 0s;"></div>
+          <div class="particle" style="left: 15%; animation-delay: -2s;"></div>
+          <div class="particle" style="left: 25%; animation-delay: -4s;"></div>
+          <div class="particle" style="left: 35%; animation-delay: -6s;"></div>
+          <div class="particle" style="left: 45%; animation-delay: -8s;"></div>
+          <div class="particle" style="left: 55%; animation-delay: -10s;"></div>
+          <div class="particle" style="left: 65%; animation-delay: -12s;"></div>
+          <div class="particle" style="left: 75%; animation-delay: -14s;"></div>
+          <div class="particle" style="left: 85%; animation-delay: -16s;"></div>
+          <div class="particle" style="left: 95%; animation-delay: -18s;"></div>
+          <div class="particle" style="left: 10%; animation-delay: -1s;"></div>
+          <div class="particle" style="left: 30%; animation-delay: -5s;"></div>
+          <div class="particle" style="left: 50%; animation-delay: -9s;"></div>
+          <div class="particle" style="left: 70%; animation-delay: -13s;"></div>
+          <div class="particle" style="left: 90%; animation-delay: -17s;"></div>
+        </div>
+        
+        <!-- Hero Video Background -->
+        <div class="hero-video-bg">
+          <video autoplay muted loop playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-waves-in-a-purple-virtual-background-23463-large.mp4" type="video/mp4">
+          </video>
+          <div class="hero-video-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+          <div class="hero-badge animate-fade-in-up">
+            <span class="status-dot"></span>
+            <span>XIVIX BUSINESS ENGINEERING</span>
+          </div>
+          
+          <!-- 메인 카피 - 모바일 최적화 -->
+          <h1 class="hero-title animate-fade-in-up delay-1">
+            <span class="highlight">20년 현장 데이터</span>가 설계한 AI<br>
+            사장님의 노동을 멈춥니다
+          </h1>
+          
+          <!-- 서브 카피 - 핵심 실적 (압축) -->
+          <p class="hero-tagline animate-fade-in-up delay-2">
+            <strong>23개 유통망</strong> · <strong>1.4만대 판매</strong> · <strong>13회 전시회</strong><br>
+            제조·홈쇼핑·정부인증 지식을 AI에 이식했습니다
+          </p>
+          
+          <!-- CTA 버튼 -->
+          <div class="hero-buttons animate-fade-in-up delay-3">
+            <button class="btn btn-lime" onclick="openChat()">
+              <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
+            </button>
+            <button class="btn btn-secondary" onclick="scrollTo('services')">
+              <i class="fas fa-list-ul"></i> 서비스 보기
+            </button>
+          </div>
+          
+          <!-- 신뢰 지표 -->
+          <div class="hero-trust animate-fade-in-up delay-3">
+            <div class="trust-item"><i class="fas fa-check-circle"></i> 무료 상담</div>
+            <div class="trust-item"><i class="fas fa-check-circle"></i> 강매 없음</div>
+            <div class="trust-item"><i class="fas fa-check-circle"></i> 성과 보장</div>
           </div>
         </div>
-        <button class="chat-close" onclick="toggleChat()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
+      </section>
       
-      <div class="chat-messages" id="chatMessages">
-        <div class="chat-message bot">
-          안녕하세요! XIVIX AI 상담사입니다.<br><br>
-          어떤 도움이 필요하신가요?<br>
-          마케팅, 웹사이트, AI 시스템 등 무엇이든 물어보세요!
+      <!-- ========================================
+           🎯 Section 2: Problem - 아이콘 기반 깔끔한 디자인
+           ======================================== -->
+      <section class="problem-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <p class="section-eyebrow">이런 고민 있으시죠?</p>
+            <h2 class="section-title">아직도 <span style="color:#ef4444;">혼자</span> 하시나요?</h2>
+          </div>
+          <div class="problem-grid reveal">
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-pen-fancy"></i></div>
+              <div class="problem-title">하루 2시간 블로그 작성</div>
+              <div class="problem-desc">본업에 집중할 시간이 없어요</div>
+            </div>
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-wallet"></i></div>
+              <div class="problem-title">마케팅 직원 월급 300만원</div>
+              <div class="problem-desc">인건비 부담, 성과는 불확실</div>
+            </div>
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-chart-line"></i></div>
+              <div class="problem-title">광고비만 나가고 문의는 제자리</div>
+              <div class="problem-desc">뭘 해야 할지 모르겠어요</div>
+            </div>
+            <div class="problem-card">
+              <div class="problem-icon"><i class="fas fa-question-circle"></i></div>
+              <div class="problem-title">인스타? 블로그? 유튜브?</div>
+              <div class="problem-desc">뭐부터 시작해야 할지...</div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
       
-      <div class="chat-input-area">
-        <input type="text" class="chat-input" id="chatInput" placeholder="메시지를 입력하세요..." onkeypress="handleChatKeypress(event)">
-        <button class="chat-send" onclick="sendChatMessage()">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- Service Modal -->
-    <div class="modal-overlay" id="serviceModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="serviceModalTitle">서비스 상세</h2>
-          <button class="modal-close" onclick="closeServiceModal()">
-            <i class="fas fa-times"></i>
-          </button>
+      <!-- ========================================
+           🎯 Section 3: Solution - 핵심 수치 + 깔끔한 카드
+           ======================================== -->
+      <section class="solution-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <p class="section-eyebrow">XIVIX 솔루션</p>
+            <h2 class="section-title">AI가 <span class="gradient-text">대신</span> 일합니다</h2>
+            <p class="section-desc">마케팅 걱정 없이 매출에만 집중하세요</p>
+          </div>
+          <div class="solution-grid reveal">
+            <div class="solution-card">
+              <div class="solution-icon"><i class="fas fa-clock"></i></div>
+              <div class="solution-value">-90%</div>
+              <div class="solution-title">시간 절감</div>
+              <div class="solution-desc">하루 2시간 → <strong>15분</strong></div>
+            </div>
+            <div class="solution-card">
+              <div class="solution-icon"><i class="fas fa-won-sign"></i></div>
+              <div class="solution-value">-70%</div>
+              <div class="solution-title">비용 절감</div>
+              <div class="solution-desc">월 300만원 → <strong>55만원</strong></div>
+            </div>
+            <div class="solution-card">
+              <div class="solution-icon"><i class="fas fa-rocket"></i></div>
+              <div class="solution-value">+250%</div>
+              <div class="solution-title">문의량 증가</div>
+              <div class="solution-desc">3개월 평균 <strong>2.5배</strong></div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:var(--space-2xl);" class="reveal">
+            <button class="btn btn-lime" onclick="openChat()">
+              <i class="fas fa-search-dollar"></i> 내 가게 무료 진단받기
+            </button>
+          </div>
         </div>
-        <div class="modal-body" id="serviceModalBody">
-          <!-- Content loaded dynamically -->
+      </section>
+      
+      <!-- ========================================
+           🎯 Section 4: Social Proof - 실적 수치
+           ======================================== -->
+      <section class="proof-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <p class="section-eyebrow">실제 고객 성과</p>
+            <h2 class="section-title">이미 <span class="gradient-text">결과</span>를 보고 있습니다</h2>
+          </div>
+          <div class="proof-stats reveal">
+            <div class="proof-stat">
+              <div class="proof-number">127<span style="font-size:0.5em;">+</span></div>
+              <div class="proof-label">누적 고객사</div>
+            </div>
+            <div class="proof-stat">
+              <div class="proof-number">4.9</div>
+              <div class="proof-label">고객 만족도</div>
+            </div>
+            <div class="proof-stat">
+              <div class="proof-number">89<span style="font-size:0.5em;">%</span></div>
+              <div class="proof-label">재계약률</div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+      
+      <!-- ========================================
+           🎯 Section 5: 4대 블록 비즈니스 스토리텔링
+           ======================================== -->
+      <section class="business-blocks">
+        <div class="container">
+          <div class="blocks-header reveal">
+            <div class="blocks-eyebrow">
+              <i class="fas fa-building"></i>
+              <span>XIVIX BUSINESS ENGINEERING GROUP</span>
+            </div>
+            <h2 class="blocks-title">
+              데이터로 검증된<br>
+              <span class="gradient-text">4대 비즈니스 블록</span>
+            </h2>
+            <p class="blocks-subtitle">
+              현장에서 축적한 실질 데이터와 파트너십으로<br>
+              비즈니스 성장을 지원합니다
+            </p>
+          </div>
+          
+          <div class="blocks-grid">
+            <!-- Block 1: 커머스 유통 설계 -->
+            <div class="block-card block-commerce reveal">
+              <div class="block-number">01</div>
+              <div class="block-icon"><i class="fas fa-store"></i></div>
+              <h3 class="block-title">커머스 유통 설계</h3>
+              <p class="block-desc">
+                전국 유통망과 홈쇼핑 계약을 기반으로<br>
+                자사몰·온라인 통합 운영 시스템 구축
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">23</div>
+                  <div class="block-stat-label">전국 대리점</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">3+</div>
+                  <div class="block-stat-label">홈쇼핑 계약</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-tv"></i> 신세계TV쇼핑</div>
+                <div class="partner-badge"><i class="fas fa-shopping-cart"></i> K홈쇼핑</div>
+                <div class="partner-badge"><i class="fas fa-globe"></i> 자사몰 통합</div>
+              </div>
+            </div>
+            
+            <!-- Block 2: 글로벌 제조 및 B2B -->
+            <div class="block-card block-global reveal">
+              <div class="block-number">02</div>
+              <div class="block-icon"><i class="fas fa-globe-asia"></i></div>
+              <h3 class="block-title">글로벌 제조 및 B2B</h3>
+              <p class="block-desc">
+                아모스프로페셔널, RBH, 시세이도, 웰라 등<br>
+                글로벌 파트너십과 B2B/B2C 통합 판매 경험
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">14,807+</div>
+                  <div class="block-stat-label">누적 판매대</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">4+</div>
+                  <div class="block-stat-label">글로벌 파트너</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-industry"></i> 아모스프로페셔널</div>
+                <div class="partner-badge"><i class="fas fa-handshake"></i> RBH</div>
+                <div class="partner-badge"><i class="fas fa-star"></i> 시세이도</div>
+                <div class="partner-badge"><i class="fas fa-gem"></i> 웰라</div>
+              </div>
+            </div>
+            
+            <!-- Block 3: 규제 특례 및 국가 인증 -->
+            <div class="block-card block-certification reveal">
+              <div class="block-number">03</div>
+              <div class="block-icon"><i class="fas fa-certificate"></i></div>
+              <h3 class="block-title">규제 특례 및 국가 인증</h3>
+              <p class="block-desc">
+                산업부 실증특례, 기술 특허, 메인비즈,<br>
+                ISO 9001/14001, 벤처기업 등 10종 인증 보유
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">10+</div>
+                  <div class="block-stat-label">국가 인증</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">ISO</div>
+                  <div class="block-stat-label">9001·14001</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-shield-alt"></i> 규제 샌드박스</div>
+                <div class="partner-badge"><i class="fas fa-award"></i> 메인비즈</div>
+                <div class="partner-badge"><i class="fas fa-rocket"></i> 벤처기업</div>
+                <div class="partner-badge"><i class="fas fa-file-signature"></i> 기술특허</div>
+              </div>
+            </div>
+            
+            <!-- Block 4: 빅데이터 알고리즘 -->
+            <div class="block-card block-bigdata reveal">
+              <div class="block-number">04</div>
+              <div class="block-icon"><i class="fas fa-brain"></i></div>
+              <h3 class="block-title">빅데이터 알고리즘</h3>
+              <p class="block-desc">
+                RGB-16 AI 알고리즘, 1,600만 컬러 추출,<br>
+                실전 데이터 기반 마케팅 자동화 시스템
+              </p>
+              <div class="block-stats">
+                <div class="block-stat">
+                  <div class="block-stat-value">1,600만</div>
+                  <div class="block-stat-label">컬러 추출</div>
+                </div>
+                <div class="block-stat">
+                  <div class="block-stat-value">AI</div>
+                  <div class="block-stat-label">마케팅 자동화</div>
+                </div>
+              </div>
+              <div class="block-partners">
+                <div class="partner-badge"><i class="fas fa-palette"></i> RGB-16 AI</div>
+                <div class="partner-badge"><i class="fas fa-database"></i> 실전 빅데이터</div>
+                <div class="partner-badge"><i class="fas fa-robot"></i> 자동화 솔루션</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 파트너 로고 -->
+          <div class="reveal" style="margin-top: var(--space-2xl); text-align: center;">
+            <p class="partners-title">TRUSTED PARTNERS</p>
+            <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: var(--space-lg);">
+              <a href="https://hoobis.kr" target="_blank" class="partner-logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary);">
+                <i class="fas fa-vacuum" style="font-size: 1.5rem; color: var(--neon-orange);"></i>
+                <span style="font-weight: 700;">HOOBIS</span>
+              </a>
+              <a href="https://amanna.hair" target="_blank" class="partner-logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary);">
+                <i class="fas fa-cut" style="font-size: 1.5rem; color: var(--neon-pink);"></i>
+                <span style="font-weight: 700;">AMANNA</span>
+              </a>
+              <div class="partner-logo" style="display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-tv" style="font-size: 1.5rem; color: var(--neon-cyan);"></i>
+                <span style="font-weight: 700;">신세계TV쇼핑</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 친구 초대 혜택 배너 -->
+      <section id="referral-benefits" class="section" style="padding: var(--space-xl) var(--space-lg);">
+        <div class="container" style="max-width: 700px;">
+          <div class="reveal" style="background: linear-gradient(135deg, rgba(132,204,22,0.1), rgba(34,197,94,0.1)); border: 2px solid rgba(132,204,22,0.3); border-radius: var(--radius-xl); padding: var(--space-lg); display: flex; align-items: center; gap: var(--space-lg); flex-wrap: wrap; justify-content: center;">
+            <div style="font-size: 2.5rem; color: var(--neon-lime);"><i class="fas fa-gift"></i></div>
+            <div style="flex: 1; min-width: 220px;">
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--neon-lime);">친구 초대 = 15% 할인!</div>
+              <div style="font-size: 0.9rem; color: var(--text-secondary);">추천인 5% 적립 · 2차 추천 2% 추가</div>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button class="btn btn-small" onclick="shareKakao()" style="background: #FEE500; color: #191919; white-space: nowrap; padding: 14px 20px;">
+                <i class="fas fa-comment"></i> 카카오 공유
+              </button>
+              <button class="btn btn-primary btn-small" onclick="openChat()" style="white-space: nowrap; padding: 14px 20px;">
+                <i class="fas fa-comments"></i> 코드 받기
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 아코디언 섹션 - 포트폴리오 & 서비스 (강조) -->
+      <section id="menu-section" class="section" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
+        <div class="container" style="max-width: 800px;">
+          <div class="section-header reveal" style="margin-bottom: var(--space-xl);">
+            <p class="section-eyebrow">나에게 딱 맞는 서비스 찾기</p>
+            <h2 class="section-title" style="font-size: clamp(1.5rem, 4vw, 2.2rem);">클릭해서 <span class="gradient-text">상세 정보</span> 확인</h2>
+          </div>
+          
+          <!-- 포트폴리오 아코디언 -->
+          <div class="accordion reveal" id="accordion-portfolio">
+            <button class="accordion-header" onclick="toggleAccordion('portfolio')">
+              <div class="accordion-title">
+                <i class="fas fa-briefcase"></i>
+                <span>포트폴리오</span>
+              </div>
+              <i class="fas fa-chevron-down accordion-arrow" id="arrow-portfolio"></i>
+            </button>
+            <div class="accordion-content" id="content-portfolio">
+              <div class="accordion-grid" id="portfolio-menu"></div>
+            </div>
+          </div>
+          
+          <!-- 서비스 메뉴 아코디언 -->
+          <div class="accordion reveal" id="accordion-services">
+            <button class="accordion-header" onclick="toggleAccordion('services')">
+              <div class="accordion-title">
+                <i class="fas fa-concierge-bell"></i>
+                <span>서비스 메뉴</span>
+              </div>
+              <i class="fas fa-chevron-down accordion-arrow" id="arrow-services"></i>
+            </button>
+            <div class="accordion-content" id="content-services">
+              <div class="accordion-grid">
+                <button class="accordion-item" onclick="openServiceModal('sets')">
+                  <span class="item-icon" style="background: rgba(249,115,22,0.15); color: #f97316;"><i class="fas fa-fire"></i></span>
+                  <span class="item-text">SNS 셋트 메뉴</span>
+                  <span class="item-badge hot">추천</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('pricing')">
+                  <span class="item-icon" style="background: rgba(168,85,247,0.15); color: #a855f7;"><i class="fas fa-tags"></i></span>
+                  <span class="item-text">채널별 가격표</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('websites')">
+                  <span class="item-icon" style="background: rgba(34,197,94,0.15); color: #22c55e;"><i class="fas fa-globe"></i></span>
+                  <span class="item-text">웹사이트 구축</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('sysdev')">
+                  <span class="item-icon" style="background: rgba(6,182,212,0.15); color: #06b6d4;"><i class="fas fa-cogs"></i></span>
+                  <span class="item-text">시스템 개발</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('addons')">
+                  <span class="item-icon" style="background: rgba(139,92,246,0.15); color: #8b5cf6;"><i class="fas fa-plus-circle"></i></span>
+                  <span class="item-text">부가 서비스</span>
+                </button>
+                <button class="accordion-item" onclick="openServiceModal('consulting')">
+                  <span class="item-icon" style="background: rgba(234,179,8,0.15); color: #eab308;"><i class="fas fa-handshake"></i></span>
+                  <span class="item-text">브랜드 컨설팅</span>
+                  <span class="item-badge premium">프리미엄</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+      
+      <footer class="footer">
+        <div class="footer-logo gradient-text">X I Λ I X</div>
+        <div class="footer-company">AI 마케팅 자동화 시스템 | 대표: 방익주</div>
+        <div style="font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 12px;">
+          <i class="fas fa-phone-alt" style="margin-right: 6px;"></i>010-4845-3065 | <i class="fas fa-envelope" style="margin-right: 6px;"></i>contact@xivix.kr
+        </div>
+        <div style="margin: 16px 0;">
+          <a href="/admin" style="display: inline-block; padding: 10px 24px; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: var(--neon-purple); font-size: 0.85rem; text-decoration: none; transition: all 0.2s;">
+            <i class="fas fa-cog"></i> 관리자
+          </a>
+        </div>
+        <div class="footer-copy">© 2025 X I Λ I X. All rights reserved.</div>
+      </footer>
     </div>
-
-    <!-- Education Modal -->
-    <div class="edu-modal" id="eduModal">
+    
+    <!-- iframe 모달 (xivix-class 페이지) -->
+    <div class="iframe-modal" id="iframe-modal">
+      <div class="iframe-modal-header">
+        <span class="iframe-modal-title"><i class="fas fa-graduation-cap" style="margin-right: 8px;"></i>XIΛIX AI 입문반 1기</span>
+        <button class="iframe-modal-close" onclick="closeIframeModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <iframe id="iframe-content" src="about:blank"></iframe>
+    </div>
+    
+    <!-- 수강 신청 모달 -->
+    <div class="edu-modal" id="edu-modal">
       <div class="edu-modal-content">
         <div class="edu-modal-header">
-          <button class="edu-modal-close" onclick="closeEduModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <h3 style="font-size: 1.3rem; font-weight: 700;">AI 입문반 1기 수강 신청</h3>
+          <button class="edu-modal-close" onclick="closeEduModal()"><i class="fas fa-times"></i></button>
+          <h2 style="font-size:1.3rem;font-weight:800;color:var(--text-primary);"><i class="fas fa-graduation-cap" style="margin-right: 8px;"></i>수강 신청</h2>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">XIΛIX AI 입문반 1기</p>
         </div>
         <div class="edu-modal-body">
           <div class="edu-product">
-            <span class="edu-badge">선착순 마감</span>
-            <div class="edu-price">₩50,000</div>
-            <div class="edu-note">정가 ₩150,000 → 한정 특가</div>
+            <div class="edu-badge">선착순 5명 중 잔여 2석!</div>
+            <div style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">XIΛIX AI 입문반 1기</div>
+            <div class="edu-price">2,000,000원</div>
+            <div class="edu-note">(카드결제 시 VAT 별도 → 2,200,000원)</div>
+            <div style="font-size:0.85rem;color:var(--text-secondary);margin-top:8px;">6주 과정 · 1월 개강</div>
           </div>
           
+          <div style="font-weight:600;margin-bottom:12px;text-align:center;">결제 방법 선택</div>
           <div class="payment-btns">
-            <button class="payment-btn active" onclick="selectPayment('card')">
-              <i class="fas fa-credit-card" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
-              <div style="font-weight: 600;">카드 결제</div>
-            </button>
-            <button class="payment-btn" onclick="selectPayment('bank')">
-              <i class="fas fa-university" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
-              <div style="font-weight: 600;">무통장 입금</div>
-            </button>
+            <button class="payment-btn" id="pay-card" onclick="selectPay('card')"><i class="fas fa-credit-card" style="font-size:1.5rem;margin-bottom:4px;"></i><br>카드결제</button>
+            <button class="payment-btn" id="pay-bank" onclick="selectPay('bank')"><i class="fas fa-university" style="font-size:1.5rem;margin-bottom:4px;"></i><br>계좌이체</button>
           </div>
           
-          <div class="bank-info" id="bankInfo">
-            <div class="bank-row"><span>은행</span><strong>케이뱅크</strong></div>
-            <div class="bank-row"><span>계좌번호</span><strong>3333-24-8458909</strong></div>
-            <div class="bank-row"><span>예금주</span><strong>방익주</strong></div>
-            <div class="bank-row"><span>금액</span><strong style="color: var(--accent-primary);">₩50,000</strong></div>
-            <div class="bank-form" style="margin-top: 16px;">
-              <input type="text" id="bankName" placeholder="입금자명">
-              <input type="tel" id="bankPhone" placeholder="연락처">
-              <input type="email" id="bankEmail" placeholder="이메일">
+          <div class="bank-info" id="bank-info">
+            <div style="text-align:center;font-weight:700;color:var(--neon-green);margin-bottom:12px;"><i class="fas fa-university" style="margin-right:6px;"></i>계좌이체 안내</div>
+            <div class="bank-row"><span>입금 은행</span><span>케이뱅크 (K-Bank)</span></div>
+            <div class="bank-row"><span>계좌번호</span><span id="bank-num">100124491987</span></div>
+            <div class="bank-row"><span>예금주</span><span>방익주</span></div>
+            <button onclick="copyBank()" style="width:100%;padding:10px;background:var(--neon-green);color:white;border:none;border-radius:8px;cursor:pointer;margin:10px 0;"><i class="fas fa-copy"></i> 계좌번호 복사</button>
+            <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6;">
+              <i class="fas fa-check" style="color:var(--neon-green);margin-right:4px;"></i>입금자명은 신청자 성함과 동일하게<br>
+              <i class="fas fa-check" style="color:var(--neon-green);margin-right:4px;"></i>입금 후 아래 정보 입력 시 등록 완료<br>
+              <i class="fas fa-check" style="color:var(--neon-green);margin-right:4px;"></i>계좌이체 금액: 2,000,000원
+            </div>
+            <div class="bank-form" style="margin-top:16px;">
+              <input type="text" id="edu-name" placeholder="성함 *">
+              <input type="tel" id="edu-phone" placeholder="연락처 *">
+              <input type="email" id="edu-email" placeholder="이메일 *">
             </div>
           </div>
           
-          <button class="edu-submit card-btn" id="eduSubmitBtn" onclick="submitEduPayment()">
-            <i class="fas fa-credit-card"></i> 카드로 결제하기
+          <button class="edu-submit card-btn" id="submit-card" onclick="submitCard()" style="display:none;"><i class="fas fa-credit-card" style="margin-right:6px;"></i>카드결제 진행 (2,200,000원)</button>
+          <button class="edu-submit bank-btn" id="submit-bank" onclick="submitBank()" style="display:none;"><i class="fas fa-file-signature" style="margin-right:6px;"></i>계좌이체 신청하기</button>
+          
+          <div style="text-align:center;margin-top:16px;font-size:0.85rem;color:var(--text-secondary);">
+            문의: <a href="tel:010-4845-3065" style="color:var(--neon-cyan);"><i class="fas fa-phone-alt" style="margin-right:4px;"></i>010-4845-3065</a> (방익주 대표)
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 서비스 상세 모달 -->
+    <div class="service-modal" id="service-modal">
+      <div class="service-modal-content">
+        <div class="service-modal-header">
+          <h2 class="service-modal-title"><i class="fas fa-list" id="service-modal-icon"></i><span id="service-modal-name">서비스</span></h2>
+          <button class="service-modal-close" onclick="closeServiceModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="service-modal-body" id="service-modal-body"></div>
+      </div>
+    </div>
+    
+    <div class="portfolio-modal" id="portfolio-modal">
+      <div class="portfolio-modal-header">
+        <div class="portfolio-modal-title">
+          <i class="fas fa-globe"></i>
+          <span id="portfolio-modal-name">프로젝트</span>
+        </div>
+        <button class="portfolio-modal-close" onclick="closePortfolioModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="portfolio-modal-body">
+        <iframe id="portfolio-iframe" class="portfolio-iframe" src="about:blank"></iframe>
+        <div class="portfolio-block-layer" id="portfolio-block-layer"></div>
+        <div class="portfolio-overlay" id="portfolio-overlay">
+          <div class="portfolio-membership">
+            <i class="fas fa-lock"></i>
+            <div class="portfolio-membership-text">회원제로 운영중</div>
+            <div style="font-size:0.75rem;margin-top:6px;opacity:0.8;">미리보기만 가능합니다</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 하단 고정 결제 바 (장바구니에 아이템 있을 때만 표시) -->
+    <div class="checkout-bar" id="checkout-bar" style="display:none;">
+      <div class="checkout-bar-content">
+        <div class="checkout-info" onclick="toggleCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="checkout-count">0</span>개 상품
+          <span class="checkout-total" id="checkout-total-display">0원</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()"><i class="fas fa-credit-card"></i>결제하기</button>
+      </div>
+    </div>
+    
+    <div class="cart-floating">
+      <button class="cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <div class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+          <span class="cart-title"><i class="fas fa-shopping-cart"></i> 장바구니</span>
+          <button class="cart-close" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items"><div class="cart-empty">항목을 추가하세요</div></div>
+        <div class="cart-footer">
+          <label class="cart-regional"><input type="checkbox" id="regional-fee" onchange="updateCart()">지방 출장비 (+30만원)</label>
+          <div class="cart-total"><span>총 금액</span><span id="cart-total">0원</span></div>
+          
+          <!-- 친구초대 혜택 배너 -->
+          <div class="referral-banner" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(168,85,247,0.15));border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:12px;margin-bottom:12px;text-align:center;">
+            <div style="font-size:0.9rem;font-weight:700;color:var(--neon-green);margin-bottom:4px;">
+              <i class="fas fa-gift"></i> 친구 초대하면 바로 15% 할인!
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">
+              추천인도 결제금액의 5% 적립금 획득
+            </div>
+          </div>
+          
+          <div style="display:flex;gap:8px;">
+            <button class="btn" style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);" onclick="downloadQuote()"><i class="fas fa-file-pdf"></i> 견적서</button>
+            <button class="btn btn-primary" style="flex:2;" onclick="checkout()"><i class="fas fa-credit-card"></i> 결제하기</button>
+          </div>
+          <button class="btn" style="width:100%;margin-top:8px;background:transparent;border:1px solid rgba(239,68,68,0.5);color:#ef4444;font-size:0.85rem;" onclick="clearCart()"><i class="fas fa-trash"></i> 장바구니 비우기</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-widget">
+      <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+          <div style="display:flex;align-items:center;">
+            <div class="chat-avatar"><i class="fas fa-user-tie"></i></div>
+            <div class="chat-info"><div class="chat-name">X I Λ I X 봇</div><div class="chat-status">맞춤 솔루션 상담</div></div>
+          </div>
+          <button class="chat-close" onclick="closeChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="message"><div class="message-avatar"><i class="fas fa-robot"></i></div><div class="message-content">안녕하세요!<br>X I Λ I X 비즈니스 상담 <strong>봇</strong>입니다.<br><br>20년 현장 경험을 기반으로<br>맞춤 솔루션을 안내해드립니다.<br><br>어떤 사업을 운영하고 계신가요?</div></div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" id="chat-input" placeholder="메시지 입력..." onkeypress="if(event.key==='Enter')sendMessage()">
+          <button class="admin-key" onclick="openAdminModal()"><i class="fas fa-key"></i></button>
+          <button class="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+      <button class="chat-bubble" onclick="toggleChat()"><i class="fas fa-comments"></i></button>
+    </div>
+    
+    <div class="modal" id="admin-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">관리자 모드</h3>
+          <button class="modal-close" onclick="closeAdminModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="admin-login">
+          <input type="password" class="admin-input" id="admin-password" placeholder="비밀번호" onkeypress="if(event.key==='Enter')verifyAdmin()">
+          <button class="btn btn-primary" style="width:100%;" onclick="verifyAdmin()">확인</button>
+        </div>
+        <div id="admin-panel" style="display:none;">
+          <div class="admin-success"><i class="fas fa-check-circle"></i>관리자 모드 활성화</div>
+          <label class="admin-label">고객명</label>
+          <input type="text" class="admin-input" id="custom-name" placeholder="고객 이름">
+          <label class="admin-label">이메일</label>
+          <input type="email" class="admin-input" id="custom-email" placeholder="email@example.com">
+          <label class="admin-label">연락처</label>
+          <input type="tel" class="admin-input" id="custom-phone" placeholder="010-0000-0000">
+          <label class="admin-label">맞춤 금액 (원)</label>
+          <input type="number" class="admin-input" id="custom-amount" placeholder="1000000">
+          <button class="btn btn-primary" style="width:100%;" onclick="processCustomPayment()"><i class="fas fa-credit-card"></i>결제 링크 생성</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 상담 예약 모달 -->
+    <div class="booking-modal" id="booking-modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.9);backdrop-filter:blur(12px);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px;">
+      <div style="background:linear-gradient(145deg,var(--bg-secondary),var(--bg-tertiary));border:2px solid #eab308;border-radius:24px;padding:32px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:loginPop 0.4s ease;">
+        <button onclick="closeBookingModal()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-tertiary);font-size:1.2rem;cursor:pointer;"><i class="fas fa-times"></i></button>
+        
+        <div style="text-align:center;margin-bottom:24px;">
+          <div style="font-size:3rem;margin-bottom:8px;">📅</div>
+          <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">상담 예약</h2>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">원하시는 시간에 전문 상담을 받으세요!</p>
+        </div>
+        
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">이름 *</label>
+            <input type="text" id="booking-name" placeholder="홍길동" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">연락처 *</label>
+            <input type="tel" id="booking-phone" placeholder="010-1234-5678" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">이메일 (선택)</label>
+            <input type="email" id="booking-email" placeholder="example@email.com" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+          </div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">희망 날짜 *</label>
+              <input type="date" id="booking-date" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;" onchange="loadAvailableTimes()">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">희망 시간 *</label>
+              <select id="booking-time" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+                <option value="">날짜를 먼저 선택</option>
+              </select>
+            </div>
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">상담 유형</label>
+            <select id="booking-type" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+              <option value="general">일반 마케팅 상담</option>
+              <option value="sns">SNS 마케팅 상담</option>
+              <option value="website">웹사이트/시스템 상담</option>
+              <option value="branding">브랜드 컨설팅</option>
+              <option value="franchise">프랜차이즈 컨설팅</option>
+              <option value="video">영상 제작 상담</option>
+            </select>
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">업종</label>
+            <select id="booking-industry" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;">
+              <option value="">선택해주세요</option>
+              <option value="병원">병원/의원</option>
+              <option value="뷰티">뷰티/미용</option>
+              <option value="식음료">식음료/카페</option>
+              <option value="교육">교육/학원</option>
+              <option value="쇼핑몰">쇼핑몰/커머스</option>
+              <option value="서비스">서비스업</option>
+              <option value="기타">기타</option>
+            </select>
+          </div>
+          
+          <div>
+            <label style="display:block;font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">문의 내용 (선택)</label>
+            <textarea id="booking-message" rows="3" placeholder="상담받고 싶은 내용을 간단히 적어주세요" style="width:100%;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 16px;font-size:0.95rem;color:var(--text-primary);outline:none;resize:vertical;"></textarea>
+          </div>
+        </div>
+        
+        <button onclick="submitBooking()" style="width:100%;margin-top:24px;padding:16px;background:linear-gradient(135deg,#eab308,#ca8a04);border:none;border-radius:12px;color:white;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <i class="fas fa-calendar-check"></i> 예약 신청하기
+        </button>
+        
+        <p style="text-align:center;margin-top:16px;font-size:0.8rem;color:var(--text-tertiary);">
+          예약 확정 후 담당자가 연락드립니다.
+        </p>
+      </div>
+    </div>
+    
+    <!-- 로그인 유도 모달 -->
+    <div class="login-modal" id="login-modal">
+      <div class="login-modal-content" style="position:relative;">
+        <button class="login-modal-close" onclick="closeLoginModal()"><i class="fas fa-times"></i></button>
+        <div class="login-modal-icon">🔐</div>
+        <h2 class="login-modal-title">3초 로그인으로<br>더 많은 혜택을!</h2>
+        <p class="login-modal-subtitle">간편 로그인 후 결제를 진행해주세요</p>
+        
+        <div class="login-benefits">
+          <div class="login-benefit-item">
+            <div class="login-benefit-icon purple"><i class="fas fa-ticket-alt"></i></div>
+            <div class="login-benefit-text">
+              <div class="login-benefit-title">첫 가입 15% 할인쿠폰</div>
+              <div class="login-benefit-desc">친구 추천코드 입력시!</div>
+            </div>
+          </div>
+          <div class="login-benefit-item">
+            <div class="login-benefit-icon green"><i class="fas fa-gift"></i></div>
+            <div class="login-benefit-text">
+              <div class="login-benefit-title">친구 추천하면 10% 할인</div>
+              <div class="login-benefit-desc">추천할수록 혜택 UP!</div>
+            </div>
+          </div>
+          <div class="login-benefit-item">
+            <div class="login-benefit-icon cyan"><i class="fas fa-history"></i></div>
+            <div class="login-benefit-text">
+              <div class="login-benefit-title">결제 내역 & 진행상황</div>
+              <div class="login-benefit-desc">마이페이지에서 한눈에</div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="social-login-btn kakao-login-btn" onclick="loginForCheckout('kakao')">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3c5.799 0 10.5 3.664 10.5 8.185 0 4.52-4.701 8.184-10.5 8.184a13.5 13.5 0 0 1-1.727-.11l-4.408 2.883c-.501.265-.678.236-.472-.413l.892-3.678c-2.88-1.46-4.785-3.99-4.785-6.866C1.5 6.665 6.201 3 12 3z"/></svg>
+          카카오로 3초 로그인
+        </button>
+        
+        <button class="social-login-btn naver-login-btn" onclick="loginForCheckout('naver')">
+          <span style="font-weight:900;font-size:1.1rem;">N</span>
+          네이버로 3초 로그인
+        </button>
+        
+        <div class="login-modal-referral">
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:10px;">추천코드가 있다면?</p>
+          <input type="text" id="checkout-referral-code" placeholder="추천코드 입력 (예: XIVAB123)" maxlength="10">
+        </div>
+        
+        <button class="login-modal-skip" onclick="skipLoginAndCheckout()">
+          로그인 없이 결제하기
+        </button>
+      </div>
+    </div>
+    
+    <!-- 결제 완료 후 모달 -->
+    <div class="success-modal" id="success-modal">
+      <div class="success-content">
+        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+        <h2 class="success-title">결제 완료! 🎉</h2>
+        <p class="success-subtitle">감사합니다. 곧 담당자가 연락드리겠습니다.</p>
+        
+        <div class="success-order-info">
+          <div class="success-order-title">주문 내역</div>
+          <div class="success-order-name" id="success-order-name">SNS 스타터 세트</div>
+          <div class="success-order-amount" id="success-order-amount">118만원</div>
+        </div>
+        
+        <div class="success-section">
+          <div class="success-section-title"><i class="fas fa-clipboard-list"></i> 빠른 진행을 위한 질문</div>
+          <div class="success-questionnaire">
+            <div class="success-question">
+              <label>1. 업종을 선택해주세요</label>
+              <select id="q-industry">
+                <option value="">선택해주세요</option>
+                <option value="병원">병원/의원</option>
+                <option value="학원">학원/교육</option>
+                <option value="미용">미용/뷰티</option>
+                <option value="카페">카페/음식점</option>
+                <option value="쇼핑몰">쇼핑몰/이커머스</option>
+                <option value="부동산">부동산/인테리어</option>
+                <option value="IT">IT/스타트업</option>
+                <option value="기타">기타</option>
+              </select>
+            </div>
+            <div class="success-question">
+              <label>2. 현재 SNS 운영 상황</label>
+              <select id="q-sns-status">
+                <option value="">선택해주세요</option>
+                <option value="없음">아직 계정 없음</option>
+                <option value="방치">계정 있지만 방치 중</option>
+                <option value="운영중">직접 운영 중 (효과 미미)</option>
+                <option value="대행중">현재 다른 곳에서 대행 중</option>
+              </select>
+            </div>
+            <div class="success-question">
+              <label>3. 가장 원하는 목표</label>
+              <select id="q-goal">
+                <option value="">선택해주세요</option>
+                <option value="인지도">브랜드 인지도 향상</option>
+                <option value="고객유입">온라인 고객 유입 증가</option>
+                <option value="매출">직접 매출 증가</option>
+                <option value="상위노출">네이버/인스타 상위노출</option>
+                <option value="전체">전체적인 마케팅 개선</option>
+              </select>
+            </div>
+            <div class="success-question">
+              <label>4. 추가 요청사항 (선택)</label>
+              <textarea id="q-additional" placeholder="특별히 원하시는 것이나 참고사항이 있으시면 적어주세요"></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <div class="success-section">
+          <div class="success-section-title"><i class="fas fa-headset"></i> 상담 진행 방식</div>
+          <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:16px;">바쁘시면 연락처만 남겨주셔도 됩니다!</p>
+          <div class="success-contact-option">
+            <button class="contact-option-btn phone" onclick="selectContactOption('phone')">
+              <i class="fas fa-phone-alt"></i><br>전화 상담
+            </button>
+            <button class="contact-option-btn visit" onclick="selectContactOption('visit')">
+              <i class="fas fa-building"></i><br>방문 상담
+            </button>
+          </div>
+          <div id="contact-input-area" style="margin-top:16px;display:none;">
+            <div class="success-question">
+              <label id="contact-input-label">연락처를 입력해주세요</label>
+              <input type="tel" id="q-contact" placeholder="010-0000-0000">
+            </div>
+            <div class="success-question">
+              <label>희망 연락 시간</label>
+              <select id="q-contact-time">
+                <option value="언제든">언제든 괜찮아요</option>
+                <option value="오전">오전 (9시~12시)</option>
+                <option value="오후">오후 (12시~6시)</option>
+                <option value="저녁">저녁 (6시~9시)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="success-contact-option" style="margin-top:20px;">
+          <button class="contact-option-btn submit" onclick="submitQuestionnaire()" style="flex:2;">
+            <i class="fas fa-paper-plane"></i> 질문지 제출하기
+          </button>
+        </div>
+        
+        <div class="success-footer">
+          <button class="success-close-btn" onclick="closeSuccessModal()">
+            <i class="fas fa-times"></i> 나중에 제출할게요
           </button>
         </div>
       </div>
     </div>
-
-    <!-- iframe Modal -->
-    <div class="iframe-modal" id="iframeModal">
-      <div class="iframe-modal-header">
-        <span class="iframe-modal-title" id="iframeModalTitle">포트폴리오</span>
-        <button class="iframe-modal-close" onclick="closeIframeModal()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <iframe id="iframeModalContent" src=""></iframe>
-    </div>
-
+    
     <script>
+      const portfolioData = ${JSON.stringify(PORTFOLIO_DATA)};
+      const channelServices = ${JSON.stringify(CHANNEL_SERVICES)};
+      const marketingSetup = ${JSON.stringify(MARKETING_SETUP)};
+      const monthlyGrades = ${JSON.stringify(MONTHLY_GRADES)};
+      const setMenus = ${JSON.stringify(SET_MENUS)};
+      const websitePackages = ${JSON.stringify(WEBSITE_PACKAGES)};
+      const addonServices = ${JSON.stringify(ADDON_SERVICES)};
+      const webServiceOptions = ${JSON.stringify(WEB_SERVICE_OPTIONS)};
+      const sysDevOptions = ${JSON.stringify(SYSTEM_DEV_OPTIONS)};
+      const consultingOptions = ${JSON.stringify(CONSULTING_OPTIONS)};
+      
       // ========================================
-      // XIVIX ProVisual Main JavaScript
+      // LocalStorage로 장바구니/페이지 기억
       // ========================================
+      let cart = JSON.parse(localStorage.getItem('xivix_cart') || '[]');
+      let chatHistory = JSON.parse(localStorage.getItem('xivix_chat') || '[]');
+      let currentCategory = 'all';
+      let lastPaymentInfo = { orderName: '', amount: 0, customerInfo: {} };
       
-      // 데이터는 API에서 동적으로 로드
-      let portfolioData = [];
-      let channelServices = [];
+      // 장바구니 변경시 자동 저장
+      function saveCart() {
+        localStorage.setItem('xivix_cart', JSON.stringify(cart));
+      }
       
-      // 초기화
-      document.addEventListener('DOMContentLoaded', function() {
-        loadPortfolio();
-        loadServices();
-      });
+      // 채팅 기록 저장
+      function saveChat() {
+        localStorage.setItem('xivix_chat', JSON.stringify(chatHistory.slice(-20))); // 최근 20개만
+      }
       
-      // 포트폴리오 로드
-      async function loadPortfolio() {
+      // 마지막 본 섹션 저장
+      function saveLastSection(sectionId) {
+        localStorage.setItem('xivix_last_section', sectionId);
+      }
+      
+      // 마지막 본 섹션으로 이동
+      function goToLastSection() {
+        const lastSection = localStorage.getItem('xivix_last_section');
+        if (lastSection) {
+          setTimeout(() => {
+            const el = document.getElementById(lastSection);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 500);
+        }
+      }
+      
+      const colorMap = { cyan: '#22d3ee', purple: '#a855f7', orange: '#f97316', pink: '#ec4899' };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { 
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // 현재 보고있는 섹션 저장
+            if (entry.target.id) saveLastSection(entry.target.id);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      // 아코디언 토글 함수
+      function toggleAccordion(id) {
+        const accordion = document.getElementById('accordion-' + id);
+        accordion.classList.toggle('open');
+      }
+      
+      function renderPortfolioMenu() {
+        const container = document.getElementById('portfolio-menu');
+        container.innerHTML = portfolioData.categories.map(cat => {
+          const count = portfolioData.items.filter(i => i.category === cat.id).length;
+          return '<button class="accordion-item portfolio-cat-btn" data-category="' + cat.id + '"><span class="item-icon" style="background:' + cat.color + '22;color:' + cat.color + ';"><i class="fas ' + cat.icon + '"></i></span><span class="item-text">' + cat.name + ' (' + count + ')</span></button>';
+        }).join('');
+        // 이벤트 리스너 추가
+        container.querySelectorAll('.portfolio-cat-btn').forEach(btn => {
+          btn.addEventListener('click', () => openPortfolioCategoryModal(btn.dataset.category));
+        });
+      }
+      
+      function openPortfolioCategoryModal(category) {
+        const cat = portfolioData.categories.find(c => c.id === category);
+        const items = portfolioData.items.filter(p => p.category === category);
+        document.getElementById('service-modal-icon').className = 'fas ' + cat.icon;
+        document.getElementById('service-modal-icon').style.color = cat.color;
+        document.getElementById('service-modal-name').textContent = cat.name + ' 포트폴리오';
+        const body = document.getElementById('service-modal-body');
+        body.innerHTML = '<div class="portfolio-grid" id="portfolio-items-grid"></div>';
+        const grid = document.getElementById('portfolio-items-grid');
+        items.forEach(p => {
+          const div = document.createElement('div');
+          div.className = 'portfolio-item' + (p.isVideo ? ' video-item video' : '');
+          
+          // YouTube 영상이면 썸네일 추출
+          let thumbnail = '';
+          if (p.isVideo && p.url.includes('youtube.com/embed/')) {
+            const videoId = p.url.split('youtube.com/embed/')[1].split('?')[0];
+            thumbnail = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+          } else if (!p.isVideo) {
+            // 웹사이트는 placeholder 이미지 사용
+            thumbnail = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop';
+          }
+          
+          div.innerHTML = (thumbnail ? '<div class="portfolio-thumbnail"><img src="' + thumbnail + '" alt="' + p.title + '" loading="lazy" onerror="this.style.display=\\'none\\'"></div>' : '') +
+            '<div class="portfolio-content"><span class="portfolio-tag">' + (p.isVideo ? '<i class="fas fa-play-circle"></i> ' : '<i class="fas fa-external-link-alt"></i> ') + p.tag + '</span><div class="portfolio-title">' + p.title + '</div></div>';
+          div.addEventListener('click', () => openPortfolioModal(p.url, p.title, p.isVideo || false));
+          grid.appendChild(div);
+        });
+        document.getElementById('service-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // 뒤로가기 시 모달 닫기 위해 히스토리 추가
+        history.pushState({ modal: 'service' }, '', '');
+      }
+      
+      function openPortfolioModal(url, title, isVideo) {
+        document.getElementById('portfolio-modal-name').textContent = title;
+        const modalBody = document.querySelector('.portfolio-modal-body');
+        const iframe = document.getElementById('portfolio-iframe');
+        
+        if (isVideo) {
+          // 동영상: 오버레이 숨기고 영상 재생 (외부 이동 없이 웹 안에서)
+          modalBody.classList.add('video-mode');
+          iframe.src = url + '?autoplay=1&rel=0&modestbranding=1';
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        } else {
+          // 이미지/웹페이지: "회원제로 운영중" 오버레이와 함께 배경에 살짝 보이게
+          modalBody.classList.remove('video-mode');
+          iframe.src = url;
+          iframe.removeAttribute('allow');
+        }
+        
+        document.getElementById('portfolio-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // 뒤로가기 시 모달 닫기 위해 히스토리 추가
+        history.pushState({ modal: 'portfolio' }, '', '');
+      }
+      
+      function closePortfolioModal(skipHistory) {
+        document.getElementById('portfolio-modal').classList.remove('open');
+        document.getElementById('portfolio-iframe').src = 'about:blank';
+        document.querySelector('.portfolio-modal-body').classList.remove('video-mode');
+        document.body.style.overflow = '';
+        // 뒤로가기로 닫힌 경우가 아니면 히스토리에서 제거
+        if (!skipHistory && history.state && history.state.modal === 'portfolio') {
+          history.back();
+        }
+      }
+      
+      // 서비스 모달 열기/닫기
+      const serviceConfig = {
+        sets: { icon: 'fa-fire', name: '🔥 SNS 셋트 메뉴 (셋팅+월관리)', color: '#f97316' },
+        pricing: { icon: 'fa-tags', name: '채널별 가격표', color: '#a855f7' },
+        websites: { icon: 'fa-globe', name: '웹사이트 구축', color: '#22c55e' },
+        webservice: { icon: 'fa-palette', name: '🎨 웹 서비스', color: '#14b8a6' },
+        sysdev: { icon: 'fa-cogs', name: '⚙️ 시스템 개발', color: '#06b6d4' },
+        addons: { icon: 'fa-plus-circle', name: '부가 서비스', color: '#8b5cf6' },
+        consulting: { icon: 'fa-handshake', name: '🏢 브랜드/프랜차이즈 컨설팅', color: '#eab308' }
+      };
+      
+      function openServiceModal(type) {
+        const config = serviceConfig[type];
+        document.getElementById('service-modal-icon').className = 'fas ' + config.icon;
+        document.getElementById('service-modal-icon').style.color = config.color;
+        document.getElementById('service-modal-name').textContent = config.name;
+        const body = document.getElementById('service-modal-body');
+        
+        if (type === 'sets') body.innerHTML = renderSetsHTML();
+        else if (type === 'pricing') body.innerHTML = renderPricingHTML();
+        else if (type === 'websites') body.innerHTML = '<div class="grid grid-2">' + renderWebsitesHTML() + '</div>';
+        else if (type === 'webservice') body.innerHTML = '<div class="grid grid-2">' + renderWebServiceHTML() + '</div>';
+        else if (type === 'sysdev') body.innerHTML = '<div class="grid grid-2">' + renderSysDevHTML() + '</div>';
+        else if (type === 'addons') body.innerHTML = '<div class="grid grid-2">' + renderAddonsHTML() + '</div>';
+        else if (type === 'consulting') body.innerHTML = renderConsultingHTML();
+        
+        document.getElementById('service-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // 뒤로가기 시 모달 닫기 위해 히스토리 추가
+        history.pushState({ modal: 'service' }, '', '');
+      }
+      
+      function closeServiceModal(skipHistory) {
+        document.getElementById('service-modal').classList.remove('open');
+        document.body.style.overflow = '';
+        // 뒤로가기로 닫힌 경우가 아니면 히스토리에서 제거
+        if (!skipHistory && history.state && history.state.modal === 'service') {
+          history.back();
+        }
+      }
+      
+      function renderChannelsHTML() {
+        return '<div class="channel-grid">' + channelServices.map(cat => '<div class="channel-category"><div class="channel-header"><i class="' + cat.icon + ' channel-icon" style="color:' + cat.color + '"></i><span class="channel-name">' + cat.name + '</span></div><div class="channel-services">' + cat.services.map(svc => {
+          let priceHtml = '';
+          if (svc.setupFee > 0) {
+            priceHtml += '<div class="service-price"><span class="service-price-label">셋팅</span><span class="service-price-value">' + (svc.setupFee/10000) + '만</span></div>';
+          }
+          if (svc.hasAB) {
+            priceHtml += '<div class="service-price monthly"><span class="service-price-label">월A형</span><span class="service-price-value">' + (svc.monthlyFeeA/10000) + '만</span></div>';
+            priceHtml += '<div class="service-price monthly-b"><span class="service-price-label">월B형</span><span class="service-price-value">' + (svc.monthlyFeeB/10000) + '만</span></div>';
+          } else if (svc.monthlyFee > 0) {
+            priceHtml += '<div class="service-price monthly"><span class="service-price-label">월관리</span><span class="service-price-value">' + (svc.monthlyFee/10000) + '만</span></div>';
+          } else if (svc.notice) {
+            priceHtml += '<div class="service-notice">' + svc.notice + '</div>';
+          }
+          const cartPrice = svc.setupFee || svc.monthlyFee || svc.monthlyFeeA || 0;
+          return '<div class="service-item' + (svc.isSet ? ' service-set' : '') + '"><div class="service-info"><div class="service-name">' + svc.name + (svc.isSet ? ' <span class="set-badge">SET</span>' : '') + '</div><div class="service-desc">' + svc.desc + '</div>' + (svc.notice && !svc.hasAB && svc.monthlyFee !== 0 ? '<div class="service-notice-small">' + svc.notice + '</div>' : '') + (svc.smallNotice ? '<div class="service-small-notice">⚠️ ' + svc.smallNotice + '</div>' : '') + '</div><div class="service-prices">' + priceHtml + '</div>' + (cartPrice > 0 ? '<button class="service-add-btn" onclick="addToCart(\\'channel\\', \\'' + svc.id + '\\', \\'[' + cat.name + '] ' + svc.name + '\\', ' + cartPrice + ', event)"><i class="fas fa-cart-plus"></i> 담기</button>' : '') + '</div>';
+        }).join('') + '</div></div>').join('') + '</div>';
+      }
+      
+      function renderSetupHTML() {
+        return marketingSetup.map(item => '<div class="card ' + (item.recommended ? 'recommended' : '') + '">' + (item.recommended ? '<div class="card-badge">추천</div>' : '') + (item.discount ? '<div class="discount-badge">' + item.discount + '</div>' : '') + '<h3 class="card-name">' + item.name + '</h3><p class="card-desc">' + item.desc + '</p><div class="card-price"><span class="price-value">' + (item.price/10000) + '</span><span class="price-unit">만원</span>' + (item.originalPrice ? '<div class="price-original">' + (item.originalPrice/10000) + '만원</div>' : '') + '</div><ul class="card-list">' + item.includes.map(inc => '<li><i class="fas fa-check"></i>' + inc + '</li>').join('') + '</ul><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'setup\\', \\'' + item.id + '\\', \\'' + item.name + '\\', ' + item.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+      }
+      
+      function renderGradesHTML() {
+        return monthlyGrades.map(g => '<div class="card ' + (g.recommended ? 'recommended' : '') + '" style="border-top: 3px solid ' + colorMap[g.color] + '">' + (g.recommended ? '<div class="card-badge">BEST</div>' : '') + '<div class="card-tier">' + g.grade + '</div><h3 class="card-name">' + g.name + '</h3><p class="card-subtitle">' + g.subtitle + '</p><p class="card-desc">🎯 ' + g.goal + '</p><div class="card-price"><span class="price-value">' + (g.price/10000) + '</span><span class="price-unit">만원/월</span></div><ul class="card-list">' + g.services.map(s => '<li><i class="fas fa-check"></i>' + s + '</li>').join('') + '</ul><p style="font-size:0.75rem;color:var(--text-tertiary);margin-bottom:12px;">추천: ' + g.targetAudience + '</p><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'grade\\', \\'' + g.id + '\\', \\'' + g.grade + ' ' + g.name + ' (월)\\', ' + g.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+      }
+      
+      function renderSetsHTML() {
+        return '<div style="margin-bottom:20px;padding:16px;background:rgba(249,115,22,0.1);border-radius:12px;border:1px solid rgba(249,115,22,0.3);"><p style="font-size:0.9rem;color:var(--text-secondary);margin:0;"><strong style="color:#f97316;">💡 SNS 셋트 = 초기 셋팅 + 첫 달 관리 포함!</strong><br>• <strong>첫 달</strong>: 아래 금액 결제 (셋팅 + 1~2개월 관리)<br>• <strong>다음 달부터</strong>: 월관리비만 결제 (자동결제 또는 수동)</p></div><div class="grid grid-2">' + setMenus.map(s => '<div class="card ' + (s.best ? 'recommended' : '') + '"><div class="card-badge">' + s.tag + '</div><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.recommended + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span><div class="price-original">' + (s.originalPrice/10000) + '만원</div></div><div style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:10px;margin-bottom:12px;"><div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:4px;">📅 다음 달부터 월관리비</div><div style="font-size:1.1rem;font-weight:700;color:#a855f7;">' + (s.monthlyPrice/10000) + '만원<span style="font-size:0.75rem;color:var(--text-tertiary);font-weight:400;">/월 (' + s.monthlyGrade + ')</span></div></div><ul class="card-list">' + s.includes.map(inc => '<li><i class="fas fa-gift"></i>' + inc + '</li>').join('') + '</ul><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'set\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>첫 달 결제하기</button></div>').join('') + '</div>';
+      }
+      
+      function renderPricingHTML() {
+        return '<div style="margin-bottom:20px;padding:16px;background:rgba(168,85,247,0.1);border-radius:12px;border:1px solid rgba(168,85,247,0.3);"><p style="font-size:0.9rem;color:var(--text-secondary);margin:0;"><strong style="color:#a855f7;">📋 가격 구성 안내</strong><br>• <strong>셋팅비</strong>: 처음 1회 (계정 최적화, 기반 작업)<br>• <strong>월관리비</strong>: 매월 (콘텐츠 제작, 관리)<br>• 원하는 서비스를 장바구니에 담아주세요!</p></div>' + 
+        '<div class="channel-grid">' + channelServices.map(cat => '<div class="channel-category"><div class="channel-header"><i class="' + cat.icon + ' channel-icon" style="color:' + cat.color + '"></i><span class="channel-name">' + cat.name + '</span></div><div class="channel-services">' + cat.services.map(svc => {
+          let priceHtml = '';
+          let buttonHtml = '';
+          if (svc.setupFee > 0) {
+            priceHtml += '<div class="service-price"><span class="service-price-label">셋팅</span><span class="service-price-value">' + (svc.setupFee/10000) + '만</span></div>';
+            buttonHtml += '<button class="service-add-btn pricing-btn" data-type="channel" data-id="' + svc.id + '-setup" data-name="[' + cat.name + '] ' + svc.name + ' 셋팅" data-price="' + svc.setupFee + '"><i class="fas fa-cart-plus"></i> 셋팅</button>';
+          }
+          if (svc.hasAB) {
+            priceHtml += '<div class="service-price monthly"><span class="service-price-label">월A</span><span class="service-price-value">' + (svc.monthlyFeeA/10000) + '만</span></div>';
+            priceHtml += '<div class="service-price monthly-b"><span class="service-price-label">월B</span><span class="service-price-value">' + (svc.monthlyFeeB/10000) + '만</span></div>';
+            buttonHtml += '<button class="service-add-btn pricing-btn" data-type="channel" data-id="' + svc.id + '-monthlyA" data-name="[' + cat.name + '] ' + svc.name + ' 월A형" data-price="' + svc.monthlyFeeA + '"><i class="fas fa-cart-plus"></i> 월A</button>';
+            buttonHtml += '<button class="service-add-btn pricing-btn" data-type="channel" data-id="' + svc.id + '-monthlyB" data-name="[' + cat.name + '] ' + svc.name + ' 월B형" data-price="' + svc.monthlyFeeB + '"><i class="fas fa-cart-plus"></i> 월B</button>';
+          } else if (svc.monthlyFee > 0) {
+            priceHtml += '<div class="service-price monthly"><span class="service-price-label">월</span><span class="service-price-value">' + (svc.monthlyFee/10000) + '만</span></div>';
+            buttonHtml += '<button class="service-add-btn pricing-btn" data-type="channel" data-id="' + svc.id + '-monthly" data-name="[' + cat.name + '] ' + svc.name + ' 월관리" data-price="' + svc.monthlyFee + '"><i class="fas fa-cart-plus"></i> 월관리</button>';
+          } else if (svc.notice) {
+            priceHtml += '<div class="service-notice">' + svc.notice + '</div>';
+          }
+          return '<div class="service-item' + (svc.isSet ? ' service-set' : '') + '"><div class="service-info"><div class="service-name">' + svc.name + (svc.isSet ? ' <span class="set-badge">SET</span>' : '') + '</div><div class="service-desc">' + svc.desc + '</div>' + (svc.smallNotice ? '<div class="service-small-notice">⚠️ ' + svc.smallNotice + '</div>' : '') + '</div><div class="service-prices">' + priceHtml + '</div>' + (buttonHtml ? '<div class="service-buttons">' + buttonHtml + '</div>' : '') + '</div>';
+        }).join('') + '</div></div>').join('') + '</div>';
+      }
+      
+      function renderWebsitesHTML() {
+        return websitePackages.map(w => '<div class="card ' + (w.recommended ? 'recommended' : '') + '" style="border-top: 3px solid ' + colorMap[w.color] + '">' + (w.recommended ? '<div class="card-badge">BEST</div>' : '') + '<div class="card-tier">' + w.type + '</div><h3 class="card-name">' + w.name + '</h3><p class="card-subtitle">' + w.subtitle + '</p><p class="card-desc">' + w.description + '</p><div class="card-price"><span class="price-value">' + (w.price/10000) + '</span><span class="price-unit">만원</span><div class="price-original">' + (w.originalPrice/10000) + '만원</div></div><ul class="card-list">' + w.includes.map(inc => '<li><i class="fas fa-check"></i>' + inc + '</li>').join('') + '</ul><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'website\\', \\'' + w.id + '\\', \\'' + w.type + ' ' + w.name + '\\', ' + w.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+      }
+      
+      function renderAddonsHTML() {
+        return addonServices.map(a => {
+          const isHighlight = a.highlight;
+          const highlightStyle = isHighlight ? 'border: 2px solid #22c55e; background: linear-gradient(145deg, rgba(34,197,94,0.1), transparent);' : '';
+          const badgeHtml = isHighlight ? '<div class="card-badge" style="background: linear-gradient(135deg, #22c55e, #16a34a);">NEW</div>' : '';
+          const priceDisplay = a.price < 100000 ? (a.price/10000).toFixed(1) : (a.price/10000);
+          return '<div class="card" style="' + highlightStyle + '">' + badgeHtml + '<h3 class="card-name">' + a.name + '</h3><p class="card-desc">' + a.desc + '</p><div class="card-price"><span class="price-value">' + priceDisplay + '</span><span class="price-unit">만원/' + a.perUnit + '</span></div><button class="btn btn-primary btn-small" style="width:100%;' + (isHighlight ? 'background: linear-gradient(135deg, #22c55e, #16a34a);' : '') + '" onclick="addToCart(\\'addon\\', \\'' + a.id + '\\', \\'' + a.name + '\\', ' + a.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>';
+        }).join('');
+      }
+      
+      function renderWebServiceHTML() {
+        return webServiceOptions.map(w => '<div class="card"><h3 class="card-name">' + w.name + '</h3><p class="card-desc">' + w.desc + '</p><div class="card-price"><span class="price-value">' + (w.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'webservice\\', \\'' + w.id + '\\', \\'' + w.name + '\\', ' + w.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>').join('');
+      }
+      
+      function renderSysDevHTML() {
+        return sysDevOptions.map(s => {
+          if (s.isEdu) {
+            // 수강 신청 카드 - 특별 디자인 + 바로 결제
+            return '<div class="card" data-edu-card style="border:2px solid var(--neon-green);background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(168,85,247,0.1));">' +
+              '<div style="position:absolute;top:-10px;right:10px;background:linear-gradient(135deg,#ef4444,#f97316);color:white;padding:4px 12px;border-radius:12px;font-size:0.75rem;font-weight:700;">🔥 선착순 5명</div>' +
+              '<h3 class="card-name" style="color:var(--neon-green);">' + s.name + '</h3>' +
+              '<p class="card-desc">' + s.desc + '</p>' +
+              '<div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div>' +
+              '<p style="font-size:0.75rem;color:var(--neon-orange);margin-bottom:12px;">(카드결제 시 VAT 별도 → 220만원)</p>' +
+              '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+                '<button class="btn btn-small" style="background:linear-gradient(135deg,var(--neon-purple),var(--neon-pink));" onclick="eduCardPay()"><i class="fas fa-credit-card"></i> 카드</button>' +
+                '<button class="btn btn-small" style="background:linear-gradient(135deg,var(--neon-green),#16a34a);" onclick="openEduModal()"><i class="fas fa-university"></i> 계좌</button>' +
+              '</div>' +
+              '<p style="font-size:0.7rem;color:#888;margin-top:10px;text-align:center;">💻 카드결제는 PC에서 가능합니다</p>' +
+            '</div>';
+          }
+          return '<div class="card"><h3 class="card-name">' + s.name + '</h3><p class="card-desc">' + s.desc + '</p><div class="card-price"><span class="price-value">' + (s.price/10000) + '</span><span class="price-unit">만원</span></div><button class="btn btn-primary btn-small" style="width:100%;" onclick="addToCart(\\'sysdev\\', \\'' + s.id + '\\', \\'' + s.name + '\\', ' + s.price + ', event)"><i class="fas fa-cart-plus"></i>담기</button></div>';
+        }).join('');
+      }
+      
+      function renderConsultingHTML() {
+        const stepColors = ['#ef4444', '#f59e0b', '#22c55e'];
+        return '<div class="consulting-packages">' +
+          '<div class="consulting-intro">' +
+            '<h3>🏢 브랜드/프랜차이즈 컨설팅</h3>' +
+            '<p style="color: var(--neon-orange);">📋 1년 계약 · 월2회 방문 · 단계별 차등요금</p>' +
+          '</div>' +
+          '<div class="consulting-grid">' +
+            consultingOptions.map((c, idx) => {
+              const stepColor = stepColors[idx];
+              const isRecommended = c.recommended;
+              return '<div class="consulting-card' + (isRecommended ? ' recommended' : '') + '" style="--step-color: ' + stepColor + '">' +
+                '<div class="step-badge" style="background: ' + stepColor + '">' + c.badge + '</div>' +
+                (isRecommended ? '<div class="best-badge">BEST</div>' : '') +
+                '<h4 class="step-name">' + c.name + '</h4>' +
+                '<p class="step-subtitle">' + c.subtitle + '</p>' +
+                '<div class="step-pricing">' +
+                  '<div class="monthly-fee"><span class="fee-label">월</span><span class="fee-value">' + (c.monthlyFee/10000) + '</span><span class="fee-unit">만원</span></div>' +
+                  '<div class="total-fee">' + c.period + ' 총 ' + (c.totalPrice/10000) + '만원</div>' +
+                  '<div class="visit-note">' + c.desc + '</div>' +
+                '</div>' +
+                '<ul class="step-tasks">' + c.tasks.map(t => '<li><i class="fas fa-check"></i>' + t + '</li>').join('') + '</ul>' +
+                '<div class="step-includes">' +
+                  '<div class="includes-title"><i class="fas fa-box"></i> 포함</div>' +
+                  '<div class="includes-list">' + c.includes.map(i => '<span>' + i + '</span>').join('') + '</div>' +
+                '</div>' +
+                '<div class="step-advisory">' +
+                  '<div class="advisory-title"><i class="fas fa-user-tie"></i> 자문</div>' +
+                  '<div class="advisory-tags">' + c.advisory.map(a => '<span>' + a + '</span>').join('') + '</div>' +
+                '</div>' +
+                '<button class="btn btn-primary step-cta" style="background: ' + stepColor + '" onclick="addToCart(\\'consulting\\', \\'' + c.id + '\\', \\'' + c.name + ' (' + c.period + ')\\', ' + c.totalPrice + ', event)">' +
+                  '<i class="fas fa-handshake"></i> 상담신청' +
+                '</button>' +
+              '</div>';
+            }).join('') +
+          '</div>' +
+        '</div>' +
+        '<style>' +
+          '.consulting-packages { max-width: 100%; }' +
+          '.consulting-intro { text-align: center; margin-bottom: 20px; }' +
+          '.consulting-intro h3 { font-size: 1.1rem; margin: 0 0 6px; white-space: nowrap; }' +
+          '.consulting-intro p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }' +
+          '.consulting-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }' +
+          '.consulting-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; position: relative; border: 1px solid rgba(255,255,255,0.1); }' +
+          '.consulting-card.recommended { border: 2px solid var(--step-color); background: rgba(245,158,11,0.05); }' +
+          '.step-badge { position: absolute; top: -10px; left: 20px; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; color: white; }' +
+          '.best-badge { position: absolute; top: -10px; right: 20px; background: linear-gradient(135deg, #a855f7, #ec4899); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; color: white; }' +
+          '.step-name { font-size: 1.2rem; margin: 10px 0 4px; }' +
+          '.step-subtitle { color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 12px; }' +
+          '.step-pricing { text-align: center; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 12px; margin-bottom: 14px; }' +
+          '.monthly-fee { display: flex; align-items: baseline; justify-content: center; gap: 4px; }' +
+          '.fee-label { font-size: 0.8rem; color: var(--text-secondary); }' +
+          '.fee-value { font-size: 2rem; font-weight: 700; color: var(--step-color); }' +
+          '.fee-unit { font-size: 0.9rem; color: var(--text-secondary); }' +
+          '.total-fee { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 4px; }' +
+          '.visit-note { font-size: 0.75rem; color: var(--step-color); margin-top: 4px; }' +
+          '.step-tasks { list-style: none; padding: 0; margin: 0 0 12px; }' +
+          '.step-tasks li { font-size: 0.85rem; padding: 4px 0; display: flex; align-items: center; gap: 8px; }' +
+          '.step-tasks li i { color: var(--step-color); font-size: 0.7rem; }' +
+          '.step-includes, .step-advisory { margin-bottom: 10px; }' +
+          '.includes-title, .advisory-title { font-size: 0.75rem; color: var(--text-tertiary); margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }' +
+          '.includes-list span, .advisory-tags span { display: inline-block; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; margin: 2px; }' +
+          '.advisory-tags span { background: rgba(234,179,8,0.15); color: #eab308; }' +
+          '.step-cta { width: 100%; padding: 12px; font-size: 0.95rem; border: none; border-radius: 10px; margin-top: 8px; }' +
+        '</style>';
+      }
+      
+      function addToCart(type, id, name, price, event) { 
+        // 이벤트 버블링 방지 (모달 닫힘 방지)
+        if (event) event.stopPropagation();
+        cart.push({ type, id, name, price }); 
+        saveCart(); // LocalStorage 저장
+        updateCart(); 
+        // 서비스 모달이 열려있으면 장바구니 패널은 열지 않고 토스트만 표시
+        if (document.getElementById('service-modal').classList.contains('open')) {
+          showToast('✅ ' + name + ' 담기 완료! (총 ' + cart.length + '개)');
+        } else {
+          document.getElementById('cart-panel').classList.add('open'); 
+        }
+      }
+      
+      function showToast(message) {
+        let toast = document.getElementById('toast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'toast';
+          toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#a855f7,#ec4899);color:white;padding:12px 24px;border-radius:30px;font-size:0.9rem;font-weight:600;z-index:9999;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 20px rgba(168,85,247,0.4);';
+          document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+      }
+      function removeFromCart(index) { cart.splice(index, 1); saveCart(); updateCart(); }
+      function updateCart() {
+        const container = document.getElementById('cart-items');
+        const count = document.getElementById('cart-count');
+        const total = document.getElementById('cart-total');
+        const checkoutBar = document.getElementById('checkout-bar');
+        const checkoutCount = document.getElementById('checkout-count');
+        const checkoutTotal = document.getElementById('checkout-total-display');
+        
+        count.textContent = cart.length;
+        if (cart.length === 0) { 
+          container.innerHTML = '<div class="cart-empty">항목을 추가하세요</div>'; 
+          total.textContent = '0원'; 
+          checkoutBar.style.display = 'none';
+          return; 
+        }
+        container.innerHTML = cart.map((item, i) => '<div class="cart-item"><span class="cart-item-name">' + item.name + '</span><span class="cart-item-price">' + (item.price/10000) + '만</span><button class="cart-item-remove" onclick="removeFromCart(' + i + ')"><i class="fas fa-times"></i></button></div>').join('');
+        let sum = cart.reduce((acc, item) => acc + item.price, 0);
+        if (document.getElementById('regional-fee').checked) sum += 300000;
+        const totalText = (sum/10000).toLocaleString() + '만원';
+        total.textContent = totalText;
+        
+        // 하단 결제 바 업데이트 및 표시
+        checkoutBar.style.display = 'block';
+        checkoutCount.textContent = cart.length;
+        checkoutTotal.textContent = totalText;
+      }
+      function toggleCart() { document.getElementById('cart-panel').classList.toggle('open'); }
+      
+      function toggleInstallmentInfo() {
+        const info = document.getElementById('installment-info');
+        const check = document.getElementById('installment-check');
+        info.style.display = check.checked ? 'block' : 'none';
+      }
+      
+      function clearCart() {
+        if (confirm('장바구니를 비우시겠습니까?')) {
+          cart = [];
+          saveCart();
+          updateCart();
+          showToast('🗑️ 장바구니가 비워졌습니다');
+        }
+      }
+      
+      function downloadQuote() {
+        if (cart.length === 0) {
+          showToast('⚠️ 장바구니에 상품을 담아주세요');
+          return;
+        }
+        
+        const today = new Date();
+        const dateStr = today.getFullYear() + '년 ' + (today.getMonth()+1) + '월 ' + today.getDate() + '일';
+        const validUntil = new Date(today.getTime() + 7*24*60*60*1000);
+        const validStr = validUntil.getFullYear() + '년 ' + (validUntil.getMonth()+1) + '월 ' + validUntil.getDate() + '일';
+        
+        let sum = cart.reduce((acc, item) => acc + item.price, 0);
+        const isRegional = document.getElementById('regional-fee').checked;
+        if (isRegional) sum += 300000;
+        
+        const quoteHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>X I Λ I X 견적서</title><style>' +
+          'body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#333;}' +
+          '.header{text-align:center;border-bottom:3px solid #a855f7;padding-bottom:20px;margin-bottom:30px;}' +
+          '.logo{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}' +
+          'h1{font-size:1.5rem;margin:10px 0 0;color:#333;}' +
+          '.info{display:flex;justify-content:space-between;margin-bottom:30px;font-size:0.9rem;color:#666;}' +
+          'table{width:100%;border-collapse:collapse;margin-bottom:30px;}' +
+          'th,td{border:1px solid #ddd;padding:12px;text-align:left;}' +
+          'th{background:#f5f5f5;font-weight:600;}' +
+          '.price{text-align:right;}' +
+          '.total-row{background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(236,72,153,0.1));font-weight:700;}' +
+          '.total-row td{font-size:1.1rem;color:#a855f7;}' +
+          '.footer{margin-top:40px;padding-top:20px;border-top:1px solid #ddd;font-size:0.85rem;color:#666;text-align:center;}' +
+          '.notice{background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:16px;margin-top:20px;font-size:0.9rem;}' +
+          '.stamp{text-align:right;margin-top:30px;color:#a855f7;font-weight:600;}' +
+          '@media print{body{padding:20px;}}' +
+        '</style></head><body>' +
+          '<div class="header"><div class="logo">X I Λ I X</div><h1>견 적 서</h1></div>' +
+          '<div class="info"><div><strong>발행일:</strong> ' + dateStr + '<br><strong>유효기간:</strong> ' + validStr + '까지</div><div style="text-align:right;"><strong>X I Λ I X</strong><br>Combine Technology & Business<br>대표: 방익주</div></div>' +
+          '<table><thead><tr><th>No.</th><th>서비스명</th><th class="price">금액</th></tr></thead><tbody>' +
+          cart.map((item, i) => '<tr><td>' + (i+1) + '</td><td>' + item.name + '</td><td class="price">' + (item.price).toLocaleString() + '원</td></tr>').join('') +
+          (isRegional ? '<tr><td>' + (cart.length+1) + '</td><td>지방 출장비</td><td class="price">300,000원</td></tr>' : '') +
+          '<tr class="total-row"><td colspan="2" style="text-align:center;">합 계</td><td class="price">' + sum.toLocaleString() + '원</td></tr>' +
+          '</tbody></table>' +
+          '<div class="notice"><strong>📋 안내사항</strong><ul style="margin:10px 0 0;padding-left:20px;"><li>본 견적서는 발행일로부터 7일간 유효합니다.</li><li>부가세(VAT) 별도입니다.</li><li>결제 완료 후 작업이 시작됩니다.</li><li>상세 문의: X I Λ I X 챗봇 또는 카카오톡 상담</li></ul></div>' +
+          '<div class="stamp">X I Λ I X</div>' +
+          '<div class="footer">© 2026 X I Λ I X. All rights reserved.<br>본 견적서는 전자문서로 별도의 서명 없이 유효합니다.</div>' +
+        '</body></html>';
+        
+        const blob = new Blob([quoteHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'XIVIX_견적서_' + today.getFullYear() + (today.getMonth()+1).toString().padStart(2,'0') + today.getDate().toString().padStart(2,'0') + '.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('📄 견적서가 다운로드되었습니다');
+      }
+      
+      // 현재 로그인 상태
+      let currentUser = null;
+      
+      // 페이지 로드 시 로그인 상태 확인
+      async function checkLoginStatus() {
         try {
-          const res = await fetch('/api/portfolios');
+          const res = await fetch('/api/auth/me');
           const data = await res.json();
-          portfolioData = data.items || [];
-          renderPortfolio();
+          currentUser = data.user;
+          updateLoginUI();
         } catch (e) {
-          console.log('Portfolio load error:', e);
+          currentUser = null;
         }
       }
       
-      // 서비스 로드
-      async function loadServices() {
-        try {
-          const res = await fetch('/api/channel-services');
-          channelServices = await res.json();
-          renderServices();
-        } catch (e) {
-          console.log('Services load error:', e);
+      function updateLoginUI() {
+        // 헤더에 로그인 상태 표시 (옵션)
+        const headerRight = document.querySelector('.header-right');
+        if (headerRight && currentUser) {
+          // 로그인 되어있으면 마이페이지 버튼 표시
         }
       }
       
-      // 포트폴리오 렌더링
-      function renderPortfolio() {
-        const grid = document.getElementById('portfolioGrid');
-        if (!grid || !portfolioData.length) return;
+      // 결제 버튼 클릭
+      async function checkout() {
+        if (cart.length === 0) { alert('장바구니가 비어있습니다.'); return; }
         
-        grid.innerHTML = portfolioData.slice(0, 12).map(item => \`
-          <div class="portfolio-card" onclick="openPortfolio('\${item.url}', '\${item.title}')">
-            <div class="portfolio-thumb">
-              <i class="fas fa-external-link-alt"></i>
-            </div>
-            <div class="portfolio-info">
-              <h4 class="portfolio-title">\${item.title}</h4>
-              <span class="portfolio-tag">\${item.tag}</span>
-            </div>
-          </div>
-        \`).join('');
+        // 로그인 상태 확인
+        if (!currentUser) {
+          // 로그인 안 됨 → 로그인 모달 표시
+          openLoginModal();
+          return;
+        }
+        
+        // 로그인 됨 → 바로 결제 진행
+        await processPayment();
       }
       
-      // 서비스 렌더링
-      function renderServices() {
-        const grid = document.getElementById('serviceGrid');
-        if (!grid) return;
-        
-        const services = [
-          { id: 'naver', name: '네이버 마케팅', desc: '블로그, 플레이스, 스마트스토어 통합 관리', icon: 'fa-solid fa-n', iconClass: 'naver' },
-          { id: 'insta', name: '인스타그램 마케팅', desc: '피드, 릴스, 스토리 콘텐츠 제작 및 운영', icon: 'fab fa-instagram', iconClass: 'insta' },
-          { id: 'youtube', name: '유튜브 마케팅', desc: '영상 기획, 편집, 채널 성장 전략', icon: 'fab fa-youtube', iconClass: 'youtube', badge: 'HOT' },
-          { id: 'tiktok', name: '틱톡 마케팅', desc: '숏폼 콘텐츠 기획 및 바이럴 마케팅', icon: 'fab fa-tiktok', iconClass: 'tiktok' },
-          { id: 'web', name: '웹사이트 제작', desc: '랜딩페이지, 쇼핑몰, 기업 홈페이지', icon: 'fas fa-globe', iconClass: 'web' },
-          { id: 'system', name: 'AI 시스템 구축', desc: '업무 자동화, AI 챗봇, 데이터 분석', icon: 'fas fa-robot', iconClass: 'system', badge: 'NEW' }
-        ];
-        
-        grid.innerHTML = services.map(s => \`
-          <div class="service-card" onclick="openServiceDetail('\${s.id}')">
-            <div class="service-card-inner">
-              <div class="service-card-header">
-                <div class="service-icon \${s.iconClass}">
-                  <i class="\${s.icon}"></i>
-                </div>
-                <div class="service-card-info">
-                  <h3 class="service-card-title">
-                    \${s.name}
-                    \${s.badge ? \`<span class="service-card-badge">\${s.badge}</span>\` : ''}
-                  </h3>
-                  <p class="service-card-desc">\${s.desc}</p>
-                </div>
-              </div>
-            </div>
-            <span class="service-card-arrow">
-              <i class="fas fa-arrow-right"></i>
-            </span>
-          </div>
-        \`).join('');
+      // 로그인 모달 열기/닫기
+      function openLoginModal() {
+        document.getElementById('login-modal').classList.add('open');
       }
       
-      // 채팅 토글
-      function toggleChat() {
-        const chatWindow = document.getElementById('chatWindow');
-        chatWindow.classList.toggle('open');
+      function closeLoginModal() {
+        document.getElementById('login-modal').classList.remove('open');
       }
       
-      function openChat() {
-        const chatWindow = document.getElementById('chatWindow');
-        chatWindow.classList.add('open');
+      // 예약 모달
+      function openBookingModal() {
+        document.getElementById('booking-modal').style.display = 'flex';
+        // 최소 날짜 설정 (내일부터)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('booking-date').min = tomorrow.toISOString().split('T')[0];
       }
       
-      // 채팅 메시지 전송
-      async function sendChatMessage() {
-        const input = document.getElementById('chatInput');
-        const message = input.value.trim();
-        if (!message) return;
+      function closeBookingModal() {
+        document.getElementById('booking-modal').style.display = 'none';
+      }
+      
+      async function loadAvailableTimes() {
+        const date = document.getElementById('booking-date').value;
+        const timeSelect = document.getElementById('booking-time');
         
-        const messagesDiv = document.getElementById('chatMessages');
-        
-        // 사용자 메시지 추가
-        messagesDiv.innerHTML += \`<div class="chat-message user">\${message}</div>\`;
-        input.value = '';
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        
-        // 로딩 표시
-        const loadingId = 'loading_' + Date.now();
-        messagesDiv.innerHTML += \`<div class="chat-message bot" id="\${loadingId}">
-          <i class="fas fa-spinner fa-spin"></i> 생각 중...
-        </div>\`;
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        if (!date) {
+          timeSelect.innerHTML = '<option value="">날짜를 먼저 선택</option>';
+          return;
+        }
         
         try {
-          const res = await fetch('/api/chat', {
+          const res = await fetch('/api/booking/available-times?date=' + date);
+          const data = await res.json();
+          
+          if (data.availableTimes.length === 0) {
+            timeSelect.innerHTML = '<option value="">예약 가능한 시간이 없습니다</option>';
+          } else {
+            timeSelect.innerHTML = '<option value="">시간 선택</option>' + 
+              data.availableTimes.map(t => '<option value="' + t + '">' + t + '</option>').join('');
+          }
+        } catch (e) {
+          // 기본 시간 표시
+          timeSelect.innerHTML = '<option value="">시간 선택</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option>';
+        }
+      }
+      
+      async function submitBooking() {
+        const name = document.getElementById('booking-name').value.trim();
+        const phone = document.getElementById('booking-phone').value.trim();
+        const email = document.getElementById('booking-email').value.trim();
+        const date = document.getElementById('booking-date').value;
+        const time = document.getElementById('booking-time').value;
+        const consultType = document.getElementById('booking-type').value;
+        const industry = document.getElementById('booking-industry').value;
+        const message = document.getElementById('booking-message').value.trim();
+        
+        if (!name || !phone || !date || !time) {
+          showToast('⚠️ 필수 정보를 입력해주세요');
+          return;
+        }
+        
+        try {
+          const res = await fetch('/api/booking', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message })
+            body: JSON.stringify({ name, phone, email, date, time, consultType, industry, message })
           });
+          
           const data = await res.json();
           
-          document.getElementById(loadingId).innerHTML = data.response || data.reply || '죄송합니다. 다시 시도해주세요.';
+          if (data.success) {
+            closeBookingModal();
+            showToast('예약이 완료되었습니다. 담당자가 연락드릴 예정입니다.');
+            
+            // 입력값 초기화
+            document.getElementById('booking-name').value = '';
+            document.getElementById('booking-phone').value = '';
+            document.getElementById('booking-email').value = '';
+            document.getElementById('booking-date').value = '';
+            document.getElementById('booking-time').innerHTML = '<option value="">날짜를 먼저 선택</option>';
+            document.getElementById('booking-message').value = '';
+          } else {
+            showToast('❌ ' + (data.error || '예약 실패. 다시 시도해주세요.'));
+          }
         } catch (e) {
-          document.getElementById(loadingId).innerHTML = '네트워크 오류가 발생했습니다.';
+          showToast('❌ 네트워크 오류. 다시 시도해주세요.');
+        }
+      }
+      
+      // 카카오/네이버 로그인 후 결제 계속
+      function loginForCheckout(provider) {
+        const referralCode = document.getElementById('checkout-referral-code').value.trim();
+        
+        // 현재 장바구니 상태를 localStorage에 저장
+        localStorage.setItem('xivix_pending_cart', JSON.stringify(cart));
+        localStorage.setItem('xivix_pending_checkout', 'true');
+        
+        let url = '/api/auth/' + provider;
+        if (referralCode && provider === 'kakao') {
+          url += '?state=' + encodeURIComponent(referralCode);
+        }
+        window.location.href = url;
+      }
+      
+      // 로그인 없이 결제 (비회원)
+      async function skipLoginAndCheckout() {
+        closeLoginModal();
+        await processPaymentAsGuest();
+      }
+      
+      // 회원 결제 처리
+      async function processPayment() {
+        const customerEmail = currentUser.email;
+        const customerName = currentUser.name;
+        let customerPhone = currentUser.phone || '';
+        
+        // 전화번호가 없으면 입력받기 (이니시스 V2 필수)
+        if (!customerPhone || customerPhone.trim() === '') {
+          customerPhone = prompt('결제를 위해 휴대폰 번호를 입력해주세요:\\n(예: 010-1234-5678)', '');
+          if (!customerPhone || customerPhone.trim() === '') {
+            alert('휴대폰 번호는 필수입니다.');
+            return;
+          }
         }
         
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        await executePayment(customerEmail, customerName, customerPhone);
       }
       
-      function handleChatKeypress(e) {
-        if (e.key === 'Enter') sendChatMessage();
+      // 비회원 결제 처리
+      async function processPaymentAsGuest() {
+        const customerEmail = prompt('결제를 위해 이메일을 입력해주세요:', '');
+        if (!customerEmail || !customerEmail.includes('@')) {
+          alert('유효한 이메일을 입력해주세요.');
+          return;
+        }
+        const customerName = prompt('성함을 입력해주세요:', '') || '고객';
+        const customerPhone = prompt('휴대폰 번호를 입력해주세요 (필수):\\n(예: 010-1234-5678)', '');
+        if (!customerPhone || customerPhone.trim() === '') {
+          alert('휴대폰 번호는 필수입니다.');
+          return;
+        }
+        
+        await executePayment(customerEmail, customerName, customerPhone);
       }
       
-      // 모바일 메뉴
-      function toggleMobileMenu() {
-        const nav = document.getElementById('mobileNav');
-        const btn = document.querySelector('.mobile-menu-btn i');
-        nav.classList.toggle('open');
-        btn.className = nav.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+      // 실제 결제 실행
+      async function executePayment(customerEmail, customerName, customerPhone) {
+        // 모바일 체크 - 현재 모바일 카드결제 미지원
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          alert('📱 모바일 카드결제 안내\\n\\n현재 모바일 카드결제는 준비 중입니다.\\n(약 1개월 소요 예정)\\n\\n✅ PC에서 카드결제 가능합니다.');
+          return;
+        }
+        
+        const isRegional = document.getElementById('regional-fee').checked;
+        try {
+          const res = await fetch('/api/payment/prepare', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: cart, isRegional }) });
+          const data = await res.json();
+          if (typeof PortOne !== 'undefined') {
+            const response = await PortOne.requestPayment({ 
+              storeId: data.storeId, 
+              channelKey: data.channelKey, 
+              paymentId: data.orderId, 
+              orderName: data.orderName, 
+              totalAmount: data.totalAmount, 
+              currency: 'KRW', 
+              payMethod: 'CARD',
+              windowType: {
+                pc: 'IFRAME',
+                mobile: 'REDIRECTION'
+              },
+              redirectUrl: 'https://xivix.kr/?cart_payment=success&orderId=' + data.orderId,
+              customer: {
+                email: customerEmail,
+                fullName: customerName,
+                phoneNumber: customerPhone.replace(/-/g, '')
+              }
+            });
+            if (response.code) alert('결제 실패: ' + response.message);
+            else { 
+              // 결제 성공 - DB에 저장
+              await fetch('/api/payment/complete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  orderId: data.orderId,
+                  orderName: data.orderName,
+                  totalAmount: data.totalAmount,
+                  originalAmount: data.originalAmount,
+                  discountAmount: data.discountAmount,
+                  couponId: data.couponId,
+                  items: cart,
+                  customerEmail,
+                  customerName,
+                  customerPhone,
+                  isSubscription: cart.some(item => item.name.includes('관리') || item.name.includes('GRADE'))
+                })
+              });
+              
+              // 정보 저장 후 성공 모달 표시
+              lastPaymentInfo = {
+                orderName: data.orderName,
+                amount: data.totalAmount,
+                customerInfo: { email: customerEmail, name: customerName, phone: customerPhone }
+              };
+              document.getElementById('success-order-name').textContent = data.orderName;
+              document.getElementById('success-order-amount').textContent = (data.totalAmount/10000).toLocaleString() + '만원';
+              document.getElementById('success-modal').classList.add('open');
+              cart = []; 
+              updateCart();
+              document.getElementById('cart-panel').classList.remove('open');
+            }
+          } else { alert('결제 준비 완료\\n' + data.orderName + '\\n' + (data.totalAmount/10000) + '만원'); }
+        } catch (err) { alert('오류: ' + err.message); }
       }
       
-      function closeMobileMenu() {
-        document.getElementById('mobileNav').classList.remove('open');
-        document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
+      // 결제 완료 후 모달 관련 함수
+      function closeSuccessModal() {
+        document.getElementById('success-modal').classList.remove('open');
+        resetQuestionnaire();
       }
       
-      // 포트폴리오 열기
-      function openPortfolio(url, title) {
-        if (url.includes('youtube.com/embed')) {
-          // 유튜브 영상
-          document.getElementById('iframeModalTitle').textContent = title;
-          document.getElementById('iframeModalContent').src = url;
-          document.getElementById('iframeModal').classList.add('open');
+      function selectContactOption(type) {
+        const inputArea = document.getElementById('contact-input-area');
+        const label = document.getElementById('contact-input-label');
+        inputArea.style.display = 'block';
+        if (type === 'phone') {
+          label.textContent = '전화 상담을 위한 연락처';
         } else {
-          // 외부 링크
-          window.open(url, '_blank');
+          label.textContent = '🏢 방문 상담을 위한 연락처';
         }
+        document.getElementById('q-contact').dataset.contactType = type;
       }
       
-      function closeIframeModal() {
-        document.getElementById('iframeModal').classList.remove('open');
-        document.getElementById('iframeModalContent').src = '';
-      }
-      
-      // 서비스 상세
-      function openServiceDetail(id) {
-        // API에서 서비스 상세 정보 로드
-        const modal = document.getElementById('serviceModal');
-        const title = document.getElementById('serviceModalTitle');
-        const body = document.getElementById('serviceModalBody');
-        
-        const names = {
-          naver: '네이버 마케팅',
-          insta: '인스타그램 마케팅',
-          youtube: '유튜브 마케팅',
-          tiktok: '틱톡 마케팅',
-          web: '웹사이트 제작',
-          system: 'AI 시스템 구축'
+      async function submitQuestionnaire() {
+        const data = {
+          industry: document.getElementById('q-industry').value,
+          snsStatus: document.getElementById('q-sns-status').value,
+          goal: document.getElementById('q-goal').value,
+          additional: document.getElementById('q-additional').value,
+          contact: document.getElementById('q-contact').value,
+          contactType: document.getElementById('q-contact').dataset.contactType || '',
+          contactTime: document.getElementById('q-contact-time').value,
+          paymentInfo: lastPaymentInfo
         };
         
-        title.innerHTML = \`<i class="fas fa-rocket"></i> \${names[id] || '서비스 상세'}\`;
-        body.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-secondary);">상세 정보를 불러오는 중...</p>';
-        modal.classList.add('open');
+        // 최소 연락처 또는 질문지 중 하나는 필수
+        if (!data.contact && !data.industry && !data.snsStatus && !data.goal) {
+          alert('질문지를 작성하시거나 연락처를 남겨주세요!');
+          return;
+        }
         
-        // 채널 서비스 데이터로 렌더링
-        const service = channelServices.find(s => s.category === id);
-        if (service) {
-          body.innerHTML = \`
-            <div style="padding: 20px 0;">
-              <h3 style="font-size: 1.3rem; margin-bottom: 16px;">\${service.name}</h3>
-              \${service.services ? service.services.map(s => \`
-                <div style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border-subtle);">
-                  <div style="font-weight: 600; margin-bottom: 8px;">\${s.name}</div>
-                  <div style="display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.9rem;">
-                    <span>세팅비: \${(s.setup_fee || 0).toLocaleString()}원</span>
-                    <span>월비용: \${(s.monthly_fee || 0).toLocaleString()}원</span>
-                  </div>
-                </div>
-              \`).join('') : ''}
-            </div>
-            <button class="btn btn-primary btn-large" style="width: 100%;" onclick="openChat(); closeServiceModal();">
-              <i class="fas fa-comment-dots"></i> 상담하기
-            </button>
-          \`;
+        try {
+          // 질문지 데이터를 서버로 전송
+          const res = await fetch('/api/questionnaire', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          
+          if (res.ok) {
+            showToast('✅ 제출 완료! 곧 연락드리겠습니다.');
+            closeSuccessModal();
+          } else {
+            // API가 없어도 로컬에서 처리
+            console.log('질문지 데이터:', data);
+            showToast('✅ 제출 완료! 곧 연락드리겠습니다.');
+            closeSuccessModal();
+          }
+        } catch (err) {
+          // 오류 발생해도 일단 성공 처리 (데이터는 로컬 로그)
+          console.log('질문지 데이터:', data);
+          showToast('✅ 제출 완료! 곧 연락드리겠습니다.');
+          closeSuccessModal();
         }
       }
       
-      function closeServiceModal() {
-        document.getElementById('serviceModal').classList.remove('open');
+      function resetQuestionnaire() {
+        document.getElementById('q-industry').value = '';
+        document.getElementById('q-sns-status').value = '';
+        document.getElementById('q-goal').value = '';
+        document.getElementById('q-additional').value = '';
+        document.getElementById('q-contact').value = '';
+        document.getElementById('q-contact-time').value = '언제든';
+        document.getElementById('contact-input-area').style.display = 'none';
       }
       
-      // 교육 모달
-      function openEduModal() {
-        document.getElementById('eduModal').classList.add('open');
+      function toggleChat() { document.getElementById('chat-window').classList.toggle('open'); }
+      function openChat() { document.getElementById('chat-window').classList.add('open'); }
+      function closeChat() { document.getElementById('chat-window').classList.remove('open'); }
+      
+      // 띠 배너 + 수강 신청
+      function closeBanner() {
+        document.getElementById('top-banner').classList.add('hidden');
+        document.getElementById('main-container').classList.remove('with-banner');
+        sessionStorage.setItem('banner_closed', 'true');
       }
       
-      function closeEduModal() {
-        document.getElementById('eduModal').classList.remove('open');
+      // iframe 모달 (외부 페이지를 내부에서 열기)
+      function openIframeModal() {
+        document.getElementById('iframe-modal').classList.add('open');
+        document.getElementById('iframe-content').src = 'https://xivix-class.pages.dev/';
+      }
+      function closeIframeModal() {
+        document.getElementById('iframe-modal').classList.remove('open');
+        document.getElementById('iframe-content').src = 'about:blank';
       }
       
-      let selectedPayment = 'card';
+      function openEduModal() { document.getElementById('edu-modal').classList.add('open'); }
+      function closeEduModal() { document.getElementById('edu-modal').classList.remove('open'); }
       
-      function selectPayment(type) {
-        selectedPayment = type;
-        const btns = document.querySelectorAll('.payment-btn');
-        btns.forEach(b => b.classList.remove('active'));
-        event.target.closest('.payment-btn').classList.add('active');
-        
-        const bankInfo = document.getElementById('bankInfo');
-        const submitBtn = document.getElementById('eduSubmitBtn');
-        
-        if (type === 'bank') {
-          bankInfo.classList.add('show');
-          submitBtn.className = 'edu-submit bank-btn';
-          submitBtn.innerHTML = '<i class="fas fa-university"></i> 무통장 입금 신청';
-        } else {
-          bankInfo.classList.remove('show');
-          submitBtn.className = 'edu-submit card-btn';
-          submitBtn.innerHTML = '<i class="fas fa-credit-card"></i> 카드로 결제하기';
+      let payType = '';
+      function selectPay(type) {
+        payType = type;
+        document.getElementById('pay-card').classList.toggle('active', type === 'card');
+        document.getElementById('pay-bank').classList.toggle('active', type === 'bank');
+        document.getElementById('bank-info').classList.toggle('show', type === 'bank');
+        document.getElementById('submit-card').style.display = type === 'card' ? 'block' : 'none';
+        document.getElementById('submit-bank').style.display = type === 'bank' ? 'block' : 'none';
+      }
+      
+      function copyBank() {
+        navigator.clipboard.writeText('100124491987').then(() => showToast('✅ 계좌번호 복사됨!'));
+      }
+      
+      // 수강 신청 카드결제 (PortOne v2 - 기존 결제와 동일한 자격증명 사용)
+      async function eduCardPay() {
+        // 모바일 체크 - 현재 모바일 카드결제 미지원
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          alert('📱 모바일 카드결제 안내\\n\\n현재 모바일 카드결제는 준비 중입니다.\\n(약 1개월 소요 예정)\\n\\n✅ PC에서 카드결제 가능합니다.\\n✅ 계좌이체는 모바일에서도 가능합니다.');
+          return;
         }
-      }
-      
-      async function submitEduPayment() {
-        if (selectedPayment === 'bank') {
-          const name = document.getElementById('bankName').value.trim();
-          const phone = document.getElementById('bankPhone').value.trim();
-          const email = document.getElementById('bankEmail').value.trim();
-          
-          if (!name || !phone || !email) {
-            alert('모든 정보를 입력해주세요.');
-            return;
-          }
-          
-          try {
-            await fetch('/api/edu-bank-transfer', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name, phone, email, amount: 50000 })
-            });
-            alert('신청이 완료되었습니다! 입금 확인 후 안내 문자를 보내드립니다.');
-            closeEduModal();
-          } catch (e) {
-            alert('오류가 발생했습니다. 다시 시도해주세요.');
-          }
-        } else {
-          // PortOne 결제
-          if (typeof PortOne === 'undefined') {
-            alert('결제 시스템을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
-            return;
-          }
-          
-          const orderId = 'EDU_' + Date.now();
-          try {
-            const res = await PortOne.requestPayment({
-              storeId: 'store-xivix',
-              channelKey: 'channel-key-xivix',
-              paymentId: orderId,
-              orderName: 'AI 입문반 1기 수강료',
-              totalAmount: 50000,
-              currency: 'KRW',
-              payMethod: 'CARD'
-            });
-            
-            if (res.code) {
-              alert('결제가 취소되었습니다.');
-            } else {
-              alert('결제가 완료되었습니다! 수강 안내 문자를 보내드리겠습니다.');
-              closeEduModal();
+        
+        if (typeof PortOne === 'undefined') {
+          showToast('⚠️ 결제 모듈 로딩 중... 잠시 후 다시 시도해주세요.');
+          return;
+        }
+        
+        const orderId = 'EDU_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        try {
+          const response = await PortOne.requestPayment({
+            storeId: 'store-d08be3e0-9ed0-4393-9974-0b9cbd799252',
+            channelKey: 'channel-key-1cb320d6-8851-4ab2-83de-b8fb88dd2613',
+            paymentId: orderId,
+            orderName: 'XIΛIX AI 입문반 1기',
+            totalAmount: 2200000,
+            currency: 'KRW',
+            payMethod: 'CARD',
+            windowType: {
+              pc: 'IFRAME',
+              mobile: 'REDIRECTION'
+            },
+            redirectUrl: 'https://xivix.kr/?edu_payment=success',
+            customer: {
+              email: 'customer@xivix.kr',
+              fullName: '방익주',
+              phoneNumber: '01048453065'
             }
-          } catch (e) {
-            alert('결제 중 오류가 발생했습니다.');
+          });
+          
+          // PC (IFRAME)에서만 여기 도달, 모바일은 리디렉션됨
+          if (!response) return;
+          
+          if (response.code) {
+            showToast('❌ 결제 실패: ' + response.message);
+          } else if (response.paymentId) {
+            showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+            closeEduModal();
           }
+        } catch (e) {
+          showToast('❌ 결제 오류: ' + e.message);
         }
       }
       
-      // 스크롤 시 헤더 스타일 변경
-      window.addEventListener('scroll', function() {
-        const header = document.querySelector('.site-header');
-        if (window.scrollY > 50) {
-          header.style.borderBottomColor = 'rgba(255,255,255,0.1)';
-        } else {
-          header.style.borderBottomColor = 'var(--border-subtle)';
+      async function submitCard() {
+        // 모달에서 호출되는 카드결제도 동일하게
+        await eduCardPay();
+        closeEduModal();
+      }
+      
+      function submitBank() {
+        const name = document.getElementById('edu-name').value.trim();
+        const phone = document.getElementById('edu-phone').value.trim();
+        const email = document.getElementById('edu-email').value.trim();
+        if (!name || !phone || !email) { showToast('⚠️ 모든 정보를 입력해주세요.'); return; }
+        
+        fetch('/api/edu-bank-transfer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, email, product: 'XIΛIX AI 입문반 1기', amount: 2000000 })
+        }).then(() => {
+          showToast('🎉 신청 완료! 입금 확인 후 연락드리겠습니다.');
+          closeEduModal();
+        }).catch(() => {
+          showToast('🎉 신청 정보가 저장되었습니다!');
+          closeEduModal();
+        });
+      }
+      
+      // 카카오톡 공유
+      function shareKakao() {
+        // SDK 로딩 확인 및 초기화
+        if (!window.Kakao) {
+          showToast('⚠️ 카카오 SDK 로딩 중... 잠시 후 다시 클릭해주세요.');
+          return;
+        }
+        
+        // 초기화 안 됐으면 초기화
+        if (!Kakao.isInitialized()) {
+          try {
+            Kakao.init('ab4e6e4c5d28f94c4af56f85519bf1a9');
+            console.log('✅ 카카오 SDK 초기화 완료');
+          } catch (e) {
+            console.error('카카오 초기화 실패:', e);
+            showToast('⚠️ 카카오 연동 오류. 새로고침 후 다시 시도해주세요.');
+            return;
+          }
+        }
+        
+        // 현재 로그인한 사용자의 추천인 코드가 있으면 포함
+        const referralCode = currentUser?.referral_code || '';
+        const shareUrl = referralCode ? 'https://xivix.kr?ref=' + referralCode : 'https://xivix.kr';
+        
+        Kakao.Share.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: '🎁 친구 초대하면 15% 할인!',
+            description: 'AI 마케팅 전문 에이전시 XIVIX에서 SNS 마케팅, 웹사이트 제작, 브랜드 컨설팅을 받아보세요!',
+            imageUrl: 'https://dummyimage.com/1200x630/1a1a1f/ffffff.png&text=XIVIX',
+            link: {
+              mobileWebUrl: shareUrl,
+              webUrl: shareUrl
+            }
+          },
+          social: {
+            likeCount: 127,
+            commentCount: 45
+          },
+          buttons: [
+            {
+              title: '15% 할인받기',
+              link: {
+                mobileWebUrl: shareUrl,
+                webUrl: shareUrl
+              }
+            },
+            {
+              title: '서비스 둘러보기',
+              link: {
+                mobileWebUrl: 'https://xivix.kr#services',
+                webUrl: 'https://xivix.kr#services'
+              }
+            }
+          ]
+        });
+      }
+      
+      // URL 복사 공유
+      function copyShareLink() {
+        const referralCode = currentUser?.referral_code || '';
+        const shareUrl = referralCode ? 'https://xivix.kr?ref=' + referralCode : 'https://xivix.kr';
+        
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('✅ 링크가 복사되었습니다!');
+        }).catch(() => {
+          showToast('❌ 복사 실패. 다시 시도해주세요.');
+        });
+      }
+      
+      async function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const message = input.value.trim();
+        if (!message) return;
+        input.value = '';
+        appendMessage('user', message);
+        chatHistory.push({ role: 'user', content: message });
+        const loadingId = 'loading-' + Date.now();
+        appendMessage('bot', '<i class="fas fa-circle-notch fa-spin"></i>', loadingId);
+        try {
+          const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message, context: chatHistory.slice(-10) }) });
+          const data = await res.json();
+          document.getElementById(loadingId)?.remove();
+          appendMessage('bot', data.response.replace(/\\n/g, '<br>').replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>'));
+          chatHistory.push({ role: 'assistant', content: data.response });
+        } catch (err) { document.getElementById(loadingId)?.remove(); appendMessage('bot', '오류가 발생했습니다.'); }
+      }
+      
+      function appendMessage(role, content, id) {
+        const container = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        if (id) div.id = id;
+        div.className = 'message ' + (role === 'user' ? 'user' : '');
+        div.innerHTML = role === 'user' ? '<div class="message-content">' + content + '</div>' : '<div class="message-avatar"><i class="fas fa-user-tie"></i></div><div class="message-content">' + content + '</div>';
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
+      }
+      
+      function openAdminModal() { document.getElementById('admin-modal').classList.add('open'); }
+      function closeAdminModal() { document.getElementById('admin-modal').classList.remove('open'); }
+      async function verifyAdmin() {
+        try {
+          const res = await fetch('/api/admin/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ secret: document.getElementById('admin-password').value }) });
+          const data = await res.json();
+          if (data.verified) { document.getElementById('admin-login').style.display = 'none'; document.getElementById('admin-panel').style.display = 'block'; }
+          else alert('비밀번호 틀림');
+        } catch (err) { alert('오류'); }
+      }
+      async function processCustomPayment() {
+        const name = document.getElementById('custom-name').value;
+        const amount = parseInt(document.getElementById('custom-amount').value);
+        if (!name || !amount) { alert('고객명과 금액 입력'); return; }
+        try {
+          const res = await fetch('/api/payment/prepare', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ customAmount: amount, customerName: name, customerEmail: document.getElementById('custom-email').value, customerPhone: document.getElementById('custom-phone').value }) });
+          const data = await res.json();
+          if (typeof PortOne !== 'undefined') {
+            const response = await PortOne.requestPayment({ storeId: data.storeId, channelKey: data.channelKey, paymentId: data.orderId, orderName: data.orderName, totalAmount: data.totalAmount, currency: 'KRW', payMethod: 'CARD', customer: { fullName: name } });
+            if (response.code) alert('결제 실패'); else { alert('결제 완료!'); closeAdminModal(); }
+          } else alert(data.orderName + '\\n' + data.totalAmount.toLocaleString() + '원');
+        } catch (err) { alert('오류'); }
+      }
+      
+      function scrollTo(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
+      
+      // ========================================
+      // 보안 기능 (해킹방지, 복사방지, 스크랩방지, 개발자도구 방지)
+      // ========================================
+      
+      // 1. 우클릭 방지 (컨텍스트 메뉴)
+      document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        return false;
+      });
+      
+      // 2. 키보드 단축키 방지 (개발자도구, 소스보기, 복사 등)
+      document.addEventListener('keydown', e => {
+        // F12 - 개발자도구
+        if (e.key === 'F12') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+Shift+I/J/C - 개발자도구
+        if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+U - 소스보기
+        if (e.ctrlKey && ['u', 'U'].includes(e.key)) {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+S - 저장 방지
+        if (e.ctrlKey && ['s', 'S'].includes(e.key)) {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+A - 전체 선택 방지 (선택적)
+        // if (e.ctrlKey && ['a', 'A'].includes(e.key)) {
+        //   e.preventDefault();
+        //   return false;
+        // }
+      });
+      
+      // 3. 텍스트 선택 방지 (CSS로도 적용됨)
+      document.addEventListener('selectstart', e => {
+        // 입력 필드는 선택 허용
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+      
+      // 4. 드래그 방지
+      document.addEventListener('dragstart', e => {
+        e.preventDefault();
+        return false;
+      });
+      
+      // 5. 복사 방지
+      document.addEventListener('copy', e => {
+        // 입력 필드는 복사 허용
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+          return true;
+        }
+        e.preventDefault();
+        return false;
+      });
+      
+      // 6. 개발자도구 감지 - 비활성화 (페이지 렌더링 문제 방지)
+      // 7. 콘솔 로그 - 유지 (디버깅용)
+      
+      document.getElementById('admin-modal').addEventListener('click', e => { if (e.target.id === 'admin-modal') closeAdminModal(); });
+      document.getElementById('portfolio-modal').addEventListener('click', e => { if (e.target.id === 'portfolio-modal') closePortfolioModal(); });
+      document.getElementById('service-modal').addEventListener('click', e => { if (e.target.id === 'service-modal') closeServiceModal(); });
+      
+      // 포트폴리오 미리보기 보안: 클릭/드래그/스크롤 시 블럭 표시
+      (function() {
+        const blockLayer = document.getElementById('portfolio-block-layer');
+        const overlay = document.getElementById('portfolio-overlay');
+        let hideTimeout;
+        
+        function showBlock(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (overlay && !document.querySelector('.portfolio-modal-body').classList.contains('video-mode')) {
+            overlay.classList.add('show');
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => overlay.classList.remove('show'), 2500);
+          }
+        }
+        
+        if (blockLayer) {
+          blockLayer.addEventListener('click', showBlock);
+          blockLayer.addEventListener('mousedown', showBlock);
+          blockLayer.addEventListener('touchstart', showBlock, { passive: false });
+          blockLayer.addEventListener('wheel', showBlock, { passive: false });
+          blockLayer.addEventListener('contextmenu', showBlock);
+          blockLayer.addEventListener('selectstart', e => e.preventDefault());
+          blockLayer.addEventListener('dragstart', e => e.preventDefault());
+        }
+      })();
+      
+      // 브라우저 뒤로가기 시 모달만 닫히도록 처리
+      window.addEventListener('popstate', (e) => {
+        const portfolioModal = document.getElementById('portfolio-modal');
+        const serviceModal = document.getElementById('service-modal');
+        
+        // 포트폴리오 모달이 열려있으면 닫기
+        if (portfolioModal.classList.contains('open')) {
+          closePortfolioModal(true); // skipHistory = true
+          return;
+        }
+        // 서비스 모달이 열려있으면 닫기
+        if (serviceModal.classList.contains('open')) {
+          closeServiceModal(true); // skipHistory = true
+          return;
         }
       });
       
-      // ESC 키로 모달 닫기
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          closeServiceModal();
-          closeEduModal();
-          closeIframeModal();
-          document.getElementById('chatWindow').classList.remove('open');
+      document.addEventListener('DOMContentLoaded', async () => {
+        renderPortfolioMenu();
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        // 띠 배너 상태
+        if (sessionStorage.getItem('banner_closed') !== 'true') {
+          document.getElementById('main-container').classList.add('with-banner');
+        } else {
+          document.getElementById('top-banner').classList.add('hidden');
         }
+        
+        // URL 해시로 바로가기 처리
+        if (window.location.hash === '#edu' || window.location.hash === '#sysdev') {
+          setTimeout(() => {
+            openServiceModal('sysdev');
+            // 입문반 카드로 스크롤
+            setTimeout(() => {
+              const eduCard = document.querySelector('[data-edu-card]');
+              if (eduCard) eduCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+          }, 500);
+        }
+        
+        // 모바일 수강신청 결제 완료 처리 (리디렉션 방식)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('edu_payment') === 'success') {
+          const code = urlParams.get('code');
+          const paymentId = urlParams.get('paymentId');
+          const message = urlParams.get('message');
+          
+          if (code) {
+            // code가 있으면 결제 실패
+            showToast('❌ 결제 실패: ' + decodeURIComponent(message || '알 수 없는 오류'));
+          } else if (paymentId) {
+            // code 없고 paymentId 있으면 결제 성공
+            showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+          }
+          // URL 정리
+          window.history.replaceState({}, '', window.location.pathname);
+        }
+        
+        // 모바일 장바구니 결제 완료 처리 (리디렉션 방식)
+        if (urlParams.get('cart_payment') === 'success') {
+          const code = urlParams.get('code');
+          const paymentId = urlParams.get('paymentId');
+          const message = urlParams.get('message');
+          
+          if (code) {
+            showToast('❌ 결제 실패: ' + decodeURIComponent(message || '알 수 없는 오류'));
+          } else if (paymentId) {
+            showToast('🎉 결제가 완료되었습니다! 감사합니다.');
+            // 장바구니 비우기
+            cart = [];
+            updateCart();
+          }
+          // URL 정리
+          window.history.replaceState({}, '', window.location.pathname);
+        }
+        
+        // 카카오 SDK 초기화
+        if (window.Kakao && !Kakao.isInitialized()) {
+          Kakao.init('ab4e6e4c5d28f94c4af56f85519bf1a9');
+          console.log('✅ 카카오 SDK 초기화 완료');
+        }
+        
+        // LocalStorage에서 장바구니 복원
+        if (cart.length > 0) {
+          updateCart();
+          console.log('🛒 장바구니 복원됨:', cart.length + '개 상품');
+        }
+        
+        // 마지막 본 섹션으로 이동 (2초 후)
+        setTimeout(() => goToLastSection(), 1500);
+        
+        // 로그인 상태 확인
+        await checkLoginStatus();
+        
+        // 로그인 후 리다이렉트된 경우 - 장바구니 복원 및 결제 재개
+        if (localStorage.getItem('xivix_pending_checkout') === 'true') {
+          const pendingCart = localStorage.getItem('xivix_pending_cart');
+          if (pendingCart) {
+            try {
+              cart = JSON.parse(pendingCart);
+              updateCart();
+              
+              // 장바구니 데이터 정리
+              localStorage.removeItem('xivix_pending_cart');
+              localStorage.removeItem('xivix_pending_checkout');
+              
+              // 로그인 되어있으면 바로 결제 진행
+              if (currentUser) {
+                setTimeout(() => {
+                  showToast('✅ 로그인 완료! 결제를 진행합니다.');
+                  setTimeout(() => processPayment(), 1000);
+                }, 500);
+              }
+            } catch (e) {
+              localStorage.removeItem('xivix_pending_cart');
+              localStorage.removeItem('xivix_pending_checkout');
+            }
+          }
+        }
+        
+        // 챗봇 버튼 깜빡깜빡 애니메이션만 (자동 열림 X)
+        setTimeout(() => {
+          const chatBubble = document.querySelector('.chat-bubble');
+          chatBubble.classList.add('pulse');
+        }, 2000);
+        
+        // 채널별 가격표 장바구니 담기 버튼 이벤트 위임
+        document.getElementById('service-modal').addEventListener('click', (e) => {
+          const btn = e.target.closest('.pricing-btn');
+          if (btn) {
+            e.stopPropagation();
+            const type = btn.dataset.type;
+            const id = btn.dataset.id;
+            const name = btn.dataset.name;
+            const price = parseInt(btn.dataset.price);
+            addToCart(type, id, name, price, e);
+          }
+        });
       });
     </script>
 </body>
-</html>`;
+</html>`
 }
-
 
 // ========================================
 // CONTRACT PAGE - 온라인 계약서 (전자서명)
