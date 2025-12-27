@@ -4656,15 +4656,17 @@ function getMainHTML(): string {
 
     <!-- Hero Section with Fullscreen Background Video -->
     <section class="hero">
-      <!-- 풀스크린 배경 비디오 (YouTube) -->
+      <!-- 풀스크린 배경 비디오 (MP4) -->
       <div class="hero-video-bg">
-        <iframe 
-          src="https://www.youtube.com/embed/uGdcbTFJr-8?autoplay=1&mute=1&loop=1&playlist=uGdcbTFJr-8&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&vq=hd1080" 
-          allow="autoplay; encrypted-media" 
-          allowfullscreen
-          loading="lazy"
-          style="pointer-events: none;">
-        </iframe>
+        <video 
+          id="heroVideo"
+          autoplay 
+          muted 
+          loop 
+          playsinline
+          preload="auto">
+          <source src="https://3001-io6ldv3e0l3jt6e1thqwf-2e77fc33.sandbox.novita.ai/hero-bg.mp4" type="video/mp4">
+        </video>
       </div>
       
       <!-- 오버레이 (텍스트 가독성) -->
