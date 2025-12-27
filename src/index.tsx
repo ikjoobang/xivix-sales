@@ -3421,80 +3421,71 @@ function getMainHTML(): string {
       }
       
       /* ========================================
-         Hero Section - 3D 영상 포함
+         Hero Section - 풀스크린 배경 비디오
          ======================================== */
       .hero {
         min-height: 100vh;
         display: flex;
         align-items: center;
-        padding: 160px 0 var(--space-2xl);
+        justify-content: center;
         position: relative;
         overflow: hidden;
-        background: var(--gradient-hero);
       }
       
-      .hero-bg {
+      /* 풀스크린 배경 비디오 */
+      .hero-video-bg {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: hidden;
+      }
+      
+      .hero-video-bg iframe,
+      .hero-video-bg video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
         pointer-events: none;
       }
       
-      /* 애니메이션 그라디언트 오브 */
-      .hero-orb {
+      /* 비디오 위 오버레이 (텍스트 가독성) */
+      .hero-video-overlay {
         position: absolute;
-        border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.5;
-        animation: orbFloat 20s ease-in-out infinite;
-      }
-      
-      .orb-1 {
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(30, 144, 255, 0.4) 0%, transparent 70%);
-        top: 10%;
-        left: 5%;
-        animation-delay: 0s;
-      }
-      
-      .orb-2 {
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
-        top: 40%;
-        right: 5%;
-        animation-delay: -7s;
-      }
-      
-      .orb-3 {
-        width: 350px;
-        height: 350px;
-        background: radial-gradient(circle, rgba(34, 211, 238, 0.25) 0%, transparent 70%);
-        bottom: 10%;
-        left: 30%;
-        animation-delay: -14s;
-      }
-      
-      @keyframes orbFloat {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        33% { transform: translate(40px, -40px) scale(1.1); }
-        66% { transform: translate(-30px, 30px) scale(0.95); }
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 15, 20, 0.6) 0%,
+          rgba(15, 15, 20, 0.4) 30%,
+          rgba(15, 15, 20, 0.5) 60%,
+          rgba(15, 15, 20, 0.85) 100%
+        );
+        z-index: 1;
       }
       
       .hero-content {
         position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-2xl);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        max-width: var(--container-xl);
+        justify-content: center;
+        text-align: center;
+        max-width: var(--container-lg);
         margin: 0 auto;
-        padding: 0 var(--space-lg);
+        padding: 140px var(--space-lg) var(--space-2xl);
       }
       
       .hero-text {
-        max-width: 600px;
+        max-width: 900px;
       }
       
       .hero-badge {
@@ -3502,13 +3493,14 @@ function getMainHTML(): string {
         align-items: center;
         gap: var(--space-xs);
         padding: var(--space-xs) var(--space-md);
-        background: rgba(30, 144, 255, 0.15);
-        border: 1px solid var(--border-default);
+        background: rgba(30, 144, 255, 0.2);
+        border: 1px solid rgba(30, 144, 255, 0.4);
         border-radius: var(--radius-full);
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--accent-blue);
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #fff;
         margin-bottom: var(--space-lg);
+        backdrop-filter: blur(10px);
       }
       
       .hero-badge-dot {
@@ -3525,11 +3517,12 @@ function getMainHTML(): string {
       }
       
       .hero-title {
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-size: clamp(2.8rem, 6vw, 4.5rem);
         font-weight: 800;
-        line-height: 1.15;
+        line-height: 1.1;
         letter-spacing: -0.02em;
-        margin-bottom: var(--space-md);
+        margin-bottom: var(--space-lg);
+        text-shadow: 0 4px 30px rgba(0,0,0,0.5);
       }
       
       .hero-title-accent {
@@ -3537,45 +3530,25 @@ function getMainHTML(): string {
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        filter: drop-shadow(0 2px 10px rgba(30, 144, 255, 0.4));
       }
       
       .hero-desc {
-        font-size: 1.2rem;
-        color: var(--text-secondary);
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.85);
         line-height: 1.8;
         margin-bottom: var(--space-xl);
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
       }
       
       .hero-actions {
         display: flex;
         gap: var(--space-md);
         flex-wrap: wrap;
-      }
-      
-      /* 3D 영상 영역 */
-      .hero-video {
-        position: relative;
-        border-radius: var(--radius-xl);
-        overflow: hidden;
-        box-shadow: var(--shadow-lg), var(--glow-blue);
-        border: 1px solid var(--border-default);
-        aspect-ratio: 16/10;
-        background: var(--bg-card);
-      }
-      
-      .hero-video video,
-      .hero-video iframe {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border: none;
-      }
-      
-      .hero-video-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, transparent 60%, rgba(13, 1, 24, 0.8) 100%);
-        pointer-events: none;
+        justify-content: center;
       }
       
       .hero-stats {
@@ -3588,33 +3561,42 @@ function getMainHTML(): string {
       
       .hero-stat {
         text-align: center;
+        padding: var(--space-md);
+        background: rgba(30, 144, 255, 0.1);
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(30, 144, 255, 0.2);
+        backdrop-filter: blur(10px);
+        min-width: 140px;
       }
       
       .hero-stat-value {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         font-weight: 800;
         line-height: 1;
         margin-bottom: var(--space-xs);
+        text-shadow: 0 0 30px rgba(30, 144, 255, 0.5);
       }
       
       .hero-stat-value span { color: var(--accent-blue); }
       
       .hero-stat-label {
         font-size: 0.9rem;
-        color: var(--text-tertiary);
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
       }
       
       @media (max-width: 1024px) {
-        .hero-content { grid-template-columns: 1fr; text-align: center; }
-        .hero-text { max-width: none; }
-        .hero-actions { justify-content: center; }
-        .hero-video { max-width: 600px; margin: 0 auto; }
-        .hero-stats { justify-content: center; }
+        .hero-content { padding-top: 120px; }
+        .hero-text { max-width: 700px; }
       }
       
       @media (max-width: 768px) {
-        .hero { padding: 140px 0 var(--space-xl); min-height: auto; }
-        .hero-stats { flex-direction: column; gap: var(--space-lg); }
+        .hero { min-height: 100vh; }
+        .hero-content { padding: 120px var(--space-md) var(--space-xl); }
+        .hero-title { font-size: 2rem; }
+        .hero-desc { font-size: 1.1rem; }
+        .hero-stats { flex-direction: column; gap: var(--space-md); }
+        .hero-stat { min-width: 100%; }
         .hero-actions { flex-direction: column; align-items: center; }
         .hero-actions .btn { width: 100%; max-width: 300px; }
       }
@@ -4651,14 +4633,22 @@ function getMainHTML(): string {
       <a href="/login" class="mobile-nav-link" onclick="closeMobileMenu()">로그인</a>
     </nav>
 
-    <!-- Hero Section with 3D Video -->
+    <!-- Hero Section with Fullscreen Background Video -->
     <section class="hero">
-      <div class="hero-bg">
-        <div class="hero-orb orb-1"></div>
-        <div class="hero-orb orb-2"></div>
-        <div class="hero-orb orb-3"></div>
+      <!-- 풀스크린 배경 비디오 -->
+      <div class="hero-video-bg">
+        <iframe 
+          src="https://www.youtube.com/embed/uGdcbTFJr-8?autoplay=1&mute=1&loop=1&playlist=uGdcbTFJr-8&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen
+          loading="lazy">
+        </iframe>
       </div>
       
+      <!-- 오버레이 (텍스트 가독성) -->
+      <div class="hero-video-overlay"></div>
+      
+      <!-- 콘텐츠 -->
       <div class="hero-content">
         <div class="hero-text">
           <div class="hero-badge">
@@ -4699,16 +4689,6 @@ function getMainHTML(): string {
               <div class="hero-stat-label">문의량 증가</div>
             </div>
           </div>
-        </div>
-        
-        <!-- 3D 영상 영역 -->
-        <div class="hero-video">
-          <iframe 
-            src="https://www.youtube.com/embed/uGdcbTFJr-8?autoplay=1&mute=1&loop=1&playlist=uGdcbTFJr-8&controls=0&showinfo=0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen>
-          </iframe>
-          <div class="hero-video-overlay"></div>
         </div>
       </div>
     </section>
