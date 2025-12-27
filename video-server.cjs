@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3001;
+const PORT = 3002;
 const VIDEO_PATH = '/home/user/uploaded_files/raw to refined.mp4';
 
 const server = http.createServer((req, res) => {
@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
     return;
   }
   
-  if (req.url === '/video' || req.url === '/video.mp4') {
+  if (req.url === '/video' || req.url === '/video.mp4' || req.url === '/hero-bg.mp4') {
     const stat = fs.statSync(VIDEO_PATH);
     const fileSize = stat.size;
     const range = req.headers.range;
