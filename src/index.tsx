@@ -3854,40 +3854,48 @@ function getMainHTML(): string {
         justify-content: center;
       }
       
-      @media (max-width: 768px) {
+      @media (max-width: 1024px) {
         .edu-top-banner {
-          top: 70px;
+          top: 74px;
           left: 10px;
           right: 10px;
           transform: none;
           flex-direction: row;
           padding: 6px 10px;
-          gap: 8px;
-          background: rgba(30, 60, 120, 0.7);
-          font-size: 0.75rem;
+          gap: 6px;
+          background: rgba(30, 60, 150, 0.95);
+          font-size: 0.65rem;
         }
         .edu-banner-content { 
           flex-wrap: nowrap; 
-          gap: 8px;
+          gap: 6px;
+          white-space: nowrap;
         }
         .edu-banner-badge {
           padding: 2px 6px;
-          font-size: 0.6rem;
+          font-size: 0.55rem;
+          white-space: nowrap;
         }
         .edu-banner-text {
-          font-size: 0.75rem;
+          font-size: 0.65rem;
+          white-space: nowrap;
         }
         .edu-banner-price {
-          font-size: 0.75rem;
+          font-size: 0.6rem;
+          white-space: nowrap;
+        }
+        .edu-banner-price .original {
+          display: none;
         }
         .edu-banner-btn {
-          padding: 4px 10px;
-          font-size: 0.7rem;
+          padding: 3px 8px;
+          font-size: 0.55rem;
+          white-space: nowrap;
         }
         .edu-banner-close {
-          width: 20px;
-          height: 20px;
-          font-size: 0.65rem;
+          width: 18px;
+          height: 18px;
+          font-size: 0.55rem;
         }
       }
       
@@ -3996,6 +4004,13 @@ function getMainHTML(): string {
         border-radius: var(--radius-xl);
       }
       
+      @media (max-width: 1024px) {
+        .btn-large {
+          padding: 10px 20px;
+          font-size: 0.9rem;
+        }
+      }
+      
       .mobile-menu-btn {
         display: none;
         width: 44px;
@@ -4012,6 +4027,12 @@ function getMainHTML(): string {
         .header-nav { display: none; }
         .header-cta .btn-ghost { display: none; }
         .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+        /* 헤더 버튼 줄바꿈 방지 */
+        .header-cta .btn-primary {
+          white-space: nowrap;
+          padding: 6px 10px;
+          font-size: 0.7rem;
+        }
       }
       
       /* ========================================
@@ -4218,31 +4239,27 @@ function getMainHTML(): string {
         display: none;
       }
       
-      @media (max-width: 768px) {
+      @media (max-width: 1024px) {
         .stats-grid {
           flex-direction: row;
           gap: var(--space-sm);
         }
         .stat-card { padding: var(--space-sm); }
-        .stat-value { font-size: 1.5rem; }
-        .stat-label { font-size: 0.8rem; }
-        .stat-icon { width: 36px; height: 36px; font-size: 0.9rem; }
-      }
-      
-      @media (max-width: 1024px) {
-        .hero-content { padding-top: 120px; }
+        .stat-value { font-size: 1.3rem; }
+        .stat-label { font-size: 0.7rem; }
+        .stat-icon { width: 32px; height: 32px; font-size: 0.8rem; }
         .hero-text { max-width: 700px; }
       }
       
-      @media (max-width: 768px) {
+      @media (max-width: 1024px) {
         .hero { min-height: 100vh; }
-        .hero-content { padding: 120px var(--space-md) var(--space-xl); }
-        .hero-title { font-size: 1.6rem; }
-        .hero-desc { font-size: 1rem; }
+        .hero-content { padding: 100px var(--space-md) var(--space-lg); }
+        .hero-title { font-size: 1.5rem; }
+        .hero-desc { font-size: 0.9rem; }
         .hero-stats { flex-direction: column; gap: var(--space-md); padding: 0 var(--space-md); }
         .hero-stat { min-width: 100%; }
-        .hero-actions { flex-direction: column; align-items: center; }
-        .hero-actions .btn { width: 100%; max-width: 300px; }
+        .hero-actions { flex-direction: column; align-items: center; gap: var(--space-sm); }
+        .hero-actions .btn { width: 90%; max-width: 280px; padding: 10px 16px; font-size: 0.85rem; }
         /* 모바일 비디오 - 좌우만 10% 축소, 상하 절대 고정 */
         .hero-video-bg iframe,
         .hero-video-bg video {
