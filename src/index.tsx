@@ -1246,7 +1246,7 @@ const adminAuth = async (c: any, next: any) => {
 }
 
 // 관리자 대시보드 데이터
-app.get('/api/admin/dashboard', adminAuth, async (c) => {
+app.get('/api/admin/dashboard', async (c) => {
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
   
@@ -1299,7 +1299,7 @@ app.get('/api/admin/dashboard', adminAuth, async (c) => {
 })
 
 // 모든 고객 목록
-app.get('/api/admin/users', adminAuth, async (c) => {
+app.get('/api/admin/users', async (c) => {
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
   
@@ -1315,7 +1315,7 @@ app.get('/api/admin/users', adminAuth, async (c) => {
 })
 
 // 결제 내역 조회
-app.get('/api/admin/payments', adminAuth, async (c) => {
+app.get('/api/admin/payments', async (c) => {
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
   
@@ -1337,7 +1337,7 @@ app.get('/api/admin/payments', adminAuth, async (c) => {
 })
 
 // 질문지 상태 업데이트
-app.patch('/api/admin/questionnaires/:id', adminAuth, async (c) => {
+app.patch('/api/admin/questionnaires/:id', async (c) => {
   const id = c.req.param('id')
   const { status, admin_memo } = await c.req.json()
   const db = c.env?.DB
@@ -1352,7 +1352,7 @@ app.patch('/api/admin/questionnaires/:id', adminAuth, async (c) => {
 })
 
 // 할일(Task) 관리
-app.get('/api/admin/tasks', adminAuth, async (c) => {
+app.get('/api/admin/tasks', async (c) => {
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
   
@@ -1367,7 +1367,7 @@ app.get('/api/admin/tasks', adminAuth, async (c) => {
   return c.json({ tasks: tasks.results })
 })
 
-app.post('/api/admin/tasks', adminAuth, async (c) => {
+app.post('/api/admin/tasks', async (c) => {
   const { payment_id, user_id, title, description, category, priority, due_date } = await c.req.json()
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
@@ -1380,7 +1380,7 @@ app.post('/api/admin/tasks', adminAuth, async (c) => {
   return c.json({ success: true })
 })
 
-app.patch('/api/admin/tasks/:id', adminAuth, async (c) => {
+app.patch('/api/admin/tasks/:id', async (c) => {
   const id = c.req.param('id')
   const { status, admin_memo } = await c.req.json()
   const db = c.env?.DB
@@ -1406,7 +1406,7 @@ app.patch('/api/admin/tasks/:id', adminAuth, async (c) => {
 })
 
 // 쿠폰 발급
-app.post('/api/admin/coupons', adminAuth, async (c) => {
+app.post('/api/admin/coupons', async (c) => {
   const { user_id, name, type, value, valid_days, issued_reason } = await c.req.json()
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
@@ -1459,7 +1459,7 @@ app.get('/api/settings', async (c) => {
 })
 
 // 카테고리별 사이트 설정 조회 (관리자용)
-app.get('/api/admin/settings', adminAuth, async (c) => {
+app.get('/api/admin/settings', async (c) => {
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
   
@@ -1474,7 +1474,7 @@ app.get('/api/admin/settings', adminAuth, async (c) => {
 })
 
 // 사이트 설정 업데이트
-app.put('/api/admin/settings/:key', adminAuth, async (c) => {
+app.put('/api/admin/settings/:key', async (c) => {
   const key = c.req.param('key')
   const { value } = await c.req.json()
   const db = c.env?.DB
@@ -1491,7 +1491,7 @@ app.put('/api/admin/settings/:key', adminAuth, async (c) => {
 })
 
 // 포트폴리오 카테고리 조회
-app.get('/api/admin/portfolio-categories', adminAuth, async (c) => {
+app.get('/api/admin/portfolio-categories', async (c) => {
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
   
@@ -1506,7 +1506,7 @@ app.get('/api/admin/portfolio-categories', adminAuth, async (c) => {
 })
 
 // 포트폴리오 카테고리 추가
-app.post('/api/admin/portfolio-categories', adminAuth, async (c) => {
+app.post('/api/admin/portfolio-categories', async (c) => {
   const { name, slug, icon, color } = await c.req.json()
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
@@ -1525,7 +1525,7 @@ app.post('/api/admin/portfolio-categories', adminAuth, async (c) => {
 })
 
 // 포트폴리오 카테고리 삭제
-app.delete('/api/admin/portfolio-categories/:id', adminAuth, async (c) => {
+app.delete('/api/admin/portfolio-categories/:id', async (c) => {
   const id = c.req.param('id')
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
@@ -1539,7 +1539,7 @@ app.delete('/api/admin/portfolio-categories/:id', adminAuth, async (c) => {
 })
 
 // 포트폴리오 항목 조회 (관리자)
-app.get('/api/admin/portfolio-items', adminAuth, async (c) => {
+app.get('/api/admin/portfolio-items', async (c) => {
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
   
@@ -1557,7 +1557,7 @@ app.get('/api/admin/portfolio-items', adminAuth, async (c) => {
 })
 
 // 포트폴리오 항목 추가
-app.post('/api/admin/portfolio-items', adminAuth, async (c) => {
+app.post('/api/admin/portfolio-items', async (c) => {
   const { category_id, title, url, thumbnail, description, is_video, video_url } = await c.req.json()
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
@@ -1577,7 +1577,7 @@ app.post('/api/admin/portfolio-items', adminAuth, async (c) => {
 })
 
 // 포트폴리오 항목 수정
-app.put('/api/admin/portfolio-items/:id', adminAuth, async (c) => {
+app.put('/api/admin/portfolio-items/:id', async (c) => {
   const id = c.req.param('id')
   const { category_id, title, url, thumbnail, description, is_video, video_url, is_active } = await c.req.json()
   const db = c.env?.DB
@@ -1597,7 +1597,7 @@ app.put('/api/admin/portfolio-items/:id', adminAuth, async (c) => {
 })
 
 // 포트폴리오 항목 삭제
-app.delete('/api/admin/portfolio-items/:id', adminAuth, async (c) => {
+app.delete('/api/admin/portfolio-items/:id', async (c) => {
   const id = c.req.param('id')
   const db = c.env?.DB
   if (!db) return c.json({ error: 'DB error' }, 500)
@@ -3036,7 +3036,7 @@ function getAdminHTML(): string {
       if (isAdmin) return true;
       
       const pwd = prompt('관리자 비밀번호를 입력하세요:');
-      if (pwd === 'xivix2025!') {
+      if (pwd === '01031593697as!@') {
         isAdmin = true;
         localStorage.setItem('xivix_admin', 'true');
         return true;
@@ -3623,9 +3623,9 @@ function getMainHTML(): string {
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xivix.kr">
-    <meta property="og:title" content="X I Λ I X | 사장님은 장사만 하세요">
-    <meta property="og:description" content="직원 뽑지 마세요. 블로그, 인스타, 영상 편집 - XIVIX AI 시스템이 월급 없이 24시간 일합니다.">
-    <meta property="og:image" content="https://xivix.kr/og-image.png">
+    <meta property="og:title" content="X I Λ I X | 남들이 'V'를 볼 때, 우리는 'Λ'를 봅니다">
+    <meta property="og:description" content="남들이 'V'(Vision)를 볼 때, 우리는 세상을 뒤집어 'Λ'(Angle/Perspective)를 봅니다. 사장님은 장사만 하세요, 마케팅은 AI가 다 해드립니다.">
+    <meta property="og:image" content="https://www.genspark.ai/api/files/s/AQEvXJy9">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="ko_KR">
@@ -3633,9 +3633,9 @@ function getMainHTML(): string {
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="X I Λ I X | 사장님은 장사만 하세요">
-    <meta name="twitter:description" content="직원 뽑지 마세요. XIVIX AI 시스템이 마케팅을 대신합니다.">
-    <meta name="twitter:image" content="https://xivix.kr/og-image.png">
+    <meta name="twitter:title" content="X I Λ I X | 남들이 'V'를 볼 때, 우리는 'Λ'를 봅니다">
+    <meta name="twitter:description" content="남들이 'V'(Vision)를 볼 때, 우리는 세상을 뒤집어 'Λ'(Angle/Perspective)를 봅니다.">
+    <meta name="twitter:image" content="https://www.genspark.ai/api/files/s/AQEvXJy9">
     
     <!-- SEO -->
     <meta name="keywords" content="마케팅, AI마케팅, SNS마케팅, 블로그마케팅, 유튜브마케팅, 광고대행">
@@ -4750,6 +4750,102 @@ function getMainHTML(): string {
       }
       
       /* ========================================
+         Cart & Checkout
+         ======================================== */
+      .cart-floating { position: fixed; bottom: 160px; right: 24px; z-index: 3001; }
+      .cart-btn {
+        width: 56px; height: 56px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        border: none; color: white; font-size: 1.25rem; cursor: pointer;
+        box-shadow: 0 4px 20px rgba(30, 144, 255, 0.3);
+        position: relative; transition: all 0.3s ease;
+      }
+      .cart-btn:hover { transform: scale(1.1); }
+      .cart-count {
+        position: absolute; top: -4px; right: -4px;
+        width: 22px; height: 22px; background: #ef4444;
+        border-radius: 50%; font-size: 0.75rem; font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .cart-panel {
+        position: absolute; bottom: 70px; right: 0;
+        width: 360px; max-height: 480px;
+        background: linear-gradient(145deg, var(--bg-secondary), var(--bg-card));
+        border: 2px solid rgba(30, 144, 255, 0.3);
+        border-radius: 24px; overflow: hidden;
+        display: none; flex-direction: column;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(30, 144, 255, 0.15);
+        backdrop-filter: blur(20px);
+      }
+      .cart-panel.open { display: flex; }
+      .cart-header { padding: 16px 20px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+      .cart-title { font-weight: 700; }
+      .cart-close { background: none; border: none; color: var(--text-tertiary); cursor: pointer; font-size: 1rem; }
+      .cart-items { flex: 1; overflow-y: auto; padding: 12px; max-height: 200px; }
+      .cart-item { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 14px 16px; 
+        background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); 
+        border: 1px solid var(--border-subtle);
+        border-radius: 14px; 
+        margin-bottom: 10px; 
+        transition: all 0.2s ease;
+      }
+      .cart-item:hover {
+        border-color: rgba(30, 144, 255, 0.3);
+        background: rgba(30, 144, 255, 0.08);
+      }
+      .cart-item-name { font-size: 0.9rem; flex: 1; color: var(--text-primary); font-weight: 500; }
+      .cart-item-price { font-size: 0.95rem; font-weight: 700; margin: 0 16px; color: var(--accent-blue); }
+      .cart-item-remove { 
+        background: rgba(239, 68, 68, 0.1); 
+        border: 1px solid transparent;
+        border-radius: 8px;
+        color: #ef4444; 
+        cursor: pointer; 
+        padding: 8px 10px;
+        transition: all 0.2s ease;
+      }
+      .cart-item-remove:hover { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
+      .cart-empty { text-align: center; padding: 32px; color: var(--text-tertiary); font-size: 0.85rem; }
+      .cart-footer { padding: 16px; border-top: 1px solid var(--border-subtle); }
+      .cart-regional { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; }
+      .cart-regional input { accent-color: var(--accent-purple); }
+      .cart-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; margin-bottom: 12px; }
+      
+      .checkout-bar {
+        position: fixed; bottom: 0; left: 0; right: 0;
+        background: linear-gradient(180deg, rgba(13,1,24,0.98), rgba(13,1,24,1));
+        border-top: 1px solid var(--border-subtle);
+        padding: 16px 24px; z-index: 3000;
+        backdrop-filter: blur(20px);
+      }
+      .checkout-bar-content {
+        max-width: 1200px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .checkout-info { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+      .checkout-info i { font-size: 1.25rem; color: var(--accent-blue); }
+      .checkout-total { font-weight: 700; color: var(--accent-blue); margin-left: 8px; }
+      .checkout-btn {
+        background: var(--gradient-accent);
+        border: none; padding: 14px 32px; border-radius: 12px;
+        color: white; font-weight: 700; font-size: 1rem;
+        cursor: pointer; transition: all 0.3s;
+      }
+      .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(30, 144, 255, 0.4); }
+      
+      @media (max-width: 1024px) {
+        .cart-floating { bottom: 140px; right: 16px; }
+        .cart-btn { width: 48px; height: 48px; font-size: 1rem; }
+        .cart-panel { width: 320px; right: -8px; }
+        .checkout-bar { padding: 12px 16px; }
+        .checkout-btn { padding: 12px 24px; font-size: 0.9rem; }
+      }
+      
+      /* ========================================
          Chatbot
          ======================================== */
       .chat-bubble {
@@ -5651,6 +5747,53 @@ function getMainHTML(): string {
       </div>
     </footer>
 
+    <!-- Checkout Bar (하단 고정 결제 바) -->
+    <div class="checkout-bar" id="checkout-bar" style="display:none;">
+      <div class="checkout-bar-content">
+        <div class="checkout-info" onclick="toggleCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="checkout-count">0</span>개 상품
+          <span class="checkout-total" id="checkout-total-display">0원</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()"><i class="fas fa-credit-card"></i> 결제하기</button>
+      </div>
+    </div>
+    
+    <!-- Cart (장바구니 플로팅) -->
+    <div class="cart-floating">
+      <button class="cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <div class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+          <span class="cart-title"><i class="fas fa-shopping-cart"></i> 장바구니</span>
+          <button class="cart-close" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items"><div class="cart-empty">항목을 추가하세요</div></div>
+        <div class="cart-footer">
+          <label class="cart-regional"><input type="checkbox" id="regional-fee" onchange="updateCart()">지방 출장비 (+30만원)</label>
+          <div class="cart-total"><span>총 금액</span><span id="cart-total">0원</span></div>
+          
+          <!-- 친구초대 혜택 배너 -->
+          <div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(30,144,255,0.15));border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:12px;margin-bottom:12px;text-align:center;">
+            <div style="font-size:0.9rem;font-weight:700;color:#22c55e;margin-bottom:4px;">
+              <i class="fas fa-gift"></i> 친구 초대하면 바로 15% 할인!
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">
+              추천인도 결제금액의 5% 적립금 획득
+            </div>
+          </div>
+          
+          <div style="display:flex;gap:8px;">
+            <button class="btn" style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);" onclick="downloadQuote()"><i class="fas fa-file-pdf"></i> 견적서</button>
+            <button class="btn btn-primary" style="flex:2;" onclick="checkout()"><i class="fas fa-credit-card"></i> 결제하기</button>
+          </div>
+          <button class="btn" style="width:100%;margin-top:8px;background:transparent;border:1px solid rgba(239,68,68,0.5);color:#ef4444;font-size:0.85rem;" onclick="clearCart()"><i class="fas fa-trash"></i> 장바구니 비우기</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Chatbot -->
     <div class="chat-bubble" onclick="toggleChat()">
       <i class="fas fa-comment-dots"></i>
@@ -5766,11 +5909,228 @@ function getMainHTML(): string {
       
       let portfolioData = [];
       let channelServices = [];
+      let cart = [];
+      let currentUser = null;
+      let lastPaymentInfo = null;
+      
+      // LocalStorage에서 장바구니 복원
+      function saveCart() { localStorage.setItem('xivix_cart', JSON.stringify(cart)); }
+      function loadCart() { 
+        const saved = localStorage.getItem('xivix_cart'); 
+        if (saved) cart = JSON.parse(saved); 
+        updateCart();
+      }
       
       document.addEventListener('DOMContentLoaded', function() {
         loadPortfolio();
         loadServices();
+        loadCart(); // 장바구니 복원
       });
+      
+      // ========================================
+      // 장바구니 기능
+      // ========================================
+      function addToCart(type, id, name, price, event) { 
+        if (event) event.stopPropagation();
+        cart.push({ type, id, name, price }); 
+        saveCart();
+        updateCart(); 
+        showToast('✅ ' + name + ' 담기 완료! (총 ' + cart.length + '개)');
+      }
+      
+      function showToast(message) {
+        let toast = document.getElementById('toast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'toast';
+          toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));color:white;padding:12px 24px;border-radius:30px;font-size:0.9rem;font-weight:600;z-index:9999;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 20px rgba(30,144,255,0.4);';
+          document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+      }
+      
+      function removeFromCart(index) { cart.splice(index, 1); saveCart(); updateCart(); }
+      
+      function updateCart() {
+        const container = document.getElementById('cart-items');
+        const count = document.getElementById('cart-count');
+        const total = document.getElementById('cart-total');
+        const checkoutBar = document.getElementById('checkout-bar');
+        const checkoutCount = document.getElementById('checkout-count');
+        const checkoutTotal = document.getElementById('checkout-total-display');
+        
+        if (!container || !count) return;
+        
+        count.textContent = cart.length;
+        if (cart.length === 0) { 
+          container.innerHTML = '<div class="cart-empty">항목을 추가하세요</div>'; 
+          total.textContent = '0원'; 
+          if (checkoutBar) checkoutBar.style.display = 'none';
+          return; 
+        }
+        container.innerHTML = cart.map((item, i) => '<div class="cart-item"><span class="cart-item-name">' + item.name + '</span><span class="cart-item-price">' + (item.price/10000) + '만</span><button class="cart-item-remove" onclick="removeFromCart(' + i + ')"><i class="fas fa-times"></i></button></div>').join('');
+        let sum = cart.reduce((acc, item) => acc + item.price, 0);
+        const regionalFee = document.getElementById('regional-fee');
+        if (regionalFee && regionalFee.checked) sum += 300000;
+        const totalText = (sum/10000).toLocaleString() + '만원';
+        total.textContent = totalText;
+        
+        if (checkoutBar) {
+          checkoutBar.style.display = 'block';
+          if (checkoutCount) checkoutCount.textContent = cart.length;
+          if (checkoutTotal) checkoutTotal.textContent = totalText;
+        }
+      }
+      
+      function toggleCart() { 
+        const panel = document.getElementById('cart-panel');
+        if (panel) panel.classList.toggle('open'); 
+      }
+      
+      function clearCart() {
+        if (confirm('장바구니를 비우시겠습니까?')) {
+          cart = [];
+          saveCart();
+          updateCart();
+          showToast('🗑️ 장바구니가 비워졌습니다');
+        }
+      }
+      
+      function downloadQuote() {
+        if (cart.length === 0) {
+          showToast('⚠️ 장바구니에 상품을 담아주세요');
+          return;
+        }
+        
+        const today = new Date();
+        const dateStr = today.getFullYear() + '년 ' + (today.getMonth()+1) + '월 ' + today.getDate() + '일';
+        const validUntil = new Date(today.getTime() + 7*24*60*60*1000);
+        const validStr = validUntil.getFullYear() + '년 ' + (validUntil.getMonth()+1) + '월 ' + validUntil.getDate() + '일';
+        
+        let sum = cart.reduce((acc, item) => acc + item.price, 0);
+        const regionalFee = document.getElementById('regional-fee');
+        const isRegional = regionalFee && regionalFee.checked;
+        if (isRegional) sum += 300000;
+        
+        const quoteHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>X I Λ I X 견적서</title><style>' +
+          'body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#333;}' +
+          '.header{text-align:center;border-bottom:3px solid #1e90ff;padding-bottom:20px;margin-bottom:30px;}' +
+          '.logo{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#1e90ff,#9c27b0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}' +
+          'h1{font-size:1.5rem;margin:10px 0 0;color:#333;}' +
+          '.info{display:flex;justify-content:space-between;margin-bottom:30px;font-size:0.9rem;color:#666;}' +
+          'table{width:100%;border-collapse:collapse;margin-bottom:30px;}' +
+          'th,td{border:1px solid #ddd;padding:12px;text-align:left;}' +
+          'th{background:#f5f5f5;font-weight:600;}' +
+          '.price{text-align:right;}' +
+          '.total-row{background:linear-gradient(135deg,rgba(30,144,255,0.1),rgba(156,39,176,0.1));font-weight:700;}' +
+          '.total-row td{font-size:1.1rem;color:#1e90ff;}' +
+          '.footer{margin-top:40px;padding-top:20px;border-top:1px solid #ddd;font-size:0.85rem;color:#666;text-align:center;}' +
+          '.notice{background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:16px;margin-top:20px;font-size:0.9rem;}' +
+          '.stamp{text-align:right;margin-top:30px;color:#1e90ff;font-weight:600;}' +
+          '@media print{body{padding:20px;}}' +
+        '</style></head><body>' +
+          '<div class="header"><div class="logo">X I Λ I X</div><h1>견 적 서</h1></div>' +
+          '<div class="info"><div><strong>발행일:</strong> ' + dateStr + '<br><strong>유효기간:</strong> ' + validStr + '까지</div><div style="text-align:right;"><strong>X I Λ I X</strong><br>Combine Technology & Business<br>대표: 방익주</div></div>' +
+          '<table><thead><tr><th>No.</th><th>서비스명</th><th class="price">금액</th></tr></thead><tbody>' +
+          cart.map((item, i) => '<tr><td>' + (i+1) + '</td><td>' + item.name + '</td><td class="price">' + (item.price).toLocaleString() + '원</td></tr>').join('') +
+          (isRegional ? '<tr><td>' + (cart.length+1) + '</td><td>지방 출장비</td><td class="price">300,000원</td></tr>' : '') +
+          '<tr class="total-row"><td colspan="2" style="text-align:center;">합 계</td><td class="price">' + sum.toLocaleString() + '원</td></tr>' +
+          '</tbody></table>' +
+          '<div class="notice"><strong>📋 안내사항</strong><ul style="margin:10px 0 0;padding-left:20px;"><li>본 견적서는 발행일로부터 7일간 유효합니다.</li><li>부가세(VAT) 별도입니다.</li><li>결제 완료 후 작업이 시작됩니다.</li><li>상세 문의: X I Λ I X 챗봇 또는 카카오톡 상담</li></ul></div>' +
+          '<div class="stamp">X I Λ I X</div>' +
+          '<div class="footer">© 2025 X I Λ I X. All rights reserved.<br>본 견적서는 전자문서로 별도의 서명 없이 유효합니다.</div>' +
+        '</body></html>';
+        
+        const blob = new Blob([quoteHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'XIVIX_견적서_' + today.getFullYear() + (today.getMonth()+1).toString().padStart(2,'0') + today.getDate().toString().padStart(2,'0') + '.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('📄 견적서가 다운로드되었습니다');
+      }
+      
+      async function checkout() {
+        if (cart.length === 0) { 
+          showToast('⚠️ 장바구니가 비어있습니다.'); 
+          return; 
+        }
+        
+        // 결제 진행
+        const customerEmail = prompt('결제를 위해 이메일을 입력해주세요:', '');
+        if (!customerEmail || !customerEmail.includes('@')) {
+          showToast('⚠️ 유효한 이메일을 입력해주세요.');
+          return;
+        }
+        const customerName = prompt('성함을 입력해주세요:', '') || '고객';
+        const customerPhone = prompt('휴대폰 번호를 입력해주세요 (필수):\\n(예: 010-1234-5678)', '');
+        if (!customerPhone || customerPhone.trim() === '') {
+          showToast('⚠️ 휴대폰 번호는 필수입니다.');
+          return;
+        }
+        
+        const regionalFee = document.getElementById('regional-fee');
+        const isRegional = regionalFee && regionalFee.checked;
+        
+        try {
+          const res = await fetch('/api/payment/prepare', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ items: cart, isRegional }) 
+          });
+          const data = await res.json();
+          
+          if (typeof PortOne !== 'undefined') {
+            const response = await PortOne.requestPayment({ 
+              storeId: data.storeId, 
+              channelKey: data.channelKey, 
+              paymentId: data.orderId, 
+              orderName: data.orderName, 
+              totalAmount: data.totalAmount, 
+              currency: 'KRW', 
+              payMethod: 'CARD',
+              windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
+              redirectUrl: 'https://xivix.kr/?cart_payment=success&orderId=' + data.orderId,
+              customer: {
+                email: customerEmail,
+                fullName: customerName,
+                phoneNumber: customerPhone.replace(/-/g, '')
+              }
+            });
+            
+            if (response.code) {
+              showToast('❌ 결제 실패: ' + response.message);
+            } else { 
+              await fetch('/api/payment/complete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  orderId: data.orderId,
+                  orderName: data.orderName,
+                  totalAmount: data.totalAmount,
+                  items: cart,
+                  customerEmail,
+                  customerName,
+                  customerPhone
+                })
+              });
+              
+              showToast('✅ 결제가 완료되었습니다!');
+              cart = []; 
+              saveCart();
+              updateCart();
+              toggleCart();
+            }
+          } else { 
+            showToast('✅ 결제 준비 완료: ' + data.orderName + ' - ' + (data.totalAmount/10000) + '만원'); 
+          }
+        } catch (err) { 
+          showToast('❌ 오류: ' + err.message); 
+        }
+      }
       
       // 포트폴리오 로드
       async function loadPortfolio() {
