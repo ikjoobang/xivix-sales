@@ -443,6 +443,35 @@ app.get('/api/system-dev-options', (c) => c.json(SYSTEM_DEV_OPTIONS))
 app.get('/api/consulting-options', (c) => c.json(CONSULTING_OPTIONS))
 
 // ========================================
+// Health Check API
+// ========================================
+app.get('/api/health', async (c) => {
+  try {
+    const db = c.env.DB;
+    const dbStatus = db ? 'connected' : 'not configured';
+    
+    return c.json({
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0',
+      service: 'xivix-sales-contract',
+      database: dbStatus,
+      endpoints: [
+        'GET /api/health - Health Check',
+        'GET /api/contracts - 계약서 목록',
+        'POST /api/contracts - 새 계약서 생성',
+        'GET /api/contracts/:id - 계약서 조회',
+        'PUT /api/contracts/:id - 계약서 수정',
+        'DELETE /api/contracts/:id - 계약서 삭제',
+        'POST /api/contracts/:id/sign - 계약서 서명'
+      ]
+    });
+  } catch (e: any) {
+    return c.json({ status: 'error', error: e.message }, 500);
+  }
+});
+
+// ========================================
 // 계약서 저장 API
 // ========================================
 function genId() {
@@ -526,14 +555,16 @@ app.post('/api/contracts', async (c) => {
     await db.prepare(`
       INSERT INTO contracts (id, title, contract_date, provider_company, provider_rep, provider_phone, provider_email,
         bank_name, bank_account, bank_holder, services, extra_service_name, extra_service_price, setup_fee, monthly_fee,
-        service_start_date, payment_day, initial_payment, monthly_payment, agree_sms, remarks, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
+        service_start_date, payment_day, initial_payment, monthly_payment, agree_sms, remarks,
+        client_company, client_name, client_phone, client_email, client_address, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
     `).bind(
       id, data.title, data.contract_date, data.provider_company, data.provider_rep, data.provider_phone, data.provider_email,
       data.bank_name, data.bank_account, data.bank_holder, JSON.stringify(data.services || []), 
       data.extra_service_name || '', data.extra_service_price || 0,
       data.setup_fee || 0, data.monthly_fee || 0, data.start_date,
-      data.payment_day, data.initial_amount, data.monthly_amount, data.sms_agree ? 1 : 0, data.remarks || ''
+      data.payment_day, data.initial_amount, data.monthly_amount, data.sms_agree ? 1 : 0, data.remarks || '',
+      data.client_company || '', data.client_name || '', data.client_phone || '', data.client_email || '', data.client_address || ''
     ).run();
     
     return c.json({ success: true, id });
@@ -7426,7 +7457,13 @@ function getContractHTML(): string {
           initial_amount: parseInt(document.getElementById('initial-pay-amount').value.replace(/,/g, '')) || 0,
           monthly_amount: parseInt(document.getElementById('monthly-pay-amount').value.replace(/,/g, '')) || 0,
           sms_agree: document.getElementById('sms-agree').checked,
-          remarks: document.getElementById('remarks').value
+          remarks: document.getElementById('remarks').value,
+          // 고객정보 추가
+          client_company: document.getElementById('client-company')?.value?.trim() || '',
+          client_name: document.getElementById('client-name')?.value?.trim() || '',
+          client_phone: document.getElementById('client-phone')?.value?.trim() || '',
+          client_email: document.getElementById('client-email')?.value?.trim() || '',
+          client_address: document.getElementById('client-address')?.value?.trim() || ''
         };
         
         try {
@@ -8564,23 +8601,23 @@ function getContractViewHTML(id: string): string {
           <div class="info-grid">
             <div class="info-row">
               <div class="info-label">상호</div>
-              <div class="info-value \${!clientCompany ? 'empty' : ''}">\${clientCompany || '미입력'}</div>
+              <div class="info-value" data-client-company data-empty="미입력">-</div>
             </div>
             <div class="info-row">
               <div class="info-label">대표</div>
-              <div class="info-value \${!clientName ? 'empty' : ''}">\${clientName || '미입력'}</div>
+              <div class="info-value" data-client-name data-empty="미입력">-</div>
             </div>
             <div class="info-row">
               <div class="info-label">연락처</div>
-              <div class="info-value \${!clientPhone ? 'empty' : ''}">\${clientPhone || '미입력'}</div>
+              <div class="info-value" data-client-phone data-empty="미입력">-</div>
             </div>
             <div class="info-row">
               <div class="info-label">이메일</div>
-              <div class="info-value \${!clientEmail ? 'empty' : ''}">\${clientEmail || '미입력'}</div>
+              <div class="info-value" data-client-email data-empty="미입력">-</div>
             </div>
             <div class="info-row">
               <div class="info-label">주소</div>
-              <div class="info-value \${!clientAddress ? 'empty' : ''}">\${clientAddress || '미입력'}</div>
+              <div class="info-value" data-client-address data-empty="미입력">-</div>
             </div>
           </div>
         </div>
@@ -8721,11 +8758,11 @@ function getContractViewHTML(id: string): string {
               <div class="sig-box-content">
                 <div class="sig-info">
                   <div class="label">상호</div>
-                  <div class="value">\${clientCompany || '-'}</div>
+                  <div class="value" data-client-company>-</div>
                 </div>
                 <div class="sig-info">
                   <div class="label">대표</div>
-                  <div class="value">\${clientName || '-'}</div>
+                  <div class="value" data-client-name>-</div>
                 </div>
                 <div class="sig-area">
                   \${isSigned && d.client_signature ? 
@@ -8749,14 +8786,38 @@ function getContractViewHTML(id: string): string {
       
       document.getElementById('contract-page').innerHTML = html;
       
+      // 고객정보 DOM에 직접 설정
+      document.querySelectorAll('[data-client-company]').forEach(el => {
+        el.textContent = clientCompany || el.getAttribute('data-empty') || '-';
+        if (!clientCompany) el.classList.add('empty');
+      });
+      document.querySelectorAll('[data-client-name]').forEach(el => {
+        el.textContent = clientName || el.getAttribute('data-empty') || '-';
+        if (!clientName) el.classList.add('empty');
+      });
+      document.querySelectorAll('[data-client-phone]').forEach(el => {
+        el.textContent = clientPhone || el.getAttribute('data-empty') || '-';
+        if (!clientPhone) el.classList.add('empty');
+      });
+      document.querySelectorAll('[data-client-email]').forEach(el => {
+        el.textContent = clientEmail || el.getAttribute('data-empty') || '-';
+        if (!clientEmail) el.classList.add('empty');
+      });
+      document.querySelectorAll('[data-client-address]').forEach(el => {
+        el.textContent = clientAddress || el.getAttribute('data-empty') || '-';
+        if (!clientAddress) el.classList.add('empty');
+      });
+      
       // 하단 액션 바 렌더링
       const actionBar = document.getElementById('action-bar');
       if (isSigned) {
         actionBar.innerHTML = '<div class="btn-wrap"><button class="btn btn-primary" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF 다운로드</button></div>';
       } else {
-        actionBar.innerHTML = '<div class="btn-wrap"><button class="btn btn-primary" id="submit-btn" onclick="submitSign()" disabled><i class="fas fa-signature"></i> 계약 서명하기</button><button class="btn btn-secondary" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF</button></div>';
-        initCanvas();
-        initValidation();
+        actionBar.innerHTML = '<div class="btn-wrap"><button class="btn btn-primary" id="submit-btn" onclick="submitSign()" disabled><i class="fas fa-check-circle"></i> 서명 완료 및 제출</button><button class="btn btn-secondary" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> PDF</button></div>';
+        setTimeout(() => {
+          initCanvas();
+          initValidation();
+        }, 100);
       }
     }
     
@@ -8911,12 +8972,12 @@ function getContractViewHTML(id: string): string {
         } else {
           alert('❌ 오류: ' + result.error);
           btn.disabled = false;
-          btn.innerHTML = '<i class="fas fa-signature"></i> 계약 서명하기';
+          btn.innerHTML = '<i class="fas fa-check-circle"></i> 서명 완료 및 제출';
         }
       } catch (e) {
         alert('❌ 오류: ' + e.message);
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-signature"></i> 계약 서명하기';
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> 서명 완료 및 제출';
       }
     }
     
