@@ -4335,12 +4335,30 @@ function getMainHTML(): string {
       }
       
       /* ========================================
-         Portfolio Grid - 섹션 1
+         Portfolio Grid - 섹션 1 (12개 전체 표시)
          ======================================== */
       .portfolio-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: var(--space-md);
+      }
+      
+      @media (max-width: 1200px) {
+        .portfolio-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .portfolio-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .portfolio-grid {
+          grid-template-columns: 1fr;
+        }
       }
       
       .portfolio-card {
@@ -4416,12 +4434,30 @@ function getMainHTML(): string {
         color: var(--accent-blue);
       }
       
-      /* 영상 포트폴리오 */
+      /* 영상 포트폴리오 (12개 전체 표시) */
       .portfolio-video-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: var(--space-md);
         margin-top: var(--space-xl);
+      }
+      
+      @media (max-width: 1200px) {
+        .portfolio-video-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .portfolio-video-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .portfolio-video-grid {
+          grid-template-columns: 1fr;
+        }
       }
       
       .portfolio-video-card {
@@ -5376,7 +5412,56 @@ function getMainHTML(): string {
       
       /* Utilities */
       .hidden { display: none !important; }
+      
+      /* 보안: 텍스트 선택 방지 (이미지/중요 콘텐츠만) */
+      .no-select {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
     </style>
+    
+    <!-- 보안 스크립트 (적당한 수준) -->
+    <script>
+      // 우클릭 방지 (이미지 저장 방지)
+      document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG' || e.target.closest('.portfolio-card')) {
+          e.preventDefault();
+        }
+      });
+      
+      // F12, Ctrl+Shift+I, Ctrl+U 방지 (개발자도구)
+      document.addEventListener('keydown', function(e) {
+        // F12
+        if (e.key === 'F12') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+Shift+I (개발자도구)
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+U (소스보기)
+        if (e.ctrlKey && e.key === 'u') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+S (저장)
+        if (e.ctrlKey && e.key === 's') {
+          e.preventDefault();
+          return false;
+        }
+      });
+      
+      // 드래그 방지 (이미지)
+      document.addEventListener('dragstart', function(e) {
+        if (e.target.tagName === 'IMG') {
+          e.preventDefault();
+        }
+      });
+    </script>
 </head>
 <body>
     <!-- AI 입문반 상단 플로팅 배너 -->
@@ -6175,20 +6260,20 @@ function getMainHTML(): string {
         }
       }
       
-      // 웹 포트폴리오 렌더링 (영상 제외) - 썸네일 포함
+      // 웹 포트폴리오 렌더링 (영상 제외) - 썸네일 포함 - 전체 표시
       function renderPortfolio() {
         const grid = document.getElementById('portfolioGrid');
         if (!grid || !portfolioData.length) return;
         
-        const webItems = portfolioData.filter(item => !item.isVideo).slice(0, 9);
+        const webItems = portfolioData.filter(item => !item.isVideo);
         grid.innerHTML = webItems.map(item => {
           // URL에서 도메인 추출하여 썸네일 생성
           const thumbUrl = \`https://api.microlink.io/?url=\${encodeURIComponent(item.url)}&screenshot=true&meta=false&embed=screenshot.url\`;
           return \`
-          <div class="portfolio-card" onclick="openPortfolio('\${item.url}', '\${item.title}')">
+          <div class="portfolio-card" onclick="openPortfolioIframe('\${item.url}', '\${item.title}')">
             <div class="portfolio-thumb">
               <img src="\${thumbUrl}" alt="\${item.title}" loading="lazy" onerror="this.style.display='none'">
-              <i class="fas fa-external-link-alt thumb-icon"></i>
+              <i class="fas fa-expand thumb-icon"></i>
             </div>
             <div class="portfolio-info">
               <h4 class="portfolio-title">\${item.title}</h4>
@@ -6198,12 +6283,12 @@ function getMainHTML(): string {
         \`;}).join('');
       }
       
-      // 영상 포트폴리오 렌더링
+      // 영상 포트폴리오 렌더링 - 전체 표시
       function renderVideoPortfolio() {
         const grid = document.getElementById('videoPortfolioGrid');
         if (!grid || !portfolioData.length) return;
         
-        const videoItems = portfolioData.filter(item => item.isVideo).slice(0, 6);
+        const videoItems = portfolioData.filter(item => item.isVideo);
         grid.innerHTML = videoItems.map(item => \`
           <div class="portfolio-video-card">
             <iframe 
@@ -6213,6 +6298,18 @@ function getMainHTML(): string {
             </iframe>
           </div>
         \`).join('');
+      }
+      
+      // 포트폴리오 iframe으로 내부에서 열기
+      function openPortfolioIframe(url, title) {
+        const modal = document.getElementById('iframeModal');
+        const iframe = document.getElementById('iframeModalContent');
+        const titleEl = document.getElementById('iframeModalTitle');
+        
+        titleEl.textContent = title;
+        iframe.src = url;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
       }
       
       // 서비스 렌더링
