@@ -4718,23 +4718,32 @@ function getMainHTML(): string {
         margin-bottom: 2px;
       }
       
+      .fact-stat-value.fact-stat-small {
+        font-size: 1.4rem;
+      }
+      
       @media (min-width: 768px) {
         .fact-stat-value {
           font-size: 2.5rem;
         }
+        
+        .fact-stat-value.fact-stat-small {
+          font-size: 2rem;
+        }
       }
       
       .fact-stat-label {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         color: var(--text-tertiary);
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        text-transform: none;
+        letter-spacing: 0;
+        line-height: 1.3;
       }
       
       @media (min-width: 768px) {
         .fact-stat-label {
-          font-size: 0.75rem;
-          letter-spacing: 2px;
+          font-size: 0.7rem;
+          letter-spacing: 0;
         }
       }
       
@@ -6085,7 +6094,7 @@ function getMainHTML(): string {
           <div class="fact-check-header">
             <div>
               <h3 class="fact-check-title">FACT CHECK</h3>
-              <p class="fact-check-subtitle">단순 AI 강의와 비교를 거부하는 압도적 숫자</p>
+              <p class="fact-check-subtitle">단순 AI와 비교를 거부하는<br>압도적 숫자</p>
             </div>
             <div class="fact-check-badge">
               <i class="fas fa-shield-alt text-green"></i>
@@ -6096,23 +6105,23 @@ function getMainHTML(): string {
           <div class="fact-check-stats">
             <div class="fact-stat">
               <i class="fas fa-shopping-cart text-blue"></i>
-              <div class="fact-stat-value">1.4만+</div>
-              <div class="fact-stat-label">누적 판매대수</div>
+              <div class="fact-stat-value">1.4만</div>
+              <div class="fact-stat-label">B2B/B2C 판매</div>
             </div>
             <div class="fact-stat">
-              <i class="fas fa-industry text-green"></i>
-              <div class="fact-stat-value">10+</div>
-              <div class="fact-stat-label">국가 인증 획득</div>
+              <i class="fas fa-certificate text-green"></i>
+              <div class="fact-stat-value">14개의</div>
+              <div class="fact-stat-label">벤처, Main-biz 외 인증</div>
             </div>
             <div class="fact-stat">
-              <i class="fas fa-chart-bar text-purple"></i>
-              <div class="fact-stat-value">1,600만</div>
-              <div class="fact-stat-label">컬러 추출 데이터</div>
+              <i class="fas fa-palette text-purple"></i>
+              <div class="fact-stat-value fact-stat-small">1600만</div>
+              <div class="fact-stat-label">컬러 SW엔진개발</div>
             </div>
             <div class="fact-stat">
               <i class="fas fa-globe text-red"></i>
-              <div class="fact-stat-value">4+</div>
-              <div class="fact-stat-label">글로벌 파트너</div>
+              <div class="fact-stat-value">4개의</div>
+              <div class="fact-stat-label">글로벌 파트너사</div>
             </div>
           </div>
         </div>
@@ -6120,8 +6129,8 @@ function getMainHTML(): string {
         <!-- 4. CTA 섹션 -->
         <div class="experience-cta">
           <p class="experience-cta-text">
-            "200만 원이 아깝다면, 직접 실패하며 배우십시오.<br>
-            <span class="text-blue">비즈니스를 모르는 AI는 장난감입니다.</span>"
+            "제가 틀렸다면, 직접 실패하면서 배우십시오.<br>
+            <span class="text-blue">비즈니스를 모르는 AI는<br>초등학생도 할 수 있습니다.</span>"
           </p>
           <button class="btn btn-cta-large" onclick="openChat()">
             <i class="fas fa-bolt"></i> 무료 진단 받기
