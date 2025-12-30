@@ -4682,100 +4682,68 @@ function getMainHTML(): string {
         }
       }
       
-      /* FACT CHECK 통계 - 3열 카드 스타일 */
       .fact-check-stats {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
       }
       
       @media (min-width: 768px) {
         .fact-check-stats {
           grid-template-columns: repeat(4, 1fr);
-          gap: var(--space-md);
+          gap: var(--space-lg);
         }
       }
       
       .fact-stat {
-        background: linear-gradient(145deg, #1a1a2e 0%, #0d0d1a 100%);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        border-radius: 16px;
-        padding: 16px 8px;
         text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 120px;
-        transition: all 0.3s;
-      }
-      
-      .fact-stat:hover {
-        border-color: rgba(59, 130, 246, 0.5);
-        transform: translateY(-2px);
-      }
-      
-      @media (min-width: 768px) {
-        .fact-stat {
-          padding: 24px 16px;
-          min-height: 150px;
-        }
+        padding: var(--space-sm) 0;
       }
       
       .fact-stat i {
-        width: 40px;
-        height: 40px;
-        background: rgba(59, 130, 246, 0.15);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        margin-bottom: 12px;
+        font-size: 1.5rem;
+        margin-bottom: var(--space-xs);
       }
       
       @media (min-width: 768px) {
         .fact-stat i {
-          width: 50px;
-          height: 50px;
-          font-size: 1.5rem;
+          font-size: 2rem;
+          margin-bottom: var(--space-sm);
         }
       }
       
       .fact-stat-value {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         font-weight: 900;
-        margin-bottom: 4px;
-        background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        margin-bottom: 2px;
       }
       
       .fact-stat-value.fact-stat-small {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
       }
       
       @media (min-width: 768px) {
         .fact-stat-value {
-          font-size: 2.2rem;
+          font-size: 2.5rem;
         }
         
         .fact-stat-value.fact-stat-small {
-          font-size: 1.8rem;
+          font-size: 2rem;
         }
       }
       
       .fact-stat-label {
-        font-size: 0.7rem;
-        color: var(--text-secondary);
+        font-size: 0.6rem;
+        color: var(--text-tertiary);
+        text-transform: none;
+        letter-spacing: 0;
         line-height: 1.3;
-        font-weight: 500;
       }
       
       @media (min-width: 768px) {
         .fact-stat-label {
-          font-size: 0.85rem;
+          font-size: 0.7rem;
+          letter-spacing: 0;
         }
       }
       
@@ -5039,35 +5007,23 @@ function getMainHTML(): string {
       }
       
       /* ========================================
-         Service Grid - 3열 카드 스타일 (모바일 최적화)
+         Service Grid - 섹션 3 (AI 마케팅 솔루션)
          ======================================== */
       .service-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-      
-      @media (min-width: 768px) {
-        .service-grid {
-          grid-template-columns: repeat(3, 1fr);
-          gap: var(--space-md);
-        }
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
       }
       
       .service-card {
-        background: linear-gradient(145deg, #1a1a2e 0%, #0d0d1a 100%);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        border-radius: 16px;
-        padding: 16px 10px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        padding: var(--space-lg);
         cursor: pointer;
         transition: all 0.3s;
         position: relative;
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        min-height: 140px;
       }
       
       .service-card::after {
@@ -5080,8 +5036,9 @@ function getMainHTML(): string {
       }
       
       .service-card:hover {
-        border-color: rgba(59, 130, 246, 0.5);
-        transform: translateY(-2px);
+        border-color: var(--accent-blue);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg), var(--shadow-blue);
       }
       
       .service-card:hover::after { opacity: 1; }
@@ -5089,38 +5046,26 @@ function getMainHTML(): string {
       .service-card-inner {
         position: relative;
         z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
       }
       
       .service-card-header {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 8px;
+        align-items: flex-start;
+        gap: var(--space-md);
+        margin-bottom: var(--space-sm);
       }
       
       .service-icon {
-        width: 44px;
-        height: 44px;
+        width: 56px;
+        height: 56px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(30, 30, 50, 0.8);
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(236, 72, 153, 0.1));
         border: 1px solid var(--border-default);
-        border-radius: 12px;
-        font-size: 1.3rem;
+        border-radius: var(--radius-lg);
+        font-size: 1.5rem;
         flex-shrink: 0;
-      }
-      
-      @media (min-width: 768px) {
-        .service-icon {
-          width: 56px;
-          height: 56px;
-          font-size: 1.5rem;
-        }
       }
       
       .service-icon.naver { color: #03C75A; }
@@ -5130,87 +5075,46 @@ function getMainHTML(): string {
       .service-icon.web { color: var(--accent-blue); }
       .service-icon.system { color: var(--neon-cyan); }
       
-      .service-card-info { 
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+      .service-card-info { flex: 1; }
       
       .service-card-title {
-        font-size: 0.85rem;
+        font-size: 1.2rem;
         font-weight: 700;
-        margin-bottom: 4px;
+        margin-bottom: var(--space-xs);
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 4px;
-        line-height: 1.3;
-      }
-      
-      @media (min-width: 768px) {
-        .service-card-title {
-          font-size: 1.1rem;
-          flex-direction: row;
-        }
+        gap: var(--space-xs);
       }
       
       .service-card-badge {
-        padding: 2px 8px;
+        padding: 3px 10px;
         background: var(--gradient-accent);
         border-radius: var(--radius-full);
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         font-weight: 700;
         color: #fff;
       }
       
-      @media (min-width: 768px) {
-        .service-card-badge {
-          font-size: 0.7rem;
-          padding: 3px 10px;
-        }
-      }
-      
       .service-card-desc {
-        font-size: 0.7rem;
+        font-size: 0.95rem;
         color: var(--text-tertiary);
-        line-height: 1.4;
-        display: none;
-      }
-      
-      @media (min-width: 768px) {
-        .service-card-desc {
-          display: block;
-          font-size: 0.85rem;
-          line-height: 1.5;
-        }
+        line-height: 1.6;
       }
       
       .service-card-arrow {
         position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 24px;
-        height: 24px;
+        top: var(--space-lg);
+        right: var(--space-lg);
+        width: 36px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: var(--bg-hover);
-        border-radius: 6px;
+        border-radius: var(--radius-md);
         color: var(--text-tertiary);
         transition: all 0.3s;
         z-index: 2;
-        font-size: 0.7rem;
-      }
-      
-      @media (min-width: 768px) {
-        .service-card-arrow {
-          width: 36px;
-          height: 36px;
-          top: var(--space-md);
-          right: var(--space-md);
-          font-size: 1rem;
-        }
       }
       
       .service-card:hover .service-card-arrow {
@@ -5218,156 +5122,93 @@ function getMainHTML(): string {
         color: #fff;
       }
       
+      @media (max-width: 768px) {
+        .service-grid { grid-template-columns: 1fr; }
+      }
+      
       /* ========================================
-         Pricing Cards - 3열 카드 스타일 (모바일 최적화)
+         Pricing Cards
          ======================================== */
       .pricing-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-      
-      @media (min-width: 768px) {
-        .pricing-grid {
-          gap: var(--space-md);
-        }
+        gap: var(--space-md);
       }
       
       .pricing-card {
-        background: linear-gradient(145deg, #1a1a2e 0%, #0d0d1a 100%);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        border-radius: 16px;
-        padding: 16px 10px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
         transition: all 0.3s;
         position: relative;
       }
       
-      @media (min-width: 768px) {
-        .pricing-card {
-          padding: var(--space-xl);
-        }
-      }
-      
       .pricing-card.featured {
         border-color: var(--accent-blue);
-        background: linear-gradient(180deg, rgba(30, 144, 255, 0.15) 0%, #1a1a2e 100%);
+        background: linear-gradient(180deg, rgba(30, 144, 255, 0.1) 0%, var(--bg-card) 100%);
       }
       
       .pricing-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(59, 130, 246, 0.5);
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg), var(--shadow-blue);
       }
       
       .pricing-badge {
         position: absolute;
-        top: -10px;
+        top: -12px;
         left: 50%;
         transform: translateX(-50%);
-        padding: 4px 12px;
+        padding: 6px 16px;
         background: var(--gradient-accent);
         border-radius: var(--radius-full);
-        font-size: 0.65rem;
+        font-size: 0.75rem;
         font-weight: 700;
         color: #fff;
       }
       
-      @media (min-width: 768px) {
-        .pricing-badge {
-          padding: 6px 16px;
-          font-size: 0.75rem;
-        }
-      }
-      
       .pricing-header {
         text-align: center;
-        padding-bottom: 12px;
+        padding-bottom: var(--space-md);
         border-bottom: 1px solid var(--border-subtle);
-        margin-bottom: 12px;
-      }
-      
-      @media (min-width: 768px) {
-        .pricing-header {
-          padding-bottom: var(--space-md);
-          margin-bottom: var(--space-md);
-        }
+        margin-bottom: var(--space-md);
       }
       
       .pricing-name {
-        font-size: 0.85rem;
+        font-size: 1.25rem;
         font-weight: 700;
-        margin-bottom: 4px;
-      }
-      
-      @media (min-width: 768px) {
-        .pricing-name {
-          font-size: 1.25rem;
-          margin-bottom: var(--space-xs);
-        }
+        margin-bottom: var(--space-xs);
       }
       
       .pricing-price {
-        font-size: 1.3rem;
+        font-size: 2.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      
-      @media (min-width: 768px) {
-        .pricing-price {
-          font-size: 2.2rem;
-        }
+        color: var(--accent-blue);
       }
       
       .pricing-period {
-        font-size: 0.7rem;
+        font-size: 0.9rem;
         color: var(--text-tertiary);
-      }
-      
-      @media (min-width: 768px) {
-        .pricing-period {
-          font-size: 0.9rem;
-        }
       }
       
       .pricing-features {
         list-style: none;
-        margin-bottom: 12px;
-      }
-      
-      @media (min-width: 768px) {
-        .pricing-features {
-          margin-bottom: var(--space-lg);
-        }
+        margin-bottom: var(--space-lg);
       }
       
       .pricing-feature {
         display: flex;
         align-items: center;
-        gap: 6px;
-        padding: 6px 0;
-        font-size: 0.7rem;
+        gap: var(--space-sm);
+        padding: var(--space-sm) 0;
+        font-size: 0.95rem;
         color: var(--text-secondary);
       }
       
-      @media (min-width: 768px) {
-        .pricing-feature {
-          gap: var(--space-sm);
-          padding: var(--space-sm) 0;
-          font-size: 0.95rem;
-        }
-      }
+      .pricing-feature i { color: var(--neon-green); font-size: 0.9rem; }
       
-      .pricing-feature i { color: var(--neon-green); font-size: 0.7rem; }
-      
-      @media (min-width: 768px) {
-        .pricing-feature i { font-size: 0.9rem; }
-      }
-      
-      /* 모바일에서도 3열 유지 */
       @media (max-width: 900px) {
-        .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+        .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
       }
       
       /* ========================================
@@ -6269,18 +6110,18 @@ function getMainHTML(): string {
             </div>
             <div class="fact-stat">
               <i class="fas fa-certificate text-green"></i>
-              <div class="fact-stat-value">14개</div>
-              <div class="fact-stat-label">국가/벤처 인증</div>
+              <div class="fact-stat-value">14개의</div>
+              <div class="fact-stat-label">벤처, Main-biz 외 인증</div>
             </div>
             <div class="fact-stat">
               <i class="fas fa-palette text-purple"></i>
               <div class="fact-stat-value fact-stat-small">1600만</div>
-              <div class="fact-stat-label">컬러 SW엔진</div>
+              <div class="fact-stat-label">컬러 SW엔진개발</div>
             </div>
             <div class="fact-stat">
               <i class="fas fa-globe text-red"></i>
-              <div class="fact-stat-value">4개</div>
-              <div class="fact-stat-label">글로벌 파트너</div>
+              <div class="fact-stat-value">4개의</div>
+              <div class="fact-stat-label">글로벌 파트너사</div>
             </div>
           </div>
         </div>
@@ -6288,9 +6129,8 @@ function getMainHTML(): string {
         <!-- 4. CTA 섹션 -->
         <div class="experience-cta">
           <p class="experience-cta-text">
-            "제가 틀렸다면,<br class="mobile-br">직접 실패하면서 배우십시오.<br>
-            <span class="text-blue">비즈니스를 모르는 AI는</span><br>
-            <span class="text-blue">초등학생도 할 수 있습니다."</span>
+            "제가 틀렸다면, 직접 실패하면서 배우십시오.<br>
+            <span class="text-blue">비즈니스를 모르는 AI는<br>초등학생도 할 수 있습니다.</span>"
           </p>
           <button class="btn btn-cta-large" onclick="openChat()">
             <i class="fas fa-bolt"></i> 무료 진단 받기
