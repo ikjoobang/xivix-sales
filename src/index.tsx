@@ -4482,16 +4482,407 @@ function getMainHTML(): string {
       /* ========================================
          Business Blocks - 섹션 2 (20년 현장 데이터)
          ======================================== */
-      .blocks-grid {
+      /* 텍스트 색상 유틸리티 */
+      .text-accent-green { color: #00ff88; }
+      .text-accent-blue { color: var(--accent-blue); }
+      .text-blue { color: #3b82f6; }
+      .text-green { color: #22c55e; }
+      .text-purple { color: #a855f7; }
+      .text-red { color: #ef4444; }
+      .underline-red { 
+        text-decoration: underline; 
+        text-decoration-color: #ef4444; 
+        text-underline-offset: 8px; 
+      }
+      
+      /* ========================================
+         실전 경험 비교 섹션 스타일 (모바일 최적화)
+         ======================================== */
+      .experience-header {
+        text-align: center;
+        margin-bottom: var(--space-lg);
+        padding: 0 var(--space-sm);
+      }
+      
+      .experience-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.4;
+        margin-bottom: var(--space-sm);
+      }
+      
+      @media (min-width: 768px) {
+        .experience-title {
+          font-size: 2.5rem;
+        }
+      }
+      
+      .experience-subtitle {
+        font-size: 0.95rem;
+        color: var(--text-tertiary);
+        line-height: 1.5;
+      }
+      
+      /* 경험 체크리스트 - 컴팩트 그리드 */
+      .experience-checklist {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+        margin-bottom: var(--space-lg);
+      }
+      
+      @media (min-width: 768px) {
+        .experience-checklist {
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--space-md);
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        .experience-checklist {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      
+      .experience-item {
+        background: #111122;
+        padding: var(--space-md);
+        border-radius: 12px;
+        border: 1px solid var(--border-subtle);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--space-xs);
+        transition: all 0.3s;
+        min-height: auto;
+      }
+      
+      .experience-item:hover {
+        border-color: rgba(239, 68, 68, 0.5);
+      }
+      
+      .experience-item i {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      
+      .experience-item h4 {
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        line-height: 1.3;
+      }
+      
+      .experience-item p {
+        display: none; /* 모바일에서 설명 숨김 */
+      }
+      
+      @media (min-width: 768px) {
+        .experience-item {
+          flex-direction: row;
+          text-align: left;
+          align-items: flex-start;
+          padding: var(--space-lg);
+        }
+        
+        .experience-item h4 {
+          font-size: 1rem;
+          margin-bottom: 4px;
+        }
+        
+        .experience-item p {
+          display: block;
+          font-size: 0.85rem;
+          color: var(--text-tertiary);
+          line-height: 1.5;
+        }
+        
+        .experience-item i {
+          font-size: 1.3rem;
+          margin-top: 2px;
+        }
+      }
+      
+      /* FACT CHECK 대시보드 (모바일 최적화) */
+      .fact-check-dashboard {
+        background: linear-gradient(135deg, #1a1a2e 0%, #000 100%);
+        padding: var(--space-lg);
+        border-radius: 16px;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.5);
+        margin-bottom: var(--space-lg);
+      }
+      
+      @media (min-width: 768px) {
+        .fact-check-dashboard {
+          padding: var(--space-xl);
+          border-radius: 24px;
+        }
+      }
+      
+      .fact-check-header {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        padding-bottom: var(--space-md);
+        border-bottom: 1px solid var(--border-subtle);
+        margin-bottom: var(--space-md);
+        text-align: center;
+      }
+      
+      @media (min-width: 768px) {
+        .fact-check-header {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          text-align: left;
+          padding-bottom: var(--space-lg);
+          margin-bottom: var(--space-lg);
+        }
+      }
+      
+      .fact-check-title {
+        font-size: 1.75rem;
+        font-weight: 900;
+        margin-bottom: 2px;
+      }
+      
+      @media (min-width: 768px) {
+        .fact-check-title {
+          font-size: 2.5rem;
+        }
+      }
+      
+      .fact-check-subtitle {
+        color: #3b82f6;
+        font-weight: 500;
+        font-size: 0.85rem;
+      }
+      
+      @media (min-width: 768px) {
+        .fact-check-subtitle {
+          font-size: 1rem;
+        }
+      }
+      
+      .fact-check-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        color: var(--text-tertiary);
+        font-size: 0.8rem;
+      }
+      
+      @media (min-width: 768px) {
+        .fact-check-badge {
+          justify-content: flex-start;
+          font-size: 0.9rem;
+        }
+      }
+      
+      .fact-check-stats {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: var(--space-md);
       }
       
+      @media (min-width: 768px) {
+        .fact-check-stats {
+          grid-template-columns: repeat(4, 1fr);
+          gap: var(--space-lg);
+        }
+      }
+      
+      .fact-stat {
+        text-align: center;
+        padding: var(--space-sm) 0;
+      }
+      
+      .fact-stat i {
+        font-size: 1.5rem;
+        margin-bottom: var(--space-xs);
+      }
+      
+      @media (min-width: 768px) {
+        .fact-stat i {
+          font-size: 2rem;
+          margin-bottom: var(--space-sm);
+        }
+      }
+      
+      .fact-stat-value {
+        font-size: 1.75rem;
+        font-weight: 900;
+        margin-bottom: 2px;
+      }
+      
+      @media (min-width: 768px) {
+        .fact-stat-value {
+          font-size: 2.5rem;
+        }
+      }
+      
+      .fact-stat-label {
+        font-size: 0.65rem;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      @media (min-width: 768px) {
+        .fact-stat-label {
+          font-size: 0.75rem;
+          letter-spacing: 2px;
+        }
+      }
+      
+      /* CTA 섹션 (모바일 최적화) */
+      .experience-cta {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 var(--space-sm);
+      }
+      
+      .experience-cta-text {
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.7;
+        margin-bottom: var(--space-lg);
+      }
+      
+      @media (min-width: 768px) {
+        .experience-cta-text {
+          font-size: 1.25rem;
+          line-height: 1.8;
+        }
+      }
+      
+      .btn-cta-large {
+        background: linear-gradient(135deg, #2563eb 0%, #22c55e 100%);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        padding: var(--space-md) var(--space-lg);
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.3);
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      
+      @media (min-width: 768px) {
+        .btn-cta-large {
+          font-size: 1.15rem;
+          padding: var(--space-lg) var(--space-xl);
+        }
+      }
+      
+      .btn-cta-large:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 50px rgba(37, 99, 235, 0.4);
+      }
+      
+      .btn-cta-large i {
+        margin-right: 0;
+      }
+      
+      /* ========================================
+         이전 스탯 카드 (유지)
+         ======================================== */
+      .stat-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-md);
+      }
+      
+      @media (max-width: 1024px) {
+        .stat-cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (max-width: 580px) {
+        .stat-cards-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      .stat-card-new {
+        background: #111;
+        padding: var(--space-lg);
+        border-radius: 0 16px 16px 0;
+        border-left: 4px solid;
+        transition: all 0.3s;
+      }
+      
+      .stat-card-new:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      }
+      
+      .stat-card-new.border-blue { border-left-color: #3b82f6; }
+      .stat-card-new.border-green { border-left-color: #22c55e; }
+      .stat-card-new.border-purple { border-left-color: #a855f7; }
+      .stat-card-new.border-red { border-left-color: #ef4444; }
+      
+      .stat-card-label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: var(--space-xs);
+        letter-spacing: 0.05em;
+      }
+      
+      .stat-card-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 4px;
+        line-height: 1.1;
+      }
+      
+      .stat-card-desc {
+        font-size: 0.9rem;
+        color: var(--text-tertiary);
+        margin-bottom: var(--space-md);
+      }
+      
+      .stat-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+      }
+      
+      .stat-card-tag {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        background: #1f1f1f;
+        border-radius: 4px;
+        color: var(--text-secondary);
+      }
+      
+      .blocks-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-lg);
+      }
+      
+      @media (max-width: 768px) {
+        .blocks-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
       .block-card {
-        background: var(--bg-card);
+        background: #111122;
         border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-xl);
+        border-radius: 24px;
         padding: var(--space-xl);
         position: relative;
         transition: all 0.3s;
@@ -4519,84 +4910,91 @@ function getMainHTML(): string {
       
       .block-number {
         position: absolute;
-        top: var(--space-md);
-        right: var(--space-md);
-        font-size: 4rem;
+        top: var(--space-sm);
+        right: var(--space-lg);
+        font-size: 6rem;
         font-weight: 900;
-        color: rgba(30, 144, 255, 0.1);
+        color: #1a1a2e;
         line-height: 1;
+        z-index: 0;
       }
       
       .block-icon {
-        width: 56px;
-        height: 56px;
+        width: 64px;
+        height: 64px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(30, 144, 255, 0.2), rgba(236, 72, 153, 0.1));
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-lg);
-        font-size: 1.5rem;
+        background: #1a1a2e;
+        border-radius: 16px;
+        font-size: 1.75rem;
         color: var(--accent-blue);
-        margin-bottom: var(--space-md);
+        margin-bottom: var(--space-lg);
+        position: relative;
+        z-index: 1;
       }
       
       .block-title {
-        font-size: 1.35rem;
+        font-size: 1.75rem;
         font-weight: 700;
-        margin-bottom: var(--space-sm);
+        margin-bottom: var(--space-md);
+        position: relative;
+        z-index: 1;
       }
       
       .block-desc {
-        font-size: 0.95rem;
+        font-size: 1rem;
         color: var(--text-secondary);
-        line-height: 1.7;
-        margin-bottom: var(--space-md);
+        line-height: 1.8;
+        margin-bottom: var(--space-xl);
+        position: relative;
+        z-index: 1;
       }
       
       .block-stats {
         display: flex;
-        gap: var(--space-sm);
-        margin-bottom: var(--space-md);
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+        position: relative;
+        z-index: 1;
       }
       
       .block-stat {
         flex: 1;
         text-align: center;
-        padding: var(--space-sm);
-        background: rgba(30, 144, 255, 0.08);
-        border-radius: var(--radius-md);
+        padding: var(--space-md);
+        background: #1a1a2e;
+        border: 1px solid rgba(30, 144, 255, 0.1);
+        border-radius: 16px;
       }
       
       .block-stat-value {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: 800;
         color: var(--accent-blue);
       }
       
       .block-stat-label {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
         color: var(--text-tertiary);
-        margin-top: 4px;
+        margin-top: 6px;
       }
       
       .block-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--space-xs);
+        gap: var(--space-sm);
+        position: relative;
+        z-index: 1;
       }
       
       .block-tag {
-        padding: 4px 12px;
-        background: rgba(30, 144, 255, 0.1);
+        padding: 8px 16px;
+        background: #1a1a2e;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-full);
-        font-size: 0.75rem;
+        font-size: 0.85rem;
         color: var(--text-secondary);
-      }
-      
-      @media (max-width: 900px) {
-        .blocks-grid { grid-template-columns: 1fr; }
       }
       
       /* ========================================
@@ -5621,113 +6019,115 @@ function getMainHTML(): string {
       </div>
     </section>
 
-    <!-- Section 2: 20년 현장 데이터 기반 -->
+    <!-- Section 2: 실전 경험 비교 섹션 -->
     <section class="section section-alt" id="business">
       <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">
-            <i class="fas fa-building"></i> Business
-          </span>
-          <h2 class="section-title">20년 현장 데이터 기반</h2>
-          <p class="section-desc">
-            유통, 글로벌 제조, 정부 인증, 빅데이터 알고리즘<br>
-            이 모든 지식을 AI에 이식했습니다.
+        
+        <!-- 1. 강렬한 질문 섹션 -->
+        <div class="experience-header">
+          <h2 class="experience-title">
+            당신의 AI 강사에게<br>
+            <span class="text-red underline-red">'실전 경험'이 있습니까?</span>
+          </h2>
+          <p class="experience-subtitle">
+            AI 툴만 다룬다고 사업 노하우를 이식할 수 있을까요?
           </p>
         </div>
-        
-        <div class="blocks-grid">
-          <div class="block-card">
-            <span class="block-number">01</span>
-            <div class="block-icon"><i class="fas fa-store"></i></div>
-            <h3 class="block-title">커머스 유통 설계</h3>
-            <p class="block-desc">전국 대리점 네트워크와 홈쇼핑 계약을 통해 검증된 유통망을 구축합니다.</p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">23</div>
-                <div class="block-stat-label">유통망</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">1.4만</div>
-                <div class="block-stat-label">판매대</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">13</div>
-                <div class="block-stat-label">전시회</div>
-              </div>
-            </div>
-            <div class="block-tags">
-              <span class="block-tag">신세계TV쇼핑</span>
-              <span class="block-tag">K홈쇼핑</span>
-              <span class="block-tag">자사몰</span>
+
+        <!-- 2. 경험 체크리스트 (6개로 축소) -->
+        <div class="experience-checklist">
+          <div class="experience-item">
+            <i class="fas fa-exclamation-circle text-red"></i>
+            <div>
+              <h4>홈쇼핑/유통</h4>
+              <p>전국 1.4만 대 유통망 설계</p>
             </div>
           </div>
-          
-          <div class="block-card">
-            <span class="block-number">02</span>
-            <div class="block-icon"><i class="fas fa-globe"></i></div>
-            <h3 class="block-title">글로벌 제조 & B2B</h3>
-            <p class="block-desc">아모스프로페셔널, RBH, 시세이도, 웰라 등 글로벌 파트너와의 협업 경험.</p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">4+</div>
-                <div class="block-stat-label">글로벌 파트너</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">14,807</div>
-                <div class="block-stat-label">누적 판매대</div>
-              </div>
-            </div>
-            <div class="block-tags">
-              <span class="block-tag">아모스</span>
-              <span class="block-tag">시세이도</span>
-              <span class="block-tag">웰라</span>
+          <div class="experience-item">
+            <i class="fas fa-exclamation-circle text-red"></i>
+            <div>
+              <h4>글로벌 B2B</h4>
+              <p>글로벌 브랜드 비즈니스 설계</p>
             </div>
           </div>
-          
-          <div class="block-card">
-            <span class="block-number">03</span>
-            <div class="block-icon"><i class="fas fa-award"></i></div>
-            <h3 class="block-title">규제 특례 & 국가 인증</h3>
-            <p class="block-desc">산업부 실증특례, 기술 특허, 메인비즈, 벤처기업 등 10종 인증 획득.</p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">10+</div>
-                <div class="block-stat-label">인증</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">ISO</div>
-                <div class="block-stat-label">9001/14001</div>
-              </div>
-            </div>
-            <div class="block-tags">
-              <span class="block-tag">실증특례</span>
-              <span class="block-tag">벤처기업</span>
-              <span class="block-tag">메인비즈</span>
+          <div class="experience-item">
+            <i class="fas fa-exclamation-circle text-red"></i>
+            <div>
+              <h4>국가 인증</h4>
+              <p>10종+ 국가 인증 직접 돌파</p>
             </div>
           </div>
-          
-          <div class="block-card">
-            <span class="block-number">04</span>
-            <div class="block-icon"><i class="fas fa-chart-line"></i></div>
-            <h3 class="block-title">빅데이터 알고리즘</h3>
-            <p class="block-desc">RGB-16 AI로 1,600만 컬러를 추출하고 실전 데이터 기반 마케팅을 자동화합니다.</p>
-            <div class="block-stats">
-              <div class="block-stat">
-                <div class="block-stat-value">1,600만</div>
-                <div class="block-stat-label">컬러 추출</div>
-              </div>
-              <div class="block-stat">
-                <div class="block-stat-value">RGB-16</div>
-                <div class="block-stat-label">AI 엔진</div>
-              </div>
+          <div class="experience-item">
+            <i class="fas fa-exclamation-circle text-red"></i>
+            <div>
+              <h4>제조 자동화</h4>
+              <p>CAD~송장 공정 자동화 설계</p>
             </div>
-            <div class="block-tags">
-              <span class="block-tag">빅데이터</span>
-              <span class="block-tag">자동화</span>
-              <span class="block-tag">AI</span>
+          </div>
+          <div class="experience-item">
+            <i class="fas fa-exclamation-circle text-red"></i>
+            <div>
+              <h4>프랜차이즈</h4>
+              <p>가맹점 관리 시스템 구축</p>
+            </div>
+          </div>
+          <div class="experience-item">
+            <i class="fas fa-exclamation-circle text-red"></i>
+            <div>
+              <h4>자금 리스크</h4>
+              <p>금융 리스크 실전 생존 지식</p>
             </div>
           </div>
         </div>
+
+        <!-- 3. FACT CHECK 대시보드 -->
+        <div class="fact-check-dashboard">
+          <div class="fact-check-header">
+            <div>
+              <h3 class="fact-check-title">FACT CHECK</h3>
+              <p class="fact-check-subtitle">단순 AI 강의와 비교를 거부하는 압도적 숫자</p>
+            </div>
+            <div class="fact-check-badge">
+              <i class="fas fa-shield-alt text-green"></i>
+              <span>20년 현장 데이터 검증 완료</span>
+            </div>
+          </div>
+          
+          <div class="fact-check-stats">
+            <div class="fact-stat">
+              <i class="fas fa-shopping-cart text-blue"></i>
+              <div class="fact-stat-value">1.4만+</div>
+              <div class="fact-stat-label">누적 판매대수</div>
+            </div>
+            <div class="fact-stat">
+              <i class="fas fa-industry text-green"></i>
+              <div class="fact-stat-value">10+</div>
+              <div class="fact-stat-label">국가 인증 획득</div>
+            </div>
+            <div class="fact-stat">
+              <i class="fas fa-chart-bar text-purple"></i>
+              <div class="fact-stat-value">1,600만</div>
+              <div class="fact-stat-label">컬러 추출 데이터</div>
+            </div>
+            <div class="fact-stat">
+              <i class="fas fa-globe text-red"></i>
+              <div class="fact-stat-value">4+</div>
+              <div class="fact-stat-label">글로벌 파트너</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. CTA 섹션 -->
+        <div class="experience-cta">
+          <p class="experience-cta-text">
+            "200만 원이 아깝다면, 직접 실패하며 배우십시오.<br>
+            <span class="text-blue">비즈니스를 모르는 AI는 장난감입니다.</span>"
+          </p>
+          <button class="btn btn-cta-large" onclick="openChat()">
+            <i class="fas fa-bolt"></i> 무료 진단 받기
+          </button>
+        </div>
+        
       </div>
     </section>
 
