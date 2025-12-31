@@ -1948,9 +1948,13 @@ app.post('/api/payment/prepare', async (c) => {
   }
   
   if (items && items.length > 0) {
-    let originalAmount = items.reduce((sum: number, item: any) => sum + item.price, 0)
+    let supplyAmount = items.reduce((sum: number, item: any) => sum + item.price, 0)
     const itemNames = items.map((item: any) => item.name)
-    if (isRegional) originalAmount += 300000
+    if (isRegional) supplyAmount += 300000
+    
+    // VAT 자동 계산 (10%)
+    const vatAmount = Math.round(supplyAmount * 0.1)
+    const originalAmount = supplyAmount + vatAmount
     const totalAmount = originalAmount - discountAmount
     
     const orderId = `XILIX_CART_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
@@ -1959,6 +1963,8 @@ app.post('/api/payment/prepare', async (c) => {
     return c.json({
       orderId,
       orderName,
+      supplyAmount,
+      vatAmount,
       originalAmount,
       discountAmount,
       totalAmount,
@@ -6496,7 +6502,9 @@ function getMainHTML(): string {
         <div class="cart-items" id="cart-items"><div class="cart-empty">항목을 추가하세요</div></div>
         <div class="cart-footer">
           <label class="cart-regional"><input type="checkbox" id="regional-fee" onchange="updateCart()">지방 출장비 (+30만원)</label>
-          <div class="cart-total"><span>총 금액</span><span id="cart-total">0원</span></div>
+          <div class="cart-total"><span>공급가액</span><span id="cart-subtotal">0원</span></div>
+          <div class="cart-total" style="font-size:0.95rem;color:var(--text-secondary);"><span>부가세 (10%)</span><span id="cart-vat">0원</span></div>
+          <div class="cart-total" style="border-top:1px solid var(--border-default);padding-top:8px;margin-top:8px;"><span>총 결제금액</span><span id="cart-total" style="color:#22c55e;">0원</span></div>
           
           <!-- 친구초대 혜택 배너 -->
           <div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(30,144,255,0.15));border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:12px;margin-bottom:12px;text-align:center;">
@@ -6684,6 +6692,8 @@ function getMainHTML(): string {
       function updateCart() {
         const container = document.getElementById('cart-items');
         const count = document.getElementById('cart-count');
+        const subtotal = document.getElementById('cart-subtotal');
+        const vatDisplay = document.getElementById('cart-vat');
         const total = document.getElementById('cart-total');
         const checkoutBar = document.getElementById('checkout-bar');
         const checkoutCount = document.getElementById('checkout-count');
@@ -6694,6 +6704,8 @@ function getMainHTML(): string {
         count.textContent = cart.length;
         if (cart.length === 0) { 
           container.innerHTML = '<div class="cart-empty">항목을 추가하세요</div>'; 
+          if (subtotal) subtotal.textContent = '0원';
+          if (vatDisplay) vatDisplay.textContent = '0원';
           total.textContent = '0원'; 
           if (checkoutBar) checkoutBar.style.display = 'none';
           return; 
@@ -6702,7 +6714,14 @@ function getMainHTML(): string {
         let sum = cart.reduce((acc, item) => acc + item.price, 0);
         const regionalFee = document.getElementById('regional-fee');
         if (regionalFee && regionalFee.checked) sum += 300000;
-        const totalText = (sum/10000).toLocaleString() + '만원';
+        
+        // VAT 자동 계산 (10%)
+        const vat = Math.round(sum * 0.1);
+        const totalWithVat = sum + vat;
+        
+        if (subtotal) subtotal.textContent = (sum/10000).toLocaleString() + '만원';
+        if (vatDisplay) vatDisplay.textContent = (vat/10000).toLocaleString() + '만원';
+        const totalText = (totalWithVat/10000).toLocaleString() + '만원';
         total.textContent = totalText;
         
         if (checkoutBar) {
