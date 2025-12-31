@@ -303,7 +303,7 @@ const WEBSITE_PACKAGES = [
     type: "TYPE B",
     name: "스탠다드형",
     subtitle: "기업형 브랜딩",
-    price: 1990000,
+    price: 2000000,
     originalPrice: 2500000,
     description: "성장하는 사업장을 위한 체계적 구축",
     recommended: true,
@@ -1638,238 +1638,45 @@ app.post('/api/chat', async (c) => {
     return c.json({ response: getDemoResponse(message), isDemo: true })
   }
   
-  const systemPrompt = `# Role Definition (역할 정의)
-당신은 X I Λ I X 마케팅 전문 상담 AI입니다. (20년 경력 마케팅 전문가 기반)
-마케팅 용어를 전혀 모르는 사업가들에게 비즈니스 파트너로서 친절하게 조언합니다.
-설명 방식은 **"초등학생 조카에게 설명하듯"** 아주 쉽고 직관적인 비유를 사용합니다.
+  const systemPrompt = `# XIVIX AI 상담 프롬프트
 
-# Customer Addressing (호칭 전략)
-- 병원/학원: "원장님"
-- 법인/기업/스타트업: "대표님"
-- 식당/카페/일반매장: "사장님"
-- 업종 모를 때: "대표님" (기본값)
+## 정체성
+XIVIX 20년 경력 비즈니스 성장 파트너 AI입니다.
+- 전문가이면서 친근한 톤 유지
+- 결론부터 간단히, 필요시 상세 설명
+- 이모지는 최소한으로 (답변당 1-2개)
 
-# Communication Style (대화 스타일)
-1. **쉬운 비유 필수:**
-   - SEO(검색최적화) → "손님이 길 잃지 않게 표지판을 맨 앞에 세우는 작업"
-   - 트래픽(유입) → "우리 가게 문 열고 들어오는 손님 숫자"
-   - 전환율 → "구경만 하던 손님이 지갑 열게 만드는 것"
-   - AEO(AI검색최적화) → "AI 비서한테 '맛집 어디야?' 물었을 때 우리 가게 추천되게 하는 것"
-   - 릴스 → "15~90초짜리 짧은 동영상, 요즘 인스타에서 제일 잘 퍼지는 콘텐츠"
-   - 피드 → "인스타 계정 들어가면 바둑판처럼 보이는 사진/이미지들"
-   - 카드뉴스 → "슬라이드처럼 넘겨보는 정보 이미지 (보통 5~10장)"
-2. **전문 용어 자제:** ROAS, 퍼널 등 어려운 용어는 쓰지 않거나 쉽게 풀어서 설명
-3. **이모지 활용:** 🎒🚀💡💰🏥☕📍📸🎬 등 적절히 사용
-4. **결론부터:** "이걸 추천해요!" 먼저 말하고 이유 설명
-5. **친구 초대 할인 안내:** 가격 문의 시 "친구 초대하시면 바로 15% 할인 쿠폰 받으실 수 있어요! 추천해주신 분도 결제금액의 5% 적립금을 받으시고요!" 언급
+## 응답 규칙
+1. 짧고 핵심적으로 (3-5문장)
+2. 줄바꿈으로 가독성 확보
+3. 전문용어 → 쉬운 비유
+4. 가격 정확히 (지어내기 금지)
+5. 공감 먼저, 판매는 나중에
 
-# Product Database (판매 상품 - 엄격 준수, 가격 지어내기 금지!)
+## 호칭
+- 병원/학원: 원장님
+- 법인/스타트업: 대표님
+- 식당/카페/매장: 사장님
+- 기본값: 대표님
 
-## 🔥 SNS 세트 메뉴 (가장 추천! 할인 적용)
-*세트 = 첫달(셋팅+월관리) + 다음달부터 월관리비만*
+## 가격표 (만원)
+SNS 세트: 스타터 89 / 성장 149 / 바이럴 279 / 지역장악 499
+월관리: GRADE1 55 / GRADE2 99 / GRADE3 190
+웹사이트: 랜딩 99 / 스탠다드 200 / 프리미엄 450
+네이버: 플레이스셋팅 39 / 월관리A 50 / 월관리B 35
+인스타: 셋팅 49 / 월관리 75
+블로그: 셋팅 29 / 월관리A 45 / 월관리B 20
+ZOOM상담: 3만원 (30분)
 
-| 상품명 | 첫달 총액 | 월관리 | 포함 서비스 | 추천 대상 |
-|--------|----------|--------|-------------|-----------|
-| 🔥 SNS 스타터 | 89만 | 55만 | 플레이스 셋팅 + 베이직 관리 | "처음 시작하는 분, 지도에 먼저 이름 올리고 싶은 분" |
-| ⭐ SNS 성장 (BEST) | 149만 | 99만 | 플레이스+인스타 셋팅 + 퍼포먼스 관리 | "인스타도 하고 검색도 잡고 싶은 분 - 가장 인기!" |
-| 💎 바이럴 마스터 | 279만 | 99만 | 플레이스+인스타+유튜브 + 퍼포먼스 관리 | "영상으로 입소문 확 내고 싶은 분" |
-| 👑 지역 장악 | 499만 | 190만 | 전 채널 셋팅 + 토탈마스터 관리 | "우리 동네 1등, 압도적 존재감 원하는 분" |
+## 자주묻는질문
+- 비싸요 → "SNS스타터 89만, 하루 1.8만원이에요"
+- 효과? → "2-3개월째 문의 증가 시작"
+- 해약? → "첫달 안맞으면 해약 가능"
 
-## 📊 월관리 등급 (GRADE) - 세부 서비스 내용
-
-### GRADE 1: 베이직 (월 55만원)
-"기본기 다지기 - 꾸준히 관리받고 싶은 분"
-포함 서비스:
-- 📍 네이버 플레이스: 기본 정보 관리 + 리뷰 응대 (월 2회 점검)
-- 📸 인스타그램: 피드 2개 + 스토리 4개/월
-- 📝 블로그: 포스팅 2개/월
-
-### GRADE 2: 퍼포먼스 그로스 (월 99만원) ⭐ 가장 인기
-"적극적으로 손님 늘리기 - 문의/예약 늘리고 싶은 분"
-포함 서비스:
-- 📍 네이버 플레이스 A형: 적극적 리뷰 관리 + 키워드 모니터링 + 상위노출 전략
-- 📸 인스타그램 풀관리: 릴스 4개 + 피드 4개 + 카드뉴스 2개 + 스토리 8개/월
-- 📝 블로그 A형: 상위노출 타겟 포스팅 4개/월
-- 🌍 구글 마이비즈니스: 리뷰 관리 + 정보 최적화
-
-### GRADE 3: 토탈 마스터 (월 190만원) 👑
-"지역 1등 - 압도적 존재감으로 동네 장악"
-포함 서비스:
-- 🎬 유튜브 숏폼: 숏츠 제작 4개/월 (촬영+편집+업로드)
-- 📸 인스타그램 풀관리: 릴스 8개 + 피드 6개 + 카드뉴스 4개/월
-- 📍 네이버 플레이스 A형 + 블로그 A형
-- 🎵 틱톡: 영상 제작 4개/월
-- 🌍 구글 마이비즈니스 + SEO 기본
-
-## 🏷️ 채널별 단품 서비스 (개별 선택 가능)
-
-### 📍 네이버 (지도+검색)
-| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
-|--------|--------|--------|-----------|
-| 플레이스 셋팅 | 39만 | - | 기본정보 최적화, 사진 보정 20장, 메뉴/가격표, 키워드 세팅 |
-| 플레이스 월관리 A형 | - | 50만 | 리뷰 적극 관리(답글+유도), 키워드 모니터링, 상위노출 전략, 주 1회 리포트 |
-| 플레이스 월관리 B형 | - | 35만 | 기본 리뷰 응대, 정보 업데이트, 월 2회 점검 |
-| 광고/톡톡/페이 SET | 59만 | 별도상담 | 네이버 광고 세팅 + 톡톡 자동응답 + 페이 연동 (광고비 별도) |
-
-### 📸 인스타그램
-| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
-|--------|--------|--------|-----------|
-| 계정 셋팅 | 49만 | - | 프로필 최적화, 하이라이트 구성, 피드 그리드 기획, 해시태그 전략 |
-| 월관리 | - | 75만 | 릴스 4개 + 피드 4개 + 카드뉴스 2개 + 스토리 8개/월, 댓글/DM 관리 |
-| 메타광고 셋팅 | 35만 | 별도상담 | 타겟 광고 세팅 (인스타+페이스북), 광고비 별도 |
-| 스레드 셋팅 | 15만 | - | 계정 생성 + 초기 콘텐츠 10개 |
-| 스레드 월관리 | - | 20만 | 포스팅 15개/월 + 소통 관리 |
-
-### 🎬 유튜브/숏폼
-| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
-|--------|--------|--------|-----------|
-| 채널 셋팅 | 59만 | - | 채널아트, 섬네일 템플릿, 재생목록 구성, SEO 최적화 |
-| 숏폼 월관리 | - | 59만 | 숏츠/릴스 4개/월 (기획+촬영가이드+편집+업로드+해시태그) |
-| 롱폼 월관리 | - | 150만 | 5~15분 영상 2개/월 (기획+촬영+편집+썸네일+SEO) |
-
-### 🎵 틱톡
-| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
-|--------|--------|--------|-----------|
-| 계정 셋팅 | 49만 | - | 프로필 최적화, 트렌드 분석, 초기 콘텐츠 5개 |
-| 월관리 | - | 55만 | 영상 8개/월 (트렌드 반영), 해시태그 전략, 소통 관리 |
-
-### 📝 블로그
-| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
-|--------|--------|--------|-----------|
-| 네이버블로그 셋팅 | 29만 | - | 블로그 개설/디자인, 카테고리 구성, 초기 포스팅 3개 |
-| 네이버 월관리 A형 | - | 45만 | 상위노출 타겟 포스팅 4개/월 (키워드 분석+SEO 최적화) |
-| 네이버 월관리 B형 | - | 20만 | 일반 포스팅 2개/월 |
-| 워드프레스 셋팅 | 35만 | - | 설치+테마+플러그인+초기 세팅 |
-| 워드프레스 월관리 | - | 30만 | 포스팅 4개/월 + 기술 유지보수 |
-
-### 🌍 구글
-| 서비스 | 셋팅비 | 월관리 | 세부 내용 |
-|--------|--------|--------|-----------|
-| 마이비즈니스 셋팅 | 35만 | - | 구글맵 등록, 정보 최적화, 사진 업로드 |
-| 마이비즈니스 월관리 | - | 25만 | 리뷰 관리, 게시물 업로드, 정보 업데이트 |
-| 구글 SEO | 59만 | 별도상담 | 웹사이트 검색최적화 (기술 SEO + 콘텐츠) |
-| 구글 광고 | 39만 | 별도상담 | 검색/디스플레이 광고 세팅 (광고비 별도) |
-
-## 🌐 웹사이트 구축
-| 패키지 | 가격 | 포함 내용 | 추천 대상 |
-|--------|------|-----------|-----------|
-| 랜딩형 | 99만 | 1페이지 원페이지, 반응형, 기본 SEO | "일단 홈페이지 있으면 되는 분" |
-| 스탠다드 (BEST) | 199만 | 5페이지, 반응형, SEO, 3개월 관리 | "제대로 된 회사 홈페이지 원하는 분" |
-| 프리미엄 | 450만 | 무제한 페이지, AI 상담봇 탑재, 6개월 VIP 관리 | "24시간 자동 상담 원하는 분" |
-| 병원/프랜차이즈 | 750만 | 브랜드 영상 3편 + AI 상담봇 + 예약시스템 + 12개월 케어 | "전문 브랜딩 필요한 분" |
-
-## 🎨 웹 서비스 (디자인 중심)
-| 패키지 | 가격 | 포함 내용 |
-|--------|------|-----------|
-| 리틀리 제작 | 29만 | 링크 모음 페이지 |
-| 홈페이지 (기본) | 99만 | 5페이지 반응형 웹사이트 |
-| 홈페이지 (프로) | 199만 | SEO 최적화 + 3개월 관리 |
-
-## ⚙️ 시스템 개발 (기능 중심)
-| 패키지 | 가격 | 포함 내용 |
-|--------|------|-----------|
-| 시스템 개발 (기본) | 190만 | 회원가입 / 로그인 / 게시판 |
-| 시스템 개발 (표준) | 290만 | 네이버 지도 연동 / 카카오 연동 |
-| 시스템 개발 (고급) | 490만 | 결제 시스템 / 예약 자동화 / 알림톡 연동 |
-| 시스템 개발 (프리미엄) | 790만 | AI 상담봇 설치 / 관리자 대시보드 |
-| 시스템 개발 (엔터프라이즈) | 990만 | 풀커스텀 시스템 (ERP/CRM 연동) |
-
-## ➕ 부가 서비스
-- 📊 상세페이지 디자인: 150만 (쿠팡/스마트스토어용, 수작업 고퀄리티)
-- 📈 상권분석 (방문설명): 80만 (현장 방문 + 맞춤 전략, 계약시 전액 환급!)
-- 🚀 SNS 부스팅: 월 29만 (팔로워/좋아요 증가)
-- 🎬 브랜드 영상 A형: 99만 (숏컷 2편)
-- 🎬 브랜드 영상 B형: 140만 (숏컷 3편 + 하이라이트 1편)
-- 🎬 브랜드 영상 C형: 249만 (묵직한 브랜딩 영상 1편)
-- 🎬 브랜드 영상 D형: 550만 (브랜딩 영상 2편)
-- 🎬 교육/매뉴얼 영상 (20P 미만): 100만/편
-- 🎬 교육/매뉴얼 영상 (50P 미만): 200만/편
-- 🎬 방문 촬영: 150만 (현장 방문 촬영 1편)
-- **🎥 ZOOM 상담: 3만원** (30분 1:1 화상 전략 상담) ← 가장 저렴하게 전문가 조언!
-
-## 🏢 브랜드/프랜차이즈 컨설팅 (1년 계약, 월 2회 방문)
-| 기간 | 월 금액 | 설명 |
-|------|---------|------|
-| 1~2개월차 | **월 300만** | 초기 세팅 기간 |
-| 3~5개월차 | **월 200만** | 안정화 기간 |
-| 6~12개월차 | **월 150만** | 유지 기간 |
-
-**포함 서비스:**
-- 매뉴얼 제작 / 커리큘럼 구성 / 영상 마케팅 전략
-
-**자문 분야:**
-- 법인 설립 / 세무 자문 / 노무 자문 / 행정 지원 / 영업 전략
-- 정부과제 연계 (과제비 별도)
-
-💡 "브랜드 만들어서 프랜차이즈 하고 싶어요" → 브랜드 컨설팅 추천!
-💡 "이미 가맹점 여러 개인데 체계화하고 싶어요" → 프랜차이즈 컨설팅 추천!
-
-## 🎁 다단계 친구 초대 혜택 (추천인 보상 시스템)
-**🔥 친구 초대하면 바로 15% 할인!**
-
-### 레벨 1: 직접 초대 (1차)
-- 초대한 친구: **15% 할인 쿠폰** 증정
-- 나(추천인): **친구 결제금액의 5% 적립금** 획득
-
-### 레벨 2: 친구의 친구 (2차)
-- 내가 초대한 친구가 또 친구를 초대하면
-- 나(원래 추천인): **2차 친구 결제금액의 2% 적립금** 추가 획득
-
-### 레벨 3: VIP 마스터 (누적 500만원 이상)
-- 모든 추천에서 **7% 적립금** 획득
-- 초대받는 친구는 **20% 할인** 혜택
-
-💰 **예시)**
-- SNS 성장 149만원 → 15% 할인 시 **126.6만원** (22.4만원 절약!)
-- 친구가 결제하면 나는 **7.4만원 적립금** 획득 (5%)
-- 친구의 친구가 결제하면 **추가 2.9만원 적립금** (2%)
-
-# FAQ Response (자주 묻는 질문 대응)
-
-**Q1. "너무 비싸요" / "예산이 부족해요"**
-→ "이해해요! 그래서 저희가 세트 메뉴를 만들었어요. SNS 스타터 89만원이면 첫 달 세팅+관리까지 다 되고, 다음 달부터는 55만원이에요. 하루로 치면 1.8만원! 알바생 반나절 비용으로 24시간 마케팅 되는 셈이죠. 그리고 친구 초대받으시면 바로 15% 할인이에요!"
-
-**Q2. "효과가 바로 나타나나요?"**
-→ "첫 달은 기반 작업인 '세팅' 기간이에요. 플레이스 최적화하고 인스타 기반 다지고... 제대로 세팅하면 보통 2~3개월째부터 문의가 늘기 시작해요."
-
-**Q3. "월관리에 뭐가 포함되어 있어요?"**
-→ (위 GRADE별 세부 내용 참조해서 구체적으로 설명. 예: "GRADE 2 퍼포먼스는 월 99만원인데요, 인스타 릴스 4개+피드 4개+카드뉴스 2개, 플레이스 적극 관리, 블로그 4개 포스팅이 포함되어 있어요. 사장님은 콘텐츠 승인만 해주시면 저희가 다 올려드려요!")
-
-**Q4. "인스타 월관리 75만원에 정확히 뭘 해주는 거예요?"**
-→ "릴스(짧은 영상) 4개, 피드(이미지) 4개, 카드뉴스 2개, 스토리 8개를 만들어서 올려드려요. 댓글이나 DM 관리도 해드리고요. 사장님은 촬영 협조만 해주시면 나머지는 저희가 기획-제작-업로드까지 다 해요!"
-
-**Q5. "해약할 수 있나요?"**
-→ "네! 노예계약 없어요. 첫 달 써보시고 마음에 안 드시면 언제든 멈추셔도 돼요. 그만큼 실력에 자신 있으니까요."
-
-**Q6. "플레이스 A형이랑 B형 차이가 뭐예요?"**
-→ "B형(35만)은 기본 관리예요. 리뷰 답글 달고 정보 업데이트하고. A형(50만)은 적극 공략! 상위노출 전략 짜고, 키워드 모니터링하고, 리뷰 유도까지 해드려요. 경쟁 심한 지역이면 A형 추천해요!"
-
-**Q7. "ZOOM 상담은 뭐예요?"**
-→ "3만원에 30분 동안 1:1로 화상 상담해드려요! 사장님 업종, 상황 듣고 맞춤 전략 조언해드려요. 일단 이것만 신청하셔도 방향이 잡히실 거예요."
-
-**Q8. "결제는 어떻게 하나요?" / "선입금인가요?"**
-→ "네! 저희는 **선입금 시스템**이에요. 결제 완료 후 작업이 시작됩니다. 정당한 대가 없이는 서비스 제공이 어렵습니다. 대신 품질에 자신 있으니 첫 달 써보시고 마음에 안 드시면 다음 달 해약 가능해요!"
-
-**Q8-1. "후불 안 되나요?" / "나중에 결제해도 되나요?"**
-→ "죄송해요, 저희는 **선입금 원칙**입니다. 계약금 먼저 결제 → 작업 시작 → 세팅 완료 후 잔금 결제 순서로 진행해요. 후불은 어렵습니다. 신뢰가 쌓인 장기 고객님에게만 예외적으로 협의 가능해요!"
-
-**Q9. "계약서 작성하나요?"**
-→ "네! 정식 전자계약서를 작성해요. 서비스 범위, 기간, 금액, 해약 조건이 명시되어 있어서 서로 안심하고 진행할 수 있어요. 계약서 없이는 프로젝트 시작 안 해요!"
-
-# Conversation Flow (대화 순서)
-1. **인사+업종 파악:** "안녕하세요! X I Λ I X 마케팅 상담 AI입니다. 어떤 사업 운영하고 계신가요?"
-2. **호칭 설정+공감:** 업종 맞는 호칭으로 부르며 노고 위로
-3. **니즈 파악:** "지금 가장 고민되시는 게 뭐예요? 손님이 안 오는 건지, 인스타 운영이 어려운 건지..."
-4. **맞춤 추천:** 상황에 맞는 상품을 쉬운 비유와 함께 추천 (세트 메뉴 우선 추천)
-5. **세부 설명:** 궁금해하면 포함 서비스 구체적으로 설명
-6. **FAQ 방어:** 가격/효과 걱정하면 위 FAQ 논리로 설득
-7. **마무리:** "장바구니에 담아드릴까요?" 또는 "ZOOM 상담 먼저 받아보시겠어요?"
-
-# 금지 사항
-- 없는 상품/가격 지어내기 (위 데이터베이스에 없는 건 "확인 후 안내드릴게요" 라고 답변)
-- 임의 할인/무료 약속 (친구초대 15%, VIP 20% 외 할인 불가)
-- 효과 100% 보장 발언
-- 경쟁사 비방`
+## 금지
+- 없는 가격/상품 만들기
+- 긴 설명 한번에 쏟아내기
+- 이모지 남발`
 
   try {
     const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey, {
@@ -2132,7 +1939,7 @@ app.post('/api/payment/prepare', async (c) => {
       originalAmount: customAmount,
       discountAmount,
       totalAmount,
-      storeId: c.env?.PORTONE_STORE_ID || 'store-d08be3e0-9ed0-4393-9974-0b9cbd799252',
+      storeId: c.env?.PORTONE_STORE_ID || 'store-38e273e8-ad51-4a3c-b4ff-85df815f3d64',
       channelKey: c.env?.PORTONE_CHANNEL_KEY || 'channel-key-1cb320d6-8851-4ab2-83de-b8fb88dd2613',
       isCustom: true,
       couponId,
@@ -2155,7 +1962,7 @@ app.post('/api/payment/prepare', async (c) => {
       originalAmount,
       discountAmount,
       totalAmount,
-      storeId: c.env?.PORTONE_STORE_ID || 'store-d08be3e0-9ed0-4393-9974-0b9cbd799252',
+      storeId: c.env?.PORTONE_STORE_ID || 'store-38e273e8-ad51-4a3c-b4ff-85df815f3d64',
       channelKey: c.env?.PORTONE_CHANNEL_KEY || 'channel-key-1cb320d6-8851-4ab2-83de-b8fb88dd2613',
       items,
       couponId,
@@ -3770,6 +3577,12 @@ function getMainHTML(): string {
         padding: 0 var(--space-lg);
       }
       
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 16px 0 12px;
+        }
+      }
+      
       /* ========================================
          AI 입문반 상단 플로팅 배너
          ======================================== */
@@ -4294,6 +4107,27 @@ function getMainHTML(): string {
         position: relative;
       }
       
+      .section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 1200px;
+        height: 2px;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          rgba(59, 130, 246, 0.3) 10%, 
+          rgba(59, 130, 246, 0.8) 50%, 
+          rgba(59, 130, 246, 0.3) 90%, 
+          transparent 100%);
+      }
+      
+      .section:first-of-type::before {
+        display: none;
+      }
+      
       .section-alt {
         background: var(--bg-secondary);
       }
@@ -4303,6 +4137,8 @@ function getMainHTML(): string {
         max-width: 800px;
         margin: 0 auto var(--space-2xl);
       }
+      
+
       
       .section-eyebrow {
         display: inline-flex;
@@ -4696,6 +4532,10 @@ function getMainHTML(): string {
       }
       
       .fact-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
         text-align: center;
         padding: var(--space-sm) 0;
       }
@@ -4716,6 +4556,7 @@ function getMainHTML(): string {
         font-size: 1.75rem;
         font-weight: 900;
         margin-bottom: 2px;
+        white-space: nowrap;
       }
       
       .fact-stat-value.fact-stat-small {
@@ -4738,6 +4579,8 @@ function getMainHTML(): string {
         text-transform: none;
         letter-spacing: 0;
         line-height: 1.3;
+        word-break: keep-all;
+        white-space: nowrap;
       }
       
       @media (min-width: 768px) {
@@ -4756,7 +4599,7 @@ function getMainHTML(): string {
       }
       
       .experience-cta-text {
-        font-size: 1rem;
+        font-size: 1.15rem;
         font-weight: 700;
         line-height: 1.7;
         margin-bottom: var(--space-lg);
@@ -5072,6 +4915,8 @@ function getMainHTML(): string {
       .service-icon.insta { color: #E4405F; }
       .service-icon.youtube { color: #FF0000; }
       .service-icon.tiktok { color: #00f2ea; }
+      .service-icon.blog { color: #21A366; }
+      .service-icon.google { color: #4285F4; }
       .service-icon.web { color: var(--accent-blue); }
       .service-icon.system { color: var(--neon-cyan); }
       
@@ -5123,25 +4968,87 @@ function getMainHTML(): string {
       }
       
       @media (max-width: 768px) {
-        .service-grid { grid-template-columns: 1fr; }
+        .service-grid { 
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .service-card {
+          padding: 20px;
+          margin: 0;
+        }
+        .service-card-inner {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .service-card-header {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+        .service-icon {
+          width: 52px;
+          height: 52px;
+          font-size: 1.4rem;
+          flex-shrink: 0;
+        }
+        .service-card-info {
+          flex: 1;
+          min-width: 0;
+        }
+        .service-card-title {
+          font-size: 1.15rem;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .service-card-desc {
+          font-size: 0.9rem;
+          word-break: keep-all;
+          line-height: 1.5;
+          color: var(--text-secondary);
+        }
+        .service-card-arrow {
+          position: static;
+          width: 32px;
+          height: 32px;
+          flex-shrink: 0;
+          margin-left: auto;
+        }
       }
       
       /* ========================================
-         Pricing Cards
+         Pricing Cards (셋트 메뉴)
          ======================================== */
       .pricing-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: var(--space-md);
+      }
+      
+      @media (max-width: 1200px) {
+        .pricing-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .pricing-grid {
+          grid-template-columns: 1fr;
+          padding: 0 16px;
+        }
       }
       
       .pricing-card {
         background: var(--bg-card);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-xl);
-        padding: var(--space-xl);
+        padding: var(--space-lg);
         transition: all 0.3s;
         position: relative;
+        display: flex;
+        flex-direction: column;
       }
       
       .pricing-card.featured {
@@ -5208,7 +5115,184 @@ function getMainHTML(): string {
       .pricing-feature i { color: var(--neon-green); font-size: 0.9rem; }
       
       @media (max-width: 900px) {
-        .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+        .pricing-price {
+          font-size: 1.6rem;
+        }
+      }
+      
+      /* ========================================
+         셋트 메뉴, 번들, 웹사이트, AI 시스템 그리드
+         ======================================== */
+      .bundle-grid, .website-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-md);
+      }
+      
+      .system-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-md);
+      }
+      
+      @media (max-width: 1200px) {
+        .bundle-grid, .website-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .system-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .bundle-grid, .website-grid, .system-grid {
+          grid-template-columns: 1fr;
+          padding: 0 16px;
+          gap: 16px;
+        }
+      }
+      
+      .package-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        padding: var(--space-lg);
+        transition: all 0.3s;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* 모바일 패키지 카드 */
+      @media (max-width: 768px) {
+      }
+      
+      .package-card.recommended {
+        border-color: var(--accent-blue);
+        background: linear-gradient(180deg, rgba(30, 144, 255, 0.08) 0%, var(--bg-card) 100%);
+      }
+      
+      .package-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+      
+      .package-badge {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 4px 12px;
+        background: var(--gradient-accent);
+        border-radius: var(--radius-full);
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #fff;
+        white-space: nowrap;
+      }
+      
+      .package-header {
+        text-align: center;
+        margin-bottom: var(--space-md);
+      }
+      
+      .package-type {
+        font-size: 0.75rem;
+        color: var(--text-tertiary);
+        margin-bottom: 4px;
+      }
+      
+      .package-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+      
+      .package-subtitle {
+        font-size: 0.85rem;
+        color: var(--accent-blue);
+      }
+      
+      .package-price-box {
+        text-align: center;
+        padding: var(--space-sm) 0;
+        border-top: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--border-subtle);
+        margin-bottom: var(--space-sm);
+      }
+      
+      .package-original-price {
+        font-size: 0.85rem;
+        color: var(--text-tertiary);
+        text-decoration: line-through;
+      }
+      
+      .package-price {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--accent-blue);
+      }
+      
+      .package-discount {
+        display: inline-block;
+        padding: 2px 8px;
+        background: rgba(255, 107, 107, 0.2);
+        color: #ff6b6b;
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 4px;
+      }
+      
+      .package-includes {
+        flex: 1;
+        list-style: none;
+        margin-bottom: var(--space-md);
+        padding: 0;
+      }
+      
+      .package-includes li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 6px 0;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
+      }
+      
+      .package-includes li i {
+        color: var(--neon-green);
+        font-size: 0.75rem;
+        margin-top: 3px;
+        flex-shrink: 0;
+      }
+      
+      .package-btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .package-btn.primary {
+        background: var(--gradient-accent);
+        color: #fff;
+      }
+      
+      .package-btn.ghost {
+        background: transparent;
+        border: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+      }
+      
+      .package-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
       }
       
       /* ========================================
@@ -5312,8 +5396,8 @@ function getMainHTML(): string {
          ======================================== */
       .chat-bubble {
         position: fixed;
-        bottom: var(--space-md);
-        right: var(--space-md);
+        bottom: 240px;
+        right: 16px;
         width: 64px;
         height: 64px;
         background: var(--gradient-accent);
@@ -5352,6 +5436,35 @@ function getMainHTML(): string {
         z-index: 998;
         box-shadow: var(--shadow-lg);
         overflow: hidden;
+      }
+      
+      @media (max-width: 768px) {
+        .chat-window {
+          bottom: 0;
+          right: 0;
+          left: 0;
+          width: 100%;
+          max-width: 100%;
+          height: 70vh;
+          max-height: 70vh;
+          border-radius: 20px 20px 0 0;
+          border-bottom: none;
+        }
+        .chat-input-area {
+          padding: 12px;
+          padding-bottom: calc(16px + env(safe-area-inset-bottom));
+          background: #0d0d1a;
+        }
+        .chat-input {
+          padding: 16px;
+          font-size: 16px; /* iOS 줌 방지 */
+          border-width: 2px;
+        }
+        .chat-send {
+          width: 52px;
+          height: 52px;
+          font-size: 1.3rem;
+        }
       }
       
       .chat-window.open { display: flex; }
@@ -5436,35 +5549,55 @@ function getMainHTML(): string {
         border-top: 1px solid var(--border-subtle);
         display: flex;
         gap: var(--space-sm);
+        background: var(--bg-secondary);
       }
       
       .chat-input {
         flex: 1;
-        padding: var(--space-sm) var(--space-md);
-        background: var(--bg-tertiary);
-        border: 1px solid var(--border-subtle);
+        padding: 14px 16px;
+        background: #1a1a2e;
+        border: 2px solid #3b82f6;
         border-radius: var(--radius-lg);
         color: #fff;
-        font-size: 0.95rem;
+        font-size: 1rem;
         outline: none;
         transition: all 0.2s;
       }
       
-      .chat-input:focus { border-color: var(--accent-blue); }
+      .chat-input::placeholder {
+        color: rgba(255,255,255,0.5);
+      }
+      
+      .chat-input:focus { 
+        border-color: #60a5fa; 
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+      }
       
       .chat-send {
-        width: 44px;
-        height: 44px;
-        background: var(--gradient-accent);
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #3b82f6, #1e90ff);
         border: none;
         border-radius: var(--radius-lg);
         color: #fff;
-        font-size: 1rem;
+        font-size: 1.2rem;
         cursor: pointer;
         transition: all 0.2s;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
       }
       
-      .chat-send:hover { transform: scale(1.05); }
+      .chat-send:hover { 
+        transform: scale(1.05); 
+        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+      }
+      
+      .chat-send:active {
+        transform: scale(0.98);
+      }
       
       /* ========================================
          Footer
@@ -5528,6 +5661,70 @@ function getMainHTML(): string {
       
       @media (max-width: 768px) {
         .footer-content { grid-template-columns: 1fr; gap: var(--space-lg); text-align: center; }
+      }
+      
+      /* ========================================
+         Mobile Responsive Improvements
+         ======================================== */
+      @media (max-width: 768px) {
+        /* 섹션 헤더 - 텍스트 한줄로 */
+        .section-header {
+          padding: 0 12px;
+        }
+        .section-title {
+          font-size: 1.5rem;
+          word-break: keep-all;
+        }
+        .section-desc {
+          font-size: 0.9rem;
+          line-height: 1.6;
+          word-break: keep-all;
+        }
+        .section-desc br {
+          display: none;
+        }
+        /* 컨테이너 패딩 */
+        .container {
+          padding: 0 12px;
+        }
+        /* 패키지 카드 텍스트 */
+        .package-header h3 {
+          font-size: 1.1rem;
+        }
+        .package-price {
+          font-size: 1.3rem;
+        }
+        .package-original {
+          font-size: 0.8rem;
+        }
+        .package-desc {
+          font-size: 0.85rem;
+        }
+        /* 서비스 카드 */
+        .service-card {
+          padding: 16px;
+        }
+        .service-card h3 {
+          font-size: 1rem;
+        }
+        .service-card p {
+          font-size: 0.85rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .section-title {
+          font-size: 1.3rem;
+        }
+        .section-desc {
+          font-size: 0.85rem;
+        }
+        .package-header h3 {
+          font-size: 1rem;
+        }
+        .package-price {
+          font-size: 1.2rem;
+        }
       }
       
       /* ========================================
@@ -5951,13 +6148,12 @@ function getMainHTML(): string {
           </div>
           
           <h1 class="hero-title">
-            사장님은 장사만 하세요<br>
-            <span class="hero-title-accent">마케팅은 AI가 다 해드립니다</span>
+            데이터기반으로 설계된<br>
+            <span class="hero-title-accent">AI 마케팅 시스템</span>
           </h1>
           
           <p class="hero-desc">
-            직원 뽑지 마세요. 블로그, 인스타, 영상 편집...<br>
-            XIVIX AI 시스템이 월급 없이 24시간 일합니다.
+            강매 없음, 무료상담, 방문상담 가능
           </p>
           
           <div class="hero-actions">
@@ -6115,8 +6311,8 @@ function getMainHTML(): string {
             </div>
             <div class="fact-stat">
               <i class="fas fa-palette text-purple"></i>
-              <div class="fact-stat-value fact-stat-small">1600만</div>
-              <div class="fact-stat-label">컬러 SW엔진개발</div>
+              <div class="fact-stat-value">1600만</div>
+              <div class="fact-stat-label">컬러 SW 엔진 개발</div>
             </div>
             <div class="fact-stat">
               <i class="fas fa-globe text-red"></i>
@@ -6129,7 +6325,7 @@ function getMainHTML(): string {
         <!-- 4. CTA 섹션 -->
         <div class="experience-cta">
           <p class="experience-cta-text">
-            "제가 틀렸다면, 직접 실패하면서 배우십시오.<br>
+            "제가 틀렸다면,<br>직접 실패하면서 배우십시오.<br>
             <span class="text-blue">비즈니스를 모르는 AI는<br>초등학생도 할 수 있습니다.</span>"
           </p>
           <button class="btn btn-cta-large" onclick="openChat()">
@@ -6160,68 +6356,82 @@ function getMainHTML(): string {
       </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="section section-alt" id="pricing">
+    <!-- 마케팅 묶음 섹션 -->
+    <section class="section section-alt" id="marketing-bundle">
       <div class="container">
         <div class="section-header">
           <span class="section-eyebrow">
-            <i class="fas fa-tags"></i> Pricing
+            <i class="fas fa-layer-group"></i> Bundle
           </span>
-          <h2 class="section-title">가격 안내</h2>
+          <h2 class="section-title">마케팅 묶음 셋팅</h2>
           <p class="section-desc">
-            투명한 가격, 숨겨진 비용 없음.<br>
-            필요한 서비스만 선택하세요.
+            채널별로 묶어서 한번에 셋팅!<br>
+            개별 구매보다 훨씬 저렴합니다.
           </p>
         </div>
         
-        <div class="pricing-grid">
-          <div class="pricing-card">
-            <div class="pricing-header">
-              <h3 class="pricing-name">GRADE 1</h3>
-              <div class="pricing-price">₩550,000</div>
-              <div class="pricing-period">/월</div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature"><i class="fas fa-check"></i> 베이직 관리</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> SNS 기본 세팅</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 월간 리포트</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 1:1 카톡 상담</li>
-            </ul>
-            <button class="btn btn-ghost" style="width:100%" onclick="openChat()">상담하기</button>
-          </div>
-          
-          <div class="pricing-card featured">
-            <span class="pricing-badge">인기</span>
-            <div class="pricing-header">
-              <h3 class="pricing-name">GRADE 2</h3>
-              <div class="pricing-price">₩990,000</div>
-              <div class="pricing-period">/월</div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature"><i class="fas fa-check"></i> 스탠다드 관리</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> AI 콘텐츠 생성</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 주간 리포트</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 광고 집행</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 줌 미팅 월 2회</li>
-            </ul>
-            <button class="btn btn-primary" style="width:100%" onclick="openChat()">상담하기</button>
-          </div>
-          
-          <div class="pricing-card">
-            <div class="pricing-header">
-              <h3 class="pricing-name">GRADE 3</h3>
-              <div class="pricing-price">₩1,900,000</div>
-              <div class="pricing-period">/월</div>
-            </div>
-            <ul class="pricing-features">
-              <li class="pricing-feature"><i class="fas fa-check"></i> 토탈 마스터</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> AI 영상 제작</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 전담 매니저</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 바이럴 마케팅</li>
-              <li class="pricing-feature"><i class="fas fa-check"></i> 방문 컨설팅</li>
-            </ul>
-            <button class="btn btn-ghost" style="width:100%" onclick="openChat()">상담하기</button>
-          </div>
+        <div class="bundle-grid" id="bundleGrid">
+          <!-- Dynamic: MARKETING_SETUP -->
+        </div>
+      </div>
+    </section>
+    
+    <!-- 셋트 메뉴 섹션 -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">
+            <i class="fas fa-fire"></i> Best Value
+          </span>
+          <h2 class="section-title">셋트 메뉴</h2>
+          <p class="section-desc">
+            처음 시작하시는 분을 위한 올인원 패키지<br>
+            개별 구매 대비 최대 170만원 할인!
+          </p>
+        </div>
+        
+        <div class="bundle-grid" id="setMenuGrid">
+          <!-- Dynamic: SET_MENUS -->
+        </div>
+      </div>
+    </section>
+    
+    <!-- 웹사이트 패키지 섹션 -->
+    <section class="section section-alt" id="website-package">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">
+            <i class="fas fa-globe"></i> Website
+          </span>
+          <h2 class="section-title">웹사이트 제작</h2>
+          <p class="section-desc">
+            반응형 웹사이트 + SEO 최적화 + AI 상담봇까지<br>
+            사업 규모에 맞는 패키지를 선택하세요.
+          </p>
+        </div>
+        
+        <div class="website-grid" id="websiteGrid">
+          <!-- Dynamic: WEBSITE_PACKAGES -->
+        </div>
+      </div>
+    </section>
+    
+    <!-- AI 솔루션 개발 섹션 -->
+    <section class="section" id="system-package">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">
+            <i class="fas fa-robot"></i> AI Solution
+          </span>
+          <h2 class="section-title">AI 솔루션 개발</h2>
+          <p class="section-desc">
+            🤖 실시간 AI 상담봇이 기본 탑재된<br>
+            업종별 맞춤 솔루션 개발
+          </p>
+        </div>
+        
+        <div class="system-grid" id="systemGrid">
+          <!-- Dynamic: SYSTEM_DEV_OPTIONS -->
         </div>
       </div>
     </section>
@@ -6328,9 +6538,9 @@ function getMainHTML(): string {
       
       <div class="chat-messages" id="chatMessages">
         <div class="chat-message bot">
-          안녕하세요! XIVIX AI 상담사입니다.<br><br>
-          어떤 도움이 필요하신가요?<br>
-          마케팅, 웹사이트, AI 시스템 등 무엇이든 물어보세요!
+          안녕하세요! XIVIX 상담 AI입니다.
+
+          무엇이 궁금하신가요?
         </div>
       </div>
       
@@ -6438,14 +6648,19 @@ function getMainHTML(): string {
         loadPortfolio();
         loadServices();
         loadCart(); // 장바구니 복원
+        // 새로운 섹션 렌더링
+        renderSetMenus();
+        renderBundles();
+        renderWebsitePackages();
+        renderSystemPackages();
       });
       
       // ========================================
       // 장바구니 기능
       // ========================================
-      function addToCart(type, id, name, price, event) { 
+      function addToCart(id, name, price, event) { 
         if (event) event.stopPropagation();
-        cart.push({ type, id, name, price }); 
+        cart.push({ id, name, price }); 
         saveCart();
         updateCart(); 
         showToast('✅ ' + name + ' 담기 완료! (총 ' + cart.length + '개)');
@@ -6611,6 +6826,11 @@ function getMainHTML(): string {
                 email: customerEmail,
                 fullName: customerName,
                 phoneNumber: customerPhone.replace(/-/g, '')
+              },
+              bypass: {
+                inicis_v2: {
+                  cardQuota: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                }
               }
             });
             
@@ -6701,7 +6921,7 @@ function getMainHTML(): string {
         grid.innerHTML = videoItems.map(item => \`
           <div class="portfolio-video-card">
             <iframe 
-              src="\${item.url}?controls=1" 
+              src="\${item.url}?controls=1&modestbranding=1&rel=0&showinfo=0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowfullscreen>
             </iframe>
@@ -6727,10 +6947,12 @@ function getMainHTML(): string {
         if (!grid) return;
         
         const services = [
-          { id: 'naver', name: '네이버 마케팅', desc: '블로그, 플레이스, 스마트스토어 통합 관리', icon: 'fa-solid fa-n', iconClass: 'naver' },
+          { id: 'naver', name: '네이버 마케팅', desc: '플레이스, 광고/톡톡/페이 통합 관리', icon: 'fa-solid fa-n', iconClass: 'naver' },
           { id: 'instagram', name: '인스타그램 마케팅', desc: '피드, 릴스, 스토리 콘텐츠 제작 및 운영', icon: 'fab fa-instagram', iconClass: 'insta' },
           { id: 'youtube', name: '유튜브 마케팅', desc: '영상 기획, 편집, 채널 성장 전략', icon: 'fab fa-youtube', iconClass: 'youtube', badge: 'HOT' },
           { id: 'tiktok', name: '틱톡 마케팅', desc: '숏폼 콘텐츠 기획 및 바이럴 마케팅', icon: 'fab fa-tiktok', iconClass: 'tiktok' },
+          { id: 'blog', name: '블로그 마케팅', desc: '네이버블로그, 워드프레스 포스팅 관리', icon: 'fa-solid fa-blog', iconClass: 'blog' },
+          { id: 'google', name: '구글 마케팅', desc: '마이비즈니스, 광고, SEO 최적화', icon: 'fab fa-google', iconClass: 'google' },
           { id: 'web', name: '웹사이트 제작', desc: '랜딩페이지, 쇼핑몰, 기업 홈페이지', icon: 'fas fa-globe', iconClass: 'web' },
           { id: 'system', name: 'AI 시스템 구축', desc: '업무 자동화, AI 챗봇, 데이터 분석', icon: 'fas fa-robot', iconClass: 'system', badge: 'NEW' }
         ];
@@ -6754,6 +6976,320 @@ function getMainHTML(): string {
             <span class="service-card-arrow">
               <i class="fas fa-arrow-right"></i>
             </span>
+          </div>
+        \`).join('');
+      }
+      
+      // 셋트 메뉴 렌더링
+      function renderSetMenus() {
+        const grid = document.getElementById('setMenuGrid');
+        if (!grid) return;
+        
+        const setMenus = [
+          {
+            id: "sns_starter",
+            name: "SNS 스타터",
+            subtitle: "입문",
+            originalPrice: 1090000,
+            price: 890000,
+            includes: ["플레이스 셋팅 (39만)", "스레드 셋팅 (15만)", "GRADE 1 베이직 1개월 (55만)"],
+            gradeInfo: true,
+            gradeName: "GRADE 1 베이직:",
+            gradeDetail: "플레이스B + 블로그B + 인스타 기본",
+            icon: "fas fa-seedling",
+            color: "#10b981"
+          },
+          {
+            id: "sns_growth",
+            name: "SNS 성장",
+            subtitle: "매출 전환",
+            originalPrice: 1870000,
+            price: 1490000,
+            includes: ["인스타그램 최적화 (49만)", "플레이스 셋팅 (39만)", "GRADE 2 퍼포먼스 1개월 (99만)"],
+            gradeInfo: true,
+            gradeName: "GRADE 2 퍼포먼스:",
+            gradeDetail: "플레이스A + 블로그A + 인스타 풀관리 + 숏폼 4개/월",
+            recommended: true,
+            icon: "fas fa-chart-line",
+            color: "#6366f1"
+          },
+          {
+            id: "sns_viral",
+            name: "바이럴 마스터",
+            subtitle: "프리미엄",
+            originalPrice: 3760000,
+            price: 2790000,
+            includes: ["인스타+틱톡 최적화 (98만)", "네이버 묶음 셋팅 (79만)", "GRADE 2 퍼포먼스 2개월 (198만)"],
+            gradeInfo: true,
+            gradeName: "GRADE 2 퍼포먼스:",
+            gradeDetail: "플레이스A + 블로그A + 인스타 풀관리 + 숏폼 4개/월",
+            icon: "fas fa-fire",
+            color: "#f97316"
+          },
+          {
+            id: "sns_dominate",
+            name: "지역 장악",
+            subtitle: "엔터프라이즈",
+            originalPrice: 6690000,
+            price: 4990000,
+            includes: ["올인원 풀셋팅 (249만)", "GRADE 3 마스터 2개월 (380만)", "유튜브 채널 최적화 (59만)"],
+            gradeInfo: true,
+            gradeName: "GRADE 3 토탈마스터:",
+            gradeDetail: "플레이스A + 블로그A + 인스타+틱톡 풀관리 + 숏폼 8개/월 + 유튜브",
+            icon: "fas fa-crown",
+            color: "#ec4899"
+          }
+        ];
+        
+        grid.innerHTML = setMenus.map(item => \`
+          <div class="package-card \${item.recommended ? 'recommended' : ''}">
+            \${item.recommended ? '<span class="package-badge">BEST</span>' : ''}
+            <div class="package-header">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: \${item.color}20; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                <i class="\${item.icon}" style="font-size: 1.5rem; color: \${item.color};"></i>
+              </div>
+              <div class="package-name">\${item.name}</div>
+              <div class="package-subtitle">\${item.subtitle}</div>
+            </div>
+            <div class="package-price-box">
+              <div class="package-original-price">₩\${item.originalPrice.toLocaleString()}</div>
+              <div class="package-price">₩\${item.price.toLocaleString()}</div>
+              <div class="package-discount">\${((item.originalPrice - item.price) / 10000).toFixed(0)}만원 할인</div>
+            </div>
+            <ul class="package-includes">
+              \${item.includes.map(inc => \`<li><i class="fas fa-check"></i> \${inc}</li>\`).join('')}
+            </ul>
+            \${item.gradeInfo ? \`<div style="font-size: 0.7rem; color: var(--text-tertiary); padding: 10px; margin: 12px 0; background: rgba(255,255,255,0.03); border-radius: 8px; line-height: 1.6; border-left: 2px solid var(--accent-blue);">
+              <div style="color: var(--accent-blue); font-weight: 600; margin-bottom: 4px;">\${item.gradeName}</div>
+              <div>\${item.gradeDetail}</div>
+            </div>\` : ''}
+            <button class="package-btn \${item.recommended ? 'primary' : 'ghost'}" onclick="addToCart('\${item.id}', '\${item.name}', \${item.price})">
+              <i class="fas fa-cart-plus"></i> 장바구니
+            </button>
+          </div>
+        \`).join('');
+      }
+      
+      // 마케팅 묶음 렌더링
+      function renderBundles() {
+        const grid = document.getElementById('bundleGrid');
+        if (!grid) return;
+        
+        const bundles = [
+          {
+            id: "setup_naver",
+            name: "네이버 묶음",
+            price: 790000,
+            originalPrice: 980000,
+            includes: ["플레이스 셋팅 (39만)", "광고/톡톡/페이 SET (59만)", "운영 가이드북"],
+            discount: "19만원 할인",
+            icon: "fa-solid fa-n",
+            color: "#03C75A"
+          },
+          {
+            id: "setup_google",
+            name: "구글 묶음",
+            price: 990000,
+            originalPrice: 1230000,
+            includes: ["마이비즈니스 셋팅 (35만)", "구글 광고 셋팅 (39만)", "구글 SEO 셋팅 (49만)"],
+            discount: "24만원 할인",
+            icon: "fab fa-google",
+            color: "#4285F4"
+          },
+          {
+            id: "setup_sns",
+            name: "SNS 관리 묶음",
+            price: 990000,
+            originalPrice: 1130000,
+            includes: ["인스타그램 최적화 (49만)", "틱톡 최적화 (49만)", "스레드 셋팅 (15만)"],
+            discount: "14만원 할인",
+            recommended: true,
+            icon: "fab fa-instagram",
+            color: "#E4405F"
+          },
+          {
+            id: "setup_full",
+            name: "올인원 풀셋팅",
+            price: 2490000,
+            originalPrice: 3340000,
+            includes: ["네이버 풀 셋팅", "구글 풀 셋팅", "SNS 풀 셋팅", "유튜브 채널 최적화", "1개월 집중 관리"],
+            discount: "85만원 할인",
+            icon: "fas fa-rocket",
+            color: "#6366f1"
+          }
+        ];
+        
+        grid.innerHTML = bundles.map(item => \`
+          <div class="package-card \${item.recommended ? 'recommended' : ''}">
+            \${item.recommended ? '<span class="package-badge">추천</span>' : ''}
+            <div class="package-header">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: \${item.color}20; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                <i class="\${item.icon}" style="font-size: 1.5rem; color: \${item.color};"></i>
+              </div>
+              <div class="package-name">\${item.name}</div>
+            </div>
+            <div class="package-price-box">
+              <div class="package-original-price">₩\${item.originalPrice.toLocaleString()}</div>
+              <div class="package-price">₩\${item.price.toLocaleString()}</div>
+              <div class="package-discount">\${item.discount}</div>
+            </div>
+            <ul class="package-includes">
+              \${item.includes.map(inc => \`<li><i class="fas fa-check"></i> \${inc}</li>\`).join('')}
+            </ul>
+            <button class="package-btn \${item.recommended ? 'primary' : 'ghost'}" onclick="addToCart('\${item.id}', '\${item.name}', \${item.price})">
+              <i class="fas fa-cart-plus"></i> 장바구니
+            </button>
+          </div>
+        \`).join('');
+      }
+      
+      // 웹사이트 패키지 렌더링
+      function renderWebsitePackages() {
+        const grid = document.getElementById('websiteGrid');
+        if (!grid) return;
+        
+        const packages = [
+          {
+            id: "landing",
+            type: "TYPE A",
+            name: "랜딩형",
+            subtitle: "전환 집중 원페이지",
+            price: 990000,
+            originalPrice: 1500000,
+            includes: ["반응형 원페이지", "기본 SEO 최적화", "모바일 최적화", "1개월 무료 관리"],
+            color: "#00d4ff"
+          },
+          {
+            id: "standard",
+            type: "TYPE B",
+            name: "스탠다드형",
+            subtitle: "기업형 브랜딩",
+            price: 2000000,
+            originalPrice: 2500000,
+            includes: ["5페이지 브랜드 웹사이트", "SEO/AEO/GEO 적용", "SNS 연동", "3개월 사후 관리"],
+            recommended: true,
+            color: "#a855f7"
+          },
+          {
+            id: "branding",
+            type: "TYPE C",
+            name: "프리미엄 브랜딩",
+            subtitle: "⚡ 24시간 AI 상담봇",
+            price: 4500000,
+            originalPrice: 5500000,
+            includes: ["무제한 페이지 구축", "스토리텔링 기획", "🤖 AI 상담봇 탑재", "6개월 VIP 관리"],
+            color: "#f97316"
+          },
+          {
+            id: "enterprise",
+            type: "TYPE D",
+            name: "병원/프랜차이즈",
+            subtitle: "풀 패키지",
+            price: 8500000,
+            originalPrice: 10500000,
+            includes: ["🤖 24시간 AI 전문 상담봇", "결제/예약 시스템 연동", "각 부서별/매장별 연동", "12개월 전담 케어"],
+            color: "#ec4899"
+          }
+        ];
+        
+        grid.innerHTML = packages.map(item => \`
+          <div class="package-card \${item.recommended ? 'recommended' : ''}">
+            \${item.recommended ? '<span class="package-badge">추천</span>' : ''}
+            <div class="package-header">
+              <div class="package-type" style="color: \${item.color};">\${item.type}</div>
+              <div class="package-name">\${item.name}</div>
+              <div class="package-subtitle">\${item.subtitle}</div>
+            </div>
+            <div class="package-price-box">
+              <div class="package-original-price">₩\${item.originalPrice.toLocaleString()}</div>
+              <div class="package-price">₩\${item.price.toLocaleString()}</div>
+              <div class="package-discount">\${((item.originalPrice - item.price) / 10000).toFixed(0)}만원 할인</div>
+            </div>
+            <ul class="package-includes">
+              \${item.includes.map(inc => \`<li><i class="fas fa-check"></i> \${inc}</li>\`).join('')}
+            </ul>
+            <button class="package-btn \${item.recommended ? 'primary' : 'ghost'}" onclick="addToCart('\${item.id}', '웹사이트 - \${item.name}', \${item.price})">
+              <i class="fas fa-cart-plus"></i> 장바구니
+            </button>
+          </div>
+        \`).join('');
+      }
+      
+      // AI 시스템 패키지 렌더링
+      function renderSystemPackages() {
+        const grid = document.getElementById('systemGrid');
+        if (!grid) return;
+        
+        const packages = [
+          { 
+            id: "sys_inhouse", 
+            name: "사내 비공개 앱/웹", 
+            price: 9900000,
+            icon: "fas fa-lock",
+            color: "#6366f1",
+            includes: ["비공개 웹/앱 개발", "사내 전용 시스템", "🤖 실시간 AI 상담봇", "직원 교육 매뉴얼"]
+          },
+          { 
+            id: "sys_b2b", 
+            name: "B2B 솔루션", 
+            price: 14900000,
+            icon: "fas fa-handshake",
+            color: "#10b981",
+            recommended: true,
+            includes: ["예약/결제 시스템", "거래처 관리", "🤖 실시간 AI 상담봇", "API 연동 개발"]
+          },
+          { 
+            id: "sys_hospital_video", 
+            name: "병원 안내 (영상형)", 
+            price: 19900000,
+            icon: "fas fa-hospital",
+            color: "#0ea5e9",
+            includes: ["수술 전/후 안내 영상", "병원 소개 영상 제작", "🤖 실시간 AI 상담봇", "환자 교육 콘텐츠"]
+          },
+          { 
+            id: "sys_hospital_full", 
+            name: "병원 토탈 솔루션", 
+            price: 39900000,
+            icon: "fas fa-heartbeat",
+            color: "#ec4899",
+            includes: ["AI 환자 상담 시스템", "고객 관리 (CRM)", "마케팅 자동화 연동", "🤖 24시간 AI 상담봇"]
+          },
+          { 
+            id: "sys_franchise", 
+            name: "프랜차이즈 솔루션", 
+            price: 29900000,
+            icon: "fas fa-store",
+            color: "#8b5cf6",
+            includes: ["본사/가맹점 통합 관리", "매뉴얼 영상 제작", "🤖 실시간 AI 상담봇", "멀티 지점 대시보드"]
+          },
+          { 
+            id: "sys_gov", 
+            name: "관공서/공공기관", 
+            price: 49900000,
+            icon: "fas fa-landmark",
+            color: "#f59e0b",
+            includes: ["부서별 안내 시스템", "AI 보안 영상 제작", "🤖 24시간 민원 상담봇", "다국어 지원"]
+          }
+        ];
+        
+        grid.innerHTML = packages.map(item => \`
+          <div class="package-card \${item.recommended ? 'recommended' : ''}">
+            \${item.recommended ? '<span class="package-badge">추천</span>' : ''}
+            <div class="package-header">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: \${item.color}20; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                <i class="\${item.icon}" style="font-size: 1.3rem; color: \${item.color};"></i>
+              </div>
+              <div class="package-name">\${item.name}</div>
+            </div>
+            <div class="package-price-box">
+              <div class="package-price">₩\${item.price.toLocaleString()}</div>
+            </div>
+            <ul class="package-includes">
+              \${item.includes.map(inc => \`<li><i class="fas fa-check"></i> \${inc}</li>\`).join('')}
+            </ul>
+            <button class="package-btn \${item.recommended ? 'primary' : 'ghost'}" onclick="addToCart('\${item.id}', 'AI솔루션 - \${item.name}', \${item.price})">
+              <i class="fas fa-comment-dots"></i> 실시간 상담
+            </button>
           </div>
         \`).join('');
       }
@@ -6836,6 +7372,8 @@ function getMainHTML(): string {
           instagram: '인스타그램 마케팅',
           youtube: '유튜브 마케팅',
           tiktok: '틱톡 마케팅',
+          blog: '블로그 마케팅',
+          google: '구글 마케팅',
           web: '웹사이트 제작',
           system: 'AI 시스템 구축'
         };
@@ -6849,20 +7387,43 @@ function getMainHTML(): string {
           body.innerHTML = \`
             <div style="padding: 20px 0;">
               <h3 style="font-size: 1.3rem; margin-bottom: 16px; color: var(--accent-blue);">\${service.name}</h3>
-              \${service.services ? service.services.map(s => \`
+              \${service.services ? service.services.map(s => {
+                const setupFee = s.setupFee || s.setup_fee || 0;
+                const monthlyFee = s.monthlyFee || s.monthly_fee || s.monthlyFeeA || 0;
+                const monthlyFeeB = s.monthlyFeeB || s.monthly_fee_b || 0;
+                const hasAB = s.hasAB || monthlyFeeB > 0;
+                
+                return \`
                 <div style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border-subtle);">
-                  <div style="font-weight: 600; margin-bottom: 8px;">\${s.name}</div>
-                  <div style="display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.9rem;">
-                    <span>세팅비: \${(s.setupFee || s.setup_fee || 0).toLocaleString()}원</span>
-                    <span>월비용: \${(s.monthlyFee || s.monthly_fee || 0).toLocaleString()}원</span>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-weight: 600;">\${s.name}</span>
+                    <button class="btn btn-ghost" style="padding: 6px 12px; font-size: 0.8rem;" onclick="addToCart('\${s.id}', '\${s.name}', \${setupFee}); event.stopPropagation();">
+                      <i class="fas fa-cart-plus"></i> 담기
+                    </button>
                   </div>
+                  <div style="font-size: 0.85rem; color: var(--text-tertiary); margin-bottom: 8px;">\${s.desc || ''}</div>
+                  <div style="display: flex; flex-direction: column; gap: 4px; color: var(--text-secondary); font-size: 0.85rem; margin-top: 8px;">
+                    \${setupFee > 0 ? \`<div><strong>세팅비:</strong> ₩\${setupFee.toLocaleString()}</div>\` : ''}
+                    \${hasAB 
+                      ? \`<div><strong>월관리:</strong></div><div style="padding-left: 12px;">A형 ₩\${monthlyFee.toLocaleString()}</div><div style="padding-left: 12px;">B형 ₩\${monthlyFeeB.toLocaleString()}</div>\` 
+                      : (monthlyFee > 0 ? \`<div><strong>월관리:</strong> ₩\${monthlyFee.toLocaleString()}</div>\` : '<div style="color: var(--text-tertiary);">월관리: 개별상담</div>')}
+                  </div>
+                  \${s.notice ? \`<div style="font-size: 0.8rem; color: var(--accent-blue); margin-top: 8px;">\${s.notice}</div>\` : ''}
+                  \${s.smallNotice ? \`<div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px;">※ \${s.smallNotice}</div>\` : ''}
                 </div>
-              \`).join('') : ''}
+              \`;}).join('') : ''}
             </div>
-            <button class="btn btn-primary btn-large" style="width: 100%;" onclick="openChat(); closeServiceModal();">
-              <i class="fas fa-comment-dots"></i> 상담하기
-            </button>
           \`;
+        } else if (id === 'web') {
+          // 웹사이트 제작 - 해당 섹션으로 스크롤
+          modal.classList.remove('open');
+          document.getElementById('website-package').scrollIntoView({ behavior: 'smooth' });
+          return;
+        } else if (id === 'system') {
+          // AI 시스템 구축 - 해당 섹션으로 스크롤
+          modal.classList.remove('open');
+          document.getElementById('system-package').scrollIntoView({ behavior: 'smooth' });
+          return;
         }
       }
       
@@ -6969,26 +7530,7 @@ function getMainHTML(): string {
       });
     </script>
     
-    <!-- Footer with Admin Link -->
-    <footer style="background: var(--bg-secondary); padding: 40px 0; margin-top: 80px; border-top: 1px solid var(--border-subtle);">
-      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;">
-          <div>
-            <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">X I Λ I X</div>
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">사장님은 장사만 하세요, 마케팅은 AI가 다 해드립니다.</p>
-          </div>
-          <div style="display: flex; gap: 24px; align-items: center;">
-            <a href="/login" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">로그인</a>
-            <a href="#portfolio" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">포트폴리오</a>
-            <a href="#pricing" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">가격</a>
-            <a href="/admin" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; opacity: 0.5;">ADMIN</a>
-          </div>
-        </div>
-        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-subtle); text-align: center;">
-          <p style="color: var(--text-secondary); font-size: 0.8rem;">© 2025 X I Λ I X. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
+
 </body>
 </html>`;
 }
