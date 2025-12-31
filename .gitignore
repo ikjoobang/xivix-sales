@@ -27,3 +27,6 @@ npm-debug.log*
 .pm2/
 pids/
 logs/
+public/hero-bg.mp4
+core
+*.mp4
