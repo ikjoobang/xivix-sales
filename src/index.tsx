@@ -3479,7 +3479,7 @@ function getMainHTML(): string {
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "MarketingAgency",
+      "@type": "ProfessionalService",
       "name": "X I Λ I X",
       "url": "https://xivix.kr",
       "description": "AI 기반 통합 마케팅 솔루션",
